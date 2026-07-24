@@ -118,7 +118,7 @@ Assets/
 | BPM | **90** | GDD: 초반 저속. 고정/가속 미정 |
 | 히로인 체력 | **8** | UI 와이어의 하트 8개. 체력제는 확정 |
 | 오답 피해 | **1** | |
-| 판정 윈도우 | **박의 ±35%**(`hitWindowRatio`) | 구현됨. 작을수록 빡셈 |
+| 판정 입력 구간 | **행동별 한 박 전체** | `[박 시작, 다음 박 시작)`의 첫 입력으로 즉시 판정 |
 | 무입력 처리 | **오답과 동일(피해)** | 미정 — §9 |
 | 한 판 길이 | ~90초 | 시연 고려 |
 | 카운트인(준비) | **3초** | `Conductor.startDelay`. 시작 전 여유. 인스펙터 조정 |
@@ -128,7 +128,7 @@ Assets/
 1. **P0 시작 리듬 패턴**: 안1(참는·입력1)로 타이밍 먼저 검증 vs 안2(몰아치는·입력4). (둘 다 데이터로 구현하되 첫 통합 대상)
 2. **패턴 배분/전환 규칙**: 고정/혼합/전환 트리거(구간·곡·적). — 후반.
 3. **무입력 처리**: 오답과 동일한가 별도인가.
-4. **판정 피드백 시점**: 응답 박마다 즉시 vs 4박 끝나고 일괄.
+4. ~~**판정 피드백 시점**~~: **응답 행동마다 즉시**로 확정. 한 박 전체에서 첫 입력을 판정하고, 미입력도 해당 박 종료 즉시 처리.
 5. **페이즈 매핑 방향(잠정)**: 공격=공세↑/수비=무방비↑ 로 구현. 뒤집을지 확인 필요.
 6. **페이즈 진행(잠정)**: `cyclesPerPhase`마다 교대. 확률 전환/구간 연동 등은 후반.
 
@@ -139,7 +139,7 @@ Assets/
 - 2026-07-24: **기획 SOT를 Notion "박자게임" 페이지로 교체.** 코어 루프를 **콜앤리스폰스(8박 2마디)** 로 정정, 판정 축=자세, P0 자세 2종(공세/무방비), 비트 클록·리듬 2종·결정론적 시퀀스 포함으로 모듈 재계획. 샘플 적을 공세/무방비로 정렬.
 - 2026-07-24: **Module 4·5 완료.** `RhythmPatternSO`(안1 `Rhythm_Hold`[F,F,F,T] / 안2 `Rhythm_Rush`[T,T,T,T]), `EnemySequenceProvider`(시드 기반 순수 해시). 라이브 검증: 재현성·독립성·시드민감성 True, 분포 397/403 균형. 컴파일 에러 0.
 - 2026-07-24: **Module 6·7·8 코드 작성**(컴파일 에러 0). `Conductor`(Time 기반 BPM 클록, 8박 사이클, 제시/응답 이벤트), `PlayerHealth`(HP, 인스펙터 조정), `InputReader`(키보드 ←/→ + 온스크린 `Press()` 공유), `RoundManager`(제시→응답 오케스트레이션, 스포트라이트 박마다 버퍼 입력 판정, HP 반영, 무입력=오답 옵션). **플레이모드 실동작 검증은 M9 UI + M10 씬 조립 단계에서 수행 예정.** 모든 튜닝 수치 `[SerializeField]` 노출(사용자 원칙).
-- 2026-07-25: **판정을 타이밍 고정으로 강화** (사용자 피드백: 입력 기반 순서 판정은 틀린 뒤 바로 고쳐 누르면 봐줘서 너무 널널 → 긍정적 방향 아님). 각 응답 박에 **±판정창**(`hitWindowRatio`, 기본 ±35%)을 두고, 창에 **먼저 들어온 입력 하나로 그 박을 확정**(오답이면 잠김, 고쳐 눌러도 안 봐줌). 창 밖 입력은 무시, 미답 박은 무입력 미스. `Conductor.SongPosition`/`BeatToTime` 추가. 컴파일 0, 예외 0.
+- 2026-07-25: **판정을 타이밍 고정으로 강화** (이후 같은 날 한 박 전체 입력 구간으로 대체됨). 각 응답 박에 **±판정창**(`hitWindowRatio`, 기본 ±35%)을 두고, 창에 먼저 들어온 입력 하나로 그 박을 확정했다. `Conductor.SongPosition`/`BeatToTime` 추가. 컴파일 0, 예외 0.
 - 2026-07-25: **플레이어 idle = 키프레임 스텝(림버스식)**. `KeyframeAnimator`(SR 필수): 스프라이트 배열을 트위닝 없이 순환 — **비트 동기**(박마다/`beatsPerFrame`) 또는 시간(fps) 선택. 행동 스프라이트 표시 중 `Pause()`, idle 복귀 시 `Resume()`(HudView 연동; 프레임 없으면 기존 단일 idle 폴백). PlayerActor 부착·배선(기본: 비트 동기 1박/프레임). **키프레임 스프라이트는 인스펙터 frames 배열에 채우면 됨.** 컴파일 0.
 - 2026-07-25: **StageRoster + StageManager (시작 스테이지 인스펙터 관리)**. 기획 확정: 스테이지 1=튜토리얼이고 1↔2는 같은 배경(다이얼로그 후 적만 교체), 3은 배경도 교체. `StageSO`에 `backgroundSprite`/`floorSprite` 추가(씬 '백그라운드'/'바닥' SR에 바꿔끼움, 비우면 유지). `StageRosterSO`(스테이지 목록), `StageManager`(DefaultExecutionOrder -100): 로스터에서 `startStageIndex`(인스펙터, 적/에셋 테스트용) 스테이지를 골라 배경 스왑 + `RoundManager.SetStage`. 에셋: Stage_2(본편1)/Stage_3(배경교체)/Stage_4 생성(기본값 Stage_1 상속, 스프라이트는 인스펙터에서 채움), `StageRoster`=[1,2,3,4]. 씬 배선·검증. 컴파일 0.
 - 2026-07-25: **UI 최신화(에셋 기반)**. ① 플레이어 HP: 하트 → `UI_HP_Player_Frame`+Fill **세그먼트 7칸**(자유 배치, `hearts[i].enabled = i<HP`). ② 적 HP: `UI_HP_Enemy_Bar`+`UI_HP_Enemy_Fill` **8칸**(HudView.enemyCells, 구동은 임시 '처리 시 1감소' — 의미(보스HP/남은적수) 미정). ③ 비트 타임라인: 점=위치 마커화, **BeatCursor 2개**(`UI_BeatTimeline_CenterCursor`) — 플레이어 커서 offset0+PresentDot0~3 / 적 커서 offset4+ResponseDot0~3, 박마다 이동+펄스(`beatOffset` 리팩토링). ④ 카운트다운: 텍스트 → `UI_Countdown_3/2/1` 에셋 + 연출(확대·회전·페이드아웃, `CountdownDisplay`). ⑤ 임포트 이슈: 일부 스프라이트 Multiple 모드라 로드 실패 → Single 전환. 컴파일 0.
@@ -165,3 +165,5 @@ Assets/
 - 2026-07-25: **Module 9(UI) 완료 → P0 코어 목업 완성.** `HudView`/`ActionButton` + Canvas 조립(HP 하트 8, 8박 인디케이터[제시◉◉◉◉▶응답○○○○], 적/주인공 색 점멸 슬롯, 페이즈·피드백 라벨, ←가드/→공격 버튼·키가이드). 플레이모드 스크린샷 2장으로 시각 검증(초반: 풀 HP·공격 페이즈·공세형 등장·제시 박 하이라이트 / 종료: GAME OVER). 씬 기본값 정상화(BPM 90, cyclesPerPhase 2). 컴파일 에러 0.
 - 2026-07-25: **씬 조립 + 플레이모드 스모크 테스트 완료 (M6·7·8·10 실동작 검증).** `Assets/Scenes/BeatMemories.unity` 조립(Conductor/Player/InputReader/RoundManager, pattern=Rush, pool=공세/무방비, phases=공격/수비). BPM 120·안2·cyclesPerPhase=1로 플레이 → 로그 확인: 사이클0 공격 페이즈(공세 3/무방비 1 편향), 사이클1 수비 페이즈 전환, 무입력=Punished, HP 8→0, `GAME OVER`+클록 정지. **예외 0.** 테스트 후 SampleScene 복원.
 - 2026-07-25: **Module 5b(페이즈=맥락) 완료.** `PhaseSO`/`ActionWeight`, `EnemySequenceProvider.GetWeighted`(결정론적 가중 선택), `RoundManager` 페이즈 순환 연결. 에셋 `Phase_Assault`(가드3:공격1)/`Phase_Defense`(가드1:공격3). 라이브 검증: 편향 73%/74%(목표 75%), 균등 50/50, **재현성 유지 True**. 컴파일 에러 0. (매핑 방향·진행은 잠정 §8-5,6.)
+- 2026-07-25: **응답 입력 구간·HP 반영 시점 확정.** 응답 마디의 각 행동은 대응하는 박 전체 `[박 시작, 다음 박 시작)`에서 첫 입력 하나를 판정한다. 구간 종료까지 입력이 없으면 해당 행동만 즉시 무입력 판정하며, 피해는 `PlayerData.TakeDamage`와 `OnHealthChanged`를 통해 행동별로 즉시 반영한다. 네 행동 종료 후 피해를 일괄 적용하지 않는다.
+- 2026-07-25: **게임오버 UI + 씬 이동.** `GameOverView`가 `RoundManager.OnGameOver`를 구독해 에셋 기반 배너·끊어진 타임라인·스캔라인/글리치·Retry/Title 버튼을 표시한다. 게임오버에도 배경·캐릭터·양측 HP는 유지하고 전투 조작 UI만 숨긴다. Retry는 현재 전투 씬을 재로드하고 Title은 최소 `Title.unity` 씬으로 이동한다. Build Settings는 Title→BeatMemories 순서.

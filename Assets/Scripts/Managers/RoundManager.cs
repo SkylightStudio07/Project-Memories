@@ -36,8 +36,6 @@ namespace BeatMemories
         [SerializeField, Min(1)] private int cyclesPerPhase = 2;
 
         [Header("판정 (인스펙터 조정)")]
-        [Tooltip("타이밍 판정창: 박 대비 ±비율 (0.35 = ±35%). 클수록 널널")]
-        [SerializeField, Range(0.05f, 0.49f)] private float hitWindowRatio = 0.35f;
         [Tooltip("마감까지 안 답한 박을 오답으로 취급(적 defaultOutcome 적용)")]
         [SerializeField] private bool noInputCountsAsMiss = true;
         [SerializeField] private bool verboseLog = true;
@@ -54,7 +52,8 @@ namespace BeatMemories
         {
             public int slot;
             public Enemy enemy;
-            public double time;   // 이 박의 이상적 시각(SongPosition 기준)
+            public double openTime;  // 입력 구간의 시작(SongPosition 기준)
+            public double closeTime; // 입력 구간의 끝. [openTime, closeTime)
             public bool consumed; // 이미 입력으로 확정됐는가
         }
 
@@ -120,8 +119,9 @@ namespace BeatMemories
         {
             if (isOver) return;
 
-            // 직전 응답에서 안 답한 박 = 무입력 미스로 마감
+            // 프레임 건너뜀 등으로 직전 응답에 남은 박이 있다면 안전하게 마감한다.
             FlushUnanswered();
+            if (isOver) return;
 
             PhaseSO phase = PhaseForCycle(cycleIndex);
             if (phase != CurrentPhase)
@@ -140,17 +140,19 @@ namespace BeatMemories
         {
             if (isOver) return;
 
-            // 응답 박마다 판정 노트를 만든다 (박의 이상적 시각을 미리 계산)
+            // 각 응답 행동은 대응하는 한 박 전체를 입력 구간으로 사용한다.
             notes.Clear();
             for (int k = 0; k < spotlightBeats.Count && k < currentCycle.Count; k++)
             {
                 int beatInCycle = spotlightBeats[k] + Conductor.BeatsPerMeasure;
                 int globalBeat = cycleIndex * Conductor.BeatsPerCycle + beatInCycle;
+                double openTime = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0;
                 notes.Add(new ResponseNote
                 {
                     slot = k,
                     enemy = currentCycle[k],
-                    time = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0,
+                    openTime = openTime,
+                    closeTime = conductor != null ? conductor.BeatToTime(globalBeat + 1) : openTime,
                     consumed = false,
                 });
             }
@@ -174,36 +176,67 @@ namespace BeatMemories
             if (verboseLog) Debug.Log($"[Round] 제시 slot{slot}: {currentCycle[slot]?.DisplayName}");
         }
 
-        // 응답 마디 입력: 판정창에 들어오는 가장 가까운 미확정 박을 그 입력으로 확정
+        private void Update()
+        {
+            if (isOver || !inResponse || conductor == null) return;
+            ExpireElapsedNotes(conductor.SongPosition);
+        }
+
+        // 응답 마디 입력: 현재 박의 첫 입력으로 해당 행동을 즉시 확정
         private void HandleInput(PlayerAction action)
         {
             if (isOver || !inResponse || conductor == null) return;
 
             double now = conductor.SongPosition;
-            double window = Mathf.Max(0f, hitWindowRatio) * conductor.SecondsPerBeat;
+            // InputReader와 Update 실행 순서에 관계없이 이미 닫힌 행동은 먼저 마감한다.
+            ExpireElapsedNotes(now);
+            if (isOver) return;
 
-            int best = -1;
-            double bestDist = double.MaxValue;
+            int current = -1;
             for (int i = 0; i < notes.Count; i++)
             {
                 if (notes[i].consumed) continue;
-                double d = Math.Abs(now - notes[i].time);
-                if (d <= window && d < bestDist) { bestDist = d; best = i; }
+                if (now >= notes[i].openTime && now < notes[i].closeTime)
+                {
+                    current = i;
+                    break;
+                }
             }
 
-            if (best < 0) return; // 창 밖 입력(빗나감) — 무시. 미답 박은 마감 시 미스.
+            if (current < 0) return;
 
-            notes[best].consumed = true;
-            ApplyJudge(notes[best].slot, notes[best].enemy, action, isMiss: false);
+            notes[current].consumed = true;
+            ApplyJudge(notes[current].slot, notes[current].enemy, action, isMiss: false);
+        }
+
+        private void ExpireElapsedNotes(double now)
+        {
+            for (int i = 0; i < notes.Count; i++)
+            {
+                if (notes[i].consumed || now < notes[i].closeTime) continue;
+
+                notes[i].consumed = true;
+                if (noInputCountsAsMiss)
+                    ApplyJudge(notes[i].slot, notes[i].enemy, PlayerAction.None, isMiss: true);
+
+                if (isOver) break;
+            }
         }
 
         private void FlushUnanswered()
         {
             if (!inResponse) return;
-            if (noInputCountsAsMiss)
-                for (int i = 0; i < notes.Count; i++)
-                    if (!notes[i].consumed)
-                        ApplyJudge(notes[i].slot, notes[i].enemy, PlayerAction.None, isMiss: true);
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                if (notes[i].consumed) continue;
+
+                notes[i].consumed = true;
+                if (noInputCountsAsMiss)
+                    ApplyJudge(notes[i].slot, notes[i].enemy, PlayerAction.None, isMiss: true);
+                if (isOver) break;
+            }
+
             notes.Clear();
             inResponse = false;
         }
