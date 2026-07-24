@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 929e907209ffcc04ab145bcd395d587a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1841926891973665364
+    second: UI_Phase_ResponseLeft_PromptRight_v1_0
+  - first:
+      213: 2690529981505545090
+    second: UI_Phase_ResponseLeft_PromptRight_v1_1
+  - first:
+      213: 1454853230733275999
+    second: UI_Phase_ResponseLeft_PromptRight_v1_2
+  - first:
+      213: 7137762324548066834
+    second: UI_Phase_ResponseLeft_PromptRight_v1_3
+  - first:
+      213: -2370238364244873906
+    second: UI_Phase_ResponseLeft_PromptRight_v1_4
+  - first:
+      213: 7366014738232281140
+    second: UI_Phase_ResponseLeft_PromptRight_v1_5
+  - first:
+      213: 3289826623648858634
+    second: UI_Phase_ResponseLeft_PromptRight_v1_6
+  - first:
+      213: -2402826700747639575
+    second: UI_Phase_ResponseLeft_PromptRight_v1_7
+  - first:
+      213: -5979817124187862692
+    second: UI_Phase_ResponseLeft_PromptRight_v1_8
+  - first:
+      213: 8675914558607731180
+    second: UI_Phase_ResponseLeft_PromptRight_v1_9
+  - first:
+      213: -49427962361126474
+    second: UI_Phase_ResponseLeft_PromptRight_v1_10
+  - first:
+      213: 618250207888852143
+    second: UI_Phase_ResponseLeft_PromptRight_v1_11
+  - first:
+      213: 8105649737997912722
+    second: UI_Phase_ResponseLeft_PromptRight_v1_12
+  - first:
+      213: 2600934978226255064
+    second: UI_Phase_ResponseLeft_PromptRight_v1_13
+  - first:
+      213: -6852920029717305941
+    second: UI_Phase_ResponseLeft_PromptRight_v1_14
+  - first:
+      213: 5721188155198615784
+    second: UI_Phase_ResponseLeft_PromptRight_v1_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_0
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 383
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cad9bad20492076e0800000000000000
+      internalID: -1841926891973665364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_1
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 388
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2832d2d53cea65520800000000000000
+      internalID: 2690529981505545090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_2
+      rect:
+        serializedVersion: 2
+        x: 252
+        y: 391
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f53bf222e4da03410800000000000000
+      internalID: 1454853230733275999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_3
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 29
+        width: 1832
+        height: 358
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21e9ad5440d6e0360800000000000000
+      internalID: 7137762324548066834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_4
+      rect:
+        serializedVersion: 2
+        x: 235
+        y: 380
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4d6e2a04c83b1fd0800000000000000
+      internalID: -2370238364244873906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_5
+      rect:
+        serializedVersion: 2
+        x: 262
+        y: 379
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43880aaa067593660800000000000000
+      internalID: 7366014738232281140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_6
+      rect:
+        serializedVersion: 2
+        x: 1439
+        y: 29
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a02863b42efc7ad20800000000000000
+      internalID: 3289826623648858634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_7
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 28
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e4fc1da8d177aed0800000000000000
+      internalID: -2402826700747639575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_8
+      rect:
+        serializedVersion: 2
+        x: 1487
+        y: 28
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c590cfa020c630da0800000000000000
+      internalID: -5979817124187862692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1511
+        y: 28
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce92477f25a076870800000000000000
+      internalID: 8675914558607731180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_10
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 28
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b16e75b785605ff0800000000000000
+      internalID: -49427962361126474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_11
+      rect:
+        serializedVersion: 2
+        x: 1562
+        y: 28
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa4c687d947749800800000000000000
+      internalID: 618250207888852143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_12
+      rect:
+        serializedVersion: 2
+        x: 1476
+        y: 16
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29a8a1bbd7d0d7070800000000000000
+      internalID: 8105649737997912722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_13
+      rect:
+        serializedVersion: 2
+        x: 1499
+        y: 15
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d470151590681420800000000000000
+      internalID: 2600934978226255064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_14
+      rect:
+        serializedVersion: 2
+        x: 1524
+        y: 15
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba56a829a8985e0a0800000000000000
+      internalID: -6852920029717305941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_ResponseLeft_PromptRight_v1_15
+      rect:
+        serializedVersion: 2
+        x: 1549
+        y: 16
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e039c3a05eb56f40800000000000000
+      internalID: 5721188155198615784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      UI_Phase_ResponseLeft_PromptRight_v1_0: -1841926891973665364
+      UI_Phase_ResponseLeft_PromptRight_v1_1: 2690529981505545090
+      UI_Phase_ResponseLeft_PromptRight_v1_10: -49427962361126474
+      UI_Phase_ResponseLeft_PromptRight_v1_11: 618250207888852143
+      UI_Phase_ResponseLeft_PromptRight_v1_12: 8105649737997912722
+      UI_Phase_ResponseLeft_PromptRight_v1_13: 2600934978226255064
+      UI_Phase_ResponseLeft_PromptRight_v1_14: -6852920029717305941
+      UI_Phase_ResponseLeft_PromptRight_v1_15: 5721188155198615784
+      UI_Phase_ResponseLeft_PromptRight_v1_2: 1454853230733275999
+      UI_Phase_ResponseLeft_PromptRight_v1_3: 7137762324548066834
+      UI_Phase_ResponseLeft_PromptRight_v1_4: -2370238364244873906
+      UI_Phase_ResponseLeft_PromptRight_v1_5: 7366014738232281140
+      UI_Phase_ResponseLeft_PromptRight_v1_6: 3289826623648858634
+      UI_Phase_ResponseLeft_PromptRight_v1_7: -2402826700747639575
+      UI_Phase_ResponseLeft_PromptRight_v1_8: -5979817124187862692
+      UI_Phase_ResponseLeft_PromptRight_v1_9: 8675914558607731180
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

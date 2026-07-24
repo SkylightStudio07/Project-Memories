@@ -1,0 +1,4459 @@
+fileFormatVersion: 2
+guid: 7b3a4c4b6d506104481df5065d555820
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5458847103379190094
+    second: UI_GameOver_GlitchOverlay_v1_0
+  - first:
+      213: -6067448118561424409
+    second: UI_GameOver_GlitchOverlay_v1_1
+  - first:
+      213: 46501195968615780
+    second: UI_GameOver_GlitchOverlay_v1_2
+  - first:
+      213: -6254990572246507188
+    second: UI_GameOver_GlitchOverlay_v1_3
+  - first:
+      213: -702347336872171096
+    second: UI_GameOver_GlitchOverlay_v1_4
+  - first:
+      213: 3911862291195097920
+    second: UI_GameOver_GlitchOverlay_v1_5
+  - first:
+      213: -6862923850854157420
+    second: UI_GameOver_GlitchOverlay_v1_6
+  - first:
+      213: 3992024559889228456
+    second: UI_GameOver_GlitchOverlay_v1_7
+  - first:
+      213: -7665221217328989173
+    second: UI_GameOver_GlitchOverlay_v1_8
+  - first:
+      213: -6011868858168535891
+    second: UI_GameOver_GlitchOverlay_v1_9
+  - first:
+      213: -2382927700035829649
+    second: UI_GameOver_GlitchOverlay_v1_10
+  - first:
+      213: 8183442466146105064
+    second: UI_GameOver_GlitchOverlay_v1_11
+  - first:
+      213: -2942779543569672374
+    second: UI_GameOver_GlitchOverlay_v1_12
+  - first:
+      213: 4946927145829273330
+    second: UI_GameOver_GlitchOverlay_v1_13
+  - first:
+      213: -1851911643983602472
+    second: UI_GameOver_GlitchOverlay_v1_14
+  - first:
+      213: -7815494227388144202
+    second: UI_GameOver_GlitchOverlay_v1_15
+  - first:
+      213: 5147801303102598497
+    second: UI_GameOver_GlitchOverlay_v1_16
+  - first:
+      213: 1814877730465177527
+    second: UI_GameOver_GlitchOverlay_v1_17
+  - first:
+      213: -1556664818398293246
+    second: UI_GameOver_GlitchOverlay_v1_18
+  - first:
+      213: 4202853682593650938
+    second: UI_GameOver_GlitchOverlay_v1_19
+  - first:
+      213: 4454020672579614671
+    second: UI_GameOver_GlitchOverlay_v1_20
+  - first:
+      213: -6503527747068537986
+    second: UI_GameOver_GlitchOverlay_v1_21
+  - first:
+      213: -4144281568121738767
+    second: UI_GameOver_GlitchOverlay_v1_22
+  - first:
+      213: 8521666347939422079
+    second: UI_GameOver_GlitchOverlay_v1_23
+  - first:
+      213: 2464135965885846145
+    second: UI_GameOver_GlitchOverlay_v1_24
+  - first:
+      213: 6573477411767947029
+    second: UI_GameOver_GlitchOverlay_v1_25
+  - first:
+      213: -8112914514239173609
+    second: UI_GameOver_GlitchOverlay_v1_26
+  - first:
+      213: -501689628221201213
+    second: UI_GameOver_GlitchOverlay_v1_27
+  - first:
+      213: 4248727419863570090
+    second: UI_GameOver_GlitchOverlay_v1_28
+  - first:
+      213: -9039183460752444689
+    second: UI_GameOver_GlitchOverlay_v1_29
+  - first:
+      213: 7040920629980071498
+    second: UI_GameOver_GlitchOverlay_v1_30
+  - first:
+      213: 8560675088373122284
+    second: UI_GameOver_GlitchOverlay_v1_31
+  - first:
+      213: -1610134587623977852
+    second: UI_GameOver_GlitchOverlay_v1_32
+  - first:
+      213: -7549735857128447279
+    second: UI_GameOver_GlitchOverlay_v1_33
+  - first:
+      213: -7842545336429297903
+    second: UI_GameOver_GlitchOverlay_v1_34
+  - first:
+      213: 7897324836093093359
+    second: UI_GameOver_GlitchOverlay_v1_35
+  - first:
+      213: -6321064874515734166
+    second: UI_GameOver_GlitchOverlay_v1_36
+  - first:
+      213: 7315722248579694633
+    second: UI_GameOver_GlitchOverlay_v1_37
+  - first:
+      213: -4948826180098123609
+    second: UI_GameOver_GlitchOverlay_v1_38
+  - first:
+      213: -486269281652508991
+    second: UI_GameOver_GlitchOverlay_v1_39
+  - first:
+      213: -8262411353428380112
+    second: UI_GameOver_GlitchOverlay_v1_40
+  - first:
+      213: 290957741681355859
+    second: UI_GameOver_GlitchOverlay_v1_41
+  - first:
+      213: 357969424489970584
+    second: UI_GameOver_GlitchOverlay_v1_42
+  - first:
+      213: 4146984498718198781
+    second: UI_GameOver_GlitchOverlay_v1_43
+  - first:
+      213: 1760928878148134943
+    second: UI_GameOver_GlitchOverlay_v1_44
+  - first:
+      213: -8765085111242507907
+    second: UI_GameOver_GlitchOverlay_v1_45
+  - first:
+      213: 5012848895020033754
+    second: UI_GameOver_GlitchOverlay_v1_46
+  - first:
+      213: 7364541536414286733
+    second: UI_GameOver_GlitchOverlay_v1_47
+  - first:
+      213: -1944627641282556649
+    second: UI_GameOver_GlitchOverlay_v1_48
+  - first:
+      213: 1156459409709350472
+    second: UI_GameOver_GlitchOverlay_v1_49
+  - first:
+      213: -885774581573362622
+    second: UI_GameOver_GlitchOverlay_v1_50
+  - first:
+      213: 4131224463309509558
+    second: UI_GameOver_GlitchOverlay_v1_51
+  - first:
+      213: -2955898278715616077
+    second: UI_GameOver_GlitchOverlay_v1_52
+  - first:
+      213: -5609822515943313518
+    second: UI_GameOver_GlitchOverlay_v1_53
+  - first:
+      213: 2150823870518045078
+    second: UI_GameOver_GlitchOverlay_v1_54
+  - first:
+      213: -4583060090765070912
+    second: UI_GameOver_GlitchOverlay_v1_55
+  - first:
+      213: 879750480012169904
+    second: UI_GameOver_GlitchOverlay_v1_56
+  - first:
+      213: -801145379441799438
+    second: UI_GameOver_GlitchOverlay_v1_57
+  - first:
+      213: 8425548277139728615
+    second: UI_GameOver_GlitchOverlay_v1_58
+  - first:
+      213: 7715668012608637666
+    second: UI_GameOver_GlitchOverlay_v1_59
+  - first:
+      213: -1605142583477055109
+    second: UI_GameOver_GlitchOverlay_v1_60
+  - first:
+      213: 3217133412417211436
+    second: UI_GameOver_GlitchOverlay_v1_61
+  - first:
+      213: 592560828249668344
+    second: UI_GameOver_GlitchOverlay_v1_62
+  - first:
+      213: 6435990266054430008
+    second: UI_GameOver_GlitchOverlay_v1_63
+  - first:
+      213: -4716936583605136441
+    second: UI_GameOver_GlitchOverlay_v1_64
+  - first:
+      213: -2191373156986973414
+    second: UI_GameOver_GlitchOverlay_v1_65
+  - first:
+      213: -575723025914419804
+    second: UI_GameOver_GlitchOverlay_v1_66
+  - first:
+      213: 19308766470557334
+    second: UI_GameOver_GlitchOverlay_v1_67
+  - first:
+      213: -7285003896465367764
+    second: UI_GameOver_GlitchOverlay_v1_68
+  - first:
+      213: -6580473677362561182
+    second: UI_GameOver_GlitchOverlay_v1_69
+  - first:
+      213: -8121952802830502960
+    second: UI_GameOver_GlitchOverlay_v1_70
+  - first:
+      213: 8633508136947516738
+    second: UI_GameOver_GlitchOverlay_v1_71
+  - first:
+      213: -8397606056722967679
+    second: UI_GameOver_GlitchOverlay_v1_72
+  - first:
+      213: 2198400280784710362
+    second: UI_GameOver_GlitchOverlay_v1_73
+  - first:
+      213: 8811290049541455945
+    second: UI_GameOver_GlitchOverlay_v1_74
+  - first:
+      213: 1263673394436652092
+    second: UI_GameOver_GlitchOverlay_v1_75
+  - first:
+      213: 758882426807615417
+    second: UI_GameOver_GlitchOverlay_v1_76
+  - first:
+      213: 6021352991859789094
+    second: UI_GameOver_GlitchOverlay_v1_77
+  - first:
+      213: -4468852516460127105
+    second: UI_GameOver_GlitchOverlay_v1_78
+  - first:
+      213: 2309661997903895774
+    second: UI_GameOver_GlitchOverlay_v1_79
+  - first:
+      213: 7256006651739122571
+    second: UI_GameOver_GlitchOverlay_v1_80
+  - first:
+      213: 6280244978047180615
+    second: UI_GameOver_GlitchOverlay_v1_81
+  - first:
+      213: 6735359394379950536
+    second: UI_GameOver_GlitchOverlay_v1_82
+  - first:
+      213: -8107921303934270475
+    second: UI_GameOver_GlitchOverlay_v1_83
+  - first:
+      213: 2566667899480360122
+    second: UI_GameOver_GlitchOverlay_v1_84
+  - first:
+      213: 6082055874539923399
+    second: UI_GameOver_GlitchOverlay_v1_85
+  - first:
+      213: -5493145366444410749
+    second: UI_GameOver_GlitchOverlay_v1_86
+  - first:
+      213: -465782565943027454
+    second: UI_GameOver_GlitchOverlay_v1_87
+  - first:
+      213: 2886701229160219189
+    second: UI_GameOver_GlitchOverlay_v1_88
+  - first:
+      213: 2305153557225298934
+    second: UI_GameOver_GlitchOverlay_v1_89
+  - first:
+      213: -3559206104141610762
+    second: UI_GameOver_GlitchOverlay_v1_90
+  - first:
+      213: -8521609534272697166
+    second: UI_GameOver_GlitchOverlay_v1_91
+  - first:
+      213: 6694270605394285007
+    second: UI_GameOver_GlitchOverlay_v1_92
+  - first:
+      213: -1107729833111294921
+    second: UI_GameOver_GlitchOverlay_v1_93
+  - first:
+      213: 424371511335053857
+    second: UI_GameOver_GlitchOverlay_v1_94
+  - first:
+      213: -6771316455255353684
+    second: UI_GameOver_GlitchOverlay_v1_95
+  - first:
+      213: 6023581929456403768
+    second: UI_GameOver_GlitchOverlay_v1_96
+  - first:
+      213: -2878693477709668380
+    second: UI_GameOver_GlitchOverlay_v1_97
+  - first:
+      213: 739324442951714959
+    second: UI_GameOver_GlitchOverlay_v1_98
+  - first:
+      213: -6071470832485868998
+    second: UI_GameOver_GlitchOverlay_v1_99
+  - first:
+      213: 5952056531818125928
+    second: UI_GameOver_GlitchOverlay_v1_100
+  - first:
+      213: 8844850709707932205
+    second: UI_GameOver_GlitchOverlay_v1_101
+  - first:
+      213: 432993958894479707
+    second: UI_GameOver_GlitchOverlay_v1_102
+  - first:
+      213: -8249926801359013955
+    second: UI_GameOver_GlitchOverlay_v1_103
+  - first:
+      213: 6347551842560637673
+    second: UI_GameOver_GlitchOverlay_v1_104
+  - first:
+      213: -733920392737375394
+    second: UI_GameOver_GlitchOverlay_v1_105
+  - first:
+      213: -7291404358258981997
+    second: UI_GameOver_GlitchOverlay_v1_106
+  - first:
+      213: 3530906400383376112
+    second: UI_GameOver_GlitchOverlay_v1_107
+  - first:
+      213: -5426179745823806940
+    second: UI_GameOver_GlitchOverlay_v1_108
+  - first:
+      213: 1815474432526622829
+    second: UI_GameOver_GlitchOverlay_v1_109
+  - first:
+      213: 6324925460616341863
+    second: UI_GameOver_GlitchOverlay_v1_110
+  - first:
+      213: -2548349475160720072
+    second: UI_GameOver_GlitchOverlay_v1_111
+  - first:
+      213: 5897336719130058831
+    second: UI_GameOver_GlitchOverlay_v1_112
+  - first:
+      213: -2620600461666563219
+    second: UI_GameOver_GlitchOverlay_v1_113
+  - first:
+      213: 5218251808747843790
+    second: UI_GameOver_GlitchOverlay_v1_114
+  - first:
+      213: -981546908072775836
+    second: UI_GameOver_GlitchOverlay_v1_115
+  - first:
+      213: 3349861720810875963
+    second: UI_GameOver_GlitchOverlay_v1_116
+  - first:
+      213: 1138263580682348246
+    second: UI_GameOver_GlitchOverlay_v1_117
+  - first:
+      213: 1274541335497871224
+    second: UI_GameOver_GlitchOverlay_v1_118
+  - first:
+      213: -2984707727796170590
+    second: UI_GameOver_GlitchOverlay_v1_119
+  - first:
+      213: -802729635490953067
+    second: UI_GameOver_GlitchOverlay_v1_120
+  - first:
+      213: 4052764904268145616
+    second: UI_GameOver_GlitchOverlay_v1_121
+  - first:
+      213: 8689726716832849934
+    second: UI_GameOver_GlitchOverlay_v1_122
+  - first:
+      213: 2746248007710493010
+    second: UI_GameOver_GlitchOverlay_v1_123
+  - first:
+      213: -1040704584064594172
+    second: UI_GameOver_GlitchOverlay_v1_124
+  - first:
+      213: 1224854440912642562
+    second: UI_GameOver_GlitchOverlay_v1_125
+  - first:
+      213: -731697233615771755
+    second: UI_GameOver_GlitchOverlay_v1_126
+  - first:
+      213: 682122593591591884
+    second: UI_GameOver_GlitchOverlay_v1_127
+  - first:
+      213: -3183710496982280707
+    second: UI_GameOver_GlitchOverlay_v1_128
+  - first:
+      213: -1849959455752696990
+    second: UI_GameOver_GlitchOverlay_v1_129
+  - first:
+      213: -7948380184679299277
+    second: UI_GameOver_GlitchOverlay_v1_130
+  - first:
+      213: 3773025071726330815
+    second: UI_GameOver_GlitchOverlay_v1_131
+  - first:
+      213: 7776587600458500899
+    second: UI_GameOver_GlitchOverlay_v1_132
+  - first:
+      213: 1041020944589581648
+    second: UI_GameOver_GlitchOverlay_v1_133
+  - first:
+      213: 4909191230537995628
+    second: UI_GameOver_GlitchOverlay_v1_134
+  - first:
+      213: 8150714293464957403
+    second: UI_GameOver_GlitchOverlay_v1_135
+  - first:
+      213: 8264581548478281098
+    second: UI_GameOver_GlitchOverlay_v1_136
+  - first:
+      213: -6461766211932320544
+    second: UI_GameOver_GlitchOverlay_v1_137
+  - first:
+      213: -4104895604907056589
+    second: UI_GameOver_GlitchOverlay_v1_138
+  - first:
+      213: 2437158800625104897
+    second: UI_GameOver_GlitchOverlay_v1_139
+  - first:
+      213: 365690661511452913
+    second: UI_GameOver_GlitchOverlay_v1_140
+  - first:
+      213: -3638672193439126670
+    second: UI_GameOver_GlitchOverlay_v1_141
+  - first:
+      213: -4258722543512009496
+    second: UI_GameOver_GlitchOverlay_v1_142
+  - first:
+      213: 7102867736993551693
+    second: UI_GameOver_GlitchOverlay_v1_143
+  - first:
+      213: -2530901650699842443
+    second: UI_GameOver_GlitchOverlay_v1_144
+  - first:
+      213: -1859551368712991463
+    second: UI_GameOver_GlitchOverlay_v1_145
+  - first:
+      213: -2011411250962334730
+    second: UI_GameOver_GlitchOverlay_v1_146
+  - first:
+      213: -2730703284959703147
+    second: UI_GameOver_GlitchOverlay_v1_147
+  - first:
+      213: -6287973305157736208
+    second: UI_GameOver_GlitchOverlay_v1_148
+  - first:
+      213: -3632766000853221762
+    second: UI_GameOver_GlitchOverlay_v1_149
+  - first:
+      213: 2557402579018282047
+    second: UI_GameOver_GlitchOverlay_v1_150
+  - first:
+      213: 4960142252318888824
+    second: UI_GameOver_GlitchOverlay_v1_151
+  - first:
+      213: -6007542787648803217
+    second: UI_GameOver_GlitchOverlay_v1_152
+  - first:
+      213: 3545300587198987360
+    second: UI_GameOver_GlitchOverlay_v1_153
+  - first:
+      213: -3327331214389184908
+    second: UI_GameOver_GlitchOverlay_v1_154
+  - first:
+      213: 3293125246539284539
+    second: UI_GameOver_GlitchOverlay_v1_155
+  - first:
+      213: 5257367383937956505
+    second: UI_GameOver_GlitchOverlay_v1_156
+  - first:
+      213: 2501125721242620466
+    second: UI_GameOver_GlitchOverlay_v1_157
+  - first:
+      213: -2946992565873116083
+    second: UI_GameOver_GlitchOverlay_v1_158
+  - first:
+      213: 5155263930488385211
+    second: UI_GameOver_GlitchOverlay_v1_159
+  - first:
+      213: 1432329906636671270
+    second: UI_GameOver_GlitchOverlay_v1_160
+  - first:
+      213: 3074596313848784699
+    second: UI_GameOver_GlitchOverlay_v1_161
+  - first:
+      213: -7160912508742988959
+    second: UI_GameOver_GlitchOverlay_v1_162
+  - first:
+      213: -330301849713433627
+    second: UI_GameOver_GlitchOverlay_v1_163
+  - first:
+      213: -2638144012892512120
+    second: UI_GameOver_GlitchOverlay_v1_164
+  - first:
+      213: -2148090098454963207
+    second: UI_GameOver_GlitchOverlay_v1_165
+  - first:
+      213: -1489080791138383233
+    second: UI_GameOver_GlitchOverlay_v1_166
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 804
+        width: 462
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e413610b488b1cb40800000000000000
+      internalID: 5458847103379190094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_1
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 911
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ebb80835181ccba0800000000000000
+      internalID: -6067448118561424409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_2
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 917
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4651753679435a000800000000000000
+      internalID: 46501195968615780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_3
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 901
+        width: 20
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4164d3073fc139a0800000000000000
+      internalID: -6254990572246507188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_4
+      rect:
+        serializedVersion: 2
+        x: 469
+        y: 917
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a9eacc71d2c046f0800000000000000
+      internalID: -702347336872171096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_5
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 906
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 043fde4270ab94630800000000000000
+      internalID: 3911862291195097920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_6
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 896
+        width: 36
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49338457e1ff1c0a0800000000000000
+      internalID: -6862923850854157420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_7
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 783
+        width: 441
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a225d2cf25866730800000000000000
+      internalID: 3992024559889228456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_8
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 884
+        width: 18
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0c71583ae9af9590800000000000000
+      internalID: -7665221217328989173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_9
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 890
+        width: 14
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da491a0302d819ca0800000000000000
+      internalID: -6011868858168535891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_10
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 875
+        width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f600de1d1e32eeed0800000000000000
+      internalID: -2382927700035829649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_11
+      rect:
+        serializedVersion: 2
+        x: 493
+        y: 875
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e63c72b09d619170800000000000000
+      internalID: 8183442466146105064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_12
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 883
+        width: 17
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a475e3db8952927d0800000000000000
+      internalID: -2942779543569672374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_13
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 873
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fe04e8770407a440800000000000000
+      internalID: 4946927145829273330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_14
+      rect:
+        serializedVersion: 2
+        x: 478
+        y: 859
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dc92f0fb20bc46e0800000000000000
+      internalID: -1851911643983602472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_15
+      rect:
+        serializedVersion: 2
+        x: 999
+        y: 734
+        width: 208
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b5e9609869c98390800000000000000
+      internalID: -7815494227388144202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_16
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 836
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16d29bdc20aa07740800000000000000
+      internalID: 5147801303102598497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_17
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 675
+        width: 111
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bfd4232eadbf2910800000000000000
+      internalID: 1814877730465177527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_18
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 790
+        width: 16
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2039501689d956ae0800000000000000
+      internalID: -1556664818398293246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_19
+      rect:
+        serializedVersion: 2
+        x: 581
+        y: 794
+        width: 24
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af8dfe91829835a30800000000000000
+      internalID: 4202853682593650938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_20
+      rect:
+        serializedVersion: 2
+        x: 1236
+        y: 772
+        width: 65
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc7ba5b043cdfcd30800000000000000
+      internalID: 4454020672579614671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_21
+      rect:
+        serializedVersion: 2
+        x: 1350
+        y: 766
+        width: 38
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e735511a8f3deb5a0800000000000000
+      internalID: -6503527747068537986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_22
+      rect:
+        serializedVersion: 2
+        x: 1389
+        y: 707
+        width: 106
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f9a7e20fdd8c76c0800000000000000
+      internalID: -4144281568121738767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_23
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 727
+        width: 84
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7f545bc46a034670800000000000000
+      internalID: 8521666347939422079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_24
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 739
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 182d3ecfa9e523220800000000000000
+      internalID: 2464135965885846145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_25
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 612
+        width: 219
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51f8b73d0eea93b50800000000000000
+      internalID: 6573477411767947029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_26
+      rect:
+        serializedVersion: 2
+        x: 1186
+        y: 753
+        width: 60
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71cc9adbb33296f80800000000000000
+      internalID: -8112914514239173609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_27
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 763
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c4a062f0f3a909f0800000000000000
+      internalID: -501689628221201213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_28
+      rect:
+        serializedVersion: 2
+        x: 1438
+        y: 680
+        width: 163
+        height: 93
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa61e60e31386fa30800000000000000
+      internalID: 4248727419863570090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_29
+      rect:
+        serializedVersion: 2
+        x: 1528
+        y: 763
+        width: 51
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe2b34ab88e5e8280800000000000000
+      internalID: -9039183460752444689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_30
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 594
+        width: 140
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a468ea1320066b160800000000000000
+      internalID: 7040920629980071498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_31
+      rect:
+        serializedVersion: 2
+        x: 1071
+        y: 674
+        width: 94
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce40400f2a0adc670800000000000000
+      internalID: 8560675088373122284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_32
+      rect:
+        serializedVersion: 2
+        x: 1173
+        y: 733
+        width: 16
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48c4a189f17a7a9e0800000000000000
+      internalID: -1610134587623977852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_33
+      rect:
+        serializedVersion: 2
+        x: 1276
+        y: 648
+        width: 86
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d264d7fc33f93790800000000000000
+      internalID: -7549735857128447279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_34
+      rect:
+        serializedVersion: 2
+        x: 1368
+        y: 707
+        width: 38
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11f3c3f619ea92390800000000000000
+      internalID: -7842545336429297903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_35
+      rect:
+        serializedVersion: 2
+        x: 534
+        y: 714
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe5e23bb81fe89d60800000000000000
+      internalID: 7897324836093093359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_36
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 676
+        width: 29
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a616a40bcf01748a0800000000000000
+      internalID: -6321064874515734166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_37
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 701
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 920c30eef9aa68560800000000000000
+      internalID: 7315722248579694633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_38
+      rect:
+        serializedVersion: 2
+        x: 556
+        y: 695
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a819182fcc325bb0800000000000000
+      internalID: -4948826180098123609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_39
+      rect:
+        serializedVersion: 2
+        x: 1363
+        y: 694
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c6fae92aac6049f0800000000000000
+      internalID: -486269281652508991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_40
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 695
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0363fb276a4065d80800000000000000
+      internalID: -8262411353428380112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_41
+      rect:
+        serializedVersion: 2
+        x: 494
+        y: 644
+        width: 29
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35c21954680b90400800000000000000
+      internalID: 290957741681355859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_42
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 668
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 89bfc238b43c7f400800000000000000
+      internalID: 357969424489970584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_43
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 672
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dfb462f0e6c0d8930800000000000000
+      internalID: 4146984498718198781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_44
+      rect:
+        serializedVersion: 2
+        x: 537
+        y: 662
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f182fb02c73107810800000000000000
+      internalID: 1760928878148134943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_45
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 667
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d79335ed7892c5680800000000000000
+      internalID: -8765085111242507907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_46
+      rect:
+        serializedVersion: 2
+        x: 1356
+        y: 684
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad6e064c287319540800000000000000
+      internalID: 5012848895020033754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_47
+      rect:
+        serializedVersion: 2
+        x: 1356
+        y: 660
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d834593228b143660800000000000000
+      internalID: 7364541536414286733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_48
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 677
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71d82fc967b4305e0800000000000000
+      internalID: -1944627641282556649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_49
+      rect:
+        serializedVersion: 2
+        x: 1369
+        y: 659
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84e32e8b4b19c0010800000000000000
+      internalID: 1156459409709350472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_50
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 686
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24cdf3a06b815b3f0800000000000000
+      internalID: -885774581573362622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_51
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 679
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b397fed2ce055930800000000000000
+      internalID: 4131224463309509558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_52
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 669
+        width: 28
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b497f03d2a8af6d0800000000000000
+      internalID: -2955898278715616077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_53
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 645
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29fe534d428e522b0800000000000000
+      internalID: -5609822515943313518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_54
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 648
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 699a8a82ae249dd10800000000000000
+      internalID: 2150823870518045078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_55
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 650
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0cdada92123b560c0800000000000000
+      internalID: -4583060090765070912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_56
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 645
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0b2da148660853c00800000000000000
+      internalID: 879750480012169904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_57
+      rect:
+        serializedVersion: 2
+        x: 460
+        y: 644
+        width: 29
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2fe0de4a582c1e4f0800000000000000
+      internalID: -801145379441799438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_58
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 648
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e861d0848f8de470800000000000000
+      internalID: 8425548277139728615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_59
+      rect:
+        serializedVersion: 2
+        x: 1363
+        y: 654
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2eac1689d2f831b60800000000000000
+      internalID: 7715668012608637666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_60
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 651
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b715ff1235369b9e0800000000000000
+      internalID: -1605142583477055109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_61
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 645
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2c0b222bcd85ac20800000000000000
+      internalID: 3217133412417211436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_62
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 638
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8faf1ab0fe2393800800000000000000
+      internalID: 592560828249668344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_63
+      rect:
+        serializedVersion: 2
+        x: 1352
+        y: 640
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83dcb023c0b315950800000000000000
+      internalID: 6435990266054430008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_64
+      rect:
+        serializedVersion: 2
+        x: 1363
+        y: 647
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c3db2a2b231a8eb0800000000000000
+      internalID: -4716936583605136441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_65
+      rect:
+        serializedVersion: 2
+        x: 1379
+        y: 645
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a13177f59bda691e0800000000000000
+      internalID: -2191373156986973414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_66
+      rect:
+        serializedVersion: 2
+        x: 1395
+        y: 643
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a5ab5f45fe9208f0800000000000000
+      internalID: -575723025914419804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_67
+      rect:
+        serializedVersion: 2
+        x: 1398
+        y: 613
+        width: 51
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69e47868839944000800000000000000
+      internalID: 19308766470557334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_68
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 599
+        width: 42
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2d58d3cd8776ea90800000000000000
+      internalID: -7285003896465367764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_69
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 633
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26ffef62e067da4a0800000000000000
+      internalID: -6580473677362561182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_70
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 638
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d3bcc035f6094f80800000000000000
+      internalID: -8121952802830502960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_71
+      rect:
+        serializedVersion: 2
+        x: 453
+        y: 638
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 245833488e160d770800000000000000
+      internalID: 8633508136947516738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_72
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 636
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 183db59a8c5b57b80800000000000000
+      internalID: -8397606056722967679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_73
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 637
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adaaa426869428e10800000000000000
+      internalID: 2198400280784710362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_74
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 638
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9404ad7ad9df74a70800000000000000
+      internalID: 8811290049541455945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_75
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 527
+        width: 75
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3c328bc148798110800000000000000
+      internalID: 1263673394436652092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_76
+      rect:
+        serializedVersion: 2
+        x: 1363
+        y: 631
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bf7724eb87188a00800000000000000
+      internalID: 758882426807615417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_77
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 638
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 62dc903c4a4209350800000000000000
+      internalID: 6021352991859789094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_78
+      rect:
+        serializedVersion: 2
+        x: 1387
+        y: 636
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7c98c230527bf1c0800000000000000
+      internalID: -4468852516460127105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_79
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 629
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edcd74899519d0020800000000000000
+      internalID: 2309661997903895774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_80
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 629
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8b28c41b9382b460800000000000000
+      internalID: 7256006651739122571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_81
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 629
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74fdeea8889e72750800000000000000
+      internalID: 6280244978047180615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_82
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 623
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c96b980fadc87d50800000000000000
+      internalID: 6735359394379950536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_83
+      rect:
+        serializedVersion: 2
+        x: 1372
+        y: 620
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f30d2c1880ea7f80800000000000000
+      internalID: -8107921303934270475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_84
+      rect:
+        serializedVersion: 2
+        x: 1380
+        y: 629
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab4cce41bd2ae9320800000000000000
+      internalID: 2566667899480360122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_85
+      rect:
+        serializedVersion: 2
+        x: 476
+        y: 622
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c7a702089dc76450800000000000000
+      internalID: 6082055874539923399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_86
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 615
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3887f75a46d64c3b0800000000000000
+      internalID: -5493145366444410749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_87
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 612
+        width: 21
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 209556e59353989f0800000000000000
+      internalID: -465782565943027454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_88
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 599
+        width: 69
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53247c8397f9f0820800000000000000
+      internalID: 2886701229160219189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_89
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 609
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fb542372fc8dff10800000000000000
+      internalID: 2305153557225298934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_90
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 603
+        width: 14
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f0cc30e7e82b9ec0800000000000000
+      internalID: -3559206104141610762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_91
+      rect:
+        serializedVersion: 2
+        x: 1388
+        y: 595
+        width: 18
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bc081b27492db980800000000000000
+      internalID: -8521609534272697166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_92
+      rect:
+        serializedVersion: 2
+        x: 1506
+        y: 599
+        width: 42
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc19dd8d5a3d6ec50800000000000000
+      internalID: 6694270605394285007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_93
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 593
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73c6c46f59d80a0f0800000000000000
+      internalID: -1107729833111294921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_94
+      rect:
+        serializedVersion: 2
+        x: 1366
+        y: 594
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12aebe124aba3e500800000000000000
+      internalID: 424371511335053857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_95
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 592
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca65fb65f837702a0800000000000000
+      internalID: -6771316455255353684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_96
+      rect:
+        serializedVersion: 2
+        x: 1448
+        y: 599
+        width: 18
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83506bcb9df089350800000000000000
+      internalID: 6023581929456403768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_97
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 583
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ef91e3b883dc08d0800000000000000
+      internalID: -2878693477709668380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_98
+      rect:
+        serializedVersion: 2
+        x: 1371
+        y: 585
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8886ebe9ab924a00800000000000000
+      internalID: 739324442951714959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_99
+      rect:
+        serializedVersion: 2
+        x: 1388
+        y: 570
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3ad885227dcdbba0800000000000000
+      internalID: -6071470832485868998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_100
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 565
+        width: 87
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86a101e51e3f99250800000000000000
+      internalID: 5952056531818125928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_101
+      rect:
+        serializedVersion: 2
+        x: 1354
+        y: 574
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d22c083cbd83fba70800000000000000
+      internalID: 8844850709707932205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_102
+      rect:
+        serializedVersion: 2
+        x: 1368
+        y: 570
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b59abc526bd420600800000000000000
+      internalID: 432993958894479707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_103
+      rect:
+        serializedVersion: 2
+        x: 1378
+        y: 575
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db7750eb84f528d80800000000000000
+      internalID: -8249926801359013955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_104
+      rect:
+        serializedVersion: 2
+        x: 1510
+        y: 562
+        width: 58
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9eaf33125c8071850800000000000000
+      internalID: 6347551842560637673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_105
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 551
+        width: 33
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5b39719a4790d5f0800000000000000
+      internalID: -733920392737375394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_106
+      rect:
+        serializedVersion: 2
+        x: 1353
+        y: 554
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3930d302e5abfca90800000000000000
+      internalID: -7291404358258981997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_107
+      rect:
+        serializedVersion: 2
+        x: 1361
+        y: 544
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0fa1102e9ac400130800000000000000
+      internalID: 3530906400383376112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_108
+      rect:
+        serializedVersion: 2
+        x: 1362
+        y: 562
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42aa0c2354652b4b0800000000000000
+      internalID: -5426179745823806940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_109
+      rect:
+        serializedVersion: 2
+        x: 1370
+        y: 554
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d60ad89a06cd13910800000000000000
+      internalID: 1815474432526622829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_110
+      rect:
+        serializedVersion: 2
+        x: 1377
+        y: 549
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7696cde0236a6c750800000000000000
+      internalID: 6324925460616341863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_111
+      rect:
+        serializedVersion: 2
+        x: 1378
+        y: 560
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 83dfd7177a172acd0800000000000000
+      internalID: -2548349475160720072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_112
+      rect:
+        serializedVersion: 2
+        x: 1387
+        y: 552
+        width: 12
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f406d98208c87d150800000000000000
+      internalID: 5897336719130058831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_113
+      rect:
+        serializedVersion: 2
+        x: 1561
+        y: 562
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6bc320c3c1c1abd0800000000000000
+      internalID: -2620600461666563219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_114
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 409
+        width: 200
+        height: 132
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec074f06f54fa6840800000000000000
+      internalID: 5218251808747843790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_115
+      rect:
+        serializedVersion: 2
+        x: 1325
+        y: 529
+        width: 11
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 46f60fd9948d062f0800000000000000
+      internalID: -981546908072775836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_116
+      rect:
+        serializedVersion: 2
+        x: 1354
+        y: 537
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3c6c9b9c791d7e20800000000000000
+      internalID: 3349861720810875963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_117
+      rect:
+        serializedVersion: 2
+        x: 1361
+        y: 531
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d6e55322bcebcf00800000000000000
+      internalID: 1138263580682348246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_118
+      rect:
+        serializedVersion: 2
+        x: 1364
+        y: 470
+        width: 161
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 87f07e1879410b110800000000000000
+      internalID: 1274541335497871224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_119
+      rect:
+        serializedVersion: 2
+        x: 1345
+        y: 530
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a0985e92203496d0800000000000000
+      internalID: -2984707727796170590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_120
+      rect:
+        serializedVersion: 2
+        x: 1328
+        y: 516
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59802e946a12cd4f0800000000000000
+      internalID: -802729635490953067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_121
+      rect:
+        serializedVersion: 2
+        x: 1337
+        y: 503
+        width: 27
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d3a21d35305e3830800000000000000
+      internalID: 4052764904268145616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_122
+      rect:
+        serializedVersion: 2
+        x: 1363
+        y: 479
+        width: 34
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e002b08a86c189870800000000000000
+      internalID: 8689726716832849934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_123
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 443
+        width: 129
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25945b44302ac1620800000000000000
+      internalID: 2746248007710493010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_124
+      rect:
+        serializedVersion: 2
+        x: 1478
+        y: 448
+        width: 19
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40f85b6d1bcae81f0800000000000000
+      internalID: -1040704584064594172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_125
+      rect:
+        serializedVersion: 2
+        x: 1460
+        y: 426
+        width: 30
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 202682cdf9e8ff010800000000000000
+      internalID: 1224854440912642562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_126
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 357
+        width: 21
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59722332e3d78d5f0800000000000000
+      internalID: -731697233615771755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_127
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 363
+        width: 16
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc38b4482e2677900800000000000000
+      internalID: 682122593591591884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_128
+      rect:
+        serializedVersion: 2
+        x: 989
+        y: 313
+        width: 220
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df550b7cb2031d3d0800000000000000
+      internalID: -3183710496982280707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_129
+      rect:
+        serializedVersion: 2
+        x: 1113
+        y: 269
+        width: 334
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 26b4cfe2daf9356e0800000000000000
+      internalID: -1849959455752696990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_130
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 347
+        width: 78
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 337cf68955ea1b190800000000000000
+      internalID: -7948380184679299277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_131
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 342
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb304e8ff4a7c5430800000000000000
+      internalID: 3773025071726330815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_132
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 240
+        width: 106
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32b4902783dfbeb60800000000000000
+      internalID: 7776587600458500899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_133
+      rect:
+        serializedVersion: 2
+        x: 374
+        y: 339
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05de0069803727e00800000000000000
+      internalID: 1041020944589581648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_134
+      rect:
+        serializedVersion: 2
+        x: 1028
+        y: 311
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c651ea60a63f02440800000000000000
+      internalID: 4909191230537995628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_135
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 316
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd18daf27772d1170800000000000000
+      internalID: 8150714293464957403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_136
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 313
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a85bb467121b1b270800000000000000
+      internalID: 8264581548478281098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_137
+      rect:
+        serializedVersion: 2
+        x: 1072
+        y: 311
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ec072cbdd13356a0800000000000000
+      internalID: -6461766211932320544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_138
+      rect:
+        serializedVersion: 2
+        x: 1079
+        y: 318
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 332e37d223b7807c0800000000000000
+      internalID: -4104895604907056589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_139
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 310
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 108f97c340782d120800000000000000
+      internalID: 2437158800625104897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_140
+      rect:
+        serializedVersion: 2
+        x: 1100
+        y: 301
+        width: 18
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f8511918b1331500800000000000000
+      internalID: 365690661511452913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_141
+      rect:
+        serializedVersion: 2
+        x: 1107
+        y: 316
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27b28f72be6d08dc0800000000000000
+      internalID: -3638672193439126670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_142
+      rect:
+        serializedVersion: 2
+        x: 1111
+        y: 314
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e4c40d096af5e4c0800000000000000
+      internalID: -4258722543512009496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_143
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 29
+        width: 631
+        height: 282
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d45551ef294729260800000000000000
+      internalID: 7102867736993551693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_144
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 15
+        width: 802
+        height: 299
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57c0694ab5e60ecd0800000000000000
+      internalID: -2530901650699842443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_145
+      rect:
+        serializedVersion: 2
+        x: 1017
+        y: 305
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91d454ae1eb8136e0800000000000000
+      internalID: -1859551368712991463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_146
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 304
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6fb7a29cf180614e0800000000000000
+      internalID: -2011411250962334730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_147
+      rect:
+        serializedVersion: 2
+        x: 1043
+        y: 310
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59f0cf884d79a1ad0800000000000000
+      internalID: -2730703284959703147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_148
+      rect:
+        serializedVersion: 2
+        x: 1057
+        y: 307
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f82fe41891acb8a0800000000000000
+      internalID: -6287973305157736208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_149
+      rect:
+        serializedVersion: 2
+        x: 1066
+        y: 303
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7ef607c192d59dc0800000000000000
+      internalID: -3632766000853221762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_150
+      rect:
+        serializedVersion: 2
+        x: 1079
+        y: 303
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f347d0e8818bd7320800000000000000
+      internalID: 2557402579018282047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_151
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 304
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8739fd83917f5d440800000000000000
+      internalID: 4960142252318888824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_152
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 171
+        width: 67
+        height: 131
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6eab39f9abe0aca0800000000000000
+      internalID: -6007542787648803217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_153
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 297
+        width: 23
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06cbaf9a910733130800000000000000
+      internalID: 3545300587198987360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_154
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 302
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4767344b3e1f2d1d0800000000000000
+      internalID: -3327331214389184908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_155
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 256
+        width: 32
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3048d8c6f783bd20800000000000000
+      internalID: 3293125246539284539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_156
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 214
+        width: 41
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99ab85de7cbe5f840800000000000000
+      internalID: 5257367383937956505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_157
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 143
+        width: 17
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23252498798c5b220800000000000000
+      internalID: 2501125721242620466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_158
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 146
+        width: 76
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c7a6b00ed2a17d0800000000000000
+      internalID: -2946992565873116083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_159
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 30
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbee4242b3d2b8740800000000000000
+      internalID: 5155263930488385211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_160
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 29
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6294f361678a0e310800000000000000
+      internalID: 1432329906636671270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_161
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 26
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b37aeaabe092baa20800000000000000
+      internalID: 3074596313848784699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_162
+      rect:
+        serializedVersion: 2
+        x: 376
+        y: 27
+        width: 70
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16b09b073045f9c90800000000000000
+      internalID: -7160912508742988959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_163
+      rect:
+        serializedVersion: 2
+        x: 1291
+        y: 15
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e32d2bb7388a6bf0800000000000000
+      internalID: -330301849713433627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_164
+      rect:
+        serializedVersion: 2
+        x: 1311
+        y: 19
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 880e73d6ffd636bd0800000000000000
+      internalID: -2638144012892512120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_165
+      rect:
+        serializedVersion: 2
+        x: 1317
+        y: 15
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fbde00cf637032e0800000000000000
+      internalID: -2148090098454963207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_GameOver_GlitchOverlay_v1_166
+      rect:
+        serializedVersion: 2
+        x: 1344
+        y: 15
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7ac652f8e8b55be0800000000000000
+      internalID: -1489080791138383233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      UI_GameOver_GlitchOverlay_v1_0: 5458847103379190094
+      UI_GameOver_GlitchOverlay_v1_1: -6067448118561424409
+      UI_GameOver_GlitchOverlay_v1_10: -2382927700035829649
+      UI_GameOver_GlitchOverlay_v1_100: 5952056531818125928
+      UI_GameOver_GlitchOverlay_v1_101: 8844850709707932205
+      UI_GameOver_GlitchOverlay_v1_102: 432993958894479707
+      UI_GameOver_GlitchOverlay_v1_103: -8249926801359013955
+      UI_GameOver_GlitchOverlay_v1_104: 6347551842560637673
+      UI_GameOver_GlitchOverlay_v1_105: -733920392737375394
+      UI_GameOver_GlitchOverlay_v1_106: -7291404358258981997
+      UI_GameOver_GlitchOverlay_v1_107: 3530906400383376112
+      UI_GameOver_GlitchOverlay_v1_108: -5426179745823806940
+      UI_GameOver_GlitchOverlay_v1_109: 1815474432526622829
+      UI_GameOver_GlitchOverlay_v1_11: 8183442466146105064
+      UI_GameOver_GlitchOverlay_v1_110: 6324925460616341863
+      UI_GameOver_GlitchOverlay_v1_111: -2548349475160720072
+      UI_GameOver_GlitchOverlay_v1_112: 5897336719130058831
+      UI_GameOver_GlitchOverlay_v1_113: -2620600461666563219
+      UI_GameOver_GlitchOverlay_v1_114: 5218251808747843790
+      UI_GameOver_GlitchOverlay_v1_115: -981546908072775836
+      UI_GameOver_GlitchOverlay_v1_116: 3349861720810875963
+      UI_GameOver_GlitchOverlay_v1_117: 1138263580682348246
+      UI_GameOver_GlitchOverlay_v1_118: 1274541335497871224
+      UI_GameOver_GlitchOverlay_v1_119: -2984707727796170590
+      UI_GameOver_GlitchOverlay_v1_12: -2942779543569672374
+      UI_GameOver_GlitchOverlay_v1_120: -802729635490953067
+      UI_GameOver_GlitchOverlay_v1_121: 4052764904268145616
+      UI_GameOver_GlitchOverlay_v1_122: 8689726716832849934
+      UI_GameOver_GlitchOverlay_v1_123: 2746248007710493010
+      UI_GameOver_GlitchOverlay_v1_124: -1040704584064594172
+      UI_GameOver_GlitchOverlay_v1_125: 1224854440912642562
+      UI_GameOver_GlitchOverlay_v1_126: -731697233615771755
+      UI_GameOver_GlitchOverlay_v1_127: 682122593591591884
+      UI_GameOver_GlitchOverlay_v1_128: -3183710496982280707
+      UI_GameOver_GlitchOverlay_v1_129: -1849959455752696990
+      UI_GameOver_GlitchOverlay_v1_13: 4946927145829273330
+      UI_GameOver_GlitchOverlay_v1_130: -7948380184679299277
+      UI_GameOver_GlitchOverlay_v1_131: 3773025071726330815
+      UI_GameOver_GlitchOverlay_v1_132: 7776587600458500899
+      UI_GameOver_GlitchOverlay_v1_133: 1041020944589581648
+      UI_GameOver_GlitchOverlay_v1_134: 4909191230537995628
+      UI_GameOver_GlitchOverlay_v1_135: 8150714293464957403
+      UI_GameOver_GlitchOverlay_v1_136: 8264581548478281098
+      UI_GameOver_GlitchOverlay_v1_137: -6461766211932320544
+      UI_GameOver_GlitchOverlay_v1_138: -4104895604907056589
+      UI_GameOver_GlitchOverlay_v1_139: 2437158800625104897
+      UI_GameOver_GlitchOverlay_v1_14: -1851911643983602472
+      UI_GameOver_GlitchOverlay_v1_140: 365690661511452913
+      UI_GameOver_GlitchOverlay_v1_141: -3638672193439126670
+      UI_GameOver_GlitchOverlay_v1_142: -4258722543512009496
+      UI_GameOver_GlitchOverlay_v1_143: 7102867736993551693
+      UI_GameOver_GlitchOverlay_v1_144: -2530901650699842443
+      UI_GameOver_GlitchOverlay_v1_145: -1859551368712991463
+      UI_GameOver_GlitchOverlay_v1_146: -2011411250962334730
+      UI_GameOver_GlitchOverlay_v1_147: -2730703284959703147
+      UI_GameOver_GlitchOverlay_v1_148: -6287973305157736208
+      UI_GameOver_GlitchOverlay_v1_149: -3632766000853221762
+      UI_GameOver_GlitchOverlay_v1_15: -7815494227388144202
+      UI_GameOver_GlitchOverlay_v1_150: 2557402579018282047
+      UI_GameOver_GlitchOverlay_v1_151: 4960142252318888824
+      UI_GameOver_GlitchOverlay_v1_152: -6007542787648803217
+      UI_GameOver_GlitchOverlay_v1_153: 3545300587198987360
+      UI_GameOver_GlitchOverlay_v1_154: -3327331214389184908
+      UI_GameOver_GlitchOverlay_v1_155: 3293125246539284539
+      UI_GameOver_GlitchOverlay_v1_156: 5257367383937956505
+      UI_GameOver_GlitchOverlay_v1_157: 2501125721242620466
+      UI_GameOver_GlitchOverlay_v1_158: -2946992565873116083
+      UI_GameOver_GlitchOverlay_v1_159: 5155263930488385211
+      UI_GameOver_GlitchOverlay_v1_16: 5147801303102598497
+      UI_GameOver_GlitchOverlay_v1_160: 1432329906636671270
+      UI_GameOver_GlitchOverlay_v1_161: 3074596313848784699
+      UI_GameOver_GlitchOverlay_v1_162: -7160912508742988959
+      UI_GameOver_GlitchOverlay_v1_163: -330301849713433627
+      UI_GameOver_GlitchOverlay_v1_164: -2638144012892512120
+      UI_GameOver_GlitchOverlay_v1_165: -2148090098454963207
+      UI_GameOver_GlitchOverlay_v1_166: -1489080791138383233
+      UI_GameOver_GlitchOverlay_v1_17: 1814877730465177527
+      UI_GameOver_GlitchOverlay_v1_18: -1556664818398293246
+      UI_GameOver_GlitchOverlay_v1_19: 4202853682593650938
+      UI_GameOver_GlitchOverlay_v1_2: 46501195968615780
+      UI_GameOver_GlitchOverlay_v1_20: 4454020672579614671
+      UI_GameOver_GlitchOverlay_v1_21: -6503527747068537986
+      UI_GameOver_GlitchOverlay_v1_22: -4144281568121738767
+      UI_GameOver_GlitchOverlay_v1_23: 8521666347939422079
+      UI_GameOver_GlitchOverlay_v1_24: 2464135965885846145
+      UI_GameOver_GlitchOverlay_v1_25: 6573477411767947029
+      UI_GameOver_GlitchOverlay_v1_26: -8112914514239173609
+      UI_GameOver_GlitchOverlay_v1_27: -501689628221201213
+      UI_GameOver_GlitchOverlay_v1_28: 4248727419863570090
+      UI_GameOver_GlitchOverlay_v1_29: -9039183460752444689
+      UI_GameOver_GlitchOverlay_v1_3: -6254990572246507188
+      UI_GameOver_GlitchOverlay_v1_30: 7040920629980071498
+      UI_GameOver_GlitchOverlay_v1_31: 8560675088373122284
+      UI_GameOver_GlitchOverlay_v1_32: -1610134587623977852
+      UI_GameOver_GlitchOverlay_v1_33: -7549735857128447279
+      UI_GameOver_GlitchOverlay_v1_34: -7842545336429297903
+      UI_GameOver_GlitchOverlay_v1_35: 7897324836093093359
+      UI_GameOver_GlitchOverlay_v1_36: -6321064874515734166
+      UI_GameOver_GlitchOverlay_v1_37: 7315722248579694633
+      UI_GameOver_GlitchOverlay_v1_38: -4948826180098123609
+      UI_GameOver_GlitchOverlay_v1_39: -486269281652508991
+      UI_GameOver_GlitchOverlay_v1_4: -702347336872171096
+      UI_GameOver_GlitchOverlay_v1_40: -8262411353428380112
+      UI_GameOver_GlitchOverlay_v1_41: 290957741681355859
+      UI_GameOver_GlitchOverlay_v1_42: 357969424489970584
+      UI_GameOver_GlitchOverlay_v1_43: 4146984498718198781
+      UI_GameOver_GlitchOverlay_v1_44: 1760928878148134943
+      UI_GameOver_GlitchOverlay_v1_45: -8765085111242507907
+      UI_GameOver_GlitchOverlay_v1_46: 5012848895020033754
+      UI_GameOver_GlitchOverlay_v1_47: 7364541536414286733
+      UI_GameOver_GlitchOverlay_v1_48: -1944627641282556649
+      UI_GameOver_GlitchOverlay_v1_49: 1156459409709350472
+      UI_GameOver_GlitchOverlay_v1_5: 3911862291195097920
+      UI_GameOver_GlitchOverlay_v1_50: -885774581573362622
+      UI_GameOver_GlitchOverlay_v1_51: 4131224463309509558
+      UI_GameOver_GlitchOverlay_v1_52: -2955898278715616077
+      UI_GameOver_GlitchOverlay_v1_53: -5609822515943313518
+      UI_GameOver_GlitchOverlay_v1_54: 2150823870518045078
+      UI_GameOver_GlitchOverlay_v1_55: -4583060090765070912
+      UI_GameOver_GlitchOverlay_v1_56: 879750480012169904
+      UI_GameOver_GlitchOverlay_v1_57: -801145379441799438
+      UI_GameOver_GlitchOverlay_v1_58: 8425548277139728615
+      UI_GameOver_GlitchOverlay_v1_59: 7715668012608637666
+      UI_GameOver_GlitchOverlay_v1_6: -6862923850854157420
+      UI_GameOver_GlitchOverlay_v1_60: -1605142583477055109
+      UI_GameOver_GlitchOverlay_v1_61: 3217133412417211436
+      UI_GameOver_GlitchOverlay_v1_62: 592560828249668344
+      UI_GameOver_GlitchOverlay_v1_63: 6435990266054430008
+      UI_GameOver_GlitchOverlay_v1_64: -4716936583605136441
+      UI_GameOver_GlitchOverlay_v1_65: -2191373156986973414
+      UI_GameOver_GlitchOverlay_v1_66: -575723025914419804
+      UI_GameOver_GlitchOverlay_v1_67: 19308766470557334
+      UI_GameOver_GlitchOverlay_v1_68: -7285003896465367764
+      UI_GameOver_GlitchOverlay_v1_69: -6580473677362561182
+      UI_GameOver_GlitchOverlay_v1_7: 3992024559889228456
+      UI_GameOver_GlitchOverlay_v1_70: -8121952802830502960
+      UI_GameOver_GlitchOverlay_v1_71: 8633508136947516738
+      UI_GameOver_GlitchOverlay_v1_72: -8397606056722967679
+      UI_GameOver_GlitchOverlay_v1_73: 2198400280784710362
+      UI_GameOver_GlitchOverlay_v1_74: 8811290049541455945
+      UI_GameOver_GlitchOverlay_v1_75: 1263673394436652092
+      UI_GameOver_GlitchOverlay_v1_76: 758882426807615417
+      UI_GameOver_GlitchOverlay_v1_77: 6021352991859789094
+      UI_GameOver_GlitchOverlay_v1_78: -4468852516460127105
+      UI_GameOver_GlitchOverlay_v1_79: 2309661997903895774
+      UI_GameOver_GlitchOverlay_v1_8: -7665221217328989173
+      UI_GameOver_GlitchOverlay_v1_80: 7256006651739122571
+      UI_GameOver_GlitchOverlay_v1_81: 6280244978047180615
+      UI_GameOver_GlitchOverlay_v1_82: 6735359394379950536
+      UI_GameOver_GlitchOverlay_v1_83: -8107921303934270475
+      UI_GameOver_GlitchOverlay_v1_84: 2566667899480360122
+      UI_GameOver_GlitchOverlay_v1_85: 6082055874539923399
+      UI_GameOver_GlitchOverlay_v1_86: -5493145366444410749
+      UI_GameOver_GlitchOverlay_v1_87: -465782565943027454
+      UI_GameOver_GlitchOverlay_v1_88: 2886701229160219189
+      UI_GameOver_GlitchOverlay_v1_89: 2305153557225298934
+      UI_GameOver_GlitchOverlay_v1_9: -6011868858168535891
+      UI_GameOver_GlitchOverlay_v1_90: -3559206104141610762
+      UI_GameOver_GlitchOverlay_v1_91: -8521609534272697166
+      UI_GameOver_GlitchOverlay_v1_92: 6694270605394285007
+      UI_GameOver_GlitchOverlay_v1_93: -1107729833111294921
+      UI_GameOver_GlitchOverlay_v1_94: 424371511335053857
+      UI_GameOver_GlitchOverlay_v1_95: -6771316455255353684
+      UI_GameOver_GlitchOverlay_v1_96: 6023581929456403768
+      UI_GameOver_GlitchOverlay_v1_97: -2878693477709668380
+      UI_GameOver_GlitchOverlay_v1_98: 739324442951714959
+      UI_GameOver_GlitchOverlay_v1_99: -6071470832485868998
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -19,13 +19,22 @@ namespace BeatMemories
         [Header("캐릭터 (월드 SpriteRenderer)")]
         [SerializeField] private SpriteRenderer enemySlot;
         [SerializeField] private SpriteRenderer playerSlot;
+        [Tooltip("플레이어 idle 키프레임 애니메이터(옵션). 있으면 idle을 이게 담당")]
+        [SerializeField] private KeyframeAnimator playerIdleAnim;
         [Tooltip("스프라이트를 이 월드 높이로 맞춤(원본 비율 유지). 0이면 스케일 고정")]
         [SerializeField] private float enemyWorldHeight = 2.4f;
         [SerializeField] private float playerWorldHeight = 2.0f;
 
         [Header("HUD (Canvas)")]
         [SerializeField] private Image[] beatDots = new Image[8];
+        [Tooltip("HP Fill 이미지(Filled Horizontal). fillAmount = 현재/최대")]
+        [SerializeField] private Image hpFill;
+        [Tooltip("플레이어 HP 칸(세그먼트). i<현재HP 면 켜짐")]
         [SerializeField] private Image[] hearts;
+        [Tooltip("적 HP 칸(세그먼트)")]
+        [SerializeField] private Image[] enemyCells;
+        [Tooltip("적 HP 최대치(칸 수와 맞춤). ※구동은 임시: 처리(Clear)마다 1 감소")]
+        [SerializeField, Min(1)] private int enemyMaxHp = 7;
         [SerializeField] private Text phaseLabel;
         [SerializeField] private Text feedbackLabel;
         [SerializeField] private Text gameOverLabel;
@@ -54,6 +63,7 @@ namespace BeatMemories
         [Tooltip("행동/자세 스프라이트 표시 후 idle 복귀까지 시간(초)")]
         [SerializeField, Min(0f)] private float actionSpriteHold = 0.3f;
 
+        private int _enemyHp;
         private Color enemyTarget;
         private float enemyFlash;
         private float enemySpriteTimer;
@@ -109,6 +119,8 @@ namespace BeatMemories
             SetEnemyIdle();
             SetPlayerIdle();
             if (player != null) OnHealth(player.CurrentHp, player.MaxHp);
+            _enemyHp = enemyMaxHp;
+            RefreshEnemyCells();
             SetDots(-1);
         }
 
@@ -173,6 +185,20 @@ namespace BeatMemories
             playerTarget = c; playerFlash = 1f;
             if (feedbackLabel != null)
                 feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
+
+            // [임시] 적을 처리(Clear)하면 적 HP 1 감소 — 실제 구동 규칙은 추후
+            if (r.Cleared)
+            {
+                _enemyHp = Mathf.Max(0, _enemyHp - 1);
+                RefreshEnemyCells();
+            }
+        }
+
+        private void RefreshEnemyCells()
+        {
+            if (enemyCells == null) return;
+            for (int i = 0; i < enemyCells.Length; i++)
+                if (enemyCells[i] != null) enemyCells[i].enabled = i < _enemyHp;
         }
 
         private void OnPhase(int cycle, PhaseSO p)
@@ -189,15 +215,19 @@ namespace BeatMemories
 
         private void OnHealth(int current, int max)
         {
-            if (hearts == null) return;
-            for (int i = 0; i < hearts.Length; i++)
-                if (hearts[i] != null) hearts[i].color = i < current ? heartFull : heartEmpty;
+            if (hpFill != null) hpFill.fillAmount = max > 0 ? (float)current / max : 0f;
+            // HP 칸(세그먼트): 현재 HP만큼만 켠다(나머지는 꺼서 빈 칸이 보이게)
+            if (hearts != null)
+                for (int i = 0; i < hearts.Length; i++)
+                    if (hearts[i] != null) hearts[i].enabled = i < current;
         }
 
         private void OnPlayerSprite(Sprite s)
         {
+            if (s == null) return;
+            if (playerIdleAnim != null) playerIdleAnim.Pause(); // 행동 동안 idle 스텝 정지
             FitSprite(playerSlot, s, playerWorldHeight); // 행동 스프라이트(원본 비율 자동)
-            if (s != null) playerSpriteTimer = actionSpriteHold;
+            playerSpriteTimer = actionSpriteHold;
         }
 
         private void OnCharged(bool charged)
@@ -216,6 +246,8 @@ namespace BeatMemories
 
         private void SetPlayerIdle()
         {
+            // 키프레임 idle이 있으면 그쪽에 맡긴다(림버스식 스텝). 없으면 단일 idle 스프라이트 폴백.
+            if (playerIdleAnim != null && playerIdleAnim.HasFrames) { playerIdleAnim.Resume(); return; }
             FitSprite(playerSlot, player != null ? player.IdleSprite : null, playerWorldHeight);
         }
 
@@ -223,14 +255,12 @@ namespace BeatMemories
         [Tooltip("적 슬롯 idle(기본) 스프라이트 — 없으면 현재 placeholder 유지")]
         [SerializeField] private Sprite enemyIdleSprite;
 
-        // 스프라이트를 원본 비율 유지(SpriteRenderer 자동)하며 목표 월드 높이로 스케일. null이면 현재 스프라이트 유지.
+        // 스프라이트만 교체(원본 비율은 SpriteRenderer가 자동 유지). null이면 현재 스프라이트 유지.
+        // 크기는 액터 트랜스폼에서 수동 관리 — 자동 리스케일하지 않는다(직접 준 스케일을 덮지 않도록).
         private static void FitSprite(SpriteRenderer sr, Sprite s, float worldHeight)
         {
             if (sr == null || s == null) return;
             sr.sprite = s;
-            float h = s.bounds.size.y;
-            if (h > 0f && worldHeight > 0f)
-                sr.transform.localScale = Vector3.one * (worldHeight / h);
         }
 
         private void SetDots(int active)

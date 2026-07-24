@@ -1,0 +1,455 @@
+fileFormatVersion: 2
+guid: 77735575ee42cb1499d9cc1cd4a858da
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3496993374140081999
+    second: UI_Phase_Right_Action_v1_0
+  - first:
+      213: 7673036585666901579
+    second: UI_Phase_Right_Action_v1_1
+  - first:
+      213: 8703539382652269948
+    second: UI_Phase_Right_Action_v1_2
+  - first:
+      213: -4659261666318457000
+    second: UI_Phase_Right_Action_v1_3
+  - first:
+      213: -1256541226524285206
+    second: UI_Phase_Right_Action_v1_4
+  - first:
+      213: 1056848934185779504
+    second: UI_Phase_Right_Action_v1_5
+  - first:
+      213: -6810171195311502273
+    second: UI_Phase_Right_Action_v1_6
+  - first:
+      213: -6927824386608398893
+    second: UI_Phase_Right_Action_v1_7
+  - first:
+      213: 4849460125517687162
+    second: UI_Phase_Right_Action_v1_8
+  - first:
+      213: -5548934395486531974
+    second: UI_Phase_Right_Action_v1_9
+  - first:
+      213: 2553640937526827334
+    second: UI_Phase_Right_Action_v1_10
+  - first:
+      213: 6228009731402423574
+    second: UI_Phase_Right_Action_v1_11
+  - first:
+      213: 3207997509298495882
+    second: UI_Phase_Right_Action_v1_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_0
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 192
+        width: 1525
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b85c78dd0f287fc0800000000000000
+      internalID: -3496993374140081999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_1
+      rect:
+        serializedVersion: 2
+        x: 1485
+        y: 723
+        width: 14
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4670450f1a1c7a60800000000000000
+      internalID: 7673036585666901579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_2
+      rect:
+        serializedVersion: 2
+        x: 1127
+        y: 195
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c757c9784fe29c870800000000000000
+      internalID: 8703539382652269948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_3
+      rect:
+        serializedVersion: 2
+        x: 1166
+        y: 188
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8576e77433af65fb0800000000000000
+      internalID: -4659261666318457000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_4
+      rect:
+        serializedVersion: 2
+        x: 1225
+        y: 197
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae6e263796edf8ee0800000000000000
+      internalID: -1256541226524285206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_5
+      rect:
+        serializedVersion: 2
+        x: 1266
+        y: 189
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 031c467918eaaae00800000000000000
+      internalID: 1056848934185779504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_6
+      rect:
+        serializedVersion: 2
+        x: 1109
+        y: 180
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3c4cd331696d71a0800000000000000
+      internalID: -6810171195311502273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_7
+      rect:
+        serializedVersion: 2
+        x: 1148
+        y: 173
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ddfae1fc6c6bdf90800000000000000
+      internalID: -6927824386608398893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_8
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 165
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7927e56a4ebc4340800000000000000
+      internalID: 4849460125517687162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_9
+      rect:
+        serializedVersion: 2
+        x: 1206
+        y: 181
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7e041b11993ef2b0800000000000000
+      internalID: -5548934395486531974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_10
+      rect:
+        serializedVersion: 2
+        x: 1227
+        y: 157
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6499e2527ea507320800000000000000
+      internalID: 2553640937526827334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_11
+      rect:
+        serializedVersion: 2
+        x: 1247
+        y: 173
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61ddae17ad55e6650800000000000000
+      internalID: 6228009731402423574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Phase_Right_Action_v1_12
+      rect:
+        serializedVersion: 2
+        x: 1269
+        y: 151
+        width: 45
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a81231eecb8158c20800000000000000
+      internalID: 3207997509298495882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      UI_Phase_Right_Action_v1_0: -3496993374140081999
+      UI_Phase_Right_Action_v1_1: 7673036585666901579
+      UI_Phase_Right_Action_v1_10: 2553640937526827334
+      UI_Phase_Right_Action_v1_11: 6228009731402423574
+      UI_Phase_Right_Action_v1_12: 3207997509298495882
+      UI_Phase_Right_Action_v1_2: 8703539382652269948
+      UI_Phase_Right_Action_v1_3: -4659261666318457000
+      UI_Phase_Right_Action_v1_4: -1256541226524285206
+      UI_Phase_Right_Action_v1_5: 1056848934185779504
+      UI_Phase_Right_Action_v1_6: -6810171195311502273
+      UI_Phase_Right_Action_v1_7: -6927824386608398893
+      UI_Phase_Right_Action_v1_8: 4849460125517687162
+      UI_Phase_Right_Action_v1_9: -5548934395486531974
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

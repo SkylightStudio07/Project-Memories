@@ -67,6 +67,13 @@ namespace BeatMemories
             OnChargedChanged?.Invoke(IsCharged);
         }
 
+        /// <summary>최대 체력을 바꾸고 가득 채운다(스테이지 적용 등).</summary>
+        public void SetMaxHp(int value)
+        {
+            maxHp = Mathf.Max(1, value);
+            ResetState();
+        }
+
         public void TakeDamage(int amount)
         {
             if (amount <= 0 || IsDead) return;

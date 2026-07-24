@@ -1,0 +1,299 @@
+fileFormatVersion: 2
+guid: e590ec053d987c842ba606e685e7eb60
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5044683172798963194
+    second: UI_FutureMonitor_GlitchFlash_v1_0
+  - first:
+      213: 398724549342995808
+    second: UI_FutureMonitor_GlitchFlash_v1_1
+  - first:
+      213: -4951189556878875955
+    second: UI_FutureMonitor_GlitchFlash_v1_2
+  - first:
+      213: 6637050571599663161
+    second: UI_FutureMonitor_GlitchFlash_v1_3
+  - first:
+      213: 1789731481132291006
+    second: UI_FutureMonitor_GlitchFlash_v1_4
+  - first:
+      213: -8377169919647876434
+    second: UI_FutureMonitor_GlitchFlash_v1_5
+  - first:
+      213: -7771936311177717437
+    second: UI_FutureMonitor_GlitchFlash_v1_6
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: UI_FutureMonitor_GlitchFlash_v1_0
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 568
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6026de8d16fadf9b0800000000000000
+      internalID: -5044683172798963194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_FutureMonitor_GlitchFlash_v1_1
+      rect:
+        serializedVersion: 2
+        x: 1019
+        y: 571
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 06521d67ddd888500800000000000000
+      internalID: 398724549342995808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_FutureMonitor_GlitchFlash_v1_2
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 293
+        width: 36
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc26c9e9457d94bb0800000000000000
+      internalID: -4951189556878875955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_FutureMonitor_GlitchFlash_v1_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 55
+        width: 1622
+        height: 514
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 930508c845a8b1c50800000000000000
+      internalID: 6637050571599663161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_FutureMonitor_GlitchFlash_v1_4
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 245
+        width: 76
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb35938bc4766d810800000000000000
+      internalID: 1789731481132291006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_FutureMonitor_GlitchFlash_v1_5
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 46
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaafc4c97505ebb80800000000000000
+      internalID: -8377169919647876434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_FutureMonitor_GlitchFlash_v1_6
+      rect:
+        serializedVersion: 2
+        x: 1093
+        y: 15
+        width: 304
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 349da4b3a19842490800000000000000
+      internalID: -7771936311177717437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      UI_FutureMonitor_GlitchFlash_v1_0: -5044683172798963194
+      UI_FutureMonitor_GlitchFlash_v1_1: 398724549342995808
+      UI_FutureMonitor_GlitchFlash_v1_2: -4951189556878875955
+      UI_FutureMonitor_GlitchFlash_v1_3: 6637050571599663161
+      UI_FutureMonitor_GlitchFlash_v1_4: 1789731481132291006
+      UI_FutureMonitor_GlitchFlash_v1_5: -8377169919647876434
+      UI_FutureMonitor_GlitchFlash_v1_6: -7771936311177717437
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

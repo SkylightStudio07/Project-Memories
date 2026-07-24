@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c927ff0c756228489da7844910e7b67, type: 3}
+  m_Name: Stage_2
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageSO
+  stageNumber: 2
+  displayName: "\uBCF8\uD3B8 1 (\uC801 \uAD50\uCCB4)"
+  keyMode: 0
+  enemyPool:
+  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
+  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
+  pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
+  phases:
+  - {fileID: 11400000, guid: 1ae94f3d63d39b142b78bfee344ac7ab, type: 2}
+  - {fileID: 11400000, guid: 054b40b29d0bc454aaabb343feb3c141, type: 2}
+  cyclesPerPhase: 2
+  bpm: 90
+  playerMaxHp: 7
+  backgroundSprite: {fileID: 0}
+  floorSprite: {fileID: 0}
+  backgroundPrefab: {fileID: 0}

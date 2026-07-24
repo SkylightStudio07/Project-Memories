@@ -14,6 +14,9 @@ namespace BeatMemories
     /// </summary>
     public class RoundManager : MonoBehaviour
     {
+        [Header("스테이지 (지정 시 아래 값을 덮어씀)")]
+        [SerializeField] private StageSO stage;
+
         [Header("참조")]
         [SerializeField] private Conductor conductor;
         [SerializeField] private PlayerData player;
@@ -64,11 +67,29 @@ namespace BeatMemories
 
         public int Seed => seed;
 
+        /// <summary>스테이지 지정(StageManager가 Awake 전에 호출 — DefaultExecutionOrder).</summary>
+        public void SetStage(StageSO s) => stage = s;
+
         private void Awake()
         {
+            if (stage != null) ApplyStage(stage);
             if (randomizeSeed) seed = Environment.TickCount;
             provider = new EnemySequenceProvider(seed, enemyPool);
             spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
+        }
+
+        /// <summary>스테이지 데이터로 이 매니저·플레이어·입력·비트를 구성한다.</summary>
+        private void ApplyStage(StageSO s)
+        {
+            if (s.enemyPool != null && s.enemyPool.Count > 0) enemyPool = new List<Enemy>(s.enemyPool);
+            if (s.pattern != null) pattern = s.pattern;
+            if (s.phases != null) phases = new List<PhaseSO>(s.phases);
+            cyclesPerPhase = Mathf.Max(1, s.cyclesPerPhase);
+            if (input != null) input.Mode = s.keyMode;
+            if (conductor != null) conductor.Bpm = s.bpm;
+            if (player != null) player.SetMaxHp(s.playerMaxHp);
+            if (s.backgroundPrefab != null) Instantiate(s.backgroundPrefab);
+            if (verboseLog) Debug.Log($"[Round] 스테이지 적용: {s.stageNumber} {s.displayName} (키 {s.keyMode}, 적 {(s.enemyPool != null ? s.enemyPool.Count : 0)})");
         }
 
         private void OnEnable()

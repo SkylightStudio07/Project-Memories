@@ -4,7 +4,9 @@
       "Bash(python -c ' *)",
       "Bash(python -c \"import json,sys;print\\('enter:',json.load\\(sys.stdin\\).get\\('data',{}\\).get\\('result',{}\\).get\\('result'\\)\\)\")",
       "Bash(python -c \"import json,sys;print\\('restore:',json.load\\(sys.stdin\\).get\\('data',{}\\).get\\('result',{}\\).get\\('result'\\)\\)\")",
-      "Bash(python -c \"import json,sys;print\\('add:',json.load\\(sys.stdin\\).get\\('data',{}\\).get\\('result',{}\\).get\\('result'\\)\\)\")"
+      "Bash(python -c \"import json,sys;print\\('add:',json.load\\(sys.stdin\\).get\\('data',{}\\).get\\('result',{}\\).get\\('result'\\)\\)\")",
+      "Bash(python -c \"import json,sys;print\\(json.load\\(sys.stdin\\).get\\('data',{}\\).get\\('result',{}\\).get\\('result'\\)\\)\")",
+      "Bash(python -c \"import json,sys;print\\('state:',json.load\\(sys.stdin\\).get\\('data',{}\\).get\\('result',{}\\).get\\('result'\\)\\)\")"
     ]
   }
 }
