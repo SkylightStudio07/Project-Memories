@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace BeatMemories
 {
@@ -24,6 +25,7 @@ namespace BeatMemories
         [SerializeField] private AudioClip tick;
         [SerializeField] private AudioClip tack;
         [SerializeField, Range(0f, 1f)] private float metronomeVolume = 0.7f;
+        [SerializeField] private AudioMixerGroup metronomeOutput;
 
         public float Bpm => Mathf.Max(1f, bpm);
         public float EarlyOffset => Mathf.Max(0f, earlyOffset);
@@ -31,5 +33,6 @@ namespace BeatMemories
         public AudioClip Tick => tick;
         public AudioClip Tack => tack;
         public float MetronomeVolume => Mathf.Clamp01(metronomeVolume);
+        public AudioMixerGroup MetronomeOutput => metronomeOutput;
     }
 }

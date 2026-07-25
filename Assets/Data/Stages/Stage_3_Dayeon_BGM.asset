@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c927ff0c756228489da7844910e7b67, type: 3}
+  m_Name: Stage_3_Dayeon_BGM
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageSO
+  stageNumber: 3
+  displayName: "\uC2A4\uD14C\uC774\uC9C0 3 (\uCC28\uC9C0 \uACF5\uACA9)"
+  keyMode: 1
+  enemyPool:
+  - {fileID: 11400000, guid: a251bc9cd77944dba1aefa8fde329395, type: 2}
+  - {fileID: 11400000, guid: 2af6e42ca1c34bf283dd0bba6ff9b01e, type: 2}
+  - {fileID: 11400000, guid: 70fe29f0f1ff4fb29394d44891a42ae2, type: 2}
+  - {fileID: 11400000, guid: f6fde21106ba4e9686cd5a5444c179cd, type: 2}
+  playerPrefab: {fileID: 4825611272768709046, guid: ff351e35aaf02da4fa6e712193ca25fc, type: 3}
+  enemyPrefab: {fileID: 5498171150338603271, guid: b756a88ecb86f9547bd11a29e4d459e1, type: 3}
+  enemySprite: {fileID: -8380145206358370378, guid: d99f64baced9b454eb41d36e12278d6a, type: 3}
+  flipEnemyIdleX: 0
+  pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
+  phases:
+  - {fileID: 11400000, guid: d09af12a7c9f49e09bbe7c1a57065839, type: 2}
+  cyclesPerPhase: 2
+  phasePreparationBeats: 0
+  repeatPhasePlan: 0
+  bpm: 137
+  playerMaxHp: 7
+  enemyMaxHp: 8
+  startDelay: 3
+  enemyPageCount: 1
+  enemyPageTransitionBeats: 0
+  cutPreviewBottomHalfOnSecondPage: 0
+  enemyPageTransitionSprite: {fileID: 0}
+  backgroundSprite: {fileID: 8681808610245202088, guid: 9818b2e84ccc0f44ea01d1b6416cead9, type: 3}
+  floorSprite: {fileID: 378343422154318483, guid: 8daff401b6b9d384398545c17f356d7c, type: 3}
+  backgroundPrefab: {fileID: 1755634556673533739, guid: 248a0d1d3b7791c43868858144a98b97, type: 3}

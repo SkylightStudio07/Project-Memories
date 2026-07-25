@@ -68,7 +68,7 @@ Assets/
 | 4 | 리듬 패턴 | `RhythmPatternSO` (안1/안2 스포트라이트·입력수 데이터) | ✅ 완료 |
 | 5 | 결정론적 시퀀스 | `EnemySequenceProvider` (시드, 재현성/독립성) | ✅ 완료 |
 | 5b | 페이즈(맥락) | `PhaseSO`/`ActionWeight`, 결정론적 가중 선택, 공격/수비 에셋 | ✅ 완료 |
-| 6 | 비트 클록 | `Conductor` (BPM, 8박 사이클, 제시/응답 전환 이벤트) | ✅ 완료(플레이 검증) |
+| 6 | 비트 클록 | `Conductor` (DSP 고정 시계, 템포 맵, 선예약 메트로놈, 8박 제시/응답 이벤트) | ✅ 완료(플레이 검증) |
 | 7 | 플레이어 | `PlayerHealth`(HP), `InputReader`(←/→) | ✅ 완료(플레이 검증) |
 | 8 | 라운드 매니저 | 사이클 오케스트레이션(제시→응답, 판정·HP 반영) | ✅ 완료(플레이 검증) |
 | 9 | UI(Canvas) | 적 슬롯(색 점멸), 8박 타임라인, HP 하트, 페이즈·키 가이드·피드백, 온스크린 버튼 | ✅ 완료(시각 검증) |
@@ -171,6 +171,7 @@ Assets/
 - 2026-07-25: **응답 입력 구간·HP 반영 시점 확정.** 응답 마디의 각 행동은 대응하는 박 전체 `[박 시작, 다음 박 시작)`에서 첫 입력 하나를 판정한다. 구간 종료까지 입력이 없으면 해당 행동만 즉시 무입력 판정하며, 피해는 `PlayerData.TakeDamage`와 `OnHealthChanged`를 통해 행동별로 즉시 반영한다. 네 행동 종료 후 피해를 일괄 적용하지 않는다.
 - 2026-07-25: **게임오버 UI + 씬 이동.** `GameOverView`가 `RoundManager.OnGameOver`를 구독해 에셋 기반 배너·끊어진 타임라인·스캔라인/글리치·Retry/Title 버튼을 표시한다. 게임오버에도 배경·캐릭터·양측 HP는 유지하고 전투 조작 UI만 숨긴다. Retry는 현재 전투 씬을 재로드하고 Title은 최소 `Title.unity` 씬으로 이동한다. Build Settings는 Title→BeatMemories 순서.
 - 2026-07-25: **적 예고→아군 행동 전환 확정.** 7박 겹침 해석을 취소하고 `적 예고 4박 → 아군 행동 4박`의 8박 연속 사이클로 확정했다. `Conductor.ResponseStartBeat=4`, `BeatsPerCycle=8`이며 아군 네 번째 행동 종료 직후 다음 사이클을 시작한다.
+- 2026-07-26: **Dayeon BGM 복제 씬 DSP 오디오·모션 동기화.** `BeatMemories_Dayeon_BGM`만 `StageSoundtrackCatalogSO`와 `RhythmAudioController`를 사용한다. BGM 루프는 `AudioSource.loop` 대신 A/B 소스에 절대 DSP 시각으로 예약하고, Stage 5 페이지 2는 4박 준비 경계에서 95→92 BPM 템포 맵·메트로놈·BGM을 함께 전환한다. `HudView`의 복제 씬 옵션은 DOTween 박 이벤트 대신 `ClockBeatPosition`을 매 프레임 샘플링해 프레임 드롭 뒤에도 위상에 재합류한다. 컨트롤러/옵션이 없는 기존 씬은 종전 동작을 유지한다.
 - 2026-07-25: **응답 마지막 박 입력 경계 수정.** 키보드·UI 입력을 실제 발생 시각과 프레임 번호를 포함한 큐로 수집하고, `RoundManager.LateUpdate`에서 입력을 모두 소비한 뒤 미입력을 마감한다. 응답 종료와 같은 프레임에 전달된 입력은 네 번째 행동에 우선 귀속하며, 새 사이클 첫 예고는 판정이 끝난 다음 프레임에 표시한다. 행동 스프라이트와 버튼 펄스도 실제 소비된 입력에만 반응한다.
 - 2026-07-25: **머지 복구(위상-준비 이벤트 이식).** origin/main의 PR #1 머지(`8b60419`)가 `Conductor`/`RoundManager`의 이벤트 정의 5개를 유실한 채 그것을 쓰는 뷰 스크립트만 남겨 **컴파일 불가**였음(정상본은 `2a38c65`). 정식 아키텍처 통째 복원 대신, 점수·세션 UI를 보존하려 **이벤트만 현재 코드에 이식**: `Conductor`에 `OnClockBeat`(매 박)·`OnPreparationMeasureStart`(선언)·`ScheduledStartDspTime`(StartClock에서 DSP 예약), `RoundManager`에 `OnPhasePreparing`(전환 시 발생)·`OnStageCleared`(선언). 준비 마디 연출은 현재 비트 모델에 준비 마디가 없어 폴백(간략 동작). 컴파일 0.
 - 2026-07-25: **스테이지 진행(적 처치→다음 스테이지) + 적 보스 HP + 차징 재해금.** (1) **적 보스 HP를 RoundManager로 승격** — `enemyBarHp`(인스펙터, 기본 7), 성공 처치(Cleared)마다 1 감소, `OnEnemyBarChanged`(HudView가 셀 반영)·0이면 `OnStageCleared` 발생. HudView의 임시 로컬 감소 제거. (2) **스테이지 전환** — `RoundManager.RestartForStage(StageSO)`가 풀·패턴·페이즈·provider·적HP·클록을 새 스테이지로 재구성·재시작(카운트인부터). `StageManager`가 `OnStageCleared` 구독 → **암전 페이드(`blackout` CanvasGroup) → 다음 스테이지 적용 → 페이드 인**, 로스터 끝이면 **게임 클리어**(`OnGameCleared` + `gameClearScreen`). 클리어 중 입력·클록 정지 가드(`_stageTransitioning`), 처치로 노트가 비워질 때 `ConsumeInput` 슬롯 캡처로 안전화. (3) **적 자세 다양성** — 전 스테이지 풀이 1종이라 한 자세만 반복하던 것을 Stage_1=[공세·무방비](2키), **Stage_2~5=[공세·무방비·차징](3키, 차징 stage2 해금)** 으로 채움. **주의: 플레이어 HP는 `SetMaxHp`→`ResetState`로 스테이지마다 풀 회복.** 컴파일 0. **연출 배선(`blackout`/`gameClearScreen`/`enemyActor`)·플레이 검증은 미완.**

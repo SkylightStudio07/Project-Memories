@@ -14,6 +14,7 @@ namespace BeatMemories
         [Header("참조")]
         [SerializeField] private RoundManager round;
         [SerializeField] private Conductor conductor;
+        [SerializeField] private StageManager stageManager;
         [SerializeField] private SpriteRenderer enemyActor;
         [SerializeField] private Image[] previewSlots = new Image[Conductor.BeatsPerMeasure];
         [SerializeField] private RectTransform previewContainer;
@@ -43,6 +44,8 @@ namespace BeatMemories
         {
             if (round == null) round = FindFirstObjectByType<RoundManager>();
             if (conductor == null) conductor = FindFirstObjectByType<Conductor>();
+            if (stageManager == null)
+                stageManager = FindFirstObjectByType<StageManager>();
             CaptureOriginalSlotState();
         }
 
@@ -99,8 +102,15 @@ namespace BeatMemories
 
             transitionActive = true;
             transitionBeatCount = Mathf.Max(0, preparationBeats);
-            if (enemyActor != null && currentStage.enemyPageTransitionSprite != null)
-                enemyActor.sprite = currentStage.enemyPageTransitionSprite;
+            SpriteRenderer activeEnemyActor = stageManager != null
+                ? stageManager.EnemyActor
+                : enemyActor;
+            if (activeEnemyActor != null
+                && currentStage.enemyPageTransitionSprite != null)
+            {
+                activeEnemyActor.sprite =
+                    currentStage.enemyPageTransitionSprite;
+            }
 
             if (transitionBeatCount <= 0)
             {
