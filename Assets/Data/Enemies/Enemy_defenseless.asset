@@ -16,6 +16,8 @@ MonoBehaviour:
     id: defenseless
     displayName: "\uC27C"
     sprite: {fileID: 4089636935794680599, guid: 42d77fc7d15a51d4ab94c4d0ccec3e85, type: 3}
+    action: 0
+    laserOriginOffset: {x: 0, y: 0}
     maxHp: 1
     armor: 0
     outcomes:

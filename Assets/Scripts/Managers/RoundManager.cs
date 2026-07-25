@@ -335,7 +335,7 @@ namespace BeatMemories
 
         private void ApplyJudge(int slot, Enemy enemy, PlayerAction action, bool isMiss, float responseRatio)
         {
-            JudgeResult result = JudgeSystem.Judge(enemy, action); // 표: 정/오답
+            JudgeResult result = JudgeSystem.Judge(enemy, action); // 양측 행동 조합 판정
             bool charged = player != null && player.IsCharged;
 
             // 공격이 '정답'이면 방어력·HP·강공격을 반영
@@ -344,10 +344,19 @@ namespace BeatMemories
                 int power = charged ? player.ChargedAttackPower : player.AttackPower;
                 int dmg = (charged && player.ChargedPiercesArmor) ? power : Mathf.Max(0, power - enemy.Armor);
                 if (dmg < enemy.MaxHp)
-                    result = new JudgeResult(action, OutcomeType.Safe, 0, false,
+                    result = new JudgeResult(
+                        action,
+                        result.PlayerDamage > 0 ? OutcomeType.Punished : OutcomeType.Safe,
+                        result.PlayerDamage,
+                        false,
                         enemy.Armor > 0 ? "방어에 막힘 — 차징→강공격 필요" : "위력 부족 — 차징 필요");
                 else if (charged)
-                    result = new JudgeResult(action, OutcomeType.Cleared, 0, true, "강공격! 방어 관통");
+                    result = new JudgeResult(
+                        action,
+                        OutcomeType.Cleared,
+                        result.PlayerDamage,
+                        true,
+                        "강공격! 방어 관통");
             }
 
             // 차징 처리

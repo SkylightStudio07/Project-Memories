@@ -20,6 +20,12 @@ namespace BeatMemories
         [Tooltip("적 실루엣 스프라이트")]
         public Sprite sprite;
 
+        [Tooltip("이 적이 현재 박자에 수행하는 행동")]
+        public PlayerAction action = PlayerAction.None;
+
+        [Tooltip("EnemyActor 기준 레이저 발사 위치의 로컬 오프셋")]
+        public Vector2 laserOriginOffset;
+
         [Tooltip("체력 — 공격 위력이 이 값 이상이어야 처리된다")]
         [Min(1)]
         public int maxHp = 1;

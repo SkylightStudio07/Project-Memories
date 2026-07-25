@@ -16,6 +16,8 @@ MonoBehaviour:
     id: charger
     displayName: "\uCC28\uC9D5"
     sprite: {fileID: -5749105444300900093, guid: b6411538dc5bac14881dc83618876152, type: 3}
+    action: 4
+    laserOriginOffset: {x: 0, y: 0}
     maxHp: 1
     armor: 0
     outcomes:

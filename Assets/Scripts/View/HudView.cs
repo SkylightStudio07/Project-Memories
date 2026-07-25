@@ -84,6 +84,17 @@ namespace BeatMemories
         [SerializeField, Min(0f)] private float enemyHitShakeStrength = 0.35f;
         [SerializeField, Min(1)] private int enemyHitShakeVibrato = 18;
 
+        [Header("Laser Effect")]
+        [Tooltip("PlayerActor 자식 발사 위치의 LineRenderer")]
+        [SerializeField] private LineRenderer playerLaser;
+        [Tooltip("EnemyActor 자식 발사 위치의 LineRenderer")]
+        [SerializeField] private LineRenderer enemyLaser;
+        [SerializeField, Min(0.01f)] private float laserWidth = 0.1f;
+        [SerializeField, Min(0f)] private float laserGrowDuration = 0.08f;
+        [SerializeField, Min(0f)] private float laserFadeDuration = 0.1f;
+        [SerializeField] private Color playerLaserColor = new Color(0.2f, 0.95f, 1f, 1f);
+        [SerializeField] private Color enemyLaserColor = new Color(1f, 0.18f, 0.18f, 1f);
+
         [Header("Score HUD")]
         [SerializeField, Min(0.1f)] private float floatingScoreDuration = 0.65f;
         [SerializeField, Min(1f)] private float floatingScoreMinScale = 1f;
@@ -161,6 +172,8 @@ namespace BeatMemories
                 RestorePresentation(playerSlot, playerBaseScale, ref playerShakeOffset);
                 RestoreOffset(playerSlot, ref playerActionOffset);
             }
+            StopLaser(playerLaser);
+            StopLaser(enemyLaser);
         }
 
         private void Start()
@@ -185,6 +198,8 @@ namespace BeatMemories
             RefreshEnemyCells();
             SetDots(-1);
             InitializeQueues();
+            InitializeLaser(playerLaser);
+            InitializeLaser(enemyLaser);
         }
 
         private void Update()
@@ -232,11 +247,19 @@ namespace BeatMemories
 
         private void OnJudged(int slot, Enemy e, JudgeResult r)
         {
+            if (enemyLaser != null && e != null)
+                enemyLaser.transform.localPosition = e.LaserOriginOffset;
+
             if (e != null && e.Sprite != null)
             {
                 SetEnemySprite(e.Sprite);
                 enemySpriteTimer = actionSpriteHold;
             }
+
+            if (r.Input == PlayerAction.Attack && enemySlot != null)
+                PlayLaser(playerLaser, enemySlot.bounds.center, playerLaserColor);
+            if (e != null && e.Action == PlayerAction.Attack && playerSlot != null)
+                PlayLaser(enemyLaser, playerSlot.bounds.center, enemyLaserColor);
 
             if (r.PlayerDamage > 0)
             {
@@ -485,6 +508,60 @@ namespace BeatMemories
                 false,
                 true,
                 ShakeRandomnessMode.Harmonic);
+        }
+
+        private void InitializeLaser(LineRenderer laser)
+        {
+            if (laser == null) return;
+            laser.useWorldSpace = true;
+            laser.positionCount = 2;
+            laser.widthMultiplier = laserWidth;
+            laser.enabled = false;
+        }
+
+        private void PlayLaser(LineRenderer laser, Vector3 target, Color color)
+        {
+            if (laser == null) return;
+
+            laser.DOKill();
+            Vector3 origin = laser.transform.position;
+            float progress = 0f;
+            laser.enabled = true;
+            laser.widthMultiplier = laserWidth;
+            laser.startColor = color;
+            laser.endColor = color;
+            laser.SetPosition(0, origin);
+            laser.SetPosition(1, origin);
+
+            Sequence sequence = DOTween.Sequence().SetTarget(laser);
+            sequence.Append(DOTween.To(
+                () => progress,
+                value =>
+                {
+                    progress = value;
+                    laser.SetPosition(0, laser.transform.position);
+                    laser.SetPosition(1, Vector3.Lerp(origin, target, value));
+                },
+                1f,
+                laserGrowDuration).SetEase(Ease.OutCubic));
+            sequence.Append(DOTween.To(
+                () => laser.widthMultiplier,
+                value => laser.widthMultiplier = value,
+                0f,
+                laserFadeDuration).SetEase(Ease.InQuad));
+            sequence.OnComplete(() =>
+            {
+                laser.enabled = false;
+                laser.widthMultiplier = laserWidth;
+            });
+        }
+
+        private void StopLaser(LineRenderer laser)
+        {
+            if (laser == null) return;
+            laser.DOKill();
+            laser.enabled = false;
+            laser.widthMultiplier = laserWidth;
         }
 
         private void UpdateActionMotion()

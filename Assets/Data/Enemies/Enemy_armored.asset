@@ -16,6 +16,8 @@ MonoBehaviour:
     id: armored
     displayName: "\uBC29\uC5B4"
     sprite: {fileID: -2263153328595618910, guid: 574d9f0d95b53b84abc3e8a7796bade7, type: 3}
+    action: 1
+    laserOriginOffset: {x: 0, y: 0}
     maxHp: 1
     armor: 2
     outcomes:
