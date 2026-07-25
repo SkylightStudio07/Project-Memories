@@ -34,28 +34,40 @@ namespace BeatMemories
         [SerializeField] private List<PhaseSO> phases = new List<PhaseSO>();
         [Tooltip("한 페이즈가 유지되는 사이클 수")]
         [SerializeField, Min(1)] private int cyclesPerPhase = 2;
-        [Tooltip("마지막 페이즈 뒤 처음으로 순환. 끄면 마지막 응답 뒤 스테이지 클리어")]
-        [SerializeField] private bool repeatPhasePlan = true;
 
         [Header("판정 (인스펙터 조정)")]
         [Tooltip("마감까지 안 답한 박을 오답으로 취급(적 defaultOutcome 적용)")]
         [SerializeField] private bool noInputCountsAsMiss = true;
+        [Tooltip("박 종료 전 입력 창이 닫히는 지점(박 길이 비율)")]
+        [SerializeField, Range(0f, 0.45f)] private float inputEndOffset = 0.12f;
+        [Tooltip("Miss 직후 다음 입력을 잠그는 시간(초)")]
+        [SerializeField, Min(0f)] private float missInputLockDuration = 0.005f;
         [SerializeField] private bool verboseLog = true;
 
+        [Header("점수 (인스펙터 조정)")]
+        [SerializeField, Min(0)] private int hitScore = 100;
+        [SerializeField, Min(0)] private int clearScore = 100;
+        [SerializeField, Min(0)] private int maxTimingBonus = 100;
+        [SerializeField, Min(0)] private int hpScoreWeight = 25;
+        [SerializeField, Min(0)] private int armorScoreWeight = 50;
+
         // 이벤트 (UI가 구독)
-        public event Action<EnemyPreviewCue> OnEnemyPreviewed;        // 정제된 제시(차폐 시 실제 적 없음)
+        public event Action<int, Enemy> OnEnemyRevealed;              // (slot, enemy) 제시
         public event Action<int, Enemy, JudgeResult> OnJudged;       // (slot, enemy, result) 판정
-        public event Action<int, PhaseSO> OnPhasePreparing;          // (phaseIndex, phase) 준비 시작
-        public event Action<int, PhaseSO> OnPhaseChanged;            // (phaseIndex, phase) 본체 시작
+        public event Action<int, PhaseSO> OnPhaseChanged;            // (cycleIndex, phase) 페이즈 시작
+        public event Action<int> OnCycleStarted;                     // 큐 등 사이클 단위 표시 초기화
+        public event Action<int> OnScoreChanged;
+        public event Action<int, bool> OnScoreAwarded;               // (획득량, 처치 보너스 여부)
+        public event Action<bool> OnAttackLanded;                    // 강공격 여부
         public event Action OnGameOver;
-        public event Action OnStageCleared;
 
         public PhaseSO CurrentPhase { get; private set; }
-        public int CurrentPhaseIndex { get; private set; } = -1;
+        public int Score { get; private set; }
 
         private sealed class ResponseNote
         {
             public int slot;
+            public int globalBeat;
             public Enemy enemy;
             public double openTime;  // 입력 구간의 시작(SongPosition 기준)
             public double closeTime; // 입력 구간의 끝. [openTime, closeTime)
@@ -70,8 +82,8 @@ namespace BeatMemories
         private bool inResponse;
         private bool responseEndPending;
         private int responseEndFrame = -1;
+        private double inputLockedUntilRealtime = double.NegativeInfinity;
         private bool isOver;
-        private int activePhaseIndex = -1;
 
         public int Seed => seed;
 
@@ -84,7 +96,6 @@ namespace BeatMemories
             if (randomizeSeed) seed = Environment.TickCount;
             provider = new EnemySequenceProvider(seed, enemyPool);
             spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
-            if (conductor != null) conductor.ConfigureTimeline(cyclesPerPhase);
         }
 
         /// <summary>스테이지 데이터로 이 매니저·플레이어·입력·비트를 구성한다.</summary>
@@ -94,14 +105,8 @@ namespace BeatMemories
             if (s.pattern != null) pattern = s.pattern;
             if (s.phases != null) phases = new List<PhaseSO>(s.phases);
             cyclesPerPhase = Mathf.Max(1, s.cyclesPerPhase);
-            repeatPhasePlan = s.repeatPhasePlan;
             if (input != null) input.Mode = s.keyMode;
-            if (conductor != null)
-            {
-                conductor.Bpm = s.bpm;
-                conductor.StartDelay = s.startDelay;
-                conductor.ConfigureTimeline(cyclesPerPhase);
-            }
+            if (conductor != null) conductor.Bpm = s.bpm;
             if (player != null) player.SetMaxHp(s.playerMaxHp);
             if (s.backgroundPrefab != null) Instantiate(s.backgroundPrefab);
             if (verboseLog) Debug.Log($"[Round] 스테이지 적용: {s.stageNumber} {s.displayName} (키 {s.keyMode}, 적 {(s.enemyPool != null ? s.enemyPool.Count : 0)})");
@@ -111,7 +116,6 @@ namespace BeatMemories
         {
             if (conductor != null)
             {
-                conductor.OnPreparationMeasureStart += HandlePreparationStart;
                 conductor.OnPresentMeasureStart += HandlePresentStart;
                 conductor.OnResponseMeasureStart += HandleResponseStart;
                 conductor.OnResponseMeasureEnd += HandleResponseEnd;
@@ -125,7 +129,6 @@ namespace BeatMemories
         {
             if (conductor != null)
             {
-                conductor.OnPreparationMeasureStart -= HandlePreparationStart;
                 conductor.OnPresentMeasureStart -= HandlePresentStart;
                 conductor.OnResponseMeasureStart -= HandleResponseStart;
                 conductor.OnResponseMeasureEnd -= HandleResponseEnd;
@@ -133,25 +136,6 @@ namespace BeatMemories
             }
             if (input != null) input.OnTimedAction -= QueueInput;
             if (player != null) player.OnDied -= HandleDied;
-        }
-
-        private void HandlePreparationStart(int phaseIndex)
-        {
-            if (isOver) return;
-
-            PhaseSO phase = PhaseForIndex(phaseIndex);
-            if (phase == null && IsPhasePlanComplete(phaseIndex))
-            {
-                HandleStageCleared();
-                return;
-            }
-
-            CurrentPhaseIndex = phaseIndex;
-            CurrentPhase = phase;
-            activePhaseIndex = -1;
-            OnPhasePreparing?.Invoke(phaseIndex, phase);
-            if (verboseLog)
-                Debug.Log($"[Round] >> 준비: {(phase != null ? phase.PhaseName : "(균등)")}");
         }
 
         private void HandlePresentStart(int cycleIndex)
@@ -163,28 +147,18 @@ namespace BeatMemories
             if (!responseEndPending) FlushUnanswered();
             if (isOver) return;
 
-            int phaseIndex = conductor != null
-                ? conductor.PhaseIndex
-                : cycleIndex / Mathf.Max(1, cyclesPerPhase);
-            PhaseSO phase = CurrentPhaseIndex == phaseIndex ? CurrentPhase : PhaseForIndex(phaseIndex);
-            if (CurrentPhaseIndex != phaseIndex)
+            PhaseSO phase = PhaseForCycle(cycleIndex);
+            if (phase != CurrentPhase)
             {
-                CurrentPhaseIndex = phaseIndex;
                 CurrentPhase = phase;
-            }
-            if (activePhaseIndex != phaseIndex)
-            {
-                activePhaseIndex = phaseIndex;
-                OnPhaseChanged?.Invoke(phaseIndex, phase);
-                if (verboseLog)
-                    Debug.Log($"[Round] >> 페이즈: {(phase != null ? phase.PhaseName : "(균등)")}");
+                OnPhaseChanged?.Invoke(cycleIndex, phase);
+                if (verboseLog) Debug.Log($"[Round] >> 페이즈: {(phase != null ? phase.PhaseName : "(균등)")}");
             }
 
             int count = pattern != null ? pattern.SpotlightCount : 0;
-            int exchangeInPhase = conductor != null
-                ? conductor.ExchangeInPhase
-                : cycleIndex % Mathf.Max(1, cyclesPerPhase);
-            currentCycle = GenerateCycle(cycleIndex, exchangeInPhase, count, phase);
+            currentCycle = provider.GenerateCycleWeighted(cycleIndex, count, phase);
+            inputLockedUntilRealtime = double.NegativeInfinity;
+            OnCycleStarted?.Invoke(cycleIndex);
             if (verboseLog) Debug.Log($"[Round] === 사이클 {cycleIndex} 제시 시작 (적 {count}) ===");
         }
 
@@ -196,14 +170,18 @@ namespace BeatMemories
             notes.Clear();
             for (int k = 0; k < spotlightBeats.Count && k < currentCycle.Count; k++)
             {
-                int globalBeat = conductor != null ? conductor.TotalBeats + k : 0;
-                double openTime = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0;
+                int beatInCycle = Conductor.ResponseStartBeat + k;
+                int globalBeat = cycleIndex * Conductor.BeatsPerCycle + beatInCycle;
+                double beatStart = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0;
+                double beatEnd = conductor != null ? conductor.BeatToTime(globalBeat + 1) : beatStart;
+                double beatDuration = beatEnd - beatStart;
                 notes.Add(new ResponseNote
                 {
                     slot = k,
+                    globalBeat = globalBeat,
                     enemy = currentCycle[k],
-                    openTime = openTime,
-                    closeTime = conductor != null ? conductor.BeatToTime(globalBeat + 1) : openTime,
+                    openTime = beatStart,
+                    closeTime = beatEnd - beatDuration * inputEndOffset,
                     consumed = false,
                 });
             }
@@ -232,12 +210,8 @@ namespace BeatMemories
             int slot = spotlightBeats.IndexOf(beatInMeasure);
             if (slot < 0 || slot >= currentCycle.Count) return;
 
-            Enemy actualEnemy = currentCycle[slot];
-            bool hidden = CurrentPhase != null && CurrentPhase.ShouldHidePreview(actualEnemy);
-            var cue = new EnemyPreviewCue(slot, actualEnemy, hidden);
-            OnEnemyPreviewed?.Invoke(cue);
-            if (verboseLog)
-                Debug.Log($"[Round] 제시 slot{slot}: {(hidden ? "[차폐]" : actualEnemy?.DisplayName)}");
+            OnEnemyRevealed?.Invoke(slot, currentCycle[slot]);
+            if (verboseLog) Debug.Log($"[Round] 제시 slot{slot}: {currentCycle[slot]?.DisplayName}");
         }
 
         private void LateUpdate()
@@ -259,6 +233,7 @@ namespace BeatMemories
                 return;
             }
 
+            RefreshPendingNoteWindows();
             ExpireElapsedNotes(conductor.SongPosition);
 
             if (responseEndPending)
@@ -279,7 +254,11 @@ namespace BeatMemories
         {
             if (isOver || !inResponse || conductor == null) return;
 
+            RefreshPendingNoteWindows();
             double inputSongTime = conductor.RealtimeToSongPosition(timedAction.Realtime);
+            ExpireElapsedNotes(inputSongTime);
+            if (isOver || timedAction.Realtime < inputLockedUntilRealtime) return;
+
             int current = -1;
             for (int i = 0; i < notes.Count; i++)
             {
@@ -291,19 +270,35 @@ namespace BeatMemories
                 }
             }
 
-            // UI 포인터 이벤트는 Conductor 뒤에 전달될 수 있다. 같은 경계 프레임의 입력은
-            // 새 제시 구간이 입력을 받지 않으므로 직전 네 번째 행동에 우선 귀속한다.
-            if (current < 0 && responseEndPending && timedAction.Frame == responseEndFrame)
-            {
-                int last = notes.Count - 1;
-                if (last >= 0 && !notes[last].consumed) current = last;
-            }
-
             if (current < 0) return;
 
             notes[current].consumed = true;
             input?.NotifyAccepted(timedAction.Action);
-            ApplyJudge(notes[current].slot, notes[current].enemy, timedAction.Action, isMiss: false);
+            double duration = notes[current].closeTime - notes[current].openTime;
+            float responseRatio = duration > 0.0
+                ? Mathf.Clamp01((float)((inputSongTime - notes[current].openTime) / duration))
+                : 1f;
+            ApplyJudge(
+                notes[current].slot,
+                notes[current].enemy,
+                timedAction.Action,
+                isMiss: false,
+                responseRatio: responseRatio);
+            conductor.AdvanceResponseBeatNow(notes[current].slot);
+        }
+
+        private void RefreshPendingNoteWindows()
+        {
+            if (conductor == null) return;
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                if (notes[i].consumed) continue;
+                double beatStart = conductor.BeatToTime(notes[i].globalBeat);
+                double beatEnd = conductor.BeatToTime(notes[i].globalBeat + 1);
+                notes[i].openTime = beatStart;
+                notes[i].closeTime = beatEnd - (beatEnd - beatStart) * inputEndOffset;
+            }
         }
 
         private void ExpireElapsedNotes(double now)
@@ -314,9 +309,21 @@ namespace BeatMemories
 
                 notes[i].consumed = true;
                 if (noInputCountsAsMiss)
-                    ApplyJudge(notes[i].slot, notes[i].enemy, PlayerAction.None, isMiss: true);
+                {
+                    ApplyJudge(
+                        notes[i].slot,
+                        notes[i].enemy,
+                        PlayerAction.None,
+                        isMiss: true,
+                        responseRatio: 1f);
+                    inputLockedUntilRealtime = Math.Max(
+                        inputLockedUntilRealtime,
+                        Time.realtimeSinceStartupAsDouble + missInputLockDuration);
+                }
 
+                conductor?.AdvanceResponseBeatNow(notes[i].slot);
                 if (isOver) break;
+                break; // 시간축이 다음 Beat 시작으로 이동했으므로 다음 노트는 다음 프레임에 검사
             }
         }
 
@@ -330,7 +337,12 @@ namespace BeatMemories
 
                 notes[i].consumed = true;
                 if (noInputCountsAsMiss)
-                    ApplyJudge(notes[i].slot, notes[i].enemy, PlayerAction.None, isMiss: true);
+                    ApplyJudge(
+                        notes[i].slot,
+                        notes[i].enemy,
+                        PlayerAction.None,
+                        isMiss: true,
+                        responseRatio: 1f);
                 if (isOver) break;
             }
 
@@ -340,76 +352,108 @@ namespace BeatMemories
             responseEndFrame = -1;
         }
 
-        private void ApplyJudge(int slot, Enemy enemy, PlayerAction action, bool isMiss)
+        private void ApplyJudge(int slot, Enemy enemy, PlayerAction action, bool isMiss, float responseRatio)
         {
-            JudgeResult result = JudgeSystem.Judge(enemy, action); // 표: 정/오답
             bool charged = player != null && player.IsCharged;
+            JudgeResult result = JudgeSystem.Judge(enemy, action, charged); // 양측 행동 조합 판정
 
             // 공격이 '정답'이면 방어력·HP·강공격을 반영
             if (action == PlayerAction.Attack && result.Cleared && enemy != null && player != null)
             {
-                int power = charged ? player.ChargedAttackPower : player.AttackPower;
-                int dmg = (charged && player.ChargedPiercesArmor) ? power : Mathf.Max(0, power - enemy.Armor);
+                float power = charged
+                    ? player.AttackPower * player.ChargedAttackMultiplier
+                    : player.AttackPower;
+                float dmg = (charged && player.ChargedPiercesArmor)
+                    ? power
+                    : Mathf.Max(0f, power - enemy.Armor);
                 if (dmg < enemy.MaxHp)
-                    result = new JudgeResult(action, OutcomeType.Safe, 0, false,
+                    result = new JudgeResult(
+                        action,
+                        result.PlayerDamage > 0 ? OutcomeType.Punished : OutcomeType.Safe,
+                        result.PlayerDamage,
+                        false,
                         enemy.Armor > 0 ? "방어에 막힘 — 차징→강공격 필요" : "위력 부족 — 차징 필요");
                 else if (charged)
-                    result = new JudgeResult(action, OutcomeType.Cleared, 0, true, "강공격! 방어 관통");
+                    result = new JudgeResult(
+                        action,
+                        OutcomeType.Cleared,
+                        result.PlayerDamage,
+                        true,
+                        "강공격! 방어 관통");
             }
 
             // 차징 처리
             if (action == PlayerAction.Attack && player != null) player.ConsumeCharge();
-            else if (action == PlayerAction.Charge && player != null && result.Type != OutcomeType.Punished)
-                player.SetCharged(true);
+            else if (action == PlayerAction.Charge && player != null)
+                player.SetCharged(result.Type != OutcomeType.Punished);
 
             if (result.PlayerDamage > 0 && player != null) player.TakeDamage(result.PlayerDamage);
+            if (result.Cleared) AwardScore(enemy, action, responseRatio);
+            if (action == PlayerAction.Attack && result.Cleared) OnAttackLanded?.Invoke(charged);
             OnJudged?.Invoke(slot, enemy, result);
             if (verboseLog)
                 Debug.Log($"[Round] {(isMiss ? "무입력" : "응답")} slot{slot}: {enemy?.DisplayName} + {action}{(charged ? "(강)" : "")} → {result.Type} (dmg {result.PlayerDamage}) HP {(player != null ? player.CurrentHp : -1)}");
         }
 
-        private List<Enemy> GenerateCycle(int cycleIndex, int exchangeInPhase, int count, PhaseSO phase)
+        private void AwardScore(Enemy enemy, PlayerAction action, float responseRatio)
         {
-            int n = Mathf.Max(0, count);
-            var generated = new List<Enemy>(n);
-            for (int slot = 0; slot < n; slot++)
-            {
-                if (phase != null
-                    && phase.TryGetAuthoredEnemy(exchangeInPhase, slot, n, out Enemy authored))
-                {
-                    generated.Add(authored);
-                }
-                else
-                {
-                    generated.Add(provider.GetWeighted(cycleIndex, slot, phase));
-                }
-            }
-            return generated;
+            if (action == PlayerAction.Attack) QueueScore(hitScore, false);
+
+            int strengthBonus = enemy != null
+                ? enemy.MaxHp * hpScoreWeight + enemy.Armor * armorScoreWeight
+                : 0;
+            int timingBonus = Mathf.RoundToInt((1f - Mathf.Clamp01(responseRatio)) * maxTimingBonus);
+            QueueScore(clearScore + strengthBonus + timingBonus, true);
         }
 
-        private PhaseSO PhaseForIndex(int phaseIndex)
+        private void QueueScore(int points, bool isClearBonus)
+        {
+            if (points <= 0) return;
+            if (OnScoreAwarded != null) OnScoreAwarded.Invoke(points, isClearBonus);
+            else CommitScore(points);
+        }
+
+        /// <summary>점수 획득 연출이 HUD에 도착했을 때 실제 점수에 반영한다.</summary>
+        public void CommitScore(int points)
+        {
+            if (points <= 0) return;
+            Score += points;
+            OnScoreChanged?.Invoke(Score);
+        }
+
+        /// <summary>응답 슬롯의 현재 입력 가능 여부와 Cursor 진행률을 반환한다.</summary>
+        public bool TryGetInputWindowProgress(int slot, out float progress)
+        {
+            progress = 0f;
+            if (!inResponse || conductor == null) return false;
+            RefreshPendingNoteWindows();
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                ResponseNote note = notes[i];
+                if (note.slot != slot || note.consumed) continue;
+
+                double now = conductor.SongPosition;
+                if (now < note.openTime
+                    || now >= note.closeTime
+                    || Time.realtimeSinceStartupAsDouble < inputLockedUntilRealtime)
+                    return false;
+
+                double duration = note.closeTime - note.openTime;
+                progress = duration > 0.0
+                    ? Mathf.Clamp01((float)((now - note.openTime) / duration))
+                    : 1f;
+                return true;
+            }
+            return false;
+        }
+
+        private PhaseSO PhaseForCycle(int cycleIndex)
         {
             if (phases == null || phases.Count == 0) return null;
-            if (phaseIndex < 0) return null;
-            if (repeatPhasePlan) return phases[phaseIndex % phases.Count];
-            return phaseIndex < phases.Count ? phases[phaseIndex] : null;
-        }
-
-        private bool IsPhasePlanComplete(int phaseIndex)
-            => !repeatPhasePlan
-               && phases != null
-               && phases.Count > 0
-               && phaseIndex >= phases.Count;
-
-        private void HandleStageCleared()
-        {
-            if (isOver) return;
-            isOver = true;
-            pendingInputs.Clear();
-            responseEndPending = false;
-            if (conductor != null) conductor.StopClock();
-            OnStageCleared?.Invoke();
-            if (verboseLog) Debug.Log("[Round] ===== STAGE CLEAR =====");
+            int block = Mathf.Max(1, cyclesPerPhase);
+            int idx = (cycleIndex / block) % phases.Count;
+            return phases[idx];
         }
 
         private void HandleDied()

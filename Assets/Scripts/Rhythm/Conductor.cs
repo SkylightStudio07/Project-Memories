@@ -4,43 +4,35 @@ using UnityEngine;
 namespace BeatMemories
 {
     /// <summary>
-    /// 비트 클록. 준비 4박 뒤 제시 4박→응답 4박 교환 두 번이 이어지는
-    /// 페이즈 타임라인을 관리한다.
+    /// 비트 클록. BPM에 맞춰 박을 세고 제시 4박 뒤 응답 4박이 이어지는 8박 사이클을 관리한다.
     /// P0는 오디오 없이 <see cref="Time.realtimeSinceStartupAsDouble"/> 기반으로 돌린다.
     /// </summary>
     [DefaultExecutionOrder(-50)]
     public class Conductor : MonoBehaviour
     {
-        public const int BeatsPerMeasure = CombatTimeline.BeatsPerMeasure;
+        public const int BeatsPerMeasure = 4;
         public const int ResponseStartBeat = BeatsPerMeasure; // 4
-        public const int BeatsPerCycle = CombatTimeline.BeatsPerExchange; // 8
-        public const int PreparationBeats = CombatTimeline.DefaultPreparationBeats; // 4
+        public const int BeatsPerCycle = ResponseStartBeat + BeatsPerMeasure; // 8
 
         [Header("템포 (인스펙터 조정)")]
-        [SerializeField, Min(1f)] private float bpm = 96f;
+        [SerializeField, Min(1f)] private float bpm = 90f;
         [SerializeField] private bool playOnStart = true;
 
         [Tooltip("시작 전 카운트인(준비) 시간(초). 이 시간 동안은 박이 진행되지 않는다.")]
         [SerializeField, Min(0f)] private float startDelay = 3f;
 
         public float Bpm { get => bpm; set => bpm = Mathf.Max(1f, value); }
-        public float StartDelay { get => startDelay; set => startDelay = Mathf.Max(0f, value); }
         public float SecondsPerBeat => 60f / bpm;
-        public double ScheduledStartDspTime { get; private set; }
         public bool IsRunning { get; private set; }
-        public int ExchangesPerPhase { get; private set; } = CombatTimeline.DefaultExchangesPerPhase;
-        public int BeatsPerPhase => CombatTimeline.BeatsPerPhase(ExchangesPerPhase, PreparationBeats);
 
         /// <summary>시작(첫 박)까지 남은 시간(초). 카운트인 표시용. 시작 후 0.</summary>
-        public double TimeUntilStart => IsRunning
-            ? System.Math.Max(0.0, ScheduledStartDspTime - AudioSettings.dspTime)
-            : startDelay;
+        public double TimeUntilStart => IsRunning ? System.Math.Max(0.0, startTime - Time.realtimeSinceStartupAsDouble) : startDelay;
 
         /// <summary>카운트인 중인가(박이 아직 시작 안 함).</summary>
-        public bool IsCountingDown => IsRunning && AudioSettings.dspTime < ScheduledStartDspTime;
+        public bool IsCountingDown => IsRunning && Time.realtimeSinceStartupAsDouble < startTime;
 
         /// <summary>첫 박(beat 0) 기준 경과 시간(초). 카운트인 중엔 음수.</summary>
-        public double SongPosition => AudioSettings.dspTime - ScheduledStartDspTime;
+        public double SongPosition => Time.realtimeSinceStartupAsDouble - startTime;
 
         /// <summary>Input System의 실시간 타임스탬프를 곡 시작 기준 시간으로 변환한다.</summary>
         public double RealtimeToSongPosition(double realtimeTime) => realtimeTime - startTime;
@@ -50,25 +42,15 @@ namespace BeatMemories
 
         /// <summary>시작 후 누적 박 수(첫 박 = 0). 시작 전 -1.</summary>
         public int TotalBeats { get; private set; } = -1;
-        public int PhaseIndex { get; private set; } = -1;
-        public int CycleIndex { get; private set; } = -1;
-        public int ExchangeInPhase { get; private set; } = -1;
-        public int BeatInCycle { get; private set; } = -1;
-        public int BeatInMeasure { get; private set; } = -1;
-        public CombatSection Section { get; private set; } = CombatSection.Preparation;
-        public bool IsPreparing => Section == CombatSection.Preparation;
-        public bool IsResponseMeasure => Section == CombatSection.Response;
+        public int CycleIndex { get; private set; }
+        public int BeatInCycle { get; private set; }
+        public int BeatInMeasure => IsResponseMeasure ? BeatInCycle - ResponseStartBeat : BeatInCycle;
+        public bool IsResponseMeasure => BeatInCycle >= ResponseStartBeat;
 
         private double startTime;
         private bool pendingBeatDispatch;
 
-        /// <summary>준비를 포함한 모든 박 정각. 인자: 절대 박 인덱스.</summary>
-        public event Action<int> OnClockBeat;
-        /// <summary>준비 마디 시작. 인자: phaseIndex.</summary>
-        public event Action<int> OnPreparationMeasureStart;
-        /// <summary>준비 마디의 매 박. 인자: 준비 내 박(0..3).</summary>
-        public event Action<int> OnPreparationBeat;
-        /// <summary>활성 교환의 매 박 정각. 인자: 사이클 내 박(0..7).</summary>
+        /// <summary>매 박 정각. 인자: 사이클 내 박(0..7).</summary>
         public event Action<int> OnBeat;
         /// <summary>제시 마디 시작(BeatInCycle==0). 인자: cycleIndex.</summary>
         public event Action<int> OnPresentMeasureStart;
@@ -86,20 +68,32 @@ namespace BeatMemories
         {
             IsRunning = true;
             TotalBeats = -1;
-            PhaseIndex = -1;
-            CycleIndex = -1;
-            ExchangeInPhase = -1;
-            BeatInCycle = -1;
-            BeatInMeasure = -1;
             pendingBeatDispatch = false;
-            ScheduledStartDspTime = AudioSettings.dspTime + startDelay;
             startTime = Time.realtimeSinceStartupAsDouble + startDelay; // 카운트인만큼 미룬다
         }
 
         public void StopClock() => IsRunning = false;
 
-        public void ConfigureTimeline(int exchangesPerPhase)
-            => ExchangesPerPhase = Mathf.Max(1, exchangesPerPhase);
+        /// <summary>
+        /// 현재 응답 슬롯이 입력/미스로 확정됐을 때 남은 박 시간을 생략하고 다음 박을 시작한다.
+        /// 기존 Beat 이벤트 순서와 사이클 경계 처리는 <see cref="AdvanceBeat"/>를 그대로 사용한다.
+        /// </summary>
+        public bool AdvanceResponseBeatNow(int resolvedSlot)
+        {
+            if (!IsRunning || pendingBeatDispatch) return false;
+            if (BeatInCycle != ResponseStartBeat + resolvedSlot) return false;
+
+            TotalBeats++;
+            startTime = Time.realtimeSinceStartupAsDouble - BeatToTime(TotalBeats);
+            AdvanceBeat();
+            return true;
+        }
+
+        /// <summary>Hit Stop처럼 실시간 정지가 발생한 만큼 비트 기준시각도 함께 뒤로 민다.</summary>
+        public void DelayClock(double seconds)
+        {
+            if (IsRunning && seconds > 0.0) startTime += seconds;
+        }
 
         private void Update()
         {
@@ -114,7 +108,7 @@ namespace BeatMemories
                 if (!IsRunning) return;
             }
 
-            double elapsed = AudioSettings.dspTime - ScheduledStartDspTime;
+            double elapsed = Time.realtimeSinceStartupAsDouble - startTime;
             if (elapsed < 0.0) return; // 카운트인 중 — 아직 박 시작 전
             int beatsNow = (int)(elapsed / SecondsPerBeat);
             while (beatsNow > TotalBeats)
@@ -126,11 +120,9 @@ namespace BeatMemories
 
         private bool AdvanceBeat()
         {
-            if (CombatTimeline.StartsAfterResponse(TotalBeats, ExchangesPerPhase, PreparationBeats))
+            if (TotalBeats > 0 && TotalBeats % BeatsPerCycle == 0)
             {
-                CombatTimelinePosition previous =
-                    CombatTimeline.Resolve(TotalBeats - 1, ExchangesPerPhase, PreparationBeats);
-                OnResponseMeasureEnd?.Invoke(previous.ExchangeIndex);
+                OnResponseMeasureEnd?.Invoke((TotalBeats / BeatsPerCycle) - 1);
                 if (!IsRunning) return false;
                 pendingBeatDispatch = true;
                 return false;
@@ -142,36 +134,14 @@ namespace BeatMemories
 
         private void DispatchCurrentBeat()
         {
-            CombatTimelinePosition position =
-                CombatTimeline.Resolve(TotalBeats, ExchangesPerPhase, PreparationBeats);
-            PhaseIndex = position.PhaseIndex;
-            CycleIndex = position.ExchangeIndex;
-            ExchangeInPhase = position.ExchangeInPhase;
-            BeatInCycle = position.BeatInCycle;
-            BeatInMeasure = position.BeatInMeasure;
-            Section = position.Section;
+            CycleIndex = TotalBeats / BeatsPerCycle;
+            BeatInCycle = TotalBeats % BeatsPerCycle;
 
-            if (position.IsPreparation)
-            {
-                if (BeatInMeasure == 0)
-                {
-                    OnPreparationMeasureStart?.Invoke(PhaseIndex);
-                    if (!IsRunning) return;
-                }
-                OnClockBeat?.Invoke(TotalBeats);
-                OnPreparationBeat?.Invoke(BeatInMeasure);
-                return;
-            }
-
-            if (position.IsPreview && BeatInMeasure == 0)
-            {
+            if (BeatInCycle == 0)
                 OnPresentMeasureStart?.Invoke(CycleIndex);
-                if (!IsRunning) return;
-            }
 
-            OnClockBeat?.Invoke(TotalBeats);
             OnBeat?.Invoke(BeatInCycle);
-            if (position.IsResponse && BeatInMeasure == 0)
+            if (BeatInCycle == ResponseStartBeat)
                 OnResponseMeasureStart?.Invoke(CycleIndex);
         }
     }

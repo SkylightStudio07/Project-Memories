@@ -17,8 +17,8 @@ namespace BeatMemories
 
         [Header("공격력 (인스펙터 조정)")]
         [SerializeField, Min(0)] private int attackPower = 1;
-        [Tooltip("차징 후 강공격 위력")]
-        [SerializeField, Min(0)] private int chargedAttackPower = 3;
+        [Tooltip("차징 후 다음 공격의 배율")]
+        [SerializeField, Min(1f)] private float chargedAttackMultiplier = 2.5f;
         [Tooltip("강공격은 방어력을 무시")]
         [SerializeField] private bool chargedPiercesArmor = true;
 
@@ -40,7 +40,8 @@ namespace BeatMemories
 
         // ── 공격/차징 ──
         public int AttackPower => attackPower;
-        public int ChargedAttackPower => chargedAttackPower;
+        public int ChargedAttackPower => Mathf.CeilToInt(attackPower * chargedAttackMultiplier);
+        public float ChargedAttackMultiplier => chargedAttackMultiplier;
         public bool ChargedPiercesArmor => chargedPiercesArmor;
         public bool IsCharged { get; private set; }
         public event Action<bool> OnChargedChanged;
@@ -50,6 +51,7 @@ namespace BeatMemories
         public Sprite IdleSprite => idleSprite;
         public Sprite CurrentSprite { get; private set; }
         public event Action<Sprite> OnSpriteChanged;
+        public event Action<PlayerAction, Sprite> OnActionPresented;
 
         // 게임플레이 시드와 독립적인 연출용 난수
         private readonly System.Random spriteRng = new System.Random();
@@ -101,9 +103,12 @@ namespace BeatMemories
         private void HandleAction(PlayerAction action)
         {
             Sprite[] arr = SpritesFor(action);
-            if (arr == null || arr.Length == 0) return; // 아트 없으면 색 폴백(HudView)
-            CurrentSprite = arr[spriteRng.Next(arr.Length)];
-            OnSpriteChanged?.Invoke(CurrentSprite);
+            if (arr != null && arr.Length > 0)
+            {
+                CurrentSprite = arr[spriteRng.Next(arr.Length)];
+                OnSpriteChanged?.Invoke(CurrentSprite);
+            }
+            OnActionPresented?.Invoke(action, CurrentSprite);
         }
 
         private Sprite[] SpritesFor(PlayerAction action)

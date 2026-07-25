@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageSO
   stageNumber: 4
   displayName: "\uC2A4\uD14C\uC774\uC9C0 4"
-  keyMode: 0
+  keyMode: 1
   enemyPool:
   - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
   - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
