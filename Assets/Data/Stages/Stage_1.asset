@@ -18,6 +18,7 @@ MonoBehaviour:
   enemyPool:
   - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
   - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
+  enemySprite: {fileID: 4089636935794680599, guid: 42d77fc7d15a51d4ab94c4d0ccec3e85, type: 3}
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
   phases:
   - {fileID: 11400000, guid: 1ae94f3d63d39b142b78bfee344ac7ab, type: 2}

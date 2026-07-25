@@ -14,16 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageSO
   stageNumber: 4
   displayName: "\uC2A4\uD14C\uC774\uC9C0 4"
-  keyMode: 0
+  keyMode: 1
   enemyPool:
-  - {fileID: 11400000, guid: 73193b9472facce40905b700b415a2cd, type: 2}
+  - {fileID: 11400000, guid: 9fd816ca654f4d8e885fb4af1b40a369, type: 2}
+  - {fileID: 11400000, guid: f1895b7e0bcb44e8a39f66771fac0f53, type: 2}
+  - {fileID: 11400000, guid: 07b24e64a97a41baaaaa9989951ce18d, type: 2}
+  - {fileID: 11400000, guid: ddcca76e5c364424a4a430e37c167072, type: 2}
+  enemySprite: {fileID: 4276949625366853428, guid: 74a3ac680153b9140aa29477ac725e20, type: 3}
+  flipEnemyIdleX: 0
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
   phases:
-  - {fileID: 11400000, guid: 1ae94f3d63d39b142b78bfee344ac7ab, type: 2}
-  - {fileID: 11400000, guid: 054b40b29d0bc454aaabb343feb3c141, type: 2}
+  - {fileID: 11400000, guid: b6adee7f404a43dbb14cd9aa7b66309d, type: 2}
+  - {fileID: 11400000, guid: 43d9a5eb1ded4229a88e059f28790715, type: 2}
   cyclesPerPhase: 2
+  phasePreparationBeats: 4
+  repeatPhasePlan: 0
   bpm: 90
   playerMaxHp: 7
-  backgroundSprite: {fileID: 8681808610245202088, guid: 9818b2e84ccc0f44ea01d1b6416cead9, type: 3}
-  floorSprite: {fileID: 378343422154318483, guid: 8daff401b6b9d384398545c17f356d7c, type: 3}
-  backgroundPrefab: {fileID: 1755634556673533739, guid: 248a0d1d3b7791c43868858144a98b97, type: 3}
+  startDelay: 0
+  backgroundSprite: {fileID: 3670592728298037066, guid: 6fd20dbf978310548b65c4b9096ad5f9, type: 3}
+  floorSprite: {fileID: 5548167994591598614, guid: c9101b459cbb671489ffda5ec0aa0602, type: 3}
+  backgroundPrefab: {fileID: 6325322317993969736, guid: 8980443e010c57146ad6bfc2fc610004, type: 3}

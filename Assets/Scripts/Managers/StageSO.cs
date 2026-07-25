@@ -29,6 +29,8 @@ namespace BeatMemories
         public RhythmPatternSO pattern;
         public List<PhaseSO> phases = new List<PhaseSO>();
         [Min(1)] public int cyclesPerPhase = 2;
+        [Tooltip("Preparation beats inserted between phases. Zero preserves the legacy timeline.")]
+        [Min(0)] public int phasePreparationBeats;
         [Tooltip("켜면 마지막 페이즈 뒤 처음으로 순환. 끄면 마지막 응답 후 스테이지 클리어")]
         public bool repeatPhasePlan = true;
 

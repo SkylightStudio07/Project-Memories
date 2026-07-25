@@ -143,7 +143,7 @@ namespace BeatMemories
         {
             if (round != null)
             {
-                round.OnEnemyRevealed += OnReveal;
+                round.OnEnemyPreviewed += OnPreview;
                 round.OnJudged += OnJudged;
                 round.OnPhaseChanged += OnPhase;
                 round.OnCycleStarted += OnCycleStarted;
@@ -151,6 +151,7 @@ namespace BeatMemories
                 round.OnScoreChanged += OnScoreChanged;
                 round.OnGameOver += OnGameOver;
                 round.OnStageCleared += QueueStageRefresh;
+                round.OnFinalStageCleared += OnFinalStageCleared;
             }
             if (conductor != null) conductor.OnBeat += OnBeat;
             if (player != null)
@@ -165,7 +166,7 @@ namespace BeatMemories
         {
             if (round != null)
             {
-                round.OnEnemyRevealed -= OnReveal;
+                round.OnEnemyPreviewed -= OnPreview;
                 round.OnJudged -= OnJudged;
                 round.OnPhaseChanged -= OnPhase;
                 round.OnCycleStarted -= OnCycleStarted;
@@ -173,6 +174,7 @@ namespace BeatMemories
                 round.OnScoreChanged -= OnScoreChanged;
                 round.OnGameOver -= OnGameOver;
                 round.OnStageCleared -= QueueStageRefresh;
+                round.OnFinalStageCleared -= OnFinalStageCleared;
             }
             if (conductor != null) conductor.OnBeat -= OnBeat;
             if (player != null)
@@ -275,11 +277,18 @@ namespace BeatMemories
             }
         }
 
-        private void OnReveal(int slot, Enemy e)
+        private void OnPreview(EnemyPreviewCue cue)
         {
-            if (slot >= 0 && slot < revealedEnemies.Length) revealedEnemies[slot] = e;
-            SetQueueSlot(enemyQueueSlots, slot, QueueSprite(e), Color.white);
-            if (feedbackLabel != null) feedbackLabel.text = e != null ? e.DisplayName : "";
+            int slot = cue.Slot;
+            Enemy enemy = cue.VisibleEnemy;
+            if (slot >= 0 && slot < revealedEnemies.Length) revealedEnemies[slot] = enemy;
+            SetQueueSlot(
+                enemyQueueSlots,
+                slot,
+                cue.IsHidden ? emptyQueueSprite : QueueSprite(enemy),
+                cue.IsHidden ? queueEmptyColor : Color.white);
+            if (feedbackLabel != null)
+                feedbackLabel.text = cue.IsHidden || enemy == null ? "" : enemy.DisplayName;
         }
 
         private void OnJudged(int slot, Enemy e, JudgeResult r)
@@ -376,6 +385,15 @@ namespace BeatMemories
         private void OnGameOver()
         {
             if (gameOverLabel != null) { gameOverLabel.enabled = true; gameOverLabel.text = "GAME OVER"; }
+        }
+
+        private void OnFinalStageCleared()
+        {
+            if (gameOverLabel != null)
+            {
+                gameOverLabel.enabled = true;
+                gameOverLabel.text = "STAGE CLEAR";
+            }
         }
 
         private void OnBeat(int beatInCycle)

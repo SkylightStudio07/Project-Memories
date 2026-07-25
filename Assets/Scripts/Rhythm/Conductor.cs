@@ -29,10 +29,13 @@ namespace BeatMemories
         public double ScheduledStartDspTime { get; private set; }
 
         /// <summary>시작(첫 박)까지 남은 시간(초). 카운트인 표시용. 시작 후 0.</summary>
-        public double TimeUntilStart => IsRunning ? System.Math.Max(0.0, startTime - Time.realtimeSinceStartupAsDouble) : startDelay;
+        public double TimeUntilStart => IsRunning && TotalBeats < 0
+            ? System.Math.Max(0.0, startTime - Time.realtimeSinceStartupAsDouble)
+            : 0.0;
 
         /// <summary>카운트인 중인가(박이 아직 시작 안 함).</summary>
-        public bool IsCountingDown => IsRunning && Time.realtimeSinceStartupAsDouble < startTime;
+        public bool IsCountingDown
+            => IsRunning && TotalBeats < 0 && Time.realtimeSinceStartupAsDouble < startTime;
 
         /// <summary>첫 박(beat 0) 기준 경과 시간(초). 카운트인 중엔 음수.</summary>
         public double SongPosition => Time.realtimeSinceStartupAsDouble - startTime;
@@ -52,11 +55,18 @@ namespace BeatMemories
 
         private double startTime;
         private bool pendingBeatDispatch;
+        private int queuedPreparationBeats;
+        private int preparationBeatCount;
+        private int preparationBeatIndex = -1;
+        private double preparationStartRealtime;
+
+        public bool IsPreparing => preparationBeatCount > 0;
 
         /// <summary>매 박 정각(전역 박 인덱스). 카운트인 이후 모든 박에서 발생. 애니·연출 클록용.</summary>
         public event Action<int> OnClockBeat;
-        /// <summary>준비 마디 시작. (현재 비트 모델엔 준비 마디가 없어 미발생 — 배너는 Start에서 자체 초기화.)</summary>
+        /// <summary>요청된 페이즈 준비 구간 시작. 인자: 다음 사이클 인덱스.</summary>
         public event Action<int> OnPreparationMeasureStart;
+        public event Action<int> OnPreparationBeat;
         /// <summary>매 박 정각. 인자: 사이클 내 박(0..7).</summary>
         public event Action<int> OnBeat;
         /// <summary>제시 마디 시작(BeatInCycle==0). 인자: cycleIndex.</summary>
@@ -76,11 +86,20 @@ namespace BeatMemories
             IsRunning = true;
             TotalBeats = -1;
             pendingBeatDispatch = false;
+            queuedPreparationBeats = 0;
+            preparationBeatCount = 0;
+            preparationBeatIndex = -1;
             startTime = Time.realtimeSinceStartupAsDouble + startDelay; // 카운트인만큼 미룬다
             ScheduledStartDspTime = AudioSettings.dspTime + startDelay;  // 오디오 예약 재생 동기용
         }
 
         public void StopClock() => IsRunning = false;
+
+        public void QueuePreparationBeats(int beats)
+        {
+            if (!IsRunning || beats <= 0) return;
+            queuedPreparationBeats = System.Math.Max(queuedPreparationBeats, beats);
+        }
 
         /// <summary>
         /// 현재 응답 슬롯이 입력/미스로 확정됐을 때 남은 박 시간을 생략하고 다음 박을 시작한다.
@@ -116,6 +135,12 @@ namespace BeatMemories
                 if (!IsRunning) return;
             }
 
+            if (IsPreparing)
+            {
+                UpdatePreparation();
+                return;
+            }
+
             double elapsed = Time.realtimeSinceStartupAsDouble - startTime;
             if (elapsed < 0.0) return; // 카운트인 중 — 아직 박 시작 전
             int beatsNow = (int)(elapsed / SecondsPerBeat);
@@ -132,6 +157,11 @@ namespace BeatMemories
             {
                 OnResponseMeasureEnd?.Invoke((TotalBeats / BeatsPerCycle) - 1);
                 if (!IsRunning) return false;
+                if (queuedPreparationBeats > 0)
+                {
+                    BeginPreparation();
+                    return false;
+                }
                 pendingBeatDispatch = true;
                 return false;
             }
@@ -152,6 +182,39 @@ namespace BeatMemories
             OnBeat?.Invoke(BeatInCycle);
             if (BeatInCycle == ResponseStartBeat)
                 OnResponseMeasureStart?.Invoke(CycleIndex);
+        }
+
+        private void BeginPreparation()
+        {
+            preparationBeatCount = queuedPreparationBeats;
+            queuedPreparationBeats = 0;
+            preparationBeatIndex = -1;
+            preparationStartRealtime = startTime + BeatToTime(TotalBeats);
+            startTime += preparationBeatCount * (double)SecondsPerBeat;
+            OnPreparationMeasureStart?.Invoke(TotalBeats / BeatsPerCycle);
+        }
+
+        private void UpdatePreparation()
+        {
+            double now = Time.realtimeSinceStartupAsDouble;
+            while (preparationBeatIndex + 1 < preparationBeatCount)
+            {
+                int nextBeat = preparationBeatIndex + 1;
+                double beatTime =
+                    preparationStartRealtime + nextBeat * (double)SecondsPerBeat;
+                if (now < beatTime) break;
+
+                preparationBeatIndex = nextBeat;
+                OnPreparationBeat?.Invoke(preparationBeatIndex);
+            }
+
+            double endTime =
+                preparationStartRealtime + preparationBeatCount * (double)SecondsPerBeat;
+            if (now < endTime) return;
+
+            preparationBeatCount = 0;
+            preparationBeatIndex = -1;
+            DispatchCurrentBeat();
         }
     }
 }

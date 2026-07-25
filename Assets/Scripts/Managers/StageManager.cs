@@ -76,6 +76,7 @@ namespace BeatMemories
         {
             if (!TryAdvanceToNextStage())
             {
+                round?.StopAtStageClear();
                 Debug.Log($"[Stage] 마지막 스테이지 완료: idx {CurrentIndex}");
             }
         }

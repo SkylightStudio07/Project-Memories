@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d62a14f7cef6184c94056cc0ebde063, type: 3}
+  m_Name: Phase_Stage4_Visible
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.PhaseSO
+  phaseName: "\uACF5\uAC1C \uD398\uC774\uC988"
+  kind: 0
+  hiddenAnswerAction: 2
+  weights: []
+  enemyWeights:
+  - enemy: {fileID: 11400000, guid: 9fd816ca654f4d8e885fb4af1b40a369, type: 2}
+    weight: 2
+  - enemy: {fileID: 11400000, guid: f1895b7e0bcb44e8a39f66771fac0f53, type: 2}
+    weight: 2
+  - enemy: {fileID: 11400000, guid: 07b24e64a97a41baaaaa9989951ce18d, type: 2}
+    weight: 1
+  - enemy: {fileID: 11400000, guid: ddcca76e5c364424a4a430e37c167072, type: 2}
+    weight: 1
+  authoredSequence: []
+  preparationSprite: {fileID: 0}
+  cueColor: {r: 1, g: 1, b: 1, a: 1}
+  preparationTintStrength: 0
+  activeTintStrength: 0
+  preparationSnareVolume: 0
+  activeSnareVolume: 0

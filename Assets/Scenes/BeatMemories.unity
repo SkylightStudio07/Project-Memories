@@ -3132,6 +3132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1188105353}
   - component: {fileID: 1188105352}
+  - component: {fileID: 1188105354}
   m_Layer: 0
   m_Name: RoundManager
   m_TagString: Untagged
@@ -3176,6 +3177,28 @@ MonoBehaviour:
   maxTimingBonus: 100
   hpScoreWeight: 25
   armorScoreWeight: 50
+--- !u!114 &1188105354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188105351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d03275e0a042dc9d3f3a92a8d61921, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.PhasePresentationController
+  round: {fileID: 1188105352}
+  conductor: {fileID: 1739020140}
+  background: {fileID: 133834108}
+  globalLight: {fileID: 1029222278}
+  targetCamera: {fileID: 2084326193}
+  snareClip: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  backgroundMusicVolume: 0.45
+  transitionSpeed: 3
+  attackPreparationZoomRatio: 0.85
 --- !u!4 &1188105353
 Transform:
   m_ObjectHideFlags: 0

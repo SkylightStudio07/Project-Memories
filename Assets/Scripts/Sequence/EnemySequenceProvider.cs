@@ -55,6 +55,8 @@ namespace BeatMemories
         public Enemy GetWeighted(int cycleIndex, int slotIndex, PhaseSO phase)
         {
             if (pool.Count == 0) return null;
+            if (phase != null && phase.HasEnemyWeights)
+                return GetEnemyWeighted(cycleIndex, slotIndex, phase, true);
             if (phase == null || answerKeys.Count == 0) return Get(cycleIndex, slotIndex);
 
             float total = 0f;
@@ -83,7 +85,10 @@ namespace BeatMemories
             var list = new List<Enemy>(n);
             for (int i = 0; i < n; i++)
             {
-                Enemy enemy = GetWeighted(cycleIndex, i, phase);
+                bool hasRoomForFollowUp = i + 1 < n;
+                Enemy enemy = phase != null && phase.HasEnemyWeights
+                    ? GetEnemyWeighted(cycleIndex, i, phase, hasRoomForFollowUp)
+                    : GetWeighted(cycleIndex, i, phase);
                 list.Add(enemy);
 
                 Enemy followUp = enemy != null ? enemy.ForcedFollowUp : null;
@@ -93,6 +98,46 @@ namespace BeatMemories
                 i++;
             }
             return list;
+        }
+
+        private Enemy GetEnemyWeighted(
+            int cycleIndex,
+            int slotIndex,
+            PhaseSO phase,
+            bool allowForcedFollowUp)
+        {
+            IReadOnlyList<EnemyWeight> entries = phase.EnemyWeights;
+            float total = 0f;
+            for (int i = 0; i < entries.Count; i++)
+            {
+                EnemyWeight entry = entries[i];
+                if (entry == null
+                    || entry.enemy == null
+                    || (!allowForcedFollowUp && entry.enemy.ForcedFollowUp != null))
+                    continue;
+                total += System.Math.Max(0f, entry.weight);
+            }
+
+            if (total <= 0f) return null;
+
+            float r = Norm(Hash((uint)seed, (uint)cycleIndex, (uint)slotIndex)) * total;
+            Enemy fallback = null;
+            float accumulated = 0f;
+            for (int i = 0; i < entries.Count; i++)
+            {
+                EnemyWeight entry = entries[i];
+                if (entry == null
+                    || entry.enemy == null
+                    || (!allowForcedFollowUp && entry.enemy.ForcedFollowUp != null)
+                    || entry.weight <= 0f)
+                    continue;
+
+                fallback = entry.enemy;
+                accumulated += entry.weight;
+                if (r < accumulated) return entry.enemy;
+            }
+
+            return fallback;
         }
 
         // ── 내부 ────────────────────────────────────────────────
