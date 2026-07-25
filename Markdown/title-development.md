@@ -129,3 +129,35 @@
 
 - `dotnet build Project-Memories.slnx` 성공
 - 신규 컴파일 오류 0개
+
+## 2026-07-26 — 옵션 설정 기능
+
+### 구현 내용
+
+- BGM/SFX 슬라이더는 이번 작업 범위에서 제외했다.
+- `Input Offset`
+  - 좌우 버튼으로 10ms씩 조절한다.
+  - 범위는 -200ms부터 +200ms까지이며 `PlayerPrefs`에 저장한다.
+  - 저장값을 `RoundManager`의 실제 입력 판정 시각에 반영한다.
+- `Resolution`
+  - 현재 모니터가 지원하는 해상도 목록을 좌우 버튼으로 순환한다.
+  - 선택 즉시 `Screen.SetResolution`으로 적용하고 저장한다.
+- `Window Mode`
+  - `Fullscreen`, `Borderless`, `Windowed`를 순환한다.
+  - 해상도와 함께 즉시 적용하고 저장한다.
+- `VSYNC`
+  - `Off`, `On`을 전환하고 `QualitySettings.vSyncCount`에 즉시 반영한다.
+- 저장된 `InputOffsetNum`, `ResolutionOffsetNum`, `WindowModeOffsetText`,
+  `VSyncModeOffsetText` TMP 오브젝트를 `OptionsSettingsController`에 직접 연결했다.
+- 설정은 타이틀 씬 재진입 및 게임 재실행 후에도 유지된다.
+
+### 추가 파일
+
+- `Assets/Scripts/Core/GameSettings.cs`
+- `Assets/Scripts/UI/OptionsSettingsController.cs`
+
+### 검증
+
+- `dotnet build Project-Memories.slnx --no-restore` 성공
+- 신규 컴파일 오류 0개
+- 기존 `HudView` 미사용 필드 경고 2개만 확인

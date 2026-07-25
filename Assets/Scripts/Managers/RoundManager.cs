@@ -347,7 +347,8 @@ namespace BeatMemories
             if (isOver || !inResponse || conductor == null) return;
 
             RefreshPendingNoteWindows();
-            double inputSongTime = conductor.RealtimeToSongPosition(timedAction.Realtime);
+            double inputSongTime = conductor.RealtimeToSongPosition(timedAction.Realtime)
+                + GameSettings.InputOffsetSeconds;
             ExpireElapsedNotes(inputSongTime);
             if (isOver || timedAction.Realtime < inputLockedUntilRealtime) return;
 
