@@ -17,7 +17,7 @@ namespace BeatMemories
         public const int PreparationBeats = CombatTimeline.DefaultPreparationBeats; // 4
 
         [Header("템포 (인스펙터 조정)")]
-        [SerializeField, Min(1f)] private float bpm = 90f;
+        [SerializeField, Min(1f)] private float bpm = 96f;
         [SerializeField] private bool playOnStart = true;
 
         [Tooltip("시작 전 카운트인(준비) 시간(초). 이 시간 동안은 박이 진행되지 않는다.")]
@@ -26,18 +26,21 @@ namespace BeatMemories
         public float Bpm { get => bpm; set => bpm = Mathf.Max(1f, value); }
         public float StartDelay { get => startDelay; set => startDelay = Mathf.Max(0f, value); }
         public float SecondsPerBeat => 60f / bpm;
+        public double ScheduledStartDspTime { get; private set; }
         public bool IsRunning { get; private set; }
         public int ExchangesPerPhase { get; private set; } = CombatTimeline.DefaultExchangesPerPhase;
         public int BeatsPerPhase => CombatTimeline.BeatsPerPhase(ExchangesPerPhase, PreparationBeats);
 
         /// <summary>시작(첫 박)까지 남은 시간(초). 카운트인 표시용. 시작 후 0.</summary>
-        public double TimeUntilStart => IsRunning ? System.Math.Max(0.0, startTime - Time.realtimeSinceStartupAsDouble) : startDelay;
+        public double TimeUntilStart => IsRunning
+            ? System.Math.Max(0.0, ScheduledStartDspTime - AudioSettings.dspTime)
+            : startDelay;
 
         /// <summary>카운트인 중인가(박이 아직 시작 안 함).</summary>
-        public bool IsCountingDown => IsRunning && Time.realtimeSinceStartupAsDouble < startTime;
+        public bool IsCountingDown => IsRunning && AudioSettings.dspTime < ScheduledStartDspTime;
 
         /// <summary>첫 박(beat 0) 기준 경과 시간(초). 카운트인 중엔 음수.</summary>
-        public double SongPosition => Time.realtimeSinceStartupAsDouble - startTime;
+        public double SongPosition => AudioSettings.dspTime - ScheduledStartDspTime;
 
         /// <summary>Input System의 실시간 타임스탬프를 곡 시작 기준 시간으로 변환한다.</summary>
         public double RealtimeToSongPosition(double realtimeTime) => realtimeTime - startTime;
@@ -89,6 +92,7 @@ namespace BeatMemories
             BeatInCycle = -1;
             BeatInMeasure = -1;
             pendingBeatDispatch = false;
+            ScheduledStartDspTime = AudioSettings.dspTime + startDelay;
             startTime = Time.realtimeSinceStartupAsDouble + startDelay; // 카운트인만큼 미룬다
         }
 
@@ -110,7 +114,7 @@ namespace BeatMemories
                 if (!IsRunning) return;
             }
 
-            double elapsed = Time.realtimeSinceStartupAsDouble - startTime;
+            double elapsed = AudioSettings.dspTime - ScheduledStartDspTime;
             if (elapsed < 0.0) return; // 카운트인 중 — 아직 박 시작 전
             int beatsNow = (int)(elapsed / SecondsPerBeat);
             while (beatsNow > TotalBeats)

@@ -3461,6 +3461,8 @@ MonoBehaviour:
   globalLight: {fileID: 1029222278}
   targetCamera: {fileID: 2084326193}
   snareClip: {fileID: 0}
+  backgroundMusic: {fileID: 8300000, guid: 23f4a83e71754865a3f69b20ef41578d, type: 3}
+  backgroundMusicVolume: 0.45
   transitionSpeed: 3
   attackPreparationZoomRatio: 0.85
 --- !u!4 &1188105353
@@ -5561,7 +5563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb4747a72f7fa44e916d36f115c807b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.Conductor
-  bpm: 90
+  bpm: 96
   playOnStart: 1
   startDelay: 3
 --- !u!4 &1739020141

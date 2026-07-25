@@ -29,7 +29,7 @@ namespace BeatMemories
         public bool repeatPhasePlan = true;
 
         [Header("수치")]
-        [Min(1f)] public float bpm = 90f;
+        [Min(1f)] public float bpm = 96f;
         [Min(1)] public int playerMaxHp = 8;
         [Tooltip("첫 준비 4박 전에 둘 별도 무박자 카운트인. Stage 1은 준비가 카운트인을 겸해 0")]
         [Min(0f)] public float startDelay = 3f;

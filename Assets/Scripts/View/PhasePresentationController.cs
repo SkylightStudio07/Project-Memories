@@ -18,6 +18,8 @@ namespace BeatMemories
         [SerializeField] private Light2D globalLight;
         [SerializeField] private Camera targetCamera;
         [SerializeField] private AudioClip snareClip;
+        [SerializeField] private AudioClip backgroundMusic;
+        [SerializeField, Range(0f, 1f)] private float backgroundMusicVolume = 0.45f;
 
         [Header("전환")]
         [SerializeField, Min(0.1f)] private float transitionSpeed = 3f;
@@ -25,6 +27,7 @@ namespace BeatMemories
         [SerializeField, Range(0.75f, 1f)] private float attackPreparationZoomRatio = 0.85f;
 
         private AudioSource _audioSource;
+        private AudioSource _backgroundMusicSource;
         private AudioClip _runtimeSnare;
         private PhaseSO _phase;
         private bool _preparing;
@@ -63,6 +66,16 @@ namespace BeatMemories
             _audioSource.loop = false;
             _audioSource.spatialBlend = 0f;
 
+            if (backgroundMusic != null)
+            {
+                _backgroundMusicSource = gameObject.AddComponent<AudioSource>();
+                _backgroundMusicSource.clip = backgroundMusic;
+                _backgroundMusicSource.playOnAwake = false;
+                _backgroundMusicSource.loop = true;
+                _backgroundMusicSource.spatialBlend = 0f;
+                _backgroundMusicSource.volume = backgroundMusicVolume;
+            }
+
             if (FindFirstObjectByType<AudioListener>() == null && Camera.main != null)
                 Camera.main.gameObject.AddComponent<AudioListener>();
 
@@ -83,6 +96,16 @@ namespace BeatMemories
                 round.OnStageCleared += OnBattleEnded;
             }
             if (conductor != null) conductor.OnClockBeat += OnClockBeat;
+        }
+
+        private void Start()
+        {
+            if (_backgroundMusicSource == null) return;
+
+            if (conductor != null && conductor.IsRunning)
+                _backgroundMusicSource.PlayScheduled(conductor.ScheduledStartDspTime);
+            else
+                _backgroundMusicSource.Play();
         }
 
         private void OnDisable()
@@ -175,21 +198,27 @@ namespace BeatMemories
         private static AudioClip CreateFallbackSnare()
         {
             const int sampleRate = 44100;
-            const float duration = 0.12f;
+            const float duration = 0.085f;
             int sampleCount = Mathf.CeilToInt(sampleRate * duration);
             var samples = new float[sampleCount];
             var rng = new System.Random(1947);
+            float previousNoise = 0f;
 
             for (int i = 0; i < sampleCount; i++)
             {
                 float time = i / (float)sampleRate;
-                float envelope = Mathf.Exp(-32f * time);
                 float noise = (float)(rng.NextDouble() * 2.0 - 1.0);
-                float body = Mathf.Sin(2f * Mathf.PI * 185f * time);
-                samples[i] = (noise * 0.82f + body * 0.18f) * envelope;
+                float crack = (noise - previousNoise * 0.72f) * Mathf.Exp(-52f * time);
+                float body = (
+                    Mathf.Sin(2f * Mathf.PI * 190f * time) +
+                    Mathf.Sin(2f * Mathf.PI * 330f * time) * 0.35f
+                ) * Mathf.Exp(-40f * time);
+                float snap = noise * Mathf.Exp(-180f * time);
+                samples[i] = Mathf.Clamp(crack * 0.72f + body * 0.38f + snap * 0.32f, -1f, 1f);
+                previousNoise = noise;
             }
 
-            AudioClip clip = AudioClip.Create("Runtime Snare", sampleCount, 1, sampleRate, false);
+            AudioClip clip = AudioClip.Create("Fast Intense Snare", sampleCount, 1, sampleRate, false);
             clip.SetData(samples, 0);
             return clip;
         }

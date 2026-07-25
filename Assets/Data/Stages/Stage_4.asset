@@ -24,7 +24,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 054b40b29d0bc454aaabb343feb3c141, type: 2}
   cyclesPerPhase: 2
   repeatPhasePlan: 1
-  bpm: 90
+  bpm: 96
   playerMaxHp: 7
   startDelay: 3
   backgroundSprite: {fileID: 0}

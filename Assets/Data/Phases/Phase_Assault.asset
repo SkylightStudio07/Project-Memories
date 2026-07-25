@@ -35,5 +35,5 @@ MonoBehaviour:
   cueColor: {r: 0.95, g: 0.08, b: 0.08, a: 1}
   preparationTintStrength: 0.85
   activeTintStrength: 0.85
-  preparationSnareVolume: 0.75
-  activeSnareVolume: 0.35
+  preparationSnareVolume: 0.9
+  activeSnareVolume: 0.65
