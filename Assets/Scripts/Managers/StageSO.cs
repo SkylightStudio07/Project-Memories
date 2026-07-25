@@ -59,6 +59,10 @@ namespace BeatMemories
         [Tooltip("페이지 전환 중 EnemyActor에 표시할 공격 자세")]
         public Sprite enemyPageTransitionSprite;
 
+        [Header("다이얼로그 (스테이지 시작 전, 카운트인 전에 재생)")]
+        [Tooltip("비우면 다이얼로그 없이 바로 카운트인 시작")]
+        public DialogueSO introDialogue;
+
         [Header("배경 (옵션 — 비우면 씬 기존 것 유지)")]
         [Tooltip("씬의 '백그라운드' SpriteRenderer에 바꿔끼울 스프라이트")]
         public Sprite backgroundSprite;

@@ -38,6 +38,7 @@ MonoBehaviour:
   enemyPageTransitionBeats: 0
   cutPreviewBottomHalfOnSecondPage: 0
   enemyPageTransitionSprite: {fileID: 0}
+  introDialogue: {fileID: 11400000, guid: 1545995104550c24bb8de2006bc560b2, type: 2}
   backgroundSprite: {fileID: 8681808610245202088, guid: 9818b2e84ccc0f44ea01d1b6416cead9, type: 3}
   floorSprite: {fileID: 378343422154318483, guid: 8daff401b6b9d384398545c17f356d7c, type: 3}
   backgroundPrefab: {fileID: 1755634556673533739, guid: 248a0d1d3b7791c43868858144a98b97, type: 3}

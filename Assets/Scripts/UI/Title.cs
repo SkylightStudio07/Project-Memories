@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Title : MonoBehaviour
 {
-    private const string BeatMemoriesSceneName = "BeatMemories";
+    private const string BeatMemoriesSceneName = "BeatMemories_Dayeon";
 
     [Header("Title Elements")]
     [SerializeField] private Graphic wooferLeft;

@@ -15,7 +15,7 @@ MonoBehaviour:
   data:
     id: stage3_interrupted_idle
     displayName: "\uC801 \uCDA9\uC804 \uCDE8\uC18C"
-    sprite: {fileID: -8380145206358370378, guid: d99f64baced9b454eb41d36e12278d6a, type: 3}
+    sprite: {fileID: 2593539413119442647, guid: f9a4bc1df4c6ed34795a5a41cce29f0a, type: 3}
     action: 0
     attackDamage: 1
     unblockableAttack: 0

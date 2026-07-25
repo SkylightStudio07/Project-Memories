@@ -521,6 +521,18 @@ namespace BeatMemories
             else if (action == PlayerAction.Charge && player != null)
                 player.SetCharged(result.Type != OutcomeType.Punished);
 
+            // 적 HP가 이미 0이면(같은 응답 마디에 남은 슬롯) 쓰러진 적은 더 이상 반격하지 못한다.
+            // 이 처리가 없으면 '죽은 적의 발악'으로 플레이어가 피해를 입고, 그 피격으로 사망 시
+            // FinalizeResponseEnd의 `stageClearPending && !isOver`가 뒤집혀 클리어가 게임오버로 덮인다.
+            bool enemyDefeated = stageClearPending || CurrentEnemyHp <= 0;
+            if (enemyDefeated && result.PlayerDamage > 0)
+                result = new JudgeResult(
+                    result.Input,
+                    result.Cleared ? OutcomeType.Cleared : OutcomeType.Safe,
+                    0,
+                    result.Cleared,
+                    "적 격파 — 반격 무효");
+
             if (result.PlayerDamage > 0 && player != null) player.TakeDamage(result.PlayerDamage);
             if (result.Cleared) DamageEnemy();
             if (result.Cleared) AwardScore(enemy, action, responseRatio);
