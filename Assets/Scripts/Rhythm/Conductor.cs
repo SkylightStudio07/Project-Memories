@@ -82,6 +82,17 @@ namespace BeatMemories
 
         public void StopClock() => IsRunning = false;
 
+        /// <summary>클록을 '시작 대기(disarmed)' 상태로 초기화한다. 박은 미발생(TotalBeats=-1),
+        /// 카운트다운 표시는 startDelay. 전환 연출 후 <see cref="StartClock"/>로 실제 시작.</summary>
+        public void ArmForStart()
+        {
+            IsRunning = false;
+            TotalBeats = -1;
+            pendingBeatDispatch = false;
+            CycleIndex = 0;
+            BeatInCycle = 0;
+        }
+
         /// <summary>
         /// 현재 응답 슬롯이 입력/미스로 확정됐을 때 남은 박 시간을 생략하고 다음 박을 시작한다.
         /// 기존 Beat 이벤트 순서와 사이클 경계 처리는 <see cref="AdvanceBeat"/>를 그대로 사용한다.

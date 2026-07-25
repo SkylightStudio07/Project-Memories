@@ -14,17 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageSO
   stageNumber: 2
   displayName: "\uBCF8\uD3B8 1 (\uC801 \uAD50\uCCB4)"
-  keyMode: 0
+  keyMode: 1
   enemyPool:
   - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
   - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
+  - {fileID: 11400000, guid: f1ed1f2c4bc0ba144bd3e06340f985d0, type: 2}
+  enemySprite: {fileID: -4976960352493729061, guid: 19257f613dc4ff543b001c502cc78bb4, type: 3}
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
   phases:
   - {fileID: 11400000, guid: 1ae94f3d63d39b142b78bfee344ac7ab, type: 2}
   - {fileID: 11400000, guid: 054b40b29d0bc454aaabb343feb3c141, type: 2}
   cyclesPerPhase: 2
+  repeatPhasePlan: 1
   bpm: 90
   playerMaxHp: 7
+  startDelay: 3
   backgroundSprite: {fileID: -6889251806150270578, guid: 4d527f3dcf6fd7d48b244f176c022691, type: 3}
   floorSprite: {fileID: 2746419046620943619, guid: 19fcddebb5327c2458c58c38339eb75e, type: 3}
   backgroundPrefab: {fileID: 3528886555057984073, guid: eb9adc3f83f8ecd4e9819555733d5580, type: 3}

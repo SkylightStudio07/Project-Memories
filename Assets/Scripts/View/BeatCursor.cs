@@ -67,6 +67,14 @@ namespace BeatMemories
         {
             if (cursor == null) return;
 
+            // 카운트인/미시작(전환 직후 포함) 중엔 이전 스테이지 잔상이 남지 않게 커서를 숨긴다.
+            if (conductor != null && conductor.TotalBeats < 0)
+            {
+                if (_cursorImage != null) _cursorImage.enabled = false;
+                _target = null;
+                return;
+            }
+
             if (showInputWindowProgress && _cursorImage != null)
             {
                 int slot = conductor != null ? conductor.BeatInCycle - beatOffset : -1;

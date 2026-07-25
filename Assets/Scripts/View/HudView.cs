@@ -155,6 +155,7 @@ namespace BeatMemories
                 round.OnScoreAwarded += OnScoreAwarded;
                 round.OnScoreChanged += OnScoreChanged;
                 round.OnGameOver += OnGameOver;
+                round.OnEnemyBarChanged += OnEnemyBar;
             }
             if (conductor != null) conductor.OnBeat += OnBeat;
             if (player != null)
@@ -176,6 +177,7 @@ namespace BeatMemories
                 round.OnScoreAwarded -= OnScoreAwarded;
                 round.OnScoreChanged -= OnScoreChanged;
                 round.OnGameOver -= OnGameOver;
+                round.OnEnemyBarChanged -= OnEnemyBar;
             }
             if (conductor != null) conductor.OnBeat -= OnBeat;
             if (player != null)
@@ -223,7 +225,7 @@ namespace BeatMemories
                 scoreLabel.text = $"SCORE  {(round != null ? round.Score : 0):N0}";
             }
             if (player != null) OnHealth(player.CurrentHp, player.MaxHp);
-            _enemyHp = enemyMaxHp;
+            _enemyHp = round != null ? round.EnemyBarCurrent : enemyMaxHp;
             RefreshEnemyCells();
             SetDots(-1);
             InitializeQueues();
@@ -309,19 +311,19 @@ namespace BeatMemories
             ResolveQueueSlot(slot, r);
             if (feedbackLabel != null)
                 feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
-
-            // [임시] 적을 처리(Clear)하면 적 HP 1 감소 — 실제 구동 규칙은 추후
-            if (r.Cleared)
-            {
-                _enemyHp = Mathf.Max(0, _enemyHp - 1);
-                RefreshEnemyCells();
-            }
+            // 적 HP는 이제 RoundManager가 소유 → OnEnemyBarChanged로 갱신된다.
         }
 
         private void OnCycleStarted(int cycle)
         {
             ResetQueues();
             SetEnemyIdle();
+        }
+
+        private void OnEnemyBar(int current, int max)
+        {
+            _enemyHp = current;
+            RefreshEnemyCells();
         }
 
         private void RefreshEnemyCells()

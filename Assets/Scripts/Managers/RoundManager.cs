@@ -51,6 +51,10 @@ namespace BeatMemories
         [SerializeField, Min(0)] private int hpScoreWeight = 25;
         [SerializeField, Min(0)] private int armorScoreWeight = 50;
 
+        [Header("적 처치 (인스펙터 조정)")]
+        [Tooltip("스테이지 적(보스) HP. 성공 공격마다 1 감소, 0이면 스테이지 클리어")]
+        [SerializeField, Min(1)] private int enemyBarHp = 7;
+
         // 이벤트 (UI가 구독)
         public event Action<int, Enemy> OnEnemyRevealed;              // (slot, enemy) 제시
         public event Action<int, Enemy, JudgeResult> OnJudged;       // (slot, enemy, result) 판정
@@ -61,10 +65,13 @@ namespace BeatMemories
         public event Action<int, bool> OnScoreAwarded;               // (획득량, 처치 보너스 여부)
         public event Action<bool> OnAttackLanded;                    // 강공격 여부
         public event Action OnGameOver;
-        public event Action OnStageCleared;                          // 스테이지 클리어(현재 모델 미발생 — 연출 구독용)
+        public event Action OnStageCleared;                          // 적 HP 0 → 스테이지 클리어
+        public event Action<int, int> OnEnemyBarChanged;             // (현재, 최대) 적 보스 HP
 
         public PhaseSO CurrentPhase { get; private set; }
         public int Score { get; private set; }
+        public int EnemyBarCurrent => _enemyBarCurrent;
+        public int EnemyBarMax => enemyBarHp;
 
         private sealed class ResponseNote
         {
@@ -86,6 +93,8 @@ namespace BeatMemories
         private int responseEndFrame = -1;
         private double inputLockedUntilRealtime = double.NegativeInfinity;
         private bool isOver;
+        private int _enemyBarCurrent;
+        private bool _stageTransitioning;
 
         public int Seed => seed;
 
@@ -98,6 +107,7 @@ namespace BeatMemories
             if (randomizeSeed) seed = Environment.TickCount;
             provider = new EnemySequenceProvider(seed, enemyPool);
             spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
+            ResetEnemyBar();
         }
 
         /// <summary>스테이지 데이터로 이 매니저·플레이어·입력·비트를 구성한다.</summary>
@@ -219,7 +229,7 @@ namespace BeatMemories
 
         private void LateUpdate()
         {
-            if (isOver || conductor == null)
+            if (isOver || _stageTransitioning || conductor == null)
             {
                 pendingInputs.Clear();
                 return;
@@ -249,7 +259,7 @@ namespace BeatMemories
 
         private void QueueInput(TimedPlayerAction timedAction)
         {
-            if (!isOver) pendingInputs.Enqueue(timedAction);
+            if (!isOver && !_stageTransitioning) pendingInputs.Enqueue(timedAction);
         }
 
         // 입력이 처리된 프레임이 아니라 Input System이 기록한 실제 발생 시각으로 행동 구간을 찾는다.
@@ -277,17 +287,20 @@ namespace BeatMemories
 
             notes[current].consumed = true;
             input?.NotifyAccepted(timedAction.Action);
+            // 클리어 처치로 노트가 비워질 수 있어 슬롯/적을 미리 캡처한다.
+            int resolvedSlot = notes[current].slot;
+            Enemy resolvedEnemy = notes[current].enemy;
             double duration = notes[current].closeTime - notes[current].openTime;
             float responseRatio = duration > 0.0
                 ? Mathf.Clamp01((float)((inputSongTime - notes[current].openTime) / duration))
                 : 1f;
             ApplyJudge(
-                notes[current].slot,
-                notes[current].enemy,
+                resolvedSlot,
+                resolvedEnemy,
                 timedAction.Action,
                 isMiss: false,
                 responseRatio: responseRatio);
-            conductor.AdvanceResponseBeatNow(notes[current].slot);
+            if (!_stageTransitioning) conductor.AdvanceResponseBeatNow(resolvedSlot);
         }
 
         private void RefreshPendingNoteWindows()
@@ -392,6 +405,7 @@ namespace BeatMemories
 
             if (result.PlayerDamage > 0 && player != null) player.TakeDamage(result.PlayerDamage);
             if (result.Cleared) AwardScore(enemy, action, responseRatio);
+            if (result.Cleared) DamageEnemyBar();
             if (action == PlayerAction.Attack && result.Cleared) OnAttackLanded?.Invoke(charged);
             OnJudged?.Invoke(slot, enemy, result);
             if (verboseLog)
@@ -457,6 +471,73 @@ namespace BeatMemories
             int block = Mathf.Max(1, cyclesPerPhase);
             int idx = (cycleIndex / block) % phases.Count;
             return phases[idx];
+        }
+
+        // ── 적 보스 HP / 스테이지 클리어 ─────────────────────────────
+        private void ResetEnemyBar()
+        {
+            _enemyBarCurrent = enemyBarHp;
+            OnEnemyBarChanged?.Invoke(_enemyBarCurrent, enemyBarHp);
+        }
+
+        private void DamageEnemyBar()
+        {
+            if (isOver || _stageTransitioning || _enemyBarCurrent <= 0) return;
+            _enemyBarCurrent = Mathf.Max(0, _enemyBarCurrent - 1);
+            OnEnemyBarChanged?.Invoke(_enemyBarCurrent, enemyBarHp);
+            if (_enemyBarCurrent == 0) BeginStageClear();
+        }
+
+        private void BeginStageClear()
+        {
+            if (_stageTransitioning) return;
+            _stageTransitioning = true;
+
+            // 진행 중이던 응답/입력을 정리하고 클록을 멈춘다(전환 연출 동안 정지).
+            notes.Clear();
+            pendingInputs.Clear();
+            inResponse = false;
+            responseEndPending = false;
+            responseEndFrame = -1;
+            if (conductor != null) conductor.StopClock();
+
+            if (verboseLog) Debug.Log("[Round] ===== 스테이지 클리어 (적 처치) =====");
+            OnStageCleared?.Invoke();
+        }
+
+        /// <summary>새 스테이지로 이 라운드를 재구성한다(StageManager가 전환 중 호출).
+        /// startClock=false면 카운트인은 <see cref="StartRound"/>로 공개 후 시작한다.</summary>
+        public void RestartForStage(StageSO s, bool startClock = true)
+        {
+            if (s != null) { stage = s; ApplyStage(s); }
+
+            provider = new EnemySequenceProvider(seed, enemyPool);
+            spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
+
+            currentCycle.Clear();
+            notes.Clear();
+            pendingInputs.Clear();
+            inResponse = false;
+            responseEndPending = false;
+            responseEndFrame = -1;
+            inputLockedUntilRealtime = double.NegativeInfinity;
+            CurrentPhase = null;
+            isOver = false;
+            _stageTransitioning = false;
+
+            ResetEnemyBar();
+            if (conductor != null)
+            {
+                if (startClock) conductor.StartClock();
+                else conductor.ArmForStart(); // 전환 연출 후 StartRound에서 시작
+            }
+            if (verboseLog) Debug.Log($"[Round] 새 스테이지 재구성: {(s != null ? s.displayName : "(유지)")} startClock={startClock}");
+        }
+
+        /// <summary>전환 연출(암전→공개) 후 새 스테이지 카운트인을 시작한다.</summary>
+        public void StartRound()
+        {
+            if (conductor != null) conductor.StartClock();
         }
 
         private void HandleDied()
