@@ -19,9 +19,15 @@ namespace BeatMemories
             bool enemyGuards = enemyAction == PlayerAction.Guard;
 
             // 공격은 상대가 가드일 때만 무효화된다. 공격/쉼/차징은 방어 상태가 아니다.
-            int playerDamage = enemyAttacks && !playerGuards ? 1 : 0;
-            if (playerDamage > 0 && input == PlayerAction.Charge) playerDamage *= 2;
-            bool enemyDamaged = playerAttacks && (!enemyGuards || chargedAttack);
+            bool attackBlocked = playerGuards && !enemy.UnblockableAttack;
+            int playerDamage = enemyAttacks && !attackBlocked
+                ? System.Math.Max(0, enemy.AttackDamage)
+                : 0;
+            if (playerDamage > 0 && input == PlayerAction.Charge && !enemy.FixedAttackDamage)
+                playerDamage *= 2;
+            bool enemyDamaged = playerAttacks
+                && !enemy.InvulnerableWhileActing
+                && (!enemyGuards || chargedAttack);
 
             OutcomeType type = enemyDamaged
                 ? OutcomeType.Cleared

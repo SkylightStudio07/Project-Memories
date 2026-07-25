@@ -20,6 +20,7 @@ namespace BeatMemories
         [SerializeField] private RoundManager round;
         [SerializeField] private Conductor conductor;
         [SerializeField] private PlayerData player;
+        [SerializeField] private StageManager stageManager;
         [SerializeField] private CameraSway cameraSway;
 
         [Header("캐릭터 (월드 SpriteRenderer)")]
@@ -136,6 +137,7 @@ namespace BeatMemories
         private Coroutine hitStopRoutine;
         private float timeScaleBeforeHitStop = 1f;
         private double hitStopStartedAt;
+        private bool stageRefreshPending;
 
         private void OnEnable()
         {
@@ -148,6 +150,7 @@ namespace BeatMemories
                 round.OnScoreAwarded += OnScoreAwarded;
                 round.OnScoreChanged += OnScoreChanged;
                 round.OnGameOver += OnGameOver;
+                round.OnStageCleared += QueueStageRefresh;
             }
             if (conductor != null) conductor.OnBeat += OnBeat;
             if (player != null)
@@ -169,6 +172,7 @@ namespace BeatMemories
                 round.OnScoreAwarded -= OnScoreAwarded;
                 round.OnScoreChanged -= OnScoreChanged;
                 round.OnGameOver -= OnGameOver;
+                round.OnStageCleared -= QueueStageRefresh;
             }
             if (conductor != null) conductor.OnBeat -= OnBeat;
             if (player != null)
@@ -208,7 +212,7 @@ namespace BeatMemories
             if (chargeLabel != null) chargeLabel.enabled = false;
             if (phaseLabel != null) phaseLabel.text = "";
             if (feedbackLabel != null) feedbackLabel.text = "";
-            SetEnemyIdle();
+            SyncStageHud();
             SetPlayerIdle();
             if (scoreLabel != null)
             {
@@ -231,6 +235,12 @@ namespace BeatMemories
 
         private void Update()
         {
+            if (stageRefreshPending)
+            {
+                stageRefreshPending = false;
+                SyncStageHud();
+            }
+
             if (countdownLabel != null && conductor != null)
             {
                 double t = conductor.TimeUntilStart;
@@ -274,6 +284,8 @@ namespace BeatMemories
 
         private void OnJudged(int slot, Enemy e, JudgeResult r)
         {
+            if (enemySlot != null) enemySlot.flipX = false;
+
             if (enemyLaser != null && e != null)
                 enemyLaser.transform.localPosition = e.LaserOriginOffset;
 
@@ -327,6 +339,35 @@ namespace BeatMemories
                 if (enemyCells[i] != null) enemyCells[i].enabled = i < _enemyHp;
         }
 
+        private void QueueStageRefresh()
+        {
+            stageRefreshPending = true;
+        }
+
+        private void SyncStageHud()
+        {
+            StageSO currentStage = stageManager != null ? stageManager.CurrentStage : null;
+            if (currentStage != null)
+            {
+                enemyIdleSprite = currentStage.enemySprite;
+                if (enemyIdleSprite == null && currentStage.enemyPool != null)
+                {
+                    for (int i = 0; i < currentStage.enemyPool.Count; i++)
+                    {
+                        Enemy enemy = currentStage.enemyPool[i];
+                        if (enemy == null || enemy.Sprite == null) continue;
+                        enemyIdleSprite = enemy.Sprite;
+                        break;
+                    }
+                }
+            }
+
+            _enemyHp = enemyMaxHp;
+            RefreshEnemyCells();
+            ResetQueues();
+            SetEnemyIdle();
+        }
+
         private void OnPhase(int cycle, PhaseSO p)
         {
             if (phaseLabel != null) phaseLabel.text = p != null ? p.PhaseName : "(균등)";
@@ -372,6 +413,8 @@ namespace BeatMemories
 
         private void SetEnemyIdle()
         {
+            StageSO currentStage = stageManager != null ? stageManager.CurrentStage : null;
+            if (enemySlot != null) enemySlot.flipX = currentStage != null && currentStage.flipEnemyIdleX;
             SetEnemySprite(enemyIdleSprite); // null이면 현재 placeholder 유지
         }
 

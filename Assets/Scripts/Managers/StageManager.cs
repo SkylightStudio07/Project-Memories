@@ -11,6 +11,8 @@ namespace BeatMemories
     [DefaultExecutionOrder(-100)]
     public class StageManager : MonoBehaviour
     {
+        private static int pendingRetryStageIndex = -1;
+
         [Header("로스터")]
         [SerializeField] private StageRosterSO roster;
         [Tooltip("시작 스테이지 인덱스(0부터). 적/에셋 테스트용으로 인스펙터에서 변경")]
@@ -30,7 +32,21 @@ namespace BeatMemories
 
         private void Awake()
         {
-            ApplyStage(startStageIndex);
+            int initialIndex = pendingRetryStageIndex >= 0
+                ? pendingRetryStageIndex
+                : startStageIndex;
+            pendingRetryStageIndex = -1;
+            ApplyStage(initialIndex);
+        }
+
+        private void OnEnable()
+        {
+            if (round != null) round.OnStageCleared += HandleStageCleared;
+        }
+
+        private void OnDisable()
+        {
+            if (round != null) round.OnStageCleared -= HandleStageCleared;
         }
 
         /// <summary>지정 인덱스 스테이지 적용: 배경/바닥 스왑 + RoundManager에 전달.</summary>
@@ -54,6 +70,52 @@ namespace BeatMemories
             if (round != null) round.SetStage(s);
 
             Debug.Log($"[Stage] 적용: idx {index} → 스테이지 {s.stageNumber} '{s.displayName}'");
+        }
+
+        private void HandleStageCleared()
+        {
+            if (!TryAdvanceToNextStage())
+            {
+                Debug.Log($"[Stage] 마지막 스테이지 완료: idx {CurrentIndex}");
+            }
+        }
+
+        private bool TryAdvanceToNextStage()
+        {
+            int nextIndex = CurrentIndex + 1;
+            if (roster == null || roster.Get(nextIndex) == null) return false;
+
+            ApplyStage(nextIndex);
+            return true;
+        }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        private void OnGUI()
+        {
+            const float width = 180f;
+            const float height = 44f;
+            const float margin = 16f;
+            Rect buttonRect = new Rect(Screen.width - width - margin, margin, width, height);
+            bool previousEnabled = GUI.enabled;
+            GUI.enabled = roster != null && roster.Get(CurrentIndex + 1) != null;
+
+            if (GUI.Button(buttonRect, "DEV  다음 스테이지"))
+            {
+                TryAdvanceToNextStage();
+            }
+
+            GUI.enabled = previousEnabled;
+        }
+#endif
+
+        public void RememberCurrentStageForRetry()
+        {
+            if (CurrentIndex >= 0) pendingRetryStageIndex = CurrentIndex;
+        }
+
+        public static void ClearPendingRetry()
+        {
+            pendingRetryStageIndex = -1;
         }
 
         private static Sprite FirstPoolSprite(StageSO s)

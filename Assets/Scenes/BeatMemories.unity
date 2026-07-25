@@ -6387,6 +6387,7 @@ MonoBehaviour:
   round: {fileID: 1188105352}
   background: {fileID: 133834108}
   floor: {fileID: 236057548}
+  enemyActor: {fileID: 1825124097}
 --- !u!4 &2032315197
 Transform:
   m_ObjectHideFlags: 0
@@ -6438,6 +6439,7 @@ MonoBehaviour:
   round: {fileID: 1188105352}
   conductor: {fileID: 1739020140}
   player: {fileID: 1716380266}
+  stageManager: {fileID: 2032315196}
   cameraSway: {fileID: 2084326195}
   enemySlot: {fileID: 1825124097}
   playerSlot: {fileID: 1177499417}
@@ -6640,6 +6642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.GameOverView
   round: {fileID: 1188105352}
+  stageManager: {fileID: 2032315196}
   gameOverRoot: {fileID: 1868432628}
   hideOnGameOver:
   - {fileID: 1689178877}

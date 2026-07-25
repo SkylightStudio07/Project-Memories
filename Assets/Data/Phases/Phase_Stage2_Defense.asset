@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d62a14f7cef6184c94056cc0ebde063, type: 3}
+  m_Name: Phase_Stage2_Defense
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.PhaseSO
+  phaseName: "\uBC29\uC5B4 \uB3CC\uD30C"
+  kind: 0
+  hiddenAnswerAction: 1
+  weights:
+  - answerAction: 1
+    weight: 1
+  - answerAction: 2
+    weight: 1
+  authoredSequence: []
+  preparationSprite: {fileID: 0}
+  cueColor: {r: 1, g: 1, b: 1, a: 1}
+  preparationTintStrength: 0
+  activeTintStrength: 0
+  preparationSnareVolume: 0.8
+  activeSnareVolume: 0.55

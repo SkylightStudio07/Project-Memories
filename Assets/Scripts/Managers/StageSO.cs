@@ -22,6 +22,8 @@ namespace BeatMemories
         public List<Enemy> enemyPool = new List<Enemy>();
         [Tooltip("시작(카운트인) 시 EnemyActor에 미리 표시할 스프라이트. 비우면 풀의 첫 적 스프라이트")]
         public Sprite enemySprite;
+        [Tooltip("EnemyActor idle 스프라이트만 좌우 반전")]
+        public bool flipEnemyIdleX;
 
         [Header("리듬 / 페이즈")]
         public RhythmPatternSO pattern;

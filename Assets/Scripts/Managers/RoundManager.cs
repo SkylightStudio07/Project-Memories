@@ -36,6 +36,7 @@ namespace BeatMemories
         [SerializeField] private List<PhaseSO> phases = new List<PhaseSO>();
         [Tooltip("한 페이즈가 유지되는 사이클 수")]
         [SerializeField, Min(1)] private int cyclesPerPhase = 2;
+        [SerializeField] private bool repeatPhasePlan = true;
 
         [Header("판정 (인스펙터 조정)")]
         [Tooltip("마감까지 안 답한 박을 오답으로 취급(적 defaultOutcome 적용)")]
@@ -63,7 +64,7 @@ namespace BeatMemories
         public event Action<int, bool> OnScoreAwarded;               // (획득량, 처치 보너스 여부)
         public event Action<bool> OnAttackLanded;                    // 강공격 여부
         public event Action OnGameOver;
-        public event Action OnStageCleared;                          // 스테이지 클리어(현재 모델 미발생 — 연출 구독용)
+        public event Action OnStageCleared;                          // 반복하지 않는 페이즈 계획의 마지막 응답 종료
 
         public PhaseSO CurrentPhase { get; private set; }
         public int Score { get; private set; }
@@ -88,18 +89,26 @@ namespace BeatMemories
         private int responseEndFrame = -1;
         private double inputLockedUntilRealtime = double.NegativeInfinity;
         private bool isOver;
+        private bool initialized;
+        private bool stageClearPending;
+        private int stageStartCycleIndex;
+        private GameObject backgroundInstance;
 
         public int Seed => seed;
 
         /// <summary>스테이지 지정(StageManager가 Awake 전에 호출 — DefaultExecutionOrder).</summary>
-        public void SetStage(StageSO s) => stage = s;
+        public void SetStage(StageSO s)
+        {
+            stage = s;
+            if (initialized && stage != null) ApplyStage(stage);
+        }
 
         private void Awake()
         {
-            if (stage != null) ApplyStage(stage);
             if (randomizeSeed) seed = Environment.TickCount;
-            provider = new EnemySequenceProvider(seed, enemyPool);
-            spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
+            initialized = true;
+            if (stage != null) ApplyStage(stage);
+            else RebuildStageRuntime();
         }
 
         /// <summary>스테이지 데이터로 이 매니저·플레이어·입력·비트를 구성한다.</summary>
@@ -109,11 +118,35 @@ namespace BeatMemories
             if (s.pattern != null) pattern = s.pattern;
             if (s.phases != null) phases = new List<PhaseSO>(s.phases);
             cyclesPerPhase = Mathf.Max(1, s.cyclesPerPhase);
+            repeatPhasePlan = s.repeatPhasePlan;
             if (input != null && !keepSceneInputMode) input.Mode = s.keyMode;
             if (conductor != null) conductor.Bpm = s.bpm;
             if (player != null) player.SetMaxHp(s.playerMaxHp);
-            if (s.backgroundPrefab != null) Instantiate(s.backgroundPrefab);
+            if (backgroundInstance != null) Destroy(backgroundInstance);
+            backgroundInstance = s.backgroundPrefab != null ? Instantiate(s.backgroundPrefab) : null;
+
+            stageStartCycleIndex = conductor != null && conductor.IsRunning
+                ? conductor.CycleIndex + 1
+                : 0;
+            stageClearPending = false;
+            isOver = false;
+            CurrentPhase = null;
+            currentCycle.Clear();
+            notes.Clear();
+            pendingInputs.Clear();
+            inResponse = false;
+            responseEndPending = false;
+            responseEndFrame = -1;
+            inputLockedUntilRealtime = double.NegativeInfinity;
+            RebuildStageRuntime();
+
             if (verboseLog) Debug.Log($"[Round] 스테이지 적용: {s.stageNumber} {s.displayName} (키 {s.keyMode}, 적 {(s.enemyPool != null ? s.enemyPool.Count : 0)})");
+        }
+
+        private void RebuildStageRuntime()
+        {
+            provider = new EnemySequenceProvider(seed, enemyPool);
+            spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
         }
 
         private void OnEnable()
@@ -201,6 +234,7 @@ namespace BeatMemories
             // Input System과 EventSystem이 같은 프레임의 입력을 모두 전달할 때까지 마감을 미룬다.
             responseEndPending = true;
             responseEndFrame = Time.frameCount;
+            stageClearPending = CompletesStage(cycleIndex);
         }
 
         // 제시 구간: 네 박 동안 스포트라이트 박마다 적을 드러낸다.
@@ -244,8 +278,11 @@ namespace BeatMemories
             if (responseEndPending)
             {
                 FlushUnanswered();
+                bool stageCleared = stageClearPending && !isOver;
                 responseEndPending = false;
                 responseEndFrame = -1;
+                stageClearPending = false;
+                if (stageCleared) OnStageCleared?.Invoke();
             }
         }
 
@@ -387,6 +424,9 @@ namespace BeatMemories
                         "강공격! 방어 관통");
             }
 
+            if (result.Cleared)
+                ReplaceInterruptedFollowUp(slot, enemy);
+
             // 차징 처리
             if (action == PlayerAction.Attack && player != null) player.ConsumeCharge();
             else if (action == PlayerAction.Charge && player != null)
@@ -409,6 +449,28 @@ namespace BeatMemories
                 : 0;
             int timingBonus = Mathf.RoundToInt((1f - Mathf.Clamp01(responseRatio)) * maxTimingBonus);
             QueueScore(clearScore + strengthBonus + timingBonus, true);
+        }
+
+        private void ReplaceInterruptedFollowUp(int slot, Enemy enemy)
+        {
+            Enemy replacement = enemy != null ? enemy.InterruptedFollowUp : null;
+            int nextSlot = slot + 1;
+            if (replacement == null
+                || nextSlot < 0
+                || nextSlot >= currentCycle.Count
+                || currentCycle[nextSlot] != enemy.ForcedFollowUp)
+                return;
+
+            currentCycle[nextSlot] = replacement;
+            for (int i = 0; i < notes.Count; i++)
+            {
+                if (notes[i].slot != nextSlot || notes[i].consumed) continue;
+                notes[i].enemy = replacement;
+                break;
+            }
+
+            if (verboseLog)
+                Debug.Log($"[Round] slot{nextSlot}: {enemy.ForcedFollowUp?.DisplayName} interrupted -> {replacement.DisplayName}");
         }
 
         private void QueueScore(int points, bool isClearBonus)
@@ -457,8 +519,18 @@ namespace BeatMemories
         {
             if (phases == null || phases.Count == 0) return null;
             int block = Mathf.Max(1, cyclesPerPhase);
-            int idx = (cycleIndex / block) % phases.Count;
+            int localCycle = Mathf.Max(0, cycleIndex - stageStartCycleIndex);
+            int idx = localCycle / block;
+            idx = repeatPhasePlan ? idx % phases.Count : Mathf.Min(idx, phases.Count - 1);
             return phases[idx];
+        }
+
+        private bool CompletesStage(int cycleIndex)
+        {
+            if (repeatPhasePlan || phases == null || phases.Count == 0) return false;
+            int localCycle = Mathf.Max(0, cycleIndex - stageStartCycleIndex);
+            int totalCycles = Mathf.Max(1, cyclesPerPhase) * phases.Count;
+            return localCycle + 1 >= totalCycles;
         }
 
         private void HandleDied()

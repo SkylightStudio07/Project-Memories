@@ -19,6 +19,12 @@ namespace BeatMemories
         public string DisplayName => data.displayName;
         public Sprite Sprite => data.sprite;
         public PlayerAction Action => data.action;
+        public int AttackDamage => data.attackDamage;
+        public bool UnblockableAttack => data.unblockableAttack;
+        public bool InvulnerableWhileActing => data.invulnerableWhileActing;
+        public bool FixedAttackDamage => data.fixedAttackDamage;
+        public Enemy ForcedFollowUp => data.forcedFollowUp;
+        public Enemy InterruptedFollowUp => data.interruptedFollowUp;
         public Vector2 LaserOriginOffset => data.laserOriginOffset;
         public int MaxHp => data.maxHp;
         public int Armor => data.armor;

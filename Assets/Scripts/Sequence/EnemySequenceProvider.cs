@@ -81,7 +81,17 @@ namespace BeatMemories
         {
             int n = count < 0 ? 0 : count;
             var list = new List<Enemy>(n);
-            for (int i = 0; i < n; i++) list.Add(GetWeighted(cycleIndex, i, phase));
+            for (int i = 0; i < n; i++)
+            {
+                Enemy enemy = GetWeighted(cycleIndex, i, phase);
+                list.Add(enemy);
+
+                Enemy followUp = enemy != null ? enemy.ForcedFollowUp : null;
+                if (followUp == null || i + 1 >= n) continue;
+
+                list.Add(followUp);
+                i++;
+            }
             return list;
         }
 
