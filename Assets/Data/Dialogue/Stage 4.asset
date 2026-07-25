@@ -18,10 +18,10 @@ MonoBehaviour:
     portrait: {fileID: -6071435802697707932, guid: d06bf404d4d79a74fa5c41cdc0c9bf3b, type: 3}
     text: "\uD558\uC544... \uD558\uC544..."
   - speaker: 1
-    speakerName: "\uD074\uB77C\uC6B0\uB514"
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
     portrait: {fileID: -6071435802697707932, guid: d06bf404d4d79a74fa5c41cdc0c9bf3b, type: 3}
     text: "\uC5B4\uBA38\uB2C8...!"
-  - speaker: 1
+  - speaker: 0
     speakerName: "\uC624\uD37C\uB808\uC774\uD130"
     portrait: {fileID: -2562287875293089574, guid: c34c8320de0312c4bb5bc51fb00929a7, type: 3}
     text: "--\uB098\uB294 \uB0B4 \uB808\uD50C\uB9AC\uCE74\uB97C \uD0A4\uC6E0\uC9C0,
@@ -63,9 +63,8 @@ MonoBehaviour:
     speakerName: "\uC624\uD37C\uB808\uC774\uD130"
     portrait: {fileID: -7818924898305715283, guid: 10dcd6bebeaf0bc449c298f2e8bea02d, type: 3}
     text: "\uCEAC\uCEAC\uCEAC, \uC774\uC0C1\uD55C \uC774\uC57C\uAE30\uB97C \uD558\uB294\uAD6C\uB098?
-      \uD074\uB77C\uC6B0\uB514\uC544.\r\n\uB124\uAC00 \uAD81\uADF9\uC801\uC73C\uB85C
-      \uADF8 \uC544\uC774\uB97C \uB3C4\uC2DC\uB85C \uB370\uB824\uAC00\uBA74... \uADF8
-      \uC544\uC774, \uB3C4\uC2DC\uC758 \uC0C1\uBD80\uAC00 \uC6A9\uC11C\uD574\uC904\uAE4C?"
+      \uD074\uB77C\uC6B0\uB514\uC544.\n\uC0C1\uBD80\uAC00 \uADF8 \uC544\uC774\uB97C
+      \uC6A9\uC11C\uD560\uB9AC\uAC00."
   - speaker: 0
     speakerName: "\uC624\uD37C\uB808\uC774\uD130"
     portrait: {fileID: -7818924898305715283, guid: 10dcd6bebeaf0bc449c298f2e8bea02d, type: 3}
