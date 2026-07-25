@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.Enemy
   data:
     id: aggressive
-    displayName: "\uACF5\uC138\uD615"
-    sprite: {fileID: 4089636935794680599, guid: 42d77fc7d15a51d4ab94c4d0ccec3e85, type: 3}
+    displayName: "\uACF5\uACA9"
+    sprite: {fileID: 8808962097276391257, guid: 575a6fab8b63b86408965f0f041834ad, type: 3}
+    action: 2
+    laserOriginOffset: {x: -1.2, y: 0.35}
     maxHp: 1
     armor: 0
     outcomes:

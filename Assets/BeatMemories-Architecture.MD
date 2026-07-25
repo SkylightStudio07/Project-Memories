@@ -116,7 +116,7 @@ Assets/
 
 | 항목 | 잠정 기본값 | 근거/비고 |
 |---|---|---|
-| BPM | **90** | GDD: 초반 저속. 고정/가속 미정 |
+| BPM | **96** | BGM 실측 템포에 맞춘 고정값. 가속 미정 |
 | 히로인 체력 | **8** | UI 와이어의 하트 8개. 체력제는 확정 |
 | 오답 피해 | **1** | |
 | 판정 입력 구간 | **행동별 한 박 전체** | `[박 시작, 다음 박 시작)`의 첫 입력으로 즉시 판정 |
@@ -165,7 +165,7 @@ Assets/
     - **검증(AutoSolver)**: 예외 0. 충전유발+차징→Cleared, 장갑+일반공격→Safe(방어막힘) 로그 확인. 강공격 관통은 수치로 확정(armor2/hp1 → 일반 dmg0 미처리, 강공격 dmg3 처리). 검증 후 AutoSolver 제거, 컴파일 0, SampleScene 복원.
 - 2026-07-25: **버그 수정 — 응답 첫 슬롯 확정 실패.** 원인: `OnResponseMeasureStart`가 `OnBeat`보다 먼저 실행돼 입력 버퍼를 리셋 → 같은 프레임의 첫 응답 박 판정이 항상 None(무입력). 해결: `RoundManager`를 **입력 기반 판정**으로 재작성(버퍼 폐기, 응답 마디 중 누른 순서대로 슬롯 즉시 판정, 마감 시 미답 슬롯만 무입력 처리). 임시 `AutoSolver`로 자동 정답 플레이 → 13사이클+ HP 8 유지(전 슬롯 Cleared) 확인 후 제거. (정밀 타이밍창 ±%는 여전히 §8.)
 - 2026-07-25: **카운트인(준비) 추가** (사용자 피드백: 바로 시작해 정신없음). `Conductor.startDelay`(기본 3초) 동안 박 미진행, `Conductor.TimeUntilStart`/`IsCountingDown` 노출. `HudView`가 "준비 3/2/1" 표시. 시작 전 페이즈/피드백 라벨 비움. 플레이 스크린샷으로 "준비 2" 화면 확인. 컴파일 0.
-- 2026-07-25: **Module 9(UI) 완료 → P0 코어 목업 완성.** `HudView`/`ActionButton` + Canvas 조립(HP 하트 8, 8박 인디케이터[제시◉◉◉◉▶응답○○○○], 적/주인공 색 점멸 슬롯, 페이즈·피드백 라벨, ←가드/→공격 버튼·키가이드). 플레이모드 스크린샷 2장으로 시각 검증(초반: 풀 HP·공격 페이즈·공세형 등장·제시 박 하이라이트 / 종료: GAME OVER). 씬 기본값 정상화(BPM 90, cyclesPerPhase 2). 컴파일 에러 0.
+- 2026-07-25: **Module 9(UI) 완료 → P0 코어 목업 완성.** `HudView`/`ActionButton` + Canvas 조립(HP 하트 8, 8박 인디케이터[제시◉◉◉◉▶응답○○○○], 적/주인공 색 점멸 슬롯, 페이즈·피드백 라벨, ←가드/→공격 버튼·키가이드). 플레이모드 스크린샷 2장으로 시각 검증(초반: 풀 HP·공격 페이즈·공세형 등장·제시 박 하이라이트 / 종료: GAME OVER). 씬 기본값 정상화(BPM 96, cyclesPerPhase 2). 컴파일 에러 0.
 - 2026-07-25: **씬 조립 + 플레이모드 스모크 테스트 완료 (M6·7·8·10 실동작 검증).** `Assets/Scenes/BeatMemories.unity` 조립(Conductor/Player/InputReader/RoundManager, pattern=Rush, pool=공세/무방비, phases=공격/수비). BPM 120·안2·cyclesPerPhase=1로 플레이 → 로그 확인: 사이클0 공격 페이즈(공세 3/무방비 1 편향), 사이클1 수비 페이즈 전환, 무입력=Punished, HP 8→0, `GAME OVER`+클록 정지. **예외 0.** 테스트 후 SampleScene 복원.
 - 2026-07-25: **Module 5b(페이즈=맥락) 완료.** `PhaseSO`/`ActionWeight`, `EnemySequenceProvider.GetWeighted`(결정론적 가중 선택), `RoundManager` 페이즈 순환 연결. 에셋 `Phase_Assault`(가드3:공격1)/`Phase_Defense`(가드1:공격3). 라이브 검증: 편향 73%/74%(목표 75%), 균등 50/50, **재현성 유지 True**. 컴파일 에러 0. (매핑 방향·진행은 잠정 §8-5,6.)
 - 2026-07-25: **응답 입력 구간·HP 반영 시점 확정.** 응답 마디의 각 행동은 대응하는 박 전체 `[박 시작, 다음 박 시작)`에서 첫 입력 하나를 판정한다. 구간 종료까지 입력이 없으면 해당 행동만 즉시 무입력 판정하며, 피해는 `PlayerData.TakeDamage`와 `OnHealthChanged`를 통해 행동별로 즉시 반영한다. 네 행동 종료 후 피해를 일괄 적용하지 않는다.

@@ -18,6 +18,8 @@ namespace BeatMemories
         public string Id => data.id;
         public string DisplayName => data.displayName;
         public Sprite Sprite => data.sprite;
+        public PlayerAction Action => data.action;
+        public Vector2 LaserOriginOffset => data.laserOriginOffset;
         public int MaxHp => data.maxHp;
         public int Armor => data.armor;
 

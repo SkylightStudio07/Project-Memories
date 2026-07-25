@@ -74,6 +74,27 @@ namespace BeatMemories
 
         public void StopClock() => IsRunning = false;
 
+        /// <summary>
+        /// 현재 응답 슬롯이 입력/미스로 확정됐을 때 남은 박 시간을 생략하고 다음 박을 시작한다.
+        /// 기존 Beat 이벤트 순서와 사이클 경계 처리는 <see cref="AdvanceBeat"/>를 그대로 사용한다.
+        /// </summary>
+        public bool AdvanceResponseBeatNow(int resolvedSlot)
+        {
+            if (!IsRunning || pendingBeatDispatch) return false;
+            if (BeatInCycle != ResponseStartBeat + resolvedSlot) return false;
+
+            TotalBeats++;
+            startTime = Time.realtimeSinceStartupAsDouble - BeatToTime(TotalBeats);
+            AdvanceBeat();
+            return true;
+        }
+
+        /// <summary>Hit Stop처럼 실시간 정지가 발생한 만큼 비트 기준시각도 함께 뒤로 민다.</summary>
+        public void DelayClock(double seconds)
+        {
+            if (IsRunning && seconds > 0.0) startTime += seconds;
+        }
+
         private void Update()
         {
             if (!IsRunning) return;
