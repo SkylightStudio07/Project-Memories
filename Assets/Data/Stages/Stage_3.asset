@@ -23,8 +23,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1ae94f3d63d39b142b78bfee344ac7ab, type: 2}
   - {fileID: 11400000, guid: 054b40b29d0bc454aaabb343feb3c141, type: 2}
   cyclesPerPhase: 2
-  bpm: 90
+  repeatPhasePlan: 1
+  bpm: 96
   playerMaxHp: 7
+  startDelay: 3
   backgroundSprite: {fileID: 0}
   floorSprite: {fileID: 0}
   backgroundPrefab: {fileID: 0}

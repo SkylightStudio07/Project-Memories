@@ -15,6 +15,8 @@ namespace BeatMemories
         [SerializeField] private Sprite playerActingSprite;
         [Tooltip("제시 구간 — 적 행동 (WatchLeft_ActionRight)")]
         [SerializeField] private Sprite enemyActingSprite;
+        [Tooltip("준비 구간 배너. 비우면 제시 구간 배너를 유지한다")]
+        [SerializeField] private Sprite preparationSprite;
 
         private Image _img;
 
@@ -24,6 +26,7 @@ namespace BeatMemories
         {
             if (conductor != null)
             {
+                conductor.OnPreparationMeasureStart += OnPreparation;
                 conductor.OnPresentMeasureStart += OnPresent;
                 conductor.OnResponseMeasureStart += OnResponse;
             }
@@ -33,19 +36,24 @@ namespace BeatMemories
         {
             if (conductor != null)
             {
+                conductor.OnPreparationMeasureStart -= OnPreparation;
                 conductor.OnPresentMeasureStart -= OnPresent;
                 conductor.OnResponseMeasureStart -= OnResponse;
             }
         }
 
-        private void Start() => Set(enemyActingSprite); // 첫 구간은 제시(적 행동)
+        private void Start() => OnPreparation(0); // 첫 구간은 준비
 
+        private void OnPreparation(int phase)
+            => Set(preparationSprite != null ? preparationSprite : enemyActingSprite);
         private void OnPresent(int cycle) => Set(enemyActingSprite);
         private void OnResponse(int cycle) => Set(playerActingSprite);
 
         private void Set(Sprite s)
         {
-            if (_img != null && s != null) _img.sprite = s;
+            if (_img == null) return;
+            _img.enabled = s != null;
+            if (s != null) _img.sprite = s;
         }
     }
 }

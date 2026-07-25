@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Phase_Defense
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.PhaseSO
   phaseName: "\uC218\uBE44 \uD398\uC774\uC988"
+  kind: 0
+  hiddenAnswerAction: 1
   weights:
   - answerAction: 1
     weight: 1
@@ -20,3 +22,10 @@ MonoBehaviour:
     weight: 3
   - answerAction: 4
     weight: 1
+  authoredSequence: []
+  preparationSprite: {fileID: 0}
+  cueColor: {r: 1, g: 1, b: 1, a: 1}
+  preparationTintStrength: 0
+  activeTintStrength: 0
+  preparationSnareVolume: 0.8
+  activeSnareVolume: 0.55
