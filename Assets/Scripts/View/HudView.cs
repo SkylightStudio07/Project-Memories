@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,31 +45,16 @@ namespace BeatMemories
         [SerializeField] private Text gameOverLabel;
         [SerializeField] private Text countdownLabel;
         [SerializeField] private Text chargeLabel;
+        [SerializeField] private Text scoreLabel;
 
-        [Header("행동 Queue (기존 비트 슬롯 재사용)")]
+        [Header("통합 Queue (기존 Enemy Queue 슬롯 재사용)")]
         [SerializeField] private Image[] enemyQueueSlots = new Image[QueueSlotCount];
+        [Tooltip("기존 Player Queue. 통합 후 비활성화만 하며 Scene 오브젝트는 보존")]
         [SerializeField] private Image[] playerQueueSlots = new Image[QueueSlotCount];
         [SerializeField] private Sprite emptyQueueSprite;
-        [SerializeField] private Sprite guardActionIcon;
-        [SerializeField] private Sprite attackActionIcon;
-        [SerializeField] private Sprite chargeActionIcon;
         [SerializeField] private Color queueEmptyColor = new Color(0.12f, 0.15f, 0.20f, 0.45f);
-        [SerializeField] private Color queueWaitingColor = Color.white;
         [SerializeField] private Color queueDamageColor = new Color(0.95f, 0.18f, 0.18f);
         [SerializeField] private Color queueSuccessColor = new Color(0.25f, 0.95f, 0.38f);
-        [SerializeField, Min(0f)] private float queueBlinkDuration = 0.2f;
-        [SerializeField, Min(0f)] private float queueBlinkSpeed = 35f;
-        [SerializeField, Min(0f)] private float queuePulseScale = 0.15f;
-
-        [Header("자세 색 (인스펙터 조정)")]
-        [SerializeField] private Color aggressiveColor = new Color(0.90f, 0.32f, 0.32f); // 공세(정답 가드)
-        [SerializeField] private Color defenselessColor = new Color(0.32f, 0.62f, 0.95f); // 무방비(정답 공격)
-
-        [Header("판정 색")]
-        [SerializeField] private Color clearedColor = new Color(0.32f, 0.90f, 0.44f);
-        [SerializeField] private Color safeColor = new Color(0.92f, 0.85f, 0.32f);
-        [SerializeField] private Color punishedColor = new Color(0.95f, 0.22f, 0.22f);
-        [SerializeField] private Color idleColor = new Color(0.30f, 0.30f, 0.36f);
 
         [Header("인디케이터·하트 색")]
         [SerializeField] private Color presentDotColor = new Color(0.95f, 0.80f, 0.32f);
@@ -78,7 +64,6 @@ namespace BeatMemories
         [SerializeField] private Color heartEmpty = new Color(0.24f, 0.20f, 0.22f);
 
         [Header("연출 (인스펙터 조정)")]
-        [SerializeField, Min(0.05f)] private float flashFade = 0.35f;
         [Tooltip("행동/자세 스프라이트 표시 후 idle 복귀까지 시간(초)")]
         [SerializeField, Min(0f)] private float actionSpriteHold = 0.3f;
         [Tooltip("스프라이트 교체 시 종이를 넘기듯 가로로 접혔다 펴지는 시간(초)")]
@@ -93,23 +78,26 @@ namespace BeatMemories
         [Tooltip("피격 흔들림 최대 거리(로컬 좌표)")]
         [SerializeField, Min(0f)] private float hitShakeDistance = 0.12f;
 
-        [Header("행동 Effect")]
+        [Header("공격 성공 Effect")]
         [SerializeField, Min(0f)] private float actionEffectDuration = 0.18f;
         [SerializeField, Min(0f)] private float attackLungeDistance = 0.35f;
-        [SerializeField] private Color attackEffectColor = new Color(1f, 0.72f, 0.25f);
-        [SerializeField] private Color defenseEffectColor = new Color(0.25f, 0.85f, 1f);
+        [SerializeField, Min(0f)] private float enemyHitShakeStrength = 0.35f;
+        [SerializeField, Min(1)] private int enemyHitShakeVibrato = 18;
+
+        [Header("Score HUD")]
+        [SerializeField, Min(0.1f)] private float floatingScoreDuration = 0.65f;
+        [SerializeField, Min(1f)] private float floatingScoreMinScale = 1f;
+        [SerializeField, Min(1f)] private float floatingScoreMaxScale = 1.8f;
+        [SerializeField, Min(1)] private int floatingScoreMaxValue = 500;
+        [SerializeField] private Color hitScoreColor = new Color(0.3f, 1f, 0.55f);
+        [SerializeField] private Color clearBonusColor = new Color(1f, 0.82f, 0.25f);
 
         private int _enemyHp;
-        private Color enemyTarget;
-        private float enemyFlash;
         private float enemySpriteTimer;
         private float enemyDamageFlashTimer;
-        private float enemyShakeTimer;
         private Vector3 enemyShakeOffset;
         private Vector3 enemyBaseScale;
         private Coroutine enemyFlipRoutine;
-        private Color playerTarget;
-        private float playerFlash;
         private float playerSpriteTimer;
         private float playerDamageFlashTimer;
         private float playerShakeTimer;
@@ -118,12 +106,9 @@ namespace BeatMemories
         private Coroutine playerFlipRoutine;
         private bool presentationInitialized;
         private readonly Enemy[] revealedEnemies = new Enemy[QueueSlotCount];
-        private readonly bool[] playerQueueResolved = new bool[QueueSlotCount];
-        private readonly float[] playerQueueBlinkTimers = new float[QueueSlotCount];
-        private readonly Vector3[] playerQueueBaseScales = new Vector3[QueueSlotCount];
-        private PlayerAction currentActionEffect;
         private float actionEffectTimer;
         private Vector3 playerActionOffset;
+        private int floatingScoreOrder;
 
         private void OnEnable()
         {
@@ -133,7 +118,8 @@ namespace BeatMemories
                 round.OnJudged += OnJudged;
                 round.OnPhaseChanged += OnPhase;
                 round.OnCycleStarted += OnCycleStarted;
-                round.OnAttackLanded += OnAttackLanded;
+                round.OnScoreAwarded += OnScoreAwarded;
+                round.OnScoreChanged += OnScoreChanged;
                 round.OnGameOver += OnGameOver;
             }
             if (conductor != null) conductor.OnBeat += OnBeat;
@@ -153,7 +139,8 @@ namespace BeatMemories
                 round.OnJudged -= OnJudged;
                 round.OnPhaseChanged -= OnPhase;
                 round.OnCycleStarted -= OnCycleStarted;
-                round.OnAttackLanded -= OnAttackLanded;
+                round.OnScoreAwarded -= OnScoreAwarded;
+                round.OnScoreChanged -= OnScoreChanged;
                 round.OnGameOver -= OnGameOver;
             }
             if (conductor != null) conductor.OnBeat -= OnBeat;
@@ -186,10 +173,13 @@ namespace BeatMemories
             if (chargeLabel != null) chargeLabel.enabled = false;
             if (phaseLabel != null) phaseLabel.text = "";
             if (feedbackLabel != null) feedbackLabel.text = "";
-            enemyTarget = idleColor;
-            playerTarget = idleColor;
             SetEnemyIdle();
             SetPlayerIdle();
+            if (scoreLabel != null)
+            {
+                scoreLabel.enabled = true;
+                scoreLabel.text = $"SCORE  {(round != null ? round.Score : 0):N0}";
+            }
             if (player != null) OnHealth(player.CurrentHp, player.MaxHp);
             _enemyHp = enemyMaxHp;
             RefreshEnemyCells();
@@ -207,7 +197,6 @@ namespace BeatMemories
                 if (counting) countdownLabel.text = "준비  " + System.Math.Ceiling(t).ToString("0");
             }
 
-            // 적: 자세 스프라이트 유지시간 후 idle 복귀. 색은 항상 placeholder/스프라이트를 틴트.
             if (enemySlot != null)
             {
                 if (enemySpriteTimer > 0f)
@@ -215,12 +204,9 @@ namespace BeatMemories
                     enemySpriteTimer -= Time.deltaTime;
                     if (enemySpriteTimer <= 0f) SetEnemyIdle();
                 }
-                enemyFlash = Mathf.MoveTowards(enemyFlash, 0f, Time.deltaTime / flashFade);
-                Color color = Color.Lerp(Color.white, enemyTarget, enemyFlash);
                 enemySlot.color = enemyDamageFlashTimer > 0f
                     ? DamageFlash(Color.white, ref enemyDamageFlashTimer)
-                    : color;
-                UpdateShake(enemySlot, ref enemyShakeTimer, ref enemyShakeOffset);
+                    : Color.white;
             }
             if (playerSlot != null)
             {
@@ -229,27 +215,13 @@ namespace BeatMemories
                     playerSpriteTimer -= Time.deltaTime;
                     if (playerSpriteTimer <= 0f) SetPlayerIdle();
                 }
-                playerFlash = Mathf.MoveTowards(playerFlash, 0f, Time.deltaTime / flashFade);
-                Color color = Color.Lerp(Color.white, playerTarget, playerFlash);
-                color = ActionEffectColor(color);
                 playerSlot.color = playerDamageFlashTimer > 0f
                     ? DamageFlash(Color.white, ref playerDamageFlashTimer)
-                    : color;
+                    : Color.white;
                 UpdateShake(playerSlot, ref playerShakeTimer, ref playerShakeOffset);
                 UpdateActionMotion();
             }
-
-            UpdateQueueAnimations();
         }
-
-        private Color PoseColor(Enemy e)
-        {
-            if (e == null) return idleColor;
-            return e.PrimaryAnswer() == PlayerAction.Guard ? aggressiveColor : defenselessColor;
-        }
-
-        private Color ResultColor(OutcomeType t)
-            => t == OutcomeType.Cleared ? clearedColor : (t == OutcomeType.Safe ? safeColor : punishedColor);
 
         private void OnReveal(int slot, Enemy e)
         {
@@ -260,15 +232,23 @@ namespace BeatMemories
 
         private void OnJudged(int slot, Enemy e, JudgeResult r)
         {
-            Color c = ResultColor(r.Type);
-            enemyTarget = c; enemyFlash = 1f;
-            playerTarget = c; playerFlash = 1f;
+            if (e != null && e.Sprite != null)
+            {
+                SetEnemySprite(e.Sprite);
+                enemySpriteTimer = actionSpriteHold;
+            }
+
             if (r.PlayerDamage > 0)
+            {
                 PlayHit(ref playerDamageFlashTimer, ref playerShakeTimer);
+                if (cameraSway != null) cameraSway.Shake();
+            }
             if (r.Cleared && r.Input == PlayerAction.Attack)
-                PlayHit(ref enemyDamageFlashTimer, ref enemyShakeTimer);
-            ResolvePlayerQueueSlot(slot, r);
-            PlayActionEffect(r.Input);
+            {
+                PlayEnemyHit();
+                PlayAttackMotion();
+            }
+            ResolveQueueSlot(slot, r);
             if (feedbackLabel != null)
                 feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
 
@@ -284,11 +264,6 @@ namespace BeatMemories
         {
             ResetQueues();
             SetEnemyIdle();
-        }
-
-        private void OnAttackLanded(bool strongAttack)
-        {
-            if (cameraSway != null) cameraSway.Shake(strongAttack);
         }
 
         private void RefreshEnemyCells()
@@ -311,20 +286,6 @@ namespace BeatMemories
         private void OnBeat(int beatInCycle)
         {
             SetDots(beatInCycle);
-            if (beatInCycle < Conductor.ResponseStartBeat) return;
-
-            int slot = beatInCycle - Conductor.ResponseStartBeat;
-            if (slot < 0 || slot >= QueueSlotCount) return;
-
-            Enemy enemy = revealedEnemies[slot];
-            if (enemy != null && enemy.Sprite != null)
-            {
-                enemyTarget = PoseColor(enemy);
-                enemyFlash = 1f;
-                SetEnemySprite(enemy.Sprite);
-                enemySpriteTimer = actionSpriteHold;
-            }
-            BeginPlayerQueueSlot(slot);
         }
 
         private void OnHealth(int current, int max)
@@ -454,14 +415,9 @@ namespace BeatMemories
                     enemyQueueSlot.raycastTarget = false;
                 }
 
-                Image playerQueueSlot = QueueSlot(playerQueueSlots, i);
-                if (playerQueueSlot != null)
-                {
-                    playerQueueSlot.enabled = true;
-                    playerQueueSlot.preserveAspect = true;
-                    playerQueueSlot.raycastTarget = false;
-                    playerQueueBaseScales[i] = playerQueueSlot.rectTransform.localScale;
-                }
+                // 기존 Player Queue 오브젝트는 삭제하지 않고 표시만 끈다.
+                Image legacyPlayerSlot = QueueSlot(playerQueueSlots, i);
+                if (legacyPlayerSlot != null) legacyPlayerSlot.gameObject.SetActive(false);
             }
             ResetQueues();
         }
@@ -471,32 +427,14 @@ namespace BeatMemories
             for (int i = 0; i < QueueSlotCount; i++)
             {
                 revealedEnemies[i] = null;
-                playerQueueResolved[i] = false;
-                playerQueueBlinkTimers[i] = 0f;
                 SetQueueSlot(enemyQueueSlots, i, emptyQueueSprite, queueEmptyColor);
-                SetQueueSlot(playerQueueSlots, i, emptyQueueSprite, queueEmptyColor);
-
-                Image playerQueueSlot = QueueSlot(playerQueueSlots, i);
-                if (playerQueueSlot != null)
-                    playerQueueSlot.rectTransform.localScale = playerQueueBaseScales[i];
             }
         }
 
         private Sprite QueueSprite(Enemy enemy)
         {
             if (enemy == null) return emptyQueueSprite;
-            return enemy.Sprite != null ? enemy.Sprite : ActionIcon(enemy.PrimaryAnswer());
-        }
-
-        private Sprite ActionIcon(PlayerAction action)
-        {
-            switch (action)
-            {
-                case PlayerAction.Guard: return guardActionIcon;
-                case PlayerAction.Attack: return attackActionIcon;
-                case PlayerAction.Charge: return chargeActionIcon;
-                default: return emptyQueueSprite;
-            }
+            return enemy.Sprite != null ? enemy.Sprite : emptyQueueSprite;
         }
 
         private static Image QueueSlot(Image[] slots, int index)
@@ -510,15 +448,7 @@ namespace BeatMemories
             slot.color = color;
         }
 
-        private void BeginPlayerQueueSlot(int slot)
-        {
-            if (slot < 0 || slot >= QueueSlotCount) return;
-            playerQueueResolved[slot] = false;
-            playerQueueBlinkTimers[slot] = queueBlinkDuration;
-            SetQueueSlot(playerQueueSlots, slot, emptyQueueSprite, queueWaitingColor);
-        }
-
-        private void ResolvePlayerQueueSlot(int slot, JudgeResult result)
+        private void ResolveQueueSlot(int slot, JudgeResult result)
         {
             if (slot < 0 || slot >= QueueSlotCount) return;
 
@@ -528,52 +458,33 @@ namespace BeatMemories
                 ? Color.white
                 : (playerDamaged ? queueDamageColor : queueSuccessColor);
 
-            playerQueueResolved[slot] = true;
-            playerQueueBlinkTimers[slot] = 0f;
-            SetQueueSlot(playerQueueSlots, slot, ActionIcon(result.Input), resultColor);
-
-            Image queueSlot = QueueSlot(playerQueueSlots, slot);
-            if (queueSlot != null) queueSlot.rectTransform.localScale = playerQueueBaseScales[slot];
-        }
-
-        private void UpdateQueueAnimations()
-        {
-            for (int i = 0; i < QueueSlotCount; i++)
+            Image queueSlot = QueueSlot(enemyQueueSlots, slot);
+            if (queueSlot != null)
             {
-                Image slot = QueueSlot(playerQueueSlots, i);
-                if (slot == null || playerQueueResolved[i] || playerQueueBlinkTimers[i] <= 0f) continue;
-
-                playerQueueBlinkTimers[i] = Mathf.Max(0f, playerQueueBlinkTimers[i] - Time.deltaTime);
-                float elapsed = queueBlinkDuration - playerQueueBlinkTimers[i];
-                float pulse = Mathf.Abs(Mathf.Cos(elapsed * queueBlinkSpeed));
-                Color color = queueWaitingColor;
-                color.a = Mathf.Lerp(queueEmptyColor.a, queueWaitingColor.a, pulse);
-                slot.color = color;
-
-                float scale = 1f + queuePulseScale * pulse;
-                slot.rectTransform.localScale = playerQueueBaseScales[i] * scale;
-                if (playerQueueBlinkTimers[i] <= 0f)
-                    slot.rectTransform.localScale = playerQueueBaseScales[i];
+                queueSlot.color = resultColor;
+                queueSlot.rectTransform.DOKill();
+                queueSlot.rectTransform.DOPunchScale(Vector3.one * 0.16f, 0.18f, 6, 0.5f);
             }
         }
 
-        private void PlayActionEffect(PlayerAction action)
+        private void PlayAttackMotion()
         {
-            if (action != PlayerAction.Attack && action != PlayerAction.Guard) return;
-            currentActionEffect = action;
             actionEffectTimer = actionEffectDuration;
         }
 
-        private Color ActionEffectColor(Color baseColor)
+        private void PlayEnemyHit()
         {
-            if (actionEffectTimer <= 0f || actionEffectDuration <= 0f) return baseColor;
-
-            float normalized = 1f - actionEffectTimer / actionEffectDuration;
-            float strength = Mathf.Sin(normalized * Mathf.PI);
-            Color effectColor = currentActionEffect == PlayerAction.Guard
-                ? defenseEffectColor
-                : attackEffectColor;
-            return Color.Lerp(baseColor, effectColor, strength);
+            enemyDamageFlashTimer = damageFlashDuration;
+            if (enemySlot == null) return;
+            enemySlot.transform.DOKill();
+            enemySlot.transform.DOShakePosition(
+                hitShakeDuration,
+                enemyHitShakeStrength,
+                enemyHitShakeVibrato,
+                90f,
+                false,
+                true,
+                ShakeRandomnessMode.Harmonic);
         }
 
         private void UpdateActionMotion()
@@ -585,12 +496,64 @@ namespace BeatMemories
             if (actionEffectTimer <= 0f || actionEffectDuration <= 0f) return;
 
             actionEffectTimer = Mathf.Max(0f, actionEffectTimer - Time.deltaTime);
-            if (currentActionEffect != PlayerAction.Attack) return;
 
             float normalized = 1f - actionEffectTimer / actionEffectDuration;
             float distance = Mathf.Sin(normalized * Mathf.PI) * attackLungeDistance;
             playerActionOffset = new Vector3(distance, 0f, 0f);
             target.localPosition += playerActionOffset;
+        }
+
+        private void OnScoreAwarded(int points, bool isClearBonus)
+        {
+            if (round == null) return;
+            if (scoreLabel == null || enemySlot == null)
+            {
+                round.CommitScore(points);
+                return;
+            }
+
+            Text floating = Instantiate(scoreLabel, scoreLabel.transform.parent);
+            floating.name = "FloatingScore";
+            floating.enabled = true;
+            floating.raycastTarget = false;
+            floating.text = $"+{points:N0}";
+            floating.color = isClearBonus ? clearBonusColor : hitScoreColor;
+
+            RectTransform floatingRect = floating.rectTransform;
+            RectTransform parent = floatingRect.parent as RectTransform;
+            Canvas canvas = scoreLabel.canvas;
+            Camera uiCamera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay
+                ? canvas.worldCamera
+                : null;
+            Vector3 worldOrigin = enemySlot.transform.position + Vector3.up * (0.4f + 0.12f * floatingScoreOrder);
+            Vector2 screenOrigin = RectTransformUtility.WorldToScreenPoint(Camera.main, worldOrigin);
+            if (parent != null
+                && RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screenOrigin, uiCamera, out Vector2 localOrigin))
+                floatingRect.anchoredPosition = localOrigin;
+
+            float valueRatio = Mathf.InverseLerp(0f, floatingScoreMaxValue, points);
+            float scale = Mathf.Lerp(floatingScoreMinScale, floatingScoreMaxScale, valueRatio);
+            floatingRect.localScale = Vector3.one * scale;
+            floatingScoreOrder = (floatingScoreOrder + 1) % QueueSlotCount;
+
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(floatingRect.DOPunchScale(Vector3.one * 0.3f, 0.16f, 6, 0.5f));
+            sequence.Append(floatingRect.DOMove(scoreLabel.rectTransform.position, floatingScoreDuration)
+                .SetEase(Ease.InCubic));
+            sequence.Join(floating.DOFade(0.25f, floatingScoreDuration)
+                .SetEase(Ease.InQuad));
+            sequence.OnComplete(() =>
+            {
+                round.CommitScore(points);
+                scoreLabel.rectTransform.DOKill();
+                scoreLabel.rectTransform.DOPunchScale(Vector3.one * 0.2f, 0.2f, 6, 0.5f);
+                Destroy(floating.gameObject);
+            });
+        }
+
+        private void OnScoreChanged(int score)
+        {
+            if (scoreLabel != null) scoreLabel.text = $"SCORE  {score:N0}";
         }
 
         private void UpdateShake(SpriteRenderer slot, ref float timer, ref Vector3 offset)

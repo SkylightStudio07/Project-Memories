@@ -38,9 +38,16 @@ namespace BeatMemories
         [Header("판정 (인스펙터 조정)")]
         [Tooltip("마감까지 안 답한 박을 오답으로 취급(적 defaultOutcome 적용)")]
         [SerializeField] private bool noInputCountsAsMiss = true;
+        [Tooltip("박 시작 후 입력 창이 열리는 지점(박 길이 비율)")]
+        [SerializeField, Range(0f, 0.45f)] private float inputStartOffset = 0.12f;
+        [Tooltip("박 종료 전 입력 창이 닫히는 지점(박 길이 비율)")]
+        [SerializeField, Range(0f, 0.45f)] private float inputEndOffset = 0.12f;
+        [Tooltip("Miss 직후 다음 입력을 잠그는 시간(초)")]
+        [SerializeField, Min(0f)] private float missInputLockDuration = 0.1f;
         [SerializeField] private bool verboseLog = true;
 
         [Header("점수 (인스펙터 조정)")]
+        [SerializeField, Min(0)] private int hitScore = 100;
         [SerializeField, Min(0)] private int clearScore = 100;
         [SerializeField, Min(0)] private int maxTimingBonus = 100;
         [SerializeField, Min(0)] private int hpScoreWeight = 25;
@@ -52,6 +59,7 @@ namespace BeatMemories
         public event Action<int, PhaseSO> OnPhaseChanged;            // (cycleIndex, phase) 페이즈 시작
         public event Action<int> OnCycleStarted;                     // 큐 등 사이클 단위 표시 초기화
         public event Action<int> OnScoreChanged;
+        public event Action<int, bool> OnScoreAwarded;               // (획득량, 처치 보너스 여부)
         public event Action<bool> OnAttackLanded;                    // 강공격 여부
         public event Action OnGameOver;
 
@@ -75,6 +83,7 @@ namespace BeatMemories
         private bool inResponse;
         private bool responseEndPending;
         private int responseEndFrame = -1;
+        private double inputLockedUntil = double.NegativeInfinity;
         private bool isOver;
 
         public int Seed => seed;
@@ -149,6 +158,7 @@ namespace BeatMemories
 
             int count = pattern != null ? pattern.SpotlightCount : 0;
             currentCycle = provider.GenerateCycleWeighted(cycleIndex, count, phase);
+            inputLockedUntil = double.NegativeInfinity;
             OnCycleStarted?.Invoke(cycleIndex);
             if (verboseLog) Debug.Log($"[Round] === 사이클 {cycleIndex} 제시 시작 (적 {count}) ===");
         }
@@ -163,13 +173,15 @@ namespace BeatMemories
             {
                 int beatInCycle = Conductor.ResponseStartBeat + k;
                 int globalBeat = cycleIndex * Conductor.BeatsPerCycle + beatInCycle;
-                double openTime = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0;
+                double beatStart = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0;
+                double beatEnd = conductor != null ? conductor.BeatToTime(globalBeat + 1) : beatStart;
+                double beatDuration = beatEnd - beatStart;
                 notes.Add(new ResponseNote
                 {
                     slot = k,
                     enemy = currentCycle[k],
-                    openTime = openTime,
-                    closeTime = conductor != null ? conductor.BeatToTime(globalBeat + 1) : openTime,
+                    openTime = beatStart + beatDuration * inputStartOffset,
+                    closeTime = beatEnd - beatDuration * inputEndOffset,
                     consumed = false,
                 });
             }
@@ -242,6 +254,9 @@ namespace BeatMemories
             if (isOver || !inResponse || conductor == null) return;
 
             double inputSongTime = conductor.RealtimeToSongPosition(timedAction.Realtime);
+            ExpireElapsedNotes(inputSongTime);
+            if (isOver || inputSongTime < inputLockedUntil) return;
+
             int current = -1;
             for (int i = 0; i < notes.Count; i++)
             {
@@ -251,14 +266,6 @@ namespace BeatMemories
                     current = i;
                     break;
                 }
-            }
-
-            // UI 포인터 이벤트는 Conductor 뒤에 전달될 수 있다. 같은 경계 프레임의 입력은
-            // 새 제시 구간이 입력을 받지 않으므로 직전 네 번째 행동에 우선 귀속한다.
-            if (current < 0 && responseEndPending && timedAction.Frame == responseEndFrame)
-            {
-                int last = notes.Count - 1;
-                if (last >= 0 && !notes[last].consumed) current = last;
             }
 
             if (current < 0) return;
@@ -285,12 +292,17 @@ namespace BeatMemories
 
                 notes[i].consumed = true;
                 if (noInputCountsAsMiss)
+                {
                     ApplyJudge(
                         notes[i].slot,
                         notes[i].enemy,
                         PlayerAction.None,
                         isMiss: true,
                         responseRatio: 1f);
+                    inputLockedUntil = Math.Max(
+                        inputLockedUntil,
+                        notes[i].closeTime + missInputLockDuration);
+                }
 
                 if (isOver) break;
             }
@@ -344,21 +356,61 @@ namespace BeatMemories
                 player.SetCharged(true);
 
             if (result.PlayerDamage > 0 && player != null) player.TakeDamage(result.PlayerDamage);
-            if (result.Cleared) AwardScore(enemy, responseRatio);
+            if (result.Cleared) AwardScore(enemy, action, responseRatio);
             if (action == PlayerAction.Attack && result.Cleared) OnAttackLanded?.Invoke(charged);
             OnJudged?.Invoke(slot, enemy, result);
             if (verboseLog)
                 Debug.Log($"[Round] {(isMiss ? "무입력" : "응답")} slot{slot}: {enemy?.DisplayName} + {action}{(charged ? "(강)" : "")} → {result.Type} (dmg {result.PlayerDamage}) HP {(player != null ? player.CurrentHp : -1)}");
         }
 
-        private void AwardScore(Enemy enemy, float responseRatio)
+        private void AwardScore(Enemy enemy, PlayerAction action, float responseRatio)
         {
+            if (action == PlayerAction.Attack) QueueScore(hitScore, false);
+
             int strengthBonus = enemy != null
                 ? enemy.MaxHp * hpScoreWeight + enemy.Armor * armorScoreWeight
                 : 0;
             int timingBonus = Mathf.RoundToInt((1f - Mathf.Clamp01(responseRatio)) * maxTimingBonus);
-            Score += clearScore + strengthBonus + timingBonus;
+            QueueScore(clearScore + strengthBonus + timingBonus, true);
+        }
+
+        private void QueueScore(int points, bool isClearBonus)
+        {
+            if (points <= 0) return;
+            if (OnScoreAwarded != null) OnScoreAwarded.Invoke(points, isClearBonus);
+            else CommitScore(points);
+        }
+
+        /// <summary>점수 획득 연출이 HUD에 도착했을 때 실제 점수에 반영한다.</summary>
+        public void CommitScore(int points)
+        {
+            if (points <= 0) return;
+            Score += points;
             OnScoreChanged?.Invoke(Score);
+        }
+
+        /// <summary>응답 슬롯의 현재 입력 가능 여부와 Cursor 진행률을 반환한다.</summary>
+        public bool TryGetInputWindowProgress(int slot, out float progress)
+        {
+            progress = 0f;
+            if (!inResponse || conductor == null) return false;
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                ResponseNote note = notes[i];
+                if (note.slot != slot || note.consumed) continue;
+
+                double now = conductor.SongPosition;
+                if (now < note.openTime || now >= note.closeTime || now < inputLockedUntil)
+                    return false;
+
+                double duration = note.closeTime - note.openTime;
+                progress = duration > 0.0
+                    ? Mathf.Clamp01((float)((now - note.openTime) / duration))
+                    : 1f;
+                return true;
+            }
+            return false;
         }
 
         private PhaseSO PhaseForCycle(int cycleIndex)
