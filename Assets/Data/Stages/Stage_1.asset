@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stage_1
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageSO
   stageNumber: 1
-  displayName: "\uD29C\uD1A0\uB9AC\uC5BC (\uACF5/\uBC29)"
+  displayName: "\uD29C\uD1A0\uB9AC\uC5BC"
   keyMode: 0
   enemyPool:
   - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
@@ -21,9 +21,8 @@ MonoBehaviour:
   enemySprite: {fileID: 4089636935794680599, guid: 42d77fc7d15a51d4ab94c4d0ccec3e85, type: 3}
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
   phases:
-  - {fileID: 11400000, guid: 1ae94f3d63d39b142b78bfee344ac7ab, type: 2}
-  - {fileID: 11400000, guid: 054b40b29d0bc454aaabb343feb3c141, type: 2}
-  cyclesPerPhase: 2
+  - {fileID: 11400000, guid: bf2a7f448f9c4e9fa4bd9a47d78b9e8e, type: 2}
+  cyclesPerPhase: 4
   repeatPhasePlan: 0
   bpm: 90
   playerMaxHp: 7
