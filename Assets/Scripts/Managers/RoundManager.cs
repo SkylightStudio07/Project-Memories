@@ -4,13 +4,20 @@ using UnityEngine;
 
 namespace BeatMemories
 {
+    public enum RhythmTimingResult
+    {
+        Success,
+        TooEarly,
+        TooLate,
+    }
+
     /// <summary>
     /// P0 코어 루프 오케스트레이터.
     /// 제시 구간: 결정론적 시퀀스로 적을 스포트라이트 박마다 순서대로 드러낸다.
-    /// 응답 구간: 네 번의 제시 직후 이어지는 각 박의
-    ///   <b>가장 먼저 들어온 입력 하나로 그 행동을 확정</b>한다.
-    ///   - 틀리게 누르면 그 박은 오답으로 잠긴다(고쳐 눌러도 봐주지 않음).
-    ///   - 창을 벗어난 입력은 무시. 마감까지 안 답한 박은 무입력 미스.
+    /// 응답 구간: 각 박의 슬롯 게이지와 전역 Early/Late Offset으로 입력을 판정한다.
+    ///   - Too Early는 행동을 잠그고 정박에서 쉼으로 처리한다.
+    ///   - Success는 선택 행동을 처리한다.
+    ///   - Too Late는 Offset 끝에서 쉼으로 처리한다.
     /// </summary>
     public class RoundManager : MonoBehaviour
     {
@@ -38,10 +45,6 @@ namespace BeatMemories
         [SerializeField, Min(1)] private int cyclesPerPhase = 2;
 
         [Header("판정 (인스펙터 조정)")]
-        [Tooltip("마감까지 안 답한 박을 오답으로 취급(적 defaultOutcome 적용)")]
-        [SerializeField] private bool noInputCountsAsMiss = true;
-        [Tooltip("박 종료 전 입력 창이 닫히는 지점(박 길이 비율)")]
-        [SerializeField, Range(0f, 0.45f)] private float inputEndOffset = 0.12f;
         [Tooltip("Miss 직후 다음 입력을 잠그는 시간(초)")]
         [SerializeField, Min(0f)] private float missInputLockDuration = 0.005f;
         [SerializeField] private bool verboseLog = true;
@@ -56,6 +59,8 @@ namespace BeatMemories
         // 이벤트 (UI가 구독)
         public event Action<int, Enemy> OnEnemyRevealed;              // (slot, enemy) 제시
         public event Action<int, Enemy, JudgeResult> OnJudged;       // (slot, enemy, result) 판정
+        public event Action<int, RhythmTimingResult> OnTimingJudged; // 빠름/정확/느림 판정
+        public event Action<int, RhythmTimingResult, double> OnTimingFrameResolved;
         public event Action<int, PhaseSO> OnPhasePreparing;          // (cycleIndex, phase) 페이즈 준비(전환 직전)
         public event Action<int, PhaseSO> OnPhaseChanged;            // (cycleIndex, phase) 페이즈 시작
         public event Action<int> OnCycleStarted;                     // 큐 등 사이클 단위 표시 초기화
@@ -73,9 +78,12 @@ namespace BeatMemories
             public int slot;
             public int globalBeat;
             public Enemy enemy;
-            public double openTime;  // 입력 구간의 시작(SongPosition 기준)
-            public double closeTime; // 입력 구간의 끝. [openTime, closeTime)
+            public double openTime;   // 슬롯 게이지 시작
+            public double earlyTime;  // 성공 판정 시작
+            public double targetTime; // 정박
+            public double closeTime;  // 느림 Offset 끝
             public bool consumed; // 이미 입력으로 확정됐는가
+            public bool lockedByEarlyInput;
         }
 
         private EnemySequenceProvider provider;
@@ -180,14 +188,24 @@ namespace BeatMemories
                 double beatStart = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0;
                 double beatEnd = conductor != null ? conductor.BeatToTime(globalBeat + 1) : beatStart;
                 double beatDuration = beatEnd - beatStart;
+                double lateOffset = conductor != null
+                    ? Math.Min(conductor.LateOffset, beatDuration * 0.45)
+                    : 0.0;
+                double targetTime = beatEnd - lateOffset;
+                double earlyOffset = conductor != null
+                    ? Math.Min(conductor.EarlyOffset, targetTime - beatStart)
+                    : 0.0;
                 notes.Add(new ResponseNote
                 {
                     slot = k,
                     globalBeat = globalBeat,
                     enemy = currentCycle[k],
                     openTime = beatStart,
-                    closeTime = beatEnd - beatDuration * inputEndOffset,
+                    earlyTime = targetTime - earlyOffset,
+                    targetTime = targetTime,
+                    closeTime = beatEnd,
                     consumed = false,
+                    lockedByEarlyInput = false,
                 });
             }
             inResponse = true;
@@ -277,19 +295,32 @@ namespace BeatMemories
 
             if (current < 0) return;
 
-            notes[current].consumed = true;
+            ResponseNote note = notes[current];
+            if (note.lockedByEarlyInput) return;
+            if (inputSongTime < note.earlyTime)
+            {
+                note.lockedByEarlyInput = true;
+                ResolveTimingFrame(note, RhythmTimingResult.TooEarly, inputSongTime);
+                OnTimingJudged?.Invoke(note.slot, RhythmTimingResult.TooEarly);
+                return;
+            }
+
+            note.consumed = true;
             input?.NotifyAccepted(timedAction.Action);
-            double duration = notes[current].closeTime - notes[current].openTime;
-            float responseRatio = duration > 0.0
-                ? Mathf.Clamp01((float)((inputSongTime - notes[current].openTime) / duration))
+            ResolveTimingFrame(note, RhythmTimingResult.Success, inputSongTime);
+            OnTimingJudged?.Invoke(note.slot, RhythmTimingResult.Success);
+            double timingRange = inputSongTime <= note.targetTime
+                ? note.targetTime - note.earlyTime
+                : note.closeTime - note.targetTime;
+            float responseRatio = timingRange > 0.0
+                ? Mathf.Clamp01((float)(Math.Abs(inputSongTime - note.targetTime) / timingRange))
                 : 1f;
             ApplyJudge(
-                notes[current].slot,
-                notes[current].enemy,
+                note.slot,
+                note.enemy,
                 timedAction.Action,
                 isMiss: false,
                 responseRatio: responseRatio);
-            conductor.AdvanceResponseBeatNow(notes[current].slot);
         }
 
         private void RefreshPendingNoteWindows()
@@ -301,8 +332,14 @@ namespace BeatMemories
                 if (notes[i].consumed) continue;
                 double beatStart = conductor.BeatToTime(notes[i].globalBeat);
                 double beatEnd = conductor.BeatToTime(notes[i].globalBeat + 1);
+                double beatDuration = beatEnd - beatStart;
+                double lateOffset = Math.Min(conductor.LateOffset, beatDuration * 0.45);
+                double targetTime = beatEnd - lateOffset;
+                double earlyOffset = Math.Min(conductor.EarlyOffset, targetTime - beatStart);
                 notes[i].openTime = beatStart;
-                notes[i].closeTime = beatEnd - (beatEnd - beatStart) * inputEndOffset;
+                notes[i].earlyTime = targetTime - earlyOffset;
+                notes[i].targetTime = targetTime;
+                notes[i].closeTime = beatEnd;
             }
         }
 
@@ -310,25 +347,34 @@ namespace BeatMemories
         {
             for (int i = 0; i < notes.Count; i++)
             {
-                if (notes[i].consumed || now < notes[i].closeTime) continue;
-
-                notes[i].consumed = true;
-                if (noInputCountsAsMiss)
+                ResponseNote note = notes[i];
+                if (note.consumed) continue;
+                if (note.lockedByEarlyInput && now >= note.targetTime)
                 {
+                    note.consumed = true;
                     ApplyJudge(
-                        notes[i].slot,
-                        notes[i].enemy,
+                        note.slot,
+                        note.enemy,
                         PlayerAction.None,
                         isMiss: true,
                         responseRatio: 1f);
-                    inputLockedUntilRealtime = Math.Max(
-                        inputLockedUntilRealtime,
-                        Time.realtimeSinceStartupAsDouble + missInputLockDuration);
+                    continue;
                 }
+                if (now < note.closeTime) continue;
 
-                conductor?.AdvanceResponseBeatNow(notes[i].slot);
+                note.consumed = true;
+                ResolveTimingFrame(note, RhythmTimingResult.TooLate, note.closeTime);
+                OnTimingJudged?.Invoke(note.slot, RhythmTimingResult.TooLate);
+                ApplyJudge(
+                    note.slot,
+                    note.enemy,
+                    PlayerAction.None,
+                    isMiss: true,
+                    responseRatio: 1f);
+                inputLockedUntilRealtime = Math.Max(
+                    inputLockedUntilRealtime,
+                    Time.realtimeSinceStartupAsDouble + missInputLockDuration);
                 if (isOver) break;
-                break; // 시간축이 다음 Beat 시작으로 이동했으므로 다음 노트는 다음 프레임에 검사
             }
         }
 
@@ -341,13 +387,17 @@ namespace BeatMemories
                 if (notes[i].consumed) continue;
 
                 notes[i].consumed = true;
-                if (noInputCountsAsMiss)
-                    ApplyJudge(
-                        notes[i].slot,
-                        notes[i].enemy,
-                        PlayerAction.None,
-                        isMiss: true,
-                        responseRatio: 1f);
+                ResolveTimingFrame(
+                    notes[i],
+                    RhythmTimingResult.TooLate,
+                    notes[i].closeTime);
+                OnTimingJudged?.Invoke(notes[i].slot, RhythmTimingResult.TooLate);
+                ApplyJudge(
+                    notes[i].slot,
+                    notes[i].enemy,
+                    PlayerAction.None,
+                    isMiss: true,
+                    responseRatio: 1f);
                 if (isOver) break;
             }
 
@@ -402,13 +452,13 @@ namespace BeatMemories
 
         private void AwardScore(Enemy enemy, PlayerAction action, float responseRatio)
         {
-            if (action == PlayerAction.Attack) QueueScore(hitScore, false);
-
             int strengthBonus = enemy != null
                 ? enemy.MaxHp * hpScoreWeight + enemy.Armor * armorScoreWeight
                 : 0;
             int timingBonus = Mathf.RoundToInt((1f - Mathf.Clamp01(responseRatio)) * maxTimingBonus);
-            QueueScore(clearScore + strengthBonus + timingBonus, true);
+            int totalPoints = clearScore + strengthBonus + timingBonus;
+            if (action == PlayerAction.Attack) totalPoints += hitScore;
+            QueueScore(totalPoints, true);
         }
 
         private void QueueScore(int points, bool isClearBonus)
@@ -426,25 +476,23 @@ namespace BeatMemories
             OnScoreChanged?.Invoke(Score);
         }
 
-        /// <summary>응답 슬롯의 현재 입력 가능 여부와 Cursor 진행률을 반환한다.</summary>
-        public bool TryGetInputWindowProgress(int slot, out float progress)
+        /// <summary>응답 슬롯 게이지의 BPM 기반 진행률(슬롯 시작→정박)을 반환한다.</summary>
+        public bool TryGetTimingSlotProgress(int slot, out float progress)
         {
             progress = 0f;
-            if (!inResponse || conductor == null) return false;
+            if (isOver || !inResponse || conductor == null) return false;
             RefreshPendingNoteWindows();
 
             for (int i = 0; i < notes.Count; i++)
             {
                 ResponseNote note = notes[i];
-                if (note.slot != slot || note.consumed) continue;
+                if (note.slot != slot) continue;
 
                 double now = conductor.SongPosition;
-                if (now < note.openTime
-                    || now >= note.closeTime
-                    || Time.realtimeSinceStartupAsDouble < inputLockedUntilRealtime)
+                if (now < note.openTime || now >= note.closeTime)
                     return false;
 
-                double duration = note.closeTime - note.openTime;
+                double duration = note.targetTime - note.openTime;
                 progress = duration > 0.0
                     ? Mathf.Clamp01((float)((now - note.openTime) / duration))
                     : 1f;
@@ -452,6 +500,106 @@ namespace BeatMemories
             }
             return false;
         }
+
+        /// <summary>
+        /// 판정 프레임 Scale. Early 시작 Min, 정박 1, Late 끝 Max.
+        /// </summary>
+        public bool TryGetTimingFrameScale(int slot, out float scale)
+        {
+            return TryGetTimingFrameScale(slot, new Vector2(0f, 1.25f), out scale);
+        }
+
+        public bool TryGetTimingFrameScale(
+            int slot,
+            Vector2 scaleRange,
+            out float scale)
+        {
+            scale = 0f;
+            if (isOver || !inResponse || conductor == null) return false;
+            RefreshPendingNoteWindows();
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                ResponseNote note = notes[i];
+                if (note.slot != slot) continue;
+
+                double now = conductor.SongPosition;
+                if (now < note.openTime || now >= note.closeTime) return false;
+                scale = CalculateTimingFrameScale(note, now, scaleRange);
+                return true;
+            }
+            return false;
+        }
+
+        private void ResolveTimingFrame(
+            ResponseNote note,
+            RhythmTimingResult result,
+            double songTime)
+        {
+            OnTimingFrameResolved?.Invoke(note.slot, result, songTime);
+        }
+
+        public bool TryGetTimingFrameScaleAt(
+            int slot,
+            double songTime,
+            Vector2 scaleRange,
+            out float scale)
+        {
+            scale = Mathf.Clamp(scaleRange.x, 0f, 1f);
+            for (int i = 0; i < notes.Count; i++)
+            {
+                ResponseNote note = notes[i];
+                if (note.slot != slot) continue;
+                scale = CalculateTimingFrameScale(note, songTime, scaleRange);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>슬롯 포커스가 가장 작아져야 하는 실제 Perfect 시각.</summary>
+        public bool TryGetTimingFrameTargetTime(int slot, out double targetTime)
+        {
+            targetTime = 0.0;
+            if (isOver || !inResponse || conductor == null) return false;
+            RefreshPendingNoteWindows();
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                if (notes[i].slot != slot) continue;
+                targetTime = notes[i].targetTime;
+                return true;
+            }
+            return false;
+        }
+
+        private static float CalculateTimingFrameScale(
+            ResponseNote note,
+            double songTime,
+            Vector2 scaleRange)
+        {
+            float minScale = Mathf.Clamp(scaleRange.x, 0f, 1f);
+            float maxScale = Mathf.Max(1f, scaleRange.y);
+
+            if (songTime <= note.earlyTime) return minScale;
+            if (songTime <= note.targetTime)
+            {
+                double earlyDuration = note.targetTime - note.earlyTime;
+                float earlyProgress = earlyDuration > 0.0
+                    ? Mathf.Clamp01((float)((songTime - note.earlyTime) / earlyDuration))
+                    : 1f;
+                return Mathf.Lerp(minScale, 1f, earlyProgress);
+            }
+
+            double lateDuration = note.closeTime - note.targetTime;
+            float lateProgress = lateDuration > 0.0
+                ? Mathf.Clamp01((float)((songTime - note.targetTime) / lateDuration))
+                : 1f;
+            return Mathf.Lerp(1f, maxScale, lateProgress);
+        }
+
+        /// <summary>기존 Cursor 호출 호환용. 새 UI는 <see cref="TryGetTimingSlotProgress"/>를 사용한다.</summary>
+        public bool TryGetInputWindowProgress(int slot, out float progress) =>
+            TryGetTimingSlotProgress(slot, out progress);
 
         private PhaseSO PhaseForCycle(int cycleIndex)
         {

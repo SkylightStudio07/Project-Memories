@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -39,7 +40,7 @@ namespace BeatMemories
         [SerializeField] private Image[] hearts;
         [Tooltip("적 HP 칸(세그먼트)")]
         [SerializeField] private Image[] enemyCells;
-        [Tooltip("적 HP 최대치(칸 수와 맞춤). ※구동은 임시: 처리(Clear)마다 1 감소")]
+        [Tooltip("적 HP 최대치(칸 수와 맞춤). 처리(Clear)마다 1 감소하며 0에서 사망 연출 실행.")]
         [SerializeField, Min(1)] private int enemyMaxHp = 7;
         [SerializeField] private Text phaseLabel;
         [SerializeField] private Text feedbackLabel;
@@ -47,6 +48,12 @@ namespace BeatMemories
         [SerializeField] private Text countdownLabel;
         [SerializeField] private Text chargeLabel;
         [SerializeField] private Text scoreLabel;
+
+        [Header("스프라이트 점수")]
+        [Tooltip("0부터 9 순서의 숫자 Sprite.")]
+        [SerializeField] private Sprite[] scoreDigitSprites = new Sprite[10];
+        [SerializeField] private Vector2 scoreDigitSize = new Vector2(52f, 52f);
+        [SerializeField] private float scoreDigitSpacing = -5f;
 
         [Header("통합 Queue (기존 Enemy Queue 슬롯 재사용)")]
         [SerializeField] private Image[] enemyQueueSlots = new Image[QueueSlotCount];
@@ -61,6 +68,20 @@ namespace BeatMemories
         [SerializeField] private Color presentDotColor = new Color(0.95f, 0.80f, 0.32f);
         [SerializeField] private Color responseDotColor = new Color(0.32f, 0.90f, 0.90f);
         [SerializeField] private Color dotOffColor = new Color(0.24f, 0.24f, 0.30f);
+
+        [Header("판정 Floating Text")]
+        [SerializeField] private Color timingSuccessColor = new Color(0.3f, 1f, 0.55f);
+        [SerializeField] private Color timingEarlyColor = new Color(1f, 0.72f, 0.2f);
+        [SerializeField] private Color timingLateColor = new Color(0.65f, 0.72f, 0.8f);
+        [SerializeField, Min(0.1f)] private float timingFeedbackDuration = 0.55f;
+        [Tooltip("삐끗 텍스트를 플레이어 머리 위로 띄울 추가 월드 높이.")]
+        [SerializeField, Min(0f)] private float timingFeedbackHeadOffset = 0.3f;
+        [SerializeField, Min(1)] private int timingFeedbackFontSize = 52;
+        [SerializeField, Min(0.1f)] private float timingFeedbackStartScale = 0.8f;
+        [SerializeField, Min(0.1f)] private float timingFeedbackPopScale = 1.15f;
+        [SerializeField, Min(0f)] private float timingFeedbackRiseDistance = 48f;
+
+        [Header("하트 색")]
         [SerializeField] private Color heartFull = new Color(0.90f, 0.26f, 0.36f);
         [SerializeField] private Color heartEmpty = new Color(0.24f, 0.20f, 0.22f);
 
@@ -89,13 +110,17 @@ namespace BeatMemories
         [Header("Laser Effect")]
         [Tooltip("PlayerActor 자식 발사 위치의 LineRenderer")]
         [SerializeField] private LineRenderer playerLaser;
+        [SerializeField] private LineRenderer playerLaserOuter;
         [Tooltip("EnemyActor 자식 발사 위치의 LineRenderer")]
         [SerializeField] private LineRenderer enemyLaser;
+        [SerializeField] private LineRenderer enemyLaserOuter;
         [SerializeField] private Light2D playerLaserMuzzleGlow;
         [SerializeField] private Light2D enemyLaserMuzzleGlow;
         [SerializeField] private Light2D playerLaserHitFlash;
         [SerializeField] private Light2D enemyLaserHitFlash;
         [SerializeField, Min(0.01f)] private float laserWidth = 0.1f;
+        [SerializeField, Min(1f)] private float laserOuterWidthMultiplier = 1.9f;
+        [SerializeField, Range(0.01f, 0.5f)] private float laserStartWidthRatio = 0.08f;
         [SerializeField, Min(1f)] private float laserFlashWidthMultiplier = 1.8f;
         [SerializeField, Range(0.08f, 0.12f)] private float laserPrepareDuration = 0.1f;
         [SerializeField, Min(0f)] private float laserGrowDuration = 0.08f;
@@ -108,11 +133,48 @@ namespace BeatMemories
         [Header("Charge Effect")]
         [SerializeField] private ChargeAuraEffect chargeAura;
 
-        [Header("Score HUD")]
+        [Header("BPM Scale Bounce")]
+        [Tooltip("정박 순간 적용할 Y Scale 배율.")]
+        [SerializeField, Range(0.8f, 1f)] private float idleBeatSquash = 0.98f;
+        [Tooltip("한 박 길이 중 원래 Y Scale로 복원하는 데 사용할 비율.")]
+        [SerializeField, Range(0.05f, 0.8f)] private float idleBeatRestoreRatio = 0.22f;
+        [SerializeField] private Ease idleBeatRestoreEase = Ease.OutBack;
+
+        [Header("Death Presentation")]
+        [SerializeField] private GameObject explosionPrefab;
+        [SerializeField] private CanvasGroup combatUiGroup;
+        [SerializeField, Min(0f)] private float deathHitStopDuration = 0.08f;
+        [SerializeField, Range(0.35f, 1f)] private float deathCameraZoomRatio = 0.62f;
+        [SerializeField, Min(0.01f)] private float deathCameraDuration = 0.22f;
+        [SerializeField, Min(0.01f)] private float deathUiFadeDuration = 0.16f;
+        [SerializeField, Min(0.01f)] private float deathShakeDuration = 0.24f;
+        [SerializeField, Min(0f)] private float deathShakeStrength = 0.18f;
+        [SerializeField, Min(0f)] private float explosionInterval = 0.11f;
+        [SerializeField] private Vector2[] explosionOffsets =
+        {
+            new Vector2(-0.18f, 0.12f),
+            new Vector2(0.2f, 0.2f),
+            new Vector2(0.04f, -0.16f),
+        };
+        [SerializeField] private float[] explosionScales = { 0.82f, 1.12f, 0.96f };
+        [Tooltip("폭발 생성 후 캐릭터가 날아가기 시작할 때까지의 시간.")]
+        [SerializeField, Min(0f)] private float explosionFlyDelay = 0.18f;
+        [Tooltip("생성된 Explosion Particle을 정리하기까지의 시간. Particle Lifetime과 무관하다.")]
+        [SerializeField, Min(0.1f)] private float explosionCleanupDelay = 2f;
+        [SerializeField, Min(0.1f)] private float deathFlyDuration = 0.72f;
+        [SerializeField, Min(1f)] private float deathFlyDistance = 12f;
+        [SerializeField, Min(0f)] private float deathFlyHeight = 4f;
+        [SerializeField, Min(0f)] private float deathSpinDegrees = 720f;
+
+        [Header("Floating Score")]
         [SerializeField, Min(0.1f)] private float floatingScoreDuration = 0.65f;
         [SerializeField, Min(1f)] private float floatingScoreMinScale = 1f;
         [SerializeField, Min(1f)] private float floatingScoreMaxScale = 1.8f;
         [SerializeField, Min(1)] private int floatingScoreMaxValue = 500;
+        [Tooltip("적 머리 위 기준 Floating 점수 생성 위치.")]
+        [SerializeField] private Vector2 floatingScoreBaseOffset = new Vector2(0f, 0.35f);
+        [Tooltip("매번 다른 위치에서 나오게 할 X/Y 랜덤 범위.")]
+        [SerializeField] private Vector2 floatingScoreRandomOffset = new Vector2(0.3f, 0.18f);
         [SerializeField] private Color hitScoreColor = new Color(0.3f, 1f, 0.55f);
         [SerializeField] private Color clearBonusColor = new Color(1f, 0.82f, 0.25f);
 
@@ -132,10 +194,28 @@ namespace BeatMemories
         private readonly Enemy[] revealedEnemies = new Enemy[QueueSlotCount];
         private float actionEffectTimer;
         private Vector3 playerActionOffset;
+        private Tween playerIdleBounce;
+        private Tween enemyIdleBounce;
+        private bool playerIdleBounceEnabled;
+        private bool enemyIdleBounceEnabled;
+        private Coroutine playerDeathRoutine;
+        private Coroutine enemyDeathRoutine;
+        private bool deathPresentationActive;
+        private bool deathHitStopActive;
+        private float deathPreviousTimeScale = 1f;
+        private double deathHitStopStartedAt;
         private int floatingScoreOrder;
         private Coroutine hitStopRoutine;
         private float timeScaleBeforeHitStop = 1f;
         private double hitStopStartedAt;
+        private SpriteNumberVisual scoreNumberVisual;
+
+        private sealed class SpriteNumberVisual
+        {
+            public RectTransform Root;
+            public CanvasGroup Group;
+            public readonly List<Image> Digits = new List<Image>();
+        }
 
         private void OnEnable()
         {
@@ -143,6 +223,7 @@ namespace BeatMemories
             {
                 round.OnEnemyRevealed += OnReveal;
                 round.OnJudged += OnJudged;
+                round.OnTimingJudged += OnTimingJudged;
                 round.OnPhaseChanged += OnPhase;
                 round.OnCycleStarted += OnCycleStarted;
                 round.OnScoreAwarded += OnScoreAwarded;
@@ -164,6 +245,7 @@ namespace BeatMemories
             {
                 round.OnEnemyRevealed -= OnReveal;
                 round.OnJudged -= OnJudged;
+                round.OnTimingJudged -= OnTimingJudged;
                 round.OnPhaseChanged -= OnPhase;
                 round.OnCycleStarted -= OnCycleStarted;
                 round.OnScoreAwarded -= OnScoreAwarded;
@@ -188,8 +270,21 @@ namespace BeatMemories
                 RestorePresentation(playerSlot, playerBaseScale, ref playerShakeOffset);
                 RestoreOffset(playerSlot, ref playerActionOffset);
             }
-            StopLaser(playerLaser);
-            StopLaser(enemyLaser);
+            StopLaser(playerLaser, playerLaserOuter);
+            StopLaser(enemyLaser, enemyLaserOuter);
+            StopPlayerIdleBounce();
+            StopEnemyIdleBounce();
+            if (playerDeathRoutine != null) StopCoroutine(playerDeathRoutine);
+            if (enemyDeathRoutine != null) StopCoroutine(enemyDeathRoutine);
+            playerDeathRoutine = null;
+            enemyDeathRoutine = null;
+            if (combatUiGroup != null)
+            {
+                combatUiGroup.DOKill();
+                combatUiGroup.alpha = 1f;
+            }
+            cameraSway?.RestoreFocus(0.01f);
+            RestoreDeathHitStop();
             StopEffectLight(playerLaserMuzzleGlow);
             StopEffectLight(enemyLaserMuzzleGlow);
             StopEffectLight(playerLaserHitFlash);
@@ -210,18 +305,14 @@ namespace BeatMemories
             if (feedbackLabel != null) feedbackLabel.text = "";
             SetEnemyIdle();
             SetPlayerIdle();
-            if (scoreLabel != null)
-            {
-                scoreLabel.enabled = true;
-                scoreLabel.text = $"SCORE  {(round != null ? round.Score : 0):N0}";
-            }
+            InitializeScoreDisplay(round != null ? round.Score : 0);
             if (player != null) OnHealth(player.CurrentHp, player.MaxHp);
             _enemyHp = enemyMaxHp;
             RefreshEnemyCells();
             SetDots(-1);
             InitializeQueues();
-            InitializeLaser(playerLaser, playerLaserMuzzleGlow, playerLaserHitFlash);
-            InitializeLaser(enemyLaser, enemyLaserMuzzleGlow, enemyLaserHitFlash);
+            InitializeLaser(playerLaser, playerLaserOuter, playerLaserMuzzleGlow, playerLaserHitFlash);
+            InitializeLaser(enemyLaser, enemyLaserOuter, enemyLaserMuzzleGlow, enemyLaserHitFlash);
             if (chargeAura != null)
             {
                 chargeAura.Initialize(playerSlot, playerLaserColor);
@@ -274,8 +365,13 @@ namespace BeatMemories
 
         private void OnJudged(int slot, Enemy e, JudgeResult r)
         {
+            StopEnemyIdleBounce();
+            if (e != null && e.Action == PlayerAction.Attack) StopPlayerIdleBounce();
+
             if (enemyLaser != null && e != null)
                 enemyLaser.transform.localPosition = e.LaserOriginOffset;
+            if (enemyLaserOuter != null && e != null)
+                enemyLaserOuter.transform.localPosition = e.LaserOriginOffset;
 
             if (e != null && e.Sprite != null)
             {
@@ -286,6 +382,7 @@ namespace BeatMemories
             if (r.Input == PlayerAction.Attack && enemySlot != null)
                 PlayLaser(
                     playerLaser,
+                    playerLaserOuter,
                     playerLaserMuzzleGlow,
                     playerLaserHitFlash,
                     enemySlot,
@@ -294,24 +391,101 @@ namespace BeatMemories
             if (e != null && e.Action == PlayerAction.Attack && playerSlot != null)
                 PlayLaser(
                     enemyLaser,
+                    enemyLaserOuter,
                     enemyLaserMuzzleGlow,
                     enemyLaserHitFlash,
                     playerSlot,
                     enemyLaserColor,
                     r.PlayerDamage > 0);
 
-            if (r.Cleared && r.Input == PlayerAction.Attack)
-                PlayAttackMotion();
-            ResolveQueueSlot(slot, r);
-            if (feedbackLabel != null)
-                feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
-
-            // [임시] 적을 처리(Clear)하면 적 HP 1 감소 — 실제 구동 규칙은 추후
-            if (r.Cleared)
+            bool enemyDamaged = r.Cleared;
+            if (enemyDamaged)
             {
                 _enemyHp = Mathf.Max(0, _enemyHp - 1);
                 RefreshEnemyCells();
             }
+
+            if (enemyDamaged && r.Input == PlayerAction.Attack)
+            {
+                PlayAttackMotion();
+                if (_enemyHp <= 0 && enemyDeathRoutine == null)
+                    enemyDeathRoutine = StartCoroutine(BeginEnemyDeathAfterLaser());
+            }
+
+            ResolveQueueSlot(slot, r);
+            if (feedbackLabel != null)
+                feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
+        }
+
+        private void OnTimingJudged(int slot, RhythmTimingResult result)
+        {
+            if (result == RhythmTimingResult.Success) return;
+            if (player != null && player.TimingMistakeSprite != null)
+            {
+                StopPlayerIdleBounce();
+                SetPlayerSprite(player.TimingMistakeSprite, true);
+                playerSpriteTimer = actionSpriteHold;
+            }
+            else
+            {
+                SetPlayerIdle();
+            }
+
+            bool tooEarly = result == RhythmTimingResult.TooEarly;
+            ShowTimingFeedback(
+                tooEarly ? "빨랐다!" : "느렸다!",
+                tooEarly ? timingEarlyColor : timingLateColor);
+        }
+
+        private void ShowTimingFeedback(string message, Color color)
+        {
+            Text template = feedbackLabel != null ? feedbackLabel : scoreLabel;
+            if (template == null) return;
+
+            Text floating = Instantiate(template, template.transform.parent);
+            floating.name = "TimingFeedback";
+            floating.enabled = true;
+            floating.raycastTarget = false;
+            floating.text = message;
+            floating.color = color;
+            floating.fontSize = timingFeedbackFontSize;
+
+            RectTransform rect = floating.rectTransform;
+            rect.SetAsLastSibling();
+            RectTransform parentRect = rect.parent as RectTransform;
+            bool positionedAbovePlayer = false;
+            Camera worldCamera = Camera.main;
+            if (playerSlot != null && parentRect != null && worldCamera != null)
+            {
+                Canvas canvas = floating.canvas;
+                Camera uiCamera = canvas != null
+                    && canvas.renderMode != RenderMode.ScreenSpaceOverlay
+                    ? canvas.worldCamera
+                    : null;
+                Vector3 worldPosition =
+                    playerSlot.bounds.max + Vector3.up * timingFeedbackHeadOffset;
+                Vector2 screenPosition =
+                    RectTransformUtility.WorldToScreenPoint(worldCamera, worldPosition);
+                positionedAbovePlayer = RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                    parentRect,
+                    screenPosition,
+                    uiCamera,
+                    out Vector3 canvasWorldPosition);
+                if (positionedAbovePlayer) rect.position = canvasWorldPosition;
+            }
+            if (!positionedAbovePlayer)
+                rect.anchoredPosition =
+                    template.rectTransform.anchoredPosition + Vector2.down * 48f;
+            rect.localScale = Vector3.one * timingFeedbackStartScale;
+
+            Sequence sequence = DOTween.Sequence().SetTarget(floating);
+            sequence.Append(rect.DOScale(timingFeedbackPopScale, 0.1f).SetEase(Ease.OutBack));
+            sequence.Append(rect.DOAnchorPosY(
+                    rect.anchoredPosition.y + timingFeedbackRiseDistance,
+                    timingFeedbackDuration)
+                .SetEase(Ease.OutCubic));
+            sequence.Join(floating.DOFade(0f, timingFeedbackDuration).SetEase(Ease.InQuad));
+            sequence.OnComplete(() => Destroy(floating.gameObject));
         }
 
         private void OnCycleStarted(int cycle)
@@ -335,11 +509,23 @@ namespace BeatMemories
         private void OnGameOver()
         {
             if (gameOverLabel != null) { gameOverLabel.enabled = true; gameOverLabel.text = "GAME OVER"; }
+            if (playerDeathRoutine == null)
+                playerDeathRoutine = StartCoroutine(BeginPlayerDeath());
         }
 
         private void OnBeat(int beatInCycle)
         {
             SetDots(beatInCycle);
+            PlayIdleBeatBounce(
+                playerSlot,
+                playerBaseScale,
+                playerIdleBounceEnabled,
+                ref playerIdleBounce);
+            PlayIdleBeatBounce(
+                enemySlot,
+                enemyBaseScale,
+                enemyIdleBounceEnabled,
+                ref enemyIdleBounce);
         }
 
         private void OnHealth(int current, int max)
@@ -353,6 +539,7 @@ namespace BeatMemories
 
         private void OnPlayerActionPresented(PlayerAction action, Sprite sprite)
         {
+            StopPlayerIdleBounce();
             if (playerIdleAnim != null) playerIdleAnim.Pause(); // 행동 동안 idle 스텝 정지
             SetPlayerSprite(sprite != null ? sprite : playerSlot != null ? playerSlot.sprite : null, true);
             playerSpriteTimer = actionSpriteHold;
@@ -373,13 +560,15 @@ namespace BeatMemories
         private void SetEnemyIdle()
         {
             SetEnemySprite(enemyIdleSprite); // null이면 현재 placeholder 유지
+            StartEnemyIdleBounce();
         }
 
         private void SetPlayerIdle()
         {
             // 키프레임 idle이 있으면 그쪽에 맡긴다(림버스식 스텝). 없으면 단일 idle 스프라이트 폴백.
-            if (playerIdleAnim != null && playerIdleAnim.HasFrames) { playerIdleAnim.Resume(); return; }
-            SetPlayerSprite(player != null ? player.IdleSprite : null);
+            if (playerIdleAnim != null && playerIdleAnim.HasFrames) playerIdleAnim.Resume();
+            else SetPlayerSprite(player != null ? player.IdleSprite : null);
+            StartPlayerIdleBounce();
         }
 
         [Header("idle 스프라이트")]
@@ -524,6 +713,70 @@ namespace BeatMemories
             }
         }
 
+        private void StartPlayerIdleBounce()
+        {
+            playerIdleBounceEnabled = !deathPresentationActive && playerSlot != null;
+        }
+
+        private void StartEnemyIdleBounce()
+        {
+            enemyIdleBounceEnabled = !deathPresentationActive && enemySlot != null;
+        }
+
+        private void PlayIdleBeatBounce(
+            SpriteRenderer slot,
+            Vector3 baseScale,
+            bool enabled,
+            ref Tween activeTween)
+        {
+            if (!enabled || slot == null || conductor == null) return;
+
+            activeTween?.Kill();
+            Transform target = slot.transform;
+            Vector3 scale = target.localScale;
+            scale.y = baseScale.y * idleBeatSquash;
+            target.localScale = scale;
+
+            float restoreDuration =
+                Mathf.Max(0.03f, conductor.SecondsPerBeat * idleBeatRestoreRatio);
+            activeTween = DOTween.To(
+                    () => target.localScale.y,
+                    value =>
+                    {
+                        Vector3 current = target.localScale;
+                        current.y = value;
+                        target.localScale = current;
+                    },
+                    baseScale.y,
+                    restoreDuration)
+                .SetEase(idleBeatRestoreEase)
+                .SetTarget(slot);
+        }
+
+        private void StopPlayerIdleBounce()
+        {
+            playerIdleBounce?.Kill();
+            playerIdleBounce = null;
+            playerIdleBounceEnabled = false;
+            if (presentationInitialized) RestoreIdleScaleY(playerSlot, playerBaseScale);
+        }
+
+        private void StopEnemyIdleBounce()
+        {
+            enemyIdleBounce?.Kill();
+            enemyIdleBounce = null;
+            enemyIdleBounceEnabled = false;
+            if (presentationInitialized) RestoreIdleScaleY(enemySlot, enemyBaseScale);
+        }
+
+        private static void RestoreIdleScaleY(SpriteRenderer slot, Vector3 baseScale)
+        {
+            if (slot == null) return;
+            Vector3 scale = slot.transform.localScale;
+            scale.y = baseScale.y;
+            slot.transform.localScale = scale;
+        }
+
         private void PlayAttackMotion()
         {
             actionEffectTimer = actionEffectDuration;
@@ -544,19 +797,38 @@ namespace BeatMemories
                 ShakeRandomnessMode.Harmonic);
         }
 
-        private void InitializeLaser(LineRenderer laser, Light2D muzzleGlow, Light2D hitFlash)
+        private void InitializeLaser(
+            LineRenderer laser,
+            LineRenderer outerLaser,
+            Light2D muzzleGlow,
+            Light2D hitFlash)
         {
             if (laser == null) return;
-            laser.useWorldSpace = true;
-            laser.positionCount = 2;
-            laser.widthMultiplier = laserWidth;
-            laser.enabled = false;
+            InitializeLaserLine(laser, laserWidth);
+            if (outerLaser != null)
+            {
+                InitializeLaserLine(outerLaser, laserWidth * laserOuterWidthMultiplier);
+                outerLaser.sortingOrder = laser.sortingOrder - 1;
+            }
             InitializeEffectLight(muzzleGlow);
             InitializeEffectLight(hitFlash);
         }
 
+        private void InitializeLaserLine(LineRenderer laser, float width)
+        {
+            laser.useWorldSpace = true;
+            laser.positionCount = 2;
+            laser.widthMultiplier = width;
+            laser.widthCurve = new AnimationCurve(
+                new Keyframe(0f, laserStartWidthRatio),
+                new Keyframe(0.18f, 0.72f),
+                new Keyframe(1f, 1f));
+            laser.enabled = false;
+        }
+
         private void PlayLaser(
             LineRenderer laser,
+            LineRenderer outerLaser,
             Light2D muzzleGlow,
             Light2D hitFlash,
             SpriteRenderer targetActor,
@@ -565,7 +837,7 @@ namespace BeatMemories
         {
             if (laser == null || targetActor == null) return;
 
-            StopLaser(laser);
+            StopLaser(laser, outerLaser);
             StopEffectLight(muzzleGlow);
             Vector3 origin = laser.transform.position;
             Vector3 target = targetActor.bounds.center;
@@ -573,8 +845,13 @@ namespace BeatMemories
             float alpha = 1f;
             laser.widthMultiplier = laserWidth * laserFlashWidthMultiplier;
             SetLaserColor(laser, color, alpha);
-            laser.SetPosition(0, origin);
-            laser.SetPosition(1, origin);
+            if (outerLaser != null)
+            {
+                outerLaser.widthMultiplier =
+                    laserWidth * laserOuterWidthMultiplier * laserFlashWidthMultiplier;
+                SetLaserColor(outerLaser, Color.white, alpha);
+            }
+            SetLaserPositions(laser, outerLaser, origin, origin);
 
             Sequence sequence = DOTween.Sequence().SetTarget(laser);
             if (muzzleGlow != null)
@@ -596,14 +873,22 @@ namespace BeatMemories
                 sequence.AppendInterval(laserPrepareDuration);
             }
 
-            sequence.AppendCallback(() => laser.enabled = true);
+            sequence.AppendCallback(() =>
+            {
+                if (outerLaser != null) outerLaser.enabled = true;
+                laser.enabled = true;
+            });
             sequence.Append(DOTween.To(
                 () => progress,
                 value =>
                 {
                     progress = value;
-                    laser.SetPosition(0, laser.transform.position);
-                    laser.SetPosition(1, Vector3.Lerp(origin, target, value));
+                    Vector3 currentOrigin = laser.transform.position;
+                    SetLaserPositions(
+                        laser,
+                        outerLaser,
+                        currentOrigin,
+                        Vector3.Lerp(origin, target, value));
                 },
                 1f,
                 laserGrowDuration).SetEase(Ease.OutCubic));
@@ -612,6 +897,12 @@ namespace BeatMemories
                 value => laser.widthMultiplier = value,
                 laserWidth,
                 laserGrowDuration).SetEase(Ease.OutQuad));
+            if (outerLaser != null)
+                sequence.Join(DOTween.To(
+                    () => outerLaser.widthMultiplier,
+                    value => outerLaser.widthMultiplier = value,
+                    laserWidth * laserOuterWidthMultiplier,
+                    laserGrowDuration).SetEase(Ease.OutQuad));
             if (muzzleGlow != null)
                 sequence.Join(muzzleGlow.transform.DOScale(1f, laserGrowDuration)
                     .SetEase(Ease.OutQuad));
@@ -626,9 +917,16 @@ namespace BeatMemories
                 {
                     alpha = value;
                     SetLaserColor(laser, color, value);
+                    if (outerLaser != null) SetLaserColor(outerLaser, Color.white, value);
                 },
                 0f,
                 laserFadeDuration).SetEase(Ease.InQuad));
+            if (outerLaser != null)
+                sequence.Join(DOTween.To(
+                    () => outerLaser.widthMultiplier,
+                    value => outerLaser.widthMultiplier = value,
+                    0f,
+                    laserFadeDuration).SetEase(Ease.InQuad));
             sequence.Join(DOTween.To(
                 () => laser.widthMultiplier,
                 value => laser.widthMultiplier = value,
@@ -644,6 +942,11 @@ namespace BeatMemories
             {
                 laser.enabled = false;
                 laser.widthMultiplier = laserWidth;
+                if (outerLaser != null)
+                {
+                    outerLaser.enabled = false;
+                    outerLaser.widthMultiplier = laserWidth * laserOuterWidthMultiplier;
+                }
                 if (muzzleGlow != null)
                 {
                     muzzleGlow.enabled = false;
@@ -693,6 +996,19 @@ namespace BeatMemories
             laser.endColor = color;
         }
 
+        private static void SetLaserPositions(
+            LineRenderer laser,
+            LineRenderer outerLaser,
+            Vector3 origin,
+            Vector3 target)
+        {
+            laser.SetPosition(0, origin);
+            laser.SetPosition(1, target);
+            if (outerLaser == null) return;
+            outerLaser.SetPosition(0, origin);
+            outerLaser.SetPosition(1, target);
+        }
+
         private static void InitializeEffectLight(Light2D light)
         {
             if (light == null) return;
@@ -709,12 +1025,16 @@ namespace BeatMemories
             light.enabled = false;
         }
 
-        private void StopLaser(LineRenderer laser)
+        private void StopLaser(LineRenderer laser, LineRenderer outerLaser = null)
         {
             if (laser == null) return;
             laser.DOKill();
             laser.enabled = false;
             laser.widthMultiplier = laserWidth;
+            if (outerLaser == null) return;
+            outerLaser.DOKill();
+            outerLaser.enabled = false;
+            outerLaser.widthMultiplier = laserWidth * laserOuterWidthMultiplier;
         }
 
         private void StopChargeEffect()
@@ -724,7 +1044,10 @@ namespace BeatMemories
 
         private void BeginHitStop()
         {
-            if (laserHitStopDuration <= 0f || hitStopRoutine != null || Time.timeScale <= 0f)
+            if (deathPresentationActive
+                || laserHitStopDuration <= 0f
+                || hitStopRoutine != null
+                || Time.timeScale <= 0f)
                 return;
             hitStopRoutine = StartCoroutine(HitStop());
         }
@@ -754,6 +1077,169 @@ namespace BeatMemories
             hitStopRoutine = null;
         }
 
+        private IEnumerator BeginEnemyDeathAfterLaser()
+        {
+            float laserLead = laserPrepareDuration + laserGrowDuration + laserHitStopDuration;
+            if (laserLead > 0f) yield return new WaitForSecondsRealtime(laserLead);
+            if (!deathPresentationActive)
+                yield return PlayDeathSequence(enemySlot, false);
+            enemyDeathRoutine = null;
+        }
+
+        private IEnumerator BeginPlayerDeath()
+        {
+            yield return PlayDeathSequence(playerSlot, false);
+            playerDeathRoutine = null;
+        }
+
+        private IEnumerator PlayDeathSequence(SpriteRenderer actor, bool restoreActor)
+        {
+            if (actor == null || deathPresentationActive) yield break;
+            deathPresentationActive = true;
+            HideCombatUi();
+            if (actor != playerSlot && conductor != null)
+            {
+                double presentationDuration = deathCameraDuration
+                    + deathShakeDuration
+                    + explosionInterval * 2f
+                    + explosionFlyDelay
+                    + deathFlyDuration;
+                conductor.DelayClock(presentationDuration);
+            }
+
+            if (actor == playerSlot) StopPlayerIdleBounce();
+            else StopEnemyIdleBounce();
+            RestoreHitStop();
+
+            Transform actorTransform = actor.transform;
+            actorTransform.DOKill();
+            Vector3 originalPosition = actorTransform.position;
+            Quaternion originalRotation = actorTransform.rotation;
+            Vector3 originalScale = actorTransform.localScale;
+            bool originalEnabled = actor.enabled;
+
+            BeginDeathHitStop();
+            if (deathHitStopDuration > 0f)
+                yield return new WaitForSecondsRealtime(deathHitStopDuration);
+            RestoreDeathHitStop();
+
+            Vector3 focusPosition = actor.bounds.center;
+            cameraSway?.FocusOn(focusPosition, deathCameraZoomRatio, deathCameraDuration);
+            yield return new WaitForSecondsRealtime(deathCameraDuration);
+
+            actorTransform.DOShakePosition(
+                    deathShakeDuration,
+                    deathShakeStrength,
+                    24,
+                    90f,
+                    false,
+                    true,
+                    ShakeRandomnessMode.Harmonic)
+                .SetUpdate(true);
+            yield return new WaitForSecondsRealtime(deathShakeDuration);
+
+            Vector3 explosionCenter = actor.bounds.center;
+            for (int i = 0; i < 3; i++)
+            {
+                SpawnExplosion(explosionCenter, i);
+                if (i < 2 && explosionInterval > 0f)
+                    yield return new WaitForSecondsRealtime(explosionInterval);
+            }
+
+            if (explosionFlyDelay > 0f)
+                yield return new WaitForSecondsRealtime(explosionFlyDelay);
+
+            float direction = actor == playerSlot ? -1f : 1f;
+            Vector3 flyTarget = actorTransform.position
+                + new Vector3(direction * deathFlyDistance, deathFlyHeight, 0f);
+            actorTransform.DOMove(flyTarget, deathFlyDuration)
+                .SetEase(Ease.InCubic)
+                .SetUpdate(true);
+            actorTransform.DORotate(
+                    new Vector3(0f, 0f, direction * deathSpinDegrees),
+                    deathFlyDuration,
+                    RotateMode.FastBeyond360)
+                .SetEase(Ease.InQuad)
+                .SetUpdate(true);
+            yield return new WaitForSecondsRealtime(deathFlyDuration);
+
+            cameraSway?.RestoreFocus(deathCameraDuration);
+            FadeCombatUi(1f);
+
+            if (restoreActor)
+            {
+                actorTransform.DOKill();
+                actorTransform.position = originalPosition;
+                actorTransform.rotation = originalRotation;
+                actorTransform.localScale = originalScale;
+                actor.enabled = originalEnabled;
+                SetEnemyIdle();
+            }
+
+            deathPresentationActive = false;
+        }
+
+        private void BeginDeathHitStop()
+        {
+            if (deathHitStopDuration <= 0f || deathHitStopActive) return;
+            deathPreviousTimeScale = Time.timeScale;
+            deathHitStopStartedAt = Time.realtimeSinceStartupAsDouble;
+            deathHitStopActive = true;
+            Time.timeScale = 0f;
+        }
+
+        private void RestoreDeathHitStop()
+        {
+            if (!deathHitStopActive) return;
+            double pausedDuration =
+                Time.realtimeSinceStartupAsDouble - deathHitStopStartedAt;
+            Time.timeScale = deathPreviousTimeScale;
+            conductor?.DelayClock(pausedDuration);
+            deathHitStopActive = false;
+        }
+
+        private void FadeCombatUi(float alpha)
+        {
+            if (combatUiGroup == null) return;
+            combatUiGroup.DOKill();
+            combatUiGroup.DOFade(alpha, deathUiFadeDuration)
+                .SetEase(Ease.InOutSine)
+                .SetUpdate(true);
+        }
+
+        private void HideCombatUi()
+        {
+            if (combatUiGroup == null) return;
+            combatUiGroup.DOKill();
+            combatUiGroup.alpha = 0f;
+        }
+
+        private void SpawnExplosion(Vector3 center, int index)
+        {
+            if (explosionPrefab == null) return;
+
+            Vector2 offset = explosionOffsets != null && explosionOffsets.Length > 0
+                ? explosionOffsets[Mathf.Clamp(index, 0, explosionOffsets.Length - 1)]
+                : Vector2.zero;
+            float scale = explosionScales != null && explosionScales.Length > 0
+                ? explosionScales[Mathf.Clamp(index, 0, explosionScales.Length - 1)]
+                : 1f;
+            GameObject explosion = Instantiate(
+                explosionPrefab,
+                center + (Vector3)offset,
+                explosionPrefab.transform.rotation);
+            explosion.transform.localScale =
+                explosionPrefab.transform.localScale
+                * scale;
+            StartCoroutine(DestroyAfterRealtime(explosion, explosionCleanupDelay));
+        }
+
+        private static IEnumerator DestroyAfterRealtime(GameObject target, float delay)
+        {
+            if (delay > 0f) yield return new WaitForSecondsRealtime(delay);
+            if (target != null) Destroy(target);
+        }
+
         private void UpdateActionMotion()
         {
             Transform target = playerSlot.transform;
@@ -773,6 +1259,11 @@ namespace BeatMemories
         private void OnScoreAwarded(int points, bool isClearBonus)
         {
             if (round == null) return;
+            if (scoreNumberVisual != null && enemySlot != null)
+            {
+                ShowFloatingSpriteScore(points, isClearBonus);
+                return;
+            }
             if (scoreLabel == null || enemySlot == null)
             {
                 round.CommitScore(points);
@@ -784,7 +1275,7 @@ namespace BeatMemories
             floating.enabled = true;
             floating.raycastTarget = false;
             floating.text = $"+{points:N0}";
-            floating.color = isClearBonus ? clearBonusColor : hitScoreColor;
+            floating.color = Color.white;
 
             RectTransform floatingRect = floating.rectTransform;
             RectTransform parent = floatingRect.parent as RectTransform;
@@ -792,7 +1283,12 @@ namespace BeatMemories
             Camera uiCamera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay
                 ? canvas.worldCamera
                 : null;
-            Vector3 worldOrigin = enemySlot.transform.position + Vector3.up * (0.4f + 0.12f * floatingScoreOrder);
+            Vector2 randomOffset = RandomFloatingScoreOffset();
+            Vector3 worldOrigin = enemySlot.bounds.max
+                + new Vector3(
+                    floatingScoreBaseOffset.x + randomOffset.x,
+                    floatingScoreBaseOffset.y + randomOffset.y,
+                    0f);
             Vector2 screenOrigin = RectTransformUtility.WorldToScreenPoint(Camera.main, worldOrigin);
             if (parent != null
                 && RectTransformUtility.ScreenPointToLocalPointInRectangle(parent, screenOrigin, uiCamera, out Vector2 localOrigin))
@@ -820,7 +1316,210 @@ namespace BeatMemories
 
         private void OnScoreChanged(int score)
         {
-            if (scoreLabel != null) scoreLabel.text = $"SCORE  {score:N0}";
+            if (scoreNumberVisual != null)
+                SetSpriteNumber(scoreNumberVisual, score, Color.white);
+            else if (scoreLabel != null)
+                scoreLabel.text = $"SCORE  {score:N0}";
+        }
+
+        private void InitializeScoreDisplay(int score)
+        {
+            if (!HasScoreDigitSprites() || scoreLabel == null)
+            {
+                if (scoreLabel != null)
+                {
+                    scoreLabel.enabled = true;
+                    scoreLabel.text = $"SCORE  {score:N0}";
+                }
+                return;
+            }
+
+            RectTransform labelRect = scoreLabel.rectTransform;
+            scoreNumberVisual = CreateSpriteNumberVisual(
+                "ScoreDigits",
+                labelRect.parent,
+                labelRect.anchoredPosition,
+                labelRect.anchorMin,
+                labelRect.anchorMax,
+                labelRect.pivot);
+            scoreLabel.enabled = false;
+            SetSpriteNumber(scoreNumberVisual, score, Color.white);
+        }
+
+        private void ShowFloatingSpriteScore(int points, bool isClearBonus)
+        {
+            RectTransform parent = scoreNumberVisual.Root.parent as RectTransform;
+            if (parent == null || enemySlot == null)
+            {
+                round.CommitScore(points);
+                return;
+            }
+
+            Canvas canvas = parent.GetComponentInParent<Canvas>();
+            Camera uiCamera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay
+                ? canvas.worldCamera
+                : null;
+            Camera worldCamera = Camera.main;
+            Vector2 localOrigin = scoreNumberVisual.Root.anchoredPosition;
+            if (worldCamera != null)
+            {
+                Vector2 randomOffset = RandomFloatingScoreOffset();
+                Vector3 worldOrigin = enemySlot.bounds.max
+                    + new Vector3(
+                        floatingScoreBaseOffset.x + randomOffset.x,
+                        floatingScoreBaseOffset.y + randomOffset.y,
+                        0f);
+                Vector2 screenOrigin =
+                    RectTransformUtility.WorldToScreenPoint(worldCamera, worldOrigin);
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    parent,
+                    screenOrigin,
+                    uiCamera,
+                    out localOrigin);
+            }
+
+            SpriteNumberVisual floating = CreateSpriteNumberVisual(
+                "FloatingScore",
+                parent,
+                localOrigin,
+                new Vector2(0.5f, 0.5f),
+                new Vector2(0.5f, 0.5f),
+                new Vector2(0.5f, 0.5f));
+            SetSpriteNumber(
+                floating,
+                points,
+                Color.white);
+
+            float valueRatio = Mathf.InverseLerp(0f, floatingScoreMaxValue, points);
+            float scale = Mathf.Lerp(
+                floatingScoreMinScale,
+                floatingScoreMaxScale,
+                valueRatio);
+            floating.Root.localScale = Vector3.one * scale;
+            floatingScoreOrder = (floatingScoreOrder + 1) % QueueSlotCount;
+
+            Sequence sequence = DOTween.Sequence().SetTarget(floating.Root);
+            sequence.Append(floating.Root.DOPunchScale(
+                Vector3.one * 0.3f,
+                0.16f,
+                6,
+                0.5f));
+            sequence.Append(floating.Root.DOMove(
+                    scoreNumberVisual.Root.position,
+                    floatingScoreDuration)
+                .SetEase(Ease.InCubic));
+            sequence.Join(floating.Group.DOFade(0.25f, floatingScoreDuration)
+                .SetEase(Ease.InQuad));
+            sequence.OnComplete(() =>
+            {
+                round.CommitScore(points);
+                scoreNumberVisual.Root.DOKill();
+                scoreNumberVisual.Root.DOPunchScale(
+                    Vector3.one * 0.2f,
+                    0.2f,
+                    6,
+                    0.5f);
+                Destroy(floating.Root.gameObject);
+            });
+        }
+
+        private Vector2 RandomFloatingScoreOffset()
+        {
+            float side = floatingScoreOrder % 2 == 0 ? -1f : 1f;
+            float xMagnitude = floatingScoreRandomOffset.x > 0f
+                ? Random.Range(floatingScoreRandomOffset.x * 0.35f, floatingScoreRandomOffset.x)
+                : 0f;
+            return new Vector2(
+                side * xMagnitude,
+                Random.Range(-floatingScoreRandomOffset.y, floatingScoreRandomOffset.y));
+        }
+
+        private SpriteNumberVisual CreateSpriteNumberVisual(
+            string objectName,
+            Transform parent,
+            Vector2 anchoredPosition,
+            Vector2 anchorMin,
+            Vector2 anchorMax,
+            Vector2 pivot)
+        {
+            GameObject rootObject = new GameObject(
+                objectName,
+                typeof(RectTransform),
+                typeof(CanvasGroup));
+            RectTransform root = (RectTransform)rootObject.transform;
+            root.SetParent(parent, false);
+            root.anchorMin = anchorMin;
+            root.anchorMax = anchorMax;
+            root.pivot = pivot;
+            root.anchoredPosition = anchoredPosition;
+            root.sizeDelta = scoreDigitSize;
+            return new SpriteNumberVisual
+            {
+                Root = root,
+                Group = rootObject.GetComponent<CanvasGroup>(),
+            };
+        }
+
+        private void SetSpriteNumber(
+            SpriteNumberVisual visual,
+            int value,
+            Color color)
+        {
+            if (visual == null || visual.Root == null) return;
+            string digits = Mathf.Max(0, value).ToString();
+            EnsureDigitImages(visual, digits.Length);
+
+            float step = scoreDigitSize.x + scoreDigitSpacing;
+            float width = scoreDigitSize.x + step * (digits.Length - 1);
+            visual.Root.sizeDelta = new Vector2(width, scoreDigitSize.y);
+            float firstX = -width * 0.5f + scoreDigitSize.x * 0.5f;
+            float y = visual.Root.pivot.y >= 0.99f
+                ? -scoreDigitSize.y * 0.5f
+                : 0f;
+
+            for (int i = 0; i < visual.Digits.Count; i++)
+            {
+                Image image = visual.Digits[i];
+                bool active = i < digits.Length;
+                image.gameObject.SetActive(active);
+                if (!active) continue;
+                int digit = digits[i] - '0';
+                image.sprite = scoreDigitSprites[digit];
+                image.color = color;
+                image.rectTransform.anchoredPosition =
+                    new Vector2(firstX + step * i, y);
+            }
+        }
+
+        private void EnsureDigitImages(SpriteNumberVisual visual, int count)
+        {
+            while (visual.Digits.Count < count)
+            {
+                GameObject digitObject = new GameObject(
+                    $"Digit{visual.Digits.Count}",
+                    typeof(RectTransform),
+                    typeof(CanvasRenderer),
+                    typeof(Image));
+                RectTransform rect = (RectTransform)digitObject.transform;
+                rect.SetParent(visual.Root, false);
+                rect.anchorMin = new Vector2(0.5f, 0.5f);
+                rect.anchorMax = new Vector2(0.5f, 0.5f);
+                rect.pivot = new Vector2(0.5f, 0.5f);
+                rect.sizeDelta = scoreDigitSize;
+                Image image = digitObject.GetComponent<Image>();
+                image.preserveAspect = true;
+                image.raycastTarget = false;
+                visual.Digits.Add(image);
+            }
+        }
+
+        private bool HasScoreDigitSprites()
+        {
+            if (scoreDigitSprites == null || scoreDigitSprites.Length < 10)
+                return false;
+            for (int i = 0; i < 10; i++)
+                if (scoreDigitSprites[i] == null) return false;
+            return true;
         }
 
         private void UpdateShake(SpriteRenderer slot, ref float timer, ref Vector3 offset)
@@ -863,5 +1562,6 @@ namespace BeatMemories
                 beatDots[i].color = i == active ? onColor : dotOffColor;
             }
         }
+
     }
 }

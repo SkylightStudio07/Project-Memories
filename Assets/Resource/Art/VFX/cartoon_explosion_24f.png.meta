@@ -1,0 +1,2197 @@
+fileFormatVersion: 2
+guid: 1583dcf58d6d2964bb864401d2834d35
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1742903629265299892
+    second: cartoon_explosion_24f_0
+  - first:
+      213: -390885376023798023
+    second: cartoon_explosion_24f_1
+  - first:
+      213: 7728905522429563401
+    second: cartoon_explosion_24f_2
+  - first:
+      213: 6376763550685491618
+    second: cartoon_explosion_24f_3
+  - first:
+      213: -955804239172806331
+    second: cartoon_explosion_24f_4
+  - first:
+      213: -4912493517675284928
+    second: cartoon_explosion_24f_5
+  - first:
+      213: 592660988836942343
+    second: cartoon_explosion_24f_6
+  - first:
+      213: -5154937238136277244
+    second: cartoon_explosion_24f_7
+  - first:
+      213: 4043817031170876258
+    second: cartoon_explosion_24f_8
+  - first:
+      213: -1141043874654273267
+    second: cartoon_explosion_24f_9
+  - first:
+      213: -8483811859678251708
+    second: cartoon_explosion_24f_10
+  - first:
+      213: -2602396569406697387
+    second: cartoon_explosion_24f_11
+  - first:
+      213: -6745371766393361952
+    second: cartoon_explosion_24f_12
+  - first:
+      213: 6082130901705335061
+    second: cartoon_explosion_24f_13
+  - first:
+      213: 8814686551115122522
+    second: cartoon_explosion_24f_14
+  - first:
+      213: -997691268430341599
+    second: cartoon_explosion_24f_15
+  - first:
+      213: 3830534247435452813
+    second: cartoon_explosion_24f_16
+  - first:
+      213: 8271028463153004970
+    second: cartoon_explosion_24f_17
+  - first:
+      213: 2880774141814802000
+    second: cartoon_explosion_24f_18
+  - first:
+      213: 3175361974023269811
+    second: cartoon_explosion_24f_19
+  - first:
+      213: -5679205337692566369
+    second: cartoon_explosion_24f_20
+  - first:
+      213: 8387347726855351206
+    second: cartoon_explosion_24f_21
+  - first:
+      213: 1215566446632436632
+    second: cartoon_explosion_24f_22
+  - first:
+      213: 6578498339892110745
+    second: cartoon_explosion_24f_23
+  - first:
+      213: -7035946081960986944
+    second: cartoon_explosion_24f_24
+  - first:
+      213: -677729227795499349
+    second: cartoon_explosion_24f_25
+  - first:
+      213: -840976453234664521
+    second: cartoon_explosion_24f_26
+  - first:
+      213: 7414407321984696680
+    second: cartoon_explosion_24f_27
+  - first:
+      213: 7868251326355664408
+    second: cartoon_explosion_24f_28
+  - first:
+      213: 7235185953956015425
+    second: cartoon_explosion_24f_29
+  - first:
+      213: 5744800068127549991
+    second: cartoon_explosion_24f_30
+  - first:
+      213: 3610929379829537262
+    second: cartoon_explosion_24f_31
+  - first:
+      213: -1122299440822568322
+    second: cartoon_explosion_24f_32
+  - first:
+      213: -5487354365122546695
+    second: cartoon_explosion_24f_33
+  - first:
+      213: 456135940303993410
+    second: cartoon_explosion_24f_34
+  - first:
+      213: 6266493960294694023
+    second: cartoon_explosion_24f_35
+  - first:
+      213: 1718079961703800013
+    second: cartoon_explosion_24f_36
+  - first:
+      213: -8484681600221992314
+    second: cartoon_explosion_24f_37
+  - first:
+      213: 8870416356243976798
+    second: cartoon_explosion_24f_38
+  - first:
+      213: 5186165919420714930
+    second: cartoon_explosion_24f_39
+  - first:
+      213: 4257877777731842702
+    second: cartoon_explosion_24f_40
+  - first:
+      213: -385128991350253025
+    second: cartoon_explosion_24f_41
+  - first:
+      213: -9206188729790682339
+    second: cartoon_explosion_24f_42
+  - first:
+      213: -7696393908482067790
+    second: cartoon_explosion_24f_43
+  - first:
+      213: 402727592471902131
+    second: cartoon_explosion_24f_44
+  - first:
+      213: -7579009446190553727
+    second: cartoon_explosion_24f_45
+  - first:
+      213: -5235010206487689576
+    second: cartoon_explosion_24f_46
+  - first:
+      213: 6173082049550458664
+    second: cartoon_explosion_24f_47
+  - first:
+      213: -1057364561825022594
+    second: cartoon_explosion_24f_48
+  - first:
+      213: -6657843206465681341
+    second: cartoon_explosion_24f_49
+  - first:
+      213: 1415629204751542794
+    second: cartoon_explosion_24f_50
+  - first:
+      213: -8054837737193747024
+    second: cartoon_explosion_24f_51
+  - first:
+      213: -5644513283074266663
+    second: cartoon_explosion_24f_52
+  - first:
+      213: 1205595188318269381
+    second: cartoon_explosion_24f_53
+  - first:
+      213: 366196156375939187
+    second: cartoon_explosion_24f_54
+  - first:
+      213: -7586268081860451792
+    second: cartoon_explosion_24f_55
+  - first:
+      213: -3376406087148650147
+    second: cartoon_explosion_24f_56
+  - first:
+      213: -4863177524569956664
+    second: cartoon_explosion_24f_57
+  - first:
+      213: -5447748045313630551
+    second: cartoon_explosion_24f_58
+  - first:
+      213: -7763353184804181029
+    second: cartoon_explosion_24f_59
+  - first:
+      213: -4210913261965023555
+    second: cartoon_explosion_24f_60
+  - first:
+      213: 259353978028301557
+    second: cartoon_explosion_24f_61
+  - first:
+      213: -7333484451540041685
+    second: cartoon_explosion_24f_62
+  - first:
+      213: -257649578506830856
+    second: cartoon_explosion_24f_63
+  - first:
+      213: 413549930376081545
+    second: cartoon_explosion_24f_64
+  - first:
+      213: -1109007234485348407
+    second: cartoon_explosion_24f_65
+  - first:
+      213: 710123810116684016
+    second: cartoon_explosion_24f_66
+  - first:
+      213: 3124375249867157212
+    second: cartoon_explosion_24f_67
+  - first:
+      213: 6009853760501817375
+    second: cartoon_explosion_24f_68
+  - first:
+      213: -604717908377979593
+    second: cartoon_explosion_24f_69
+  - first:
+      213: 2235105971590445128
+    second: cartoon_explosion_24f_70
+  - first:
+      213: -3195130625639393563
+    second: cartoon_explosion_24f_71
+  - first:
+      213: -4324715227713043893
+    second: cartoon_explosion_24f_72
+  - first:
+      213: 5932163782120292003
+    second: cartoon_explosion_24f_73
+  - first:
+      213: 8993540849498180947
+    second: cartoon_explosion_24f_74
+  - first:
+      213: 40699712829181786
+    second: cartoon_explosion_24f_75
+  - first:
+      213: 3072775958755309841
+    second: cartoon_explosion_24f_76
+  - first:
+      213: 9159001976808924905
+    second: cartoon_explosion_24f_77
+  - first:
+      213: -6045087923028331486
+    second: cartoon_explosion_24f_78
+  - first:
+      213: -727778950558697670
+    second: cartoon_explosion_24f_79
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_0
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 809
+        width: 60
+        height: 79
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4617eb2266ffc7e0800000000000000
+      internalID: -1742903629265299892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_1
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 793
+        width: 108
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fed43e42db439af0800000000000000
+      internalID: -390885376023798023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_2
+      rect:
+        serializedVersion: 2
+        x: 622
+        y: 888
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 90218f68f96924b60800000000000000
+      internalID: 7728905522429563401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_3
+      rect:
+        serializedVersion: 2
+        x: 805
+        y: 865
+        width: 29
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a1744fe9a0de7850800000000000000
+      internalID: 6376763550685491618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_4
+      rect:
+        serializedVersion: 2
+        x: 811
+        y: 777
+        width: 144
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 549da49cb1d4cb2f0800000000000000
+      internalID: -955804239172806331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_5
+      rect:
+        serializedVersion: 2
+        x: 1052
+        y: 776
+        width: 164
+        height: 171
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0463e855c2153dbb0800000000000000
+      internalID: -4912493517675284928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_6
+      rect:
+        serializedVersion: 2
+        x: 1296
+        y: 767
+        width: 197
+        height: 197
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7029bdf770e893800800000000000000
+      internalID: 592660988836942343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_7
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 830
+        width: 36
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4073479d4ebf578b0800000000000000
+      internalID: -5154937238136277244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_8
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 851
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2636d9f2a268e1830800000000000000
+      internalID: 4043817031170876258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_9
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 857
+        width: 19
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d01c81a34a23a20f0800000000000000
+      internalID: -1141043874654273267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_10
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 819
+        width: 33
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 445b1a21012734a80800000000000000
+      internalID: -8483811859678251708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_11
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 526
+        width: 186
+        height: 184
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55091d3bb1e62ebd0800000000000000
+      internalID: -2602396569406697387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_12
+      rect:
+        serializedVersion: 2
+        x: 268
+        y: 522
+        width: 211
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e9ac22fd10a362a0800000000000000
+      internalID: -6745371766393361952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_13
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 514
+        width: 229
+        height: 207
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 511a291a4d1186450800000000000000
+      internalID: 6082130901705335061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_14
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 512
+        width: 230
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5741ad47be045a70800000000000000
+      internalID: 8814686551115122522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_15
+      rect:
+        serializedVersion: 2
+        x: 1010
+        y: 513
+        width: 234
+        height: 203
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12a53bdc31d7722f0800000000000000
+      internalID: -997691268430341599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_16
+      rect:
+        serializedVersion: 2
+        x: 1272
+        y: 510
+        width: 235
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d81cb5e5a9ac82530800000000000000
+      internalID: 3830534247435452813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_17
+      rect:
+        serializedVersion: 2
+        x: 1444
+        y: 683
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa14161c09898c270800000000000000
+      internalID: 8271028463153004970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_18
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 294
+        width: 216
+        height: 181
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0568009a1d09af720800000000000000
+      internalID: 2880774141814802000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_19
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 329
+        width: 144
+        height: 145
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bda0fe34e6211c20800000000000000
+      internalID: 3175361974023269811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_20
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 436
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9c0558c5d86f21b0800000000000000
+      internalID: -5679205337692566369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_21
+      rect:
+        serializedVersion: 2
+        x: 445
+        y: 438
+        width: 30
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6aba4eac158d56470800000000000000
+      internalID: 8387347726855351206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_22
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 324
+        width: 186
+        height: 149
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 893096c2e3f8ed010800000000000000
+      internalID: 1215566446632436632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_23
+      rect:
+        serializedVersion: 2
+        x: 785
+        y: 308
+        width: 95
+        height: 148
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99524c0c2658b4b50800000000000000
+      internalID: 6578498339892110745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_24
+      rect:
+        serializedVersion: 2
+        x: 869
+        y: 435
+        width: 35
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c6f9e5015c4b5e90800000000000000
+      internalID: -7035946081960986944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_25
+      rect:
+        serializedVersion: 2
+        x: 890
+        y: 376
+        width: 75
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba6795babd83896f0800000000000000
+      internalID: -677729227795499349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_26
+      rect:
+        serializedVersion: 2
+        x: 1044
+        y: 353
+        width: 99
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bbda781f504454f0800000000000000
+      internalID: -840976453234664521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_27
+      rect:
+        serializedVersion: 2
+        x: 1123
+        y: 407
+        width: 36
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86104f61d2445e660800000000000000
+      internalID: 7414407321984696680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_28
+      rect:
+        serializedVersion: 2
+        x: 1162
+        y: 416
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81eeceeb4e4a13d60800000000000000
+      internalID: 7868251326355664408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_29
+      rect:
+        serializedVersion: 2
+        x: 1383
+        y: 423
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14da17d9a4b886460800000000000000
+      internalID: 7235185953956015425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_30
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 292
+        width: 170
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72ae1668931a9bf40800000000000000
+      internalID: 5744800068127549991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_31
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 412
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee9d2c1b3299c1230800000000000000
+      internalID: 3610929379829537262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_32
+      rect:
+        serializedVersion: 2
+        x: 1170
+        y: 370
+        width: 45
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7ab622da9acc60f0800000000000000
+      internalID: -1122299440822568322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_33
+      rect:
+        serializedVersion: 2
+        x: 1313
+        y: 364
+        width: 79
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f37e26374009d3b0800000000000000
+      internalID: -5487354365122546695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_34
+      rect:
+        serializedVersion: 2
+        x: 1411
+        y: 403
+        width: 33
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24abb139835845600800000000000000
+      internalID: 456135940303993410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_35
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 298
+        width: 103
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78cfe7a3e0f07f650800000000000000
+      internalID: 6266493960294694023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_36
+      rect:
+        serializedVersion: 2
+        x: 945
+        y: 365
+        width: 35
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcc52155f98d7d710800000000000000
+      internalID: 1718079961703800013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_37
+      rect:
+        serializedVersion: 2
+        x: 1437
+        y: 376
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68aa972d90b504a80800000000000000
+      internalID: -8484681600221992314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_38
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 343
+        width: 24
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e52bcb3bdac0a1b70800000000000000
+      internalID: 8870416356243976798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_39
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 297
+        width: 103
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2bf0f4d1d66f8f740800000000000000
+      internalID: 5186165919420714930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_40
+      rect:
+        serializedVersion: 2
+        x: 1044
+        y: 314
+        width: 39
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e827cb69745071b30800000000000000
+      internalID: 4257877777731842702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_41
+      rect:
+        serializedVersion: 2
+        x: 1430
+        y: 348
+        width: 31
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1a1ddd093fb7aaf0800000000000000
+      internalID: -385128991350253025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_42
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 308
+        width: 37
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1b2f91702c0d3080800000000000000
+      internalID: -9206188729790682339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_43
+      rect:
+        serializedVersion: 2
+        x: 855
+        y: 300
+        width: 24
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b23279748ae03590800000000000000
+      internalID: -7696393908482067790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_44
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 319
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b739829c96c69500800000000000000
+      internalID: 402727592471902131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_45
+      rect:
+        serializedVersion: 2
+        x: 1137
+        y: 308
+        width: 26
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1856b726013f1d690800000000000000
+      internalID: -7579009446190553727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_46
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 317
+        width: 29
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 896c1c614f18957b0800000000000000
+      internalID: -5235010206487689576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_47
+      rect:
+        serializedVersion: 2
+        x: 1297
+        y: 307
+        width: 43
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82f9bccea613ba550800000000000000
+      internalID: 6173082049550458664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_48
+      rect:
+        serializedVersion: 2
+        x: 1442
+        y: 313
+        width: 34
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7d355e788c7351f0800000000000000
+      internalID: -1057364561825022594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_49
+      rect:
+        serializedVersion: 2
+        x: 590
+        y: 296
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3488d54e0e69a93a0800000000000000
+      internalID: -6657843206465681341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_50
+      rect:
+        serializedVersion: 2
+        x: 1392
+        y: 292
+        width: 28
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0a62eae24355a310800000000000000
+      internalID: 1415629204751542794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_51
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 147
+        width: 88
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0bdc72f11c7773090800000000000000
+      internalID: -8054837737193747024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_52
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 206
+        width: 26
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d962603319aaa1b0800000000000000
+      internalID: -5644513283074266663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_53
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 183
+        width: 46
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5cf61aeaf622bb010800000000000000
+      internalID: 1205595188318269381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_54
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 153
+        width: 65
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 378b6eac67df41500800000000000000
+      internalID: 366196156375939187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_55
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 203
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 032e2d19f5928b690800000000000000
+      internalID: -7586268081860451792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_56
+      rect:
+        serializedVersion: 2
+        x: 397
+        y: 169
+        width: 37
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d51c90e7d889421d0800000000000000
+      internalID: -3376406087148650147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_57
+      rect:
+        serializedVersion: 2
+        x: 568
+        y: 154
+        width: 47
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ce1850cec5828cb0800000000000000
+      internalID: -4863177524569956664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_58
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 182
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ae90452406b564b0800000000000000
+      internalID: -5447748045313630551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_59
+      rect:
+        serializedVersion: 2
+        x: 820
+        y: 153
+        width: 38
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdb69d11967034490800000000000000
+      internalID: -7763353184804181029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_60
+      rect:
+        serializedVersion: 2
+        x: 891
+        y: 161
+        width: 27
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db6e798d2b4df85c0800000000000000
+      internalID: -4210913261965023555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_61
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 144
+        width: 21
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fc1673a119699300800000000000000
+      internalID: 259353978028301557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_62
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 131
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b200b1ceeba3a3a90800000000000000
+      internalID: -7333484451540041685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_63
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 152
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8fb329cc215ac6cf0800000000000000
+      internalID: -257649578506830856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_64
+      rect:
+        serializedVersion: 2
+        x: 1082
+        y: 138
+        width: 32
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98034f878793db500800000000000000
+      internalID: 413549930376081545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_65
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 129
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c79927cbc30c90f0800000000000000
+      internalID: -1109007234485348407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_66
+      rect:
+        serializedVersion: 2
+        x: 1356
+        y: 131
+        width: 26
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f84d88c7dddad900800000000000000
+      internalID: 710123810116684016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_67
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 87
+        width: 48
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdeaa517cb20c5b20800000000000000
+      internalID: 3124375249867157212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_68
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 132
+        width: 12
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f10a1c2572a476350800000000000000
+      internalID: 6009853760501817375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_69
+      rect:
+        serializedVersion: 2
+        x: 842
+        y: 118
+        width: 29
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73530d9244c9b97f0800000000000000
+      internalID: -604717908377979593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_70
+      rect:
+        serializedVersion: 2
+        x: 923
+        y: 128
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 848b0000a01b40f10800000000000000
+      internalID: 2235105971590445128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_71
+      rect:
+        serializedVersion: 2
+        x: 1395
+        y: 118
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e6dacfdf9d98a3d0800000000000000
+      internalID: -3195130625639393563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_72
+      rect:
+        serializedVersion: 2
+        x: 178
+        y: 83
+        width: 38
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b420179e9668bf3c0800000000000000
+      internalID: -4324715227713043893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_73
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 95
+        width: 35
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3aeb7b6a787435250800000000000000
+      internalID: 5932163782120292003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_74
+      rect:
+        serializedVersion: 2
+        x: 338
+        y: 104
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35dcd47b0c97fcc70800000000000000
+      internalID: 8993540849498180947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_75
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 94
+        width: 30
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5fc4a55c28909000800000000000000
+      internalID: 40699712829181786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_76
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 100
+        width: 26
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11978f74471b4aa20800000000000000
+      internalID: 3072775958755309841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_77
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 101
+        width: 24
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e6ebcc75cf4b1f70800000000000000
+      internalID: 9159001976808924905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_78
+      rect:
+        serializedVersion: 2
+        x: 919
+        y: 96
+        width: 26
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22474efef888b1ca0800000000000000
+      internalID: -6045087923028331486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cartoon_explosion_24f_79
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 82
+        width: 29
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a3731f086e866e5f0800000000000000
+      internalID: -727778950558697670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      cartoon_explosion_24f_0: -1742903629265299892
+      cartoon_explosion_24f_1: -390885376023798023
+      cartoon_explosion_24f_10: -8483811859678251708
+      cartoon_explosion_24f_11: -2602396569406697387
+      cartoon_explosion_24f_12: -6745371766393361952
+      cartoon_explosion_24f_13: 6082130901705335061
+      cartoon_explosion_24f_14: 8814686551115122522
+      cartoon_explosion_24f_15: -997691268430341599
+      cartoon_explosion_24f_16: 3830534247435452813
+      cartoon_explosion_24f_17: 8271028463153004970
+      cartoon_explosion_24f_18: 2880774141814802000
+      cartoon_explosion_24f_19: 3175361974023269811
+      cartoon_explosion_24f_2: 7728905522429563401
+      cartoon_explosion_24f_20: -5679205337692566369
+      cartoon_explosion_24f_21: 8387347726855351206
+      cartoon_explosion_24f_22: 1215566446632436632
+      cartoon_explosion_24f_23: 6578498339892110745
+      cartoon_explosion_24f_24: -7035946081960986944
+      cartoon_explosion_24f_25: -677729227795499349
+      cartoon_explosion_24f_26: -840976453234664521
+      cartoon_explosion_24f_27: 7414407321984696680
+      cartoon_explosion_24f_28: 7868251326355664408
+      cartoon_explosion_24f_29: 7235185953956015425
+      cartoon_explosion_24f_3: 6376763550685491618
+      cartoon_explosion_24f_30: 5744800068127549991
+      cartoon_explosion_24f_31: 3610929379829537262
+      cartoon_explosion_24f_32: -1122299440822568322
+      cartoon_explosion_24f_33: -5487354365122546695
+      cartoon_explosion_24f_34: 456135940303993410
+      cartoon_explosion_24f_35: 6266493960294694023
+      cartoon_explosion_24f_36: 1718079961703800013
+      cartoon_explosion_24f_37: -8484681600221992314
+      cartoon_explosion_24f_38: 8870416356243976798
+      cartoon_explosion_24f_39: 5186165919420714930
+      cartoon_explosion_24f_4: -955804239172806331
+      cartoon_explosion_24f_40: 4257877777731842702
+      cartoon_explosion_24f_41: -385128991350253025
+      cartoon_explosion_24f_42: -9206188729790682339
+      cartoon_explosion_24f_43: -7696393908482067790
+      cartoon_explosion_24f_44: 402727592471902131
+      cartoon_explosion_24f_45: -7579009446190553727
+      cartoon_explosion_24f_46: -5235010206487689576
+      cartoon_explosion_24f_47: 6173082049550458664
+      cartoon_explosion_24f_48: -1057364561825022594
+      cartoon_explosion_24f_49: -6657843206465681341
+      cartoon_explosion_24f_5: -4912493517675284928
+      cartoon_explosion_24f_50: 1415629204751542794
+      cartoon_explosion_24f_51: -8054837737193747024
+      cartoon_explosion_24f_52: -5644513283074266663
+      cartoon_explosion_24f_53: 1205595188318269381
+      cartoon_explosion_24f_54: 366196156375939187
+      cartoon_explosion_24f_55: -7586268081860451792
+      cartoon_explosion_24f_56: -3376406087148650147
+      cartoon_explosion_24f_57: -4863177524569956664
+      cartoon_explosion_24f_58: -5447748045313630551
+      cartoon_explosion_24f_59: -7763353184804181029
+      cartoon_explosion_24f_6: 592660988836942343
+      cartoon_explosion_24f_60: -4210913261965023555
+      cartoon_explosion_24f_61: 259353978028301557
+      cartoon_explosion_24f_62: -7333484451540041685
+      cartoon_explosion_24f_63: -257649578506830856
+      cartoon_explosion_24f_64: 413549930376081545
+      cartoon_explosion_24f_65: -1109007234485348407
+      cartoon_explosion_24f_66: 710123810116684016
+      cartoon_explosion_24f_67: 3124375249867157212
+      cartoon_explosion_24f_68: 6009853760501817375
+      cartoon_explosion_24f_69: -604717908377979593
+      cartoon_explosion_24f_7: -5154937238136277244
+      cartoon_explosion_24f_70: 2235105971590445128
+      cartoon_explosion_24f_71: -3195130625639393563
+      cartoon_explosion_24f_72: -4324715227713043893
+      cartoon_explosion_24f_73: 5932163782120292003
+      cartoon_explosion_24f_74: 8993540849498180947
+      cartoon_explosion_24f_75: 40699712829181786
+      cartoon_explosion_24f_76: 3072775958755309841
+      cartoon_explosion_24f_77: 9159001976808924905
+      cartoon_explosion_24f_78: -6045087923028331486
+      cartoon_explosion_24f_79: -727778950558697670
+      cartoon_explosion_24f_8: 4043817031170876258
+      cartoon_explosion_24f_9: -1141043874654273267
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
