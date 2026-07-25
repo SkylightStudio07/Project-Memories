@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.Enemy
   data:
     id: charger
-    displayName: "\uCDA9\uC804\uC720\uBC1C\uD615"
-    sprite: {fileID: 0}
+    displayName: "\uCC28\uC9D5"
+    sprite: {fileID: -5749105444300900093, guid: b6411538dc5bac14881dc83618876152, type: 3}
     maxHp: 1
     armor: 0
     outcomes:

@@ -40,13 +40,23 @@ namespace BeatMemories
         [SerializeField] private bool noInputCountsAsMiss = true;
         [SerializeField] private bool verboseLog = true;
 
+        [Header("점수 (인스펙터 조정)")]
+        [SerializeField, Min(0)] private int clearScore = 100;
+        [SerializeField, Min(0)] private int maxTimingBonus = 100;
+        [SerializeField, Min(0)] private int hpScoreWeight = 25;
+        [SerializeField, Min(0)] private int armorScoreWeight = 50;
+
         // 이벤트 (UI가 구독)
         public event Action<int, Enemy> OnEnemyRevealed;              // (slot, enemy) 제시
         public event Action<int, Enemy, JudgeResult> OnJudged;       // (slot, enemy, result) 판정
         public event Action<int, PhaseSO> OnPhaseChanged;            // (cycleIndex, phase) 페이즈 시작
+        public event Action<int> OnCycleStarted;                     // 큐 등 사이클 단위 표시 초기화
+        public event Action<int> OnScoreChanged;
+        public event Action<bool> OnAttackLanded;                    // 강공격 여부
         public event Action OnGameOver;
 
         public PhaseSO CurrentPhase { get; private set; }
+        public int Score { get; private set; }
 
         private sealed class ResponseNote
         {
@@ -139,6 +149,7 @@ namespace BeatMemories
 
             int count = pattern != null ? pattern.SpotlightCount : 0;
             currentCycle = provider.GenerateCycleWeighted(cycleIndex, count, phase);
+            OnCycleStarted?.Invoke(cycleIndex);
             if (verboseLog) Debug.Log($"[Round] === 사이클 {cycleIndex} 제시 시작 (적 {count}) ===");
         }
 
@@ -254,7 +265,16 @@ namespace BeatMemories
 
             notes[current].consumed = true;
             input?.NotifyAccepted(timedAction.Action);
-            ApplyJudge(notes[current].slot, notes[current].enemy, timedAction.Action, isMiss: false);
+            double duration = notes[current].closeTime - notes[current].openTime;
+            float responseRatio = duration > 0.0
+                ? Mathf.Clamp01((float)((inputSongTime - notes[current].openTime) / duration))
+                : 1f;
+            ApplyJudge(
+                notes[current].slot,
+                notes[current].enemy,
+                timedAction.Action,
+                isMiss: false,
+                responseRatio: responseRatio);
         }
 
         private void ExpireElapsedNotes(double now)
@@ -265,7 +285,12 @@ namespace BeatMemories
 
                 notes[i].consumed = true;
                 if (noInputCountsAsMiss)
-                    ApplyJudge(notes[i].slot, notes[i].enemy, PlayerAction.None, isMiss: true);
+                    ApplyJudge(
+                        notes[i].slot,
+                        notes[i].enemy,
+                        PlayerAction.None,
+                        isMiss: true,
+                        responseRatio: 1f);
 
                 if (isOver) break;
             }
@@ -281,7 +306,12 @@ namespace BeatMemories
 
                 notes[i].consumed = true;
                 if (noInputCountsAsMiss)
-                    ApplyJudge(notes[i].slot, notes[i].enemy, PlayerAction.None, isMiss: true);
+                    ApplyJudge(
+                        notes[i].slot,
+                        notes[i].enemy,
+                        PlayerAction.None,
+                        isMiss: true,
+                        responseRatio: 1f);
                 if (isOver) break;
             }
 
@@ -291,7 +321,7 @@ namespace BeatMemories
             responseEndFrame = -1;
         }
 
-        private void ApplyJudge(int slot, Enemy enemy, PlayerAction action, bool isMiss)
+        private void ApplyJudge(int slot, Enemy enemy, PlayerAction action, bool isMiss, float responseRatio)
         {
             JudgeResult result = JudgeSystem.Judge(enemy, action); // 표: 정/오답
             bool charged = player != null && player.IsCharged;
@@ -314,9 +344,21 @@ namespace BeatMemories
                 player.SetCharged(true);
 
             if (result.PlayerDamage > 0 && player != null) player.TakeDamage(result.PlayerDamage);
+            if (result.Cleared) AwardScore(enemy, responseRatio);
+            if (action == PlayerAction.Attack && result.Cleared) OnAttackLanded?.Invoke(charged);
             OnJudged?.Invoke(slot, enemy, result);
             if (verboseLog)
                 Debug.Log($"[Round] {(isMiss ? "무입력" : "응답")} slot{slot}: {enemy?.DisplayName} + {action}{(charged ? "(강)" : "")} → {result.Type} (dmg {result.PlayerDamage}) HP {(player != null ? player.CurrentHp : -1)}");
+        }
+
+        private void AwardScore(Enemy enemy, float responseRatio)
+        {
+            int strengthBonus = enemy != null
+                ? enemy.MaxHp * hpScoreWeight + enemy.Armor * armorScoreWeight
+                : 0;
+            int timingBonus = Mathf.RoundToInt((1f - Mathf.Clamp01(responseRatio)) * maxTimingBonus);
+            Score += clearScore + strengthBonus + timingBonus;
+            OnScoreChanged?.Invoke(Score);
         }
 
         private PhaseSO PhaseForCycle(int cycleIndex)
