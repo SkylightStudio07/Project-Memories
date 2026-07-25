@@ -167,10 +167,19 @@ namespace BeatMemories.Tests
             Assert.That(stage3Serialized.FindProperty("playerMaxHp").intValue, Is.EqualTo(7));
 
             SerializedProperty pool = stage3Serialized.FindProperty("enemyPool");
-            Assert.That(pool.arraySize, Is.EqualTo(1));
+            Assert.That(pool.arraySize, Is.EqualTo(4));
             AssertAssetPath(
                 pool.GetArrayElementAtIndex(0).objectReferenceValue,
+                "Assets/Data/Enemies/Stage 3 Attack.asset");
+            AssertAssetPath(
+                pool.GetArrayElementAtIndex(1).objectReferenceValue,
+                "Assets/Data/Enemies/Stage 3 Guard.asset");
+            AssertAssetPath(
+                pool.GetArrayElementAtIndex(2).objectReferenceValue,
                 "Assets/Data/Enemies/Stage 3 Charge.asset");
+            AssertAssetPath(
+                pool.GetArrayElementAtIndex(3).objectReferenceValue,
+                "Assets/Data/Enemies/Stage 3 Idle.asset");
             AssertAssetPath(
                 stage3Serialized.FindProperty("enemySprite").objectReferenceValue,
                 "Assets/Resource/Art/Character/nai-3213a06d-1ed2-4159-af6f-9ddee9285821.png");

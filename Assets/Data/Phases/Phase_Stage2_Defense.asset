@@ -20,6 +20,13 @@ MonoBehaviour:
     weight: 1
   - answerAction: 2
     weight: 1
+  enemyWeights:
+  - enemy: {fileID: 11400000, guid: eda428c129164c5ebdc57e60fe4119a5, type: 2}
+    weight: 2
+  - enemy: {fileID: 11400000, guid: 84876b543d1d4697a96d1e14dd35a9f6, type: 2}
+    weight: 2
+  - enemy: {fileID: 11400000, guid: a3c6f3409bc949baa1b4f1624987aa5d, type: 2}
+    weight: 1
   authoredSequence: []
   preparationSprite: {fileID: 0}
   cueColor: {r: 1, g: 1, b: 1, a: 1}

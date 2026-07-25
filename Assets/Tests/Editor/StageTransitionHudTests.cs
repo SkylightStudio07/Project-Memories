@@ -34,6 +34,9 @@ namespace BeatMemories.Tests
             created.Add(hudObject);
             Component round = roundObject.AddComponent(roundType);
             Component hud = hudObject.AddComponent(hudType);
+            roundType.GetMethod(
+                "Awake",
+                BindingFlags.Instance | BindingFlags.NonPublic).Invoke(round, null);
 
             FieldInfo roundField = hudType.GetField(
                 "round",

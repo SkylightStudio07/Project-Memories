@@ -60,6 +60,7 @@ namespace BeatMemories.Tests
             var gameObject = new GameObject("Stage Clear Test");
             created.Add(gameObject);
             Component round = gameObject.AddComponent(roundManagerType);
+            PrivateMethod("Awake").Invoke(round, null);
 
             ScriptableObject stage = ScriptableObject.CreateInstance(stageType);
             created.Add(stage);

@@ -130,6 +130,12 @@ namespace BeatMemories
             // 새 사이클 첫 제시를 보낸다. 비트 수를 늘리지 않고 화면상 순서만 보장한다.
             if (pendingBeatDispatch)
             {
+                if (queuedPreparationBeats > 0)
+                {
+                    pendingBeatDispatch = false;
+                    BeginPreparation();
+                    return;
+                }
                 pendingBeatDispatch = false;
                 DispatchCurrentBeat();
                 if (!IsRunning) return;

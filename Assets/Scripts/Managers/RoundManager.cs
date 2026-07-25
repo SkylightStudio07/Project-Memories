@@ -70,11 +70,15 @@ namespace BeatMemories
         public event Action OnStageCleared;                          // 적 HP가 0이 된 응답 종료
         public event Action OnFinalStageCleared;
         public event Action<StageSO> OnStageApplied;
+        public event Action<int, int, int> OnEnemyPageTransitionStarted;
 
         public PhaseSO CurrentPhase { get; private set; }
+        public StageSO CurrentStage => stage;
         public int Score { get; private set; }
         public int CurrentEnemyHp { get; private set; }
         public int EnemyMaxHp { get; private set; } = 1;
+        public int CurrentEnemyPage { get; private set; } = 1;
+        public int EnemyPageCount { get; private set; } = 1;
 
         private sealed class ResponseNote
         {
@@ -99,6 +103,7 @@ namespace BeatMemories
         private bool initialized;
         private bool stageClearPending;
         private int stageStartCycleIndex;
+        private int responseEndCycleIndex = -1;
         private GameObject backgroundInstance;
 
         public int Seed => seed;
@@ -134,6 +139,8 @@ namespace BeatMemories
             backgroundInstance = s.backgroundPrefab != null ? Instantiate(s.backgroundPrefab) : null;
             EnemyMaxHp = Mathf.Max(1, s.enemyMaxHp);
             CurrentEnemyHp = EnemyMaxHp;
+            EnemyPageCount = Mathf.Max(1, s.enemyPageCount);
+            CurrentEnemyPage = 1;
 
             stageStartCycleIndex = conductor != null && conductor.IsRunning
                 ? conductor.CycleIndex + 1
@@ -147,6 +154,7 @@ namespace BeatMemories
             inResponse = false;
             responseEndPending = false;
             responseEndFrame = -1;
+            responseEndCycleIndex = -1;
             inputLockedUntilRealtime = double.NegativeInfinity;
             RebuildStageRuntime();
             OnStageApplied?.Invoke(s);
@@ -245,6 +253,7 @@ namespace BeatMemories
             // Input System과 EventSystem이 같은 프레임의 입력을 모두 전달할 때까지 마감을 미룬다.
             responseEndPending = true;
             responseEndFrame = Time.frameCount;
+            responseEndCycleIndex = cycleIndex;
             stageClearPending |= CurrentEnemyHp <= 0;
             if (!stageClearPending && StartsPhasePreparation(cycleIndex))
             {
@@ -302,7 +311,9 @@ namespace BeatMemories
                 responseEndPending = false;
                 responseEndFrame = -1;
                 stageClearPending = false;
-                if (stageCleared) OnStageCleared?.Invoke();
+                if (stageCleared)
+                    ResolveEnemyHpDepletion(responseEndCycleIndex);
+                responseEndCycleIndex = -1;
             }
         }
 
@@ -564,6 +575,43 @@ namespace BeatMemories
             CurrentEnemyHp = Mathf.Max(0, CurrentEnemyHp - 1);
             stageClearPending |= CurrentEnemyHp == 0;
             OnEnemyHealthChanged?.Invoke(CurrentEnemyHp, EnemyMaxHp);
+        }
+
+        private void BeginNextEnemyPage(int completedCycleIndex)
+        {
+            stageClearPending = false;
+            CurrentEnemyPage++;
+            CurrentEnemyHp = EnemyMaxHp;
+            stageStartCycleIndex = Mathf.Max(0, completedCycleIndex + 1);
+            CurrentPhase = null;
+            currentCycle.Clear();
+            notes.Clear();
+            pendingInputs.Clear();
+            inResponse = false;
+            inputLockedUntilRealtime = double.NegativeInfinity;
+
+            int transitionBeats = stage != null
+                ? Mathf.Max(0, stage.enemyPageTransitionBeats)
+                : 0;
+            OnEnemyHealthChanged?.Invoke(CurrentEnemyHp, EnemyMaxHp);
+            OnEnemyPageTransitionStarted?.Invoke(
+                CurrentEnemyPage,
+                EnemyPageCount,
+                transitionBeats);
+            conductor?.QueuePreparationBeats(transitionBeats);
+
+            if (verboseLog)
+                Debug.Log(
+                    $"[Round] 보스 페이지 {CurrentEnemyPage}/{EnemyPageCount} 시작 " +
+                    $"(HP {CurrentEnemyHp}, 전환 {transitionBeats}비트)");
+        }
+
+        private void ResolveEnemyHpDepletion(int completedCycleIndex)
+        {
+            if (CurrentEnemyPage < EnemyPageCount)
+                BeginNextEnemyPage(completedCycleIndex);
+            else
+                OnStageCleared?.Invoke();
         }
 
         public void StopAtStageClear()

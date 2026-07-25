@@ -10,27 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d62a14f7cef6184c94056cc0ebde063, type: 3}
-  m_Name: Phase_Stage3_Charge
+  m_Name: Phase_Stage5_Visible
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.PhaseSO
-  phaseName: "\uCC28\uC9C0 \uACF5\uACA9"
+  phaseName: "\uBCF4\uC2A4 \uACF5\uAC1C \uD398\uC774\uC988"
   kind: 0
-  hiddenAnswerAction: 1
-  weights:
-  - answerAction: 2
-    weight: 1
+  hiddenAnswerAction: 2
+  weights: []
   enemyWeights:
-  - enemy: {fileID: 11400000, guid: a251bc9cd77944dba1aefa8fde329395, type: 2}
+  - enemy: {fileID: 11400000, guid: 4ab86ce901b349289aaf07dbea51bd90, type: 2}
     weight: 2
-  - enemy: {fileID: 11400000, guid: 2af6e42ca1c34bf283dd0bba6ff9b01e, type: 2}
+  - enemy: {fileID: 11400000, guid: 54f428763a404c0c87b60c3593e178e8, type: 2}
     weight: 2
-  - enemy: {fileID: 11400000, guid: 70fe29f0f1ff4fb29394d44891a42ae2, type: 2}
+  - enemy: {fileID: 11400000, guid: 3589432303ac4af382984a8647224d3f, type: 2}
     weight: 1
-  - enemy: {fileID: 11400000, guid: f6fde21106ba4e9686cd5a5444c179cd, type: 2}
+  - enemy: {fileID: 11400000, guid: 2dec8aae5fbb4b839ddccfc123b077e2, type: 2}
     weight: 1
   authoredSequence: []
   preparationSprite: {fileID: 0}
   cueColor: {r: 1, g: 1, b: 1, a: 1}
   preparationTintStrength: 0
   activeTintStrength: 0
-  preparationSnareVolume: 0.8
-  activeSnareVolume: 0.55
+  preparationSnareVolume: 0
+  activeSnareVolume: 0

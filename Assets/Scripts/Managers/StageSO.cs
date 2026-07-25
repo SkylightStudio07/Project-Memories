@@ -42,6 +42,16 @@ namespace BeatMemories
         [Tooltip("첫 준비 4박 전에 둘 별도 무박자 카운트인. Stage 1은 준비가 카운트인을 겸해 0")]
         [Min(0f)] public float startDelay = 3f;
 
+        [Header("보스 페이지")]
+        [Tooltip("적 HP를 모두 소진해야 하는 페이지 수. 1이면 기존 단일 HP 동작")]
+        [Min(1)] public int enemyPageCount = 1;
+        [Tooltip("다음 페이지로 넘어갈 때 입력과 전투 진행을 멈출 비트 수")]
+        [Min(0)] public int enemyPageTransitionBeats;
+        [Tooltip("2페이지부터 예측 슬롯의 아래쪽 절반만 표시")]
+        public bool cutPreviewBottomHalfOnSecondPage;
+        [Tooltip("페이지 전환 중 EnemyActor에 표시할 공격 자세")]
+        public Sprite enemyPageTransitionSprite;
+
         [Header("배경 (옵션 — 비우면 씬 기존 것 유지)")]
         [Tooltip("씬의 '백그라운드' SpriteRenderer에 바꿔끼울 스프라이트")]
         public Sprite backgroundSprite;

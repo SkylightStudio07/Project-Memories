@@ -67,7 +67,7 @@ namespace BeatMemories.Tests
             SerializedProperty roster = new SerializedObject(
                     Load("Assets/Data/Stages/StageRoster.asset"))
                 .FindProperty("stages");
-            Assert.That(roster.arraySize, Is.EqualTo(4));
+            Assert.That(roster.arraySize, Is.EqualTo(5));
             AssertAssetPath(
                 roster.GetArrayElementAtIndex(3).objectReferenceValue,
                 "Assets/Data/Stages/Stage_4.asset");

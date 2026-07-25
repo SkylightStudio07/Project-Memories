@@ -6461,6 +6461,7 @@ GameObject:
   - component: {fileID: 2034283561}
   - component: {fileID: 2034283560}
   - component: {fileID: 2034283565}
+  - component: {fileID: 2034283566}
   m_Layer: 0
   m_Name: HUD Canvas
   m_TagString: Untagged
@@ -6577,6 +6578,31 @@ MonoBehaviour:
   hitScoreColor: {r: 0.3, g: 1, b: 0.55, a: 1}
   clearBonusColor: {r: 1, g: 0.82, b: 0.25, a: 1}
   enemyIdleSprite: {fileID: 4089636935794680599, guid: 42d77fc7d15a51d4ab94c4d0ccec3e85, type: 3}
+--- !u!114 &2034283566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034283559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 931af91c752a41a7ab811ad8fe6b847d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.BossPagePresentationController
+  round: {fileID: 1188105352}
+  conductor: {fileID: 1739020140}
+  enemyActor: {fileID: 1825124097}
+  previewSlots:
+  - {fileID: 889482538}
+  - {fileID: 1424248791}
+  - {fileID: 393356561}
+  - {fileID: 729168217}
+  previewContainer: {fileID: 118723363}
+  slashColor: {r: 0.15, g: 0.95, b: 1, a: 1}
+  slashThickness: 12
+  slashGrowDuration: 0.12
+  slashFadeDuration: 0.18
 --- !u!114 &2034283561
 MonoBehaviour:
   m_ObjectHideFlags: 0

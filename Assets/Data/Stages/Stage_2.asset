@@ -16,8 +16,9 @@ MonoBehaviour:
   displayName: "\uBCF8\uD3B8 1 (\uC801 \uAD50\uCCB4)"
   keyMode: 1
   enemyPool:
-  - {fileID: 11400000, guid: 84876b543d1d4697a96d1e14dd35a9f6, type: 2}
   - {fileID: 11400000, guid: eda428c129164c5ebdc57e60fe4119a5, type: 2}
+  - {fileID: 11400000, guid: 84876b543d1d4697a96d1e14dd35a9f6, type: 2}
+  - {fileID: 11400000, guid: a3c6f3409bc949baa1b4f1624987aa5d, type: 2}
   enemySprite: {fileID: 6485069653137293177, guid: 98ae2358737b33e4484df4e479f1be5c, type: 3}
   flipEnemyIdleX: 1
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}

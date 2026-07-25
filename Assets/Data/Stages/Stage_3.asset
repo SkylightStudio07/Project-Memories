@@ -16,7 +16,10 @@ MonoBehaviour:
   displayName: "\uC2A4\uD14C\uC774\uC9C0 3 (\uCC28\uC9C0 \uACF5\uACA9)"
   keyMode: 1
   enemyPool:
+  - {fileID: 11400000, guid: a251bc9cd77944dba1aefa8fde329395, type: 2}
+  - {fileID: 11400000, guid: 2af6e42ca1c34bf283dd0bba6ff9b01e, type: 2}
   - {fileID: 11400000, guid: 70fe29f0f1ff4fb29394d44891a42ae2, type: 2}
+  - {fileID: 11400000, guid: f6fde21106ba4e9686cd5a5444c179cd, type: 2}
   enemySprite: {fileID: -8380145206358370378, guid: d99f64baced9b454eb41d36e12278d6a, type: 3}
   flipEnemyIdleX: 0
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
