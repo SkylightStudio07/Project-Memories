@@ -26,6 +26,9 @@
 # Visual Studio cache directory
 .vs/
 
+# Local Codex instructions
+AGENTS.md
+
 # Gradle cache directory
 .gradle/
 

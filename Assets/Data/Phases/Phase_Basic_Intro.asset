@@ -10,19 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d62a14f7cef6184c94056cc0ebde063, type: 3}
-  m_Name: Phase_Defense
+  m_Name: Phase_Basic_Intro
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.PhaseSO
-  phaseName: "\uC218\uBE44 \uD398\uC774\uC988"
+  phaseName: "\uAE30\uBCF8 \uD398\uC774\uC988"
   kind: 0
   hiddenAnswerAction: 1
   weights:
   - answerAction: 1
     weight: 1
   - answerAction: 2
-    weight: 3
-  - answerAction: 4
     weight: 1
-  authoredSequence: []
+  authoredSequence:
+  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
+  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
+  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
+  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
+  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
+  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
+  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
+  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
   preparationSprite: {fileID: 0}
   cueColor: {r: 1, g: 1, b: 1, a: 1}
   preparationTintStrength: 0

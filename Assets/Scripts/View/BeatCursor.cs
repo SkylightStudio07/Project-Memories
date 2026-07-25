@@ -5,6 +5,7 @@ namespace BeatMemories
     /// <summary>
     /// 비트 타임라인 커서. 자기 담당 박 구간(<see cref="beatOffset"/>부터 dots 개수만큼)에서만
     /// 해당 박의 점(dot) 트랜스폼 위치로 이동하고, 이동할 때마다 펄스를 준다.
+    /// 준비 4박 동안에는 담당 구간과 관계없이 두 커서가 각자의 dots를 함께 순회한다.
     /// 예) 제시 커서: offset 0 + PresentDot0~3 / 응답 커서: offset 4 + ResponseDot0~3.
     /// 담당 밖의 박에서는 움직이지 않는다(마지막 위치 유지).
     /// </summary>
@@ -32,13 +33,48 @@ namespace BeatMemories
 
         private void Awake() { if (cursor != null) _baseScale = cursor.localScale; }
 
-        private void OnEnable() { if (conductor != null) conductor.OnBeat += OnBeat; }
-        private void OnDisable() { if (conductor != null) conductor.OnBeat -= OnBeat; }
+        private void OnEnable()
+        {
+            if (conductor == null) return;
+            conductor.OnBeat += OnBeat;
+            conductor.OnPreparationMeasureStart += OnPreparation;
+            conductor.OnPreparationBeat += OnPreparationBeat;
+            conductor.OnPresentMeasureStart += OnPresent;
+        }
+
+        private void OnDisable()
+        {
+            if (conductor == null) return;
+            conductor.OnBeat -= OnBeat;
+            conductor.OnPreparationMeasureStart -= OnPreparation;
+            conductor.OnPreparationBeat -= OnPreparationBeat;
+            conductor.OnPresentMeasureStart -= OnPresent;
+        }
+
+        private void OnPreparation(int phaseIndex)
+        {
+            _t = 0f;
+            _target = null;
+            if (cursor != null) cursor.localScale = _baseScale;
+        }
+
+        private void OnPreparationBeat(int beatInPreparation) => MoveToDot(beatInPreparation);
+
+        private void OnPresent(int cycleIndex)
+        {
+            if (beatOffset > 0) MoveToDot(0);
+        }
 
         private void OnBeat(int beatInCycle)
         {
             int idx = beatInCycle - beatOffset;
+            MoveToDot(idx);
+        }
+
+        private void MoveToDot(int idx)
+        {
             if (cursor == null || dots == null || idx < 0 || idx >= dots.Length) return; // 담당 밖 박 → 무시
+            cursor.localScale = _baseScale;
             _target = dots[idx];
             if (_target == null) return;
             if (!smooth) cursor.position = _target.position; // 즉시 스냅

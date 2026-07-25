@@ -34,6 +34,8 @@ namespace BeatMemories
         [SerializeField] private List<PhaseSO> phases = new List<PhaseSO>();
         [Tooltip("한 페이즈가 유지되는 사이클 수")]
         [SerializeField, Min(1)] private int cyclesPerPhase = 2;
+        [Tooltip("마지막 페이즈 뒤 처음으로 순환. 끄면 마지막 응답 뒤 스테이지 클리어")]
+        [SerializeField] private bool repeatPhasePlan = true;
 
         [Header("판정 (인스펙터 조정)")]
         [Tooltip("마감까지 안 답한 박을 오답으로 취급(적 defaultOutcome 적용)")]
@@ -41,12 +43,15 @@ namespace BeatMemories
         [SerializeField] private bool verboseLog = true;
 
         // 이벤트 (UI가 구독)
-        public event Action<int, Enemy> OnEnemyRevealed;              // (slot, enemy) 제시
+        public event Action<EnemyPreviewCue> OnEnemyPreviewed;        // 정제된 제시(차폐 시 실제 적 없음)
         public event Action<int, Enemy, JudgeResult> OnJudged;       // (slot, enemy, result) 판정
-        public event Action<int, PhaseSO> OnPhaseChanged;            // (cycleIndex, phase) 페이즈 시작
+        public event Action<int, PhaseSO> OnPhasePreparing;          // (phaseIndex, phase) 준비 시작
+        public event Action<int, PhaseSO> OnPhaseChanged;            // (phaseIndex, phase) 본체 시작
         public event Action OnGameOver;
+        public event Action OnStageCleared;
 
         public PhaseSO CurrentPhase { get; private set; }
+        public int CurrentPhaseIndex { get; private set; } = -1;
 
         private sealed class ResponseNote
         {
@@ -66,6 +71,7 @@ namespace BeatMemories
         private bool responseEndPending;
         private int responseEndFrame = -1;
         private bool isOver;
+        private int activePhaseIndex = -1;
 
         public int Seed => seed;
 
@@ -78,6 +84,7 @@ namespace BeatMemories
             if (randomizeSeed) seed = Environment.TickCount;
             provider = new EnemySequenceProvider(seed, enemyPool);
             spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
+            if (conductor != null) conductor.ConfigureTimeline(cyclesPerPhase);
         }
 
         /// <summary>스테이지 데이터로 이 매니저·플레이어·입력·비트를 구성한다.</summary>
@@ -87,8 +94,14 @@ namespace BeatMemories
             if (s.pattern != null) pattern = s.pattern;
             if (s.phases != null) phases = new List<PhaseSO>(s.phases);
             cyclesPerPhase = Mathf.Max(1, s.cyclesPerPhase);
+            repeatPhasePlan = s.repeatPhasePlan;
             if (input != null) input.Mode = s.keyMode;
-            if (conductor != null) conductor.Bpm = s.bpm;
+            if (conductor != null)
+            {
+                conductor.Bpm = s.bpm;
+                conductor.StartDelay = s.startDelay;
+                conductor.ConfigureTimeline(cyclesPerPhase);
+            }
             if (player != null) player.SetMaxHp(s.playerMaxHp);
             if (s.backgroundPrefab != null) Instantiate(s.backgroundPrefab);
             if (verboseLog) Debug.Log($"[Round] 스테이지 적용: {s.stageNumber} {s.displayName} (키 {s.keyMode}, 적 {(s.enemyPool != null ? s.enemyPool.Count : 0)})");
@@ -98,6 +111,7 @@ namespace BeatMemories
         {
             if (conductor != null)
             {
+                conductor.OnPreparationMeasureStart += HandlePreparationStart;
                 conductor.OnPresentMeasureStart += HandlePresentStart;
                 conductor.OnResponseMeasureStart += HandleResponseStart;
                 conductor.OnResponseMeasureEnd += HandleResponseEnd;
@@ -111,6 +125,7 @@ namespace BeatMemories
         {
             if (conductor != null)
             {
+                conductor.OnPreparationMeasureStart -= HandlePreparationStart;
                 conductor.OnPresentMeasureStart -= HandlePresentStart;
                 conductor.OnResponseMeasureStart -= HandleResponseStart;
                 conductor.OnResponseMeasureEnd -= HandleResponseEnd;
@@ -118,6 +133,25 @@ namespace BeatMemories
             }
             if (input != null) input.OnTimedAction -= QueueInput;
             if (player != null) player.OnDied -= HandleDied;
+        }
+
+        private void HandlePreparationStart(int phaseIndex)
+        {
+            if (isOver) return;
+
+            PhaseSO phase = PhaseForIndex(phaseIndex);
+            if (phase == null && IsPhasePlanComplete(phaseIndex))
+            {
+                HandleStageCleared();
+                return;
+            }
+
+            CurrentPhaseIndex = phaseIndex;
+            CurrentPhase = phase;
+            activePhaseIndex = -1;
+            OnPhasePreparing?.Invoke(phaseIndex, phase);
+            if (verboseLog)
+                Debug.Log($"[Round] >> 준비: {(phase != null ? phase.PhaseName : "(균등)")}");
         }
 
         private void HandlePresentStart(int cycleIndex)
@@ -129,16 +163,28 @@ namespace BeatMemories
             if (!responseEndPending) FlushUnanswered();
             if (isOver) return;
 
-            PhaseSO phase = PhaseForCycle(cycleIndex);
-            if (phase != CurrentPhase)
+            int phaseIndex = conductor != null
+                ? conductor.PhaseIndex
+                : cycleIndex / Mathf.Max(1, cyclesPerPhase);
+            PhaseSO phase = CurrentPhaseIndex == phaseIndex ? CurrentPhase : PhaseForIndex(phaseIndex);
+            if (CurrentPhaseIndex != phaseIndex)
             {
+                CurrentPhaseIndex = phaseIndex;
                 CurrentPhase = phase;
-                OnPhaseChanged?.Invoke(cycleIndex, phase);
-                if (verboseLog) Debug.Log($"[Round] >> 페이즈: {(phase != null ? phase.PhaseName : "(균등)")}");
+            }
+            if (activePhaseIndex != phaseIndex)
+            {
+                activePhaseIndex = phaseIndex;
+                OnPhaseChanged?.Invoke(phaseIndex, phase);
+                if (verboseLog)
+                    Debug.Log($"[Round] >> 페이즈: {(phase != null ? phase.PhaseName : "(균등)")}");
             }
 
             int count = pattern != null ? pattern.SpotlightCount : 0;
-            currentCycle = provider.GenerateCycleWeighted(cycleIndex, count, phase);
+            int exchangeInPhase = conductor != null
+                ? conductor.ExchangeInPhase
+                : cycleIndex % Mathf.Max(1, cyclesPerPhase);
+            currentCycle = GenerateCycle(cycleIndex, exchangeInPhase, count, phase);
             if (verboseLog) Debug.Log($"[Round] === 사이클 {cycleIndex} 제시 시작 (적 {count}) ===");
         }
 
@@ -150,8 +196,7 @@ namespace BeatMemories
             notes.Clear();
             for (int k = 0; k < spotlightBeats.Count && k < currentCycle.Count; k++)
             {
-                int beatInCycle = Conductor.ResponseStartBeat + k;
-                int globalBeat = cycleIndex * Conductor.BeatsPerCycle + beatInCycle;
+                int globalBeat = conductor != null ? conductor.TotalBeats + k : 0;
                 double openTime = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0;
                 notes.Add(new ResponseNote
                 {
@@ -187,8 +232,12 @@ namespace BeatMemories
             int slot = spotlightBeats.IndexOf(beatInMeasure);
             if (slot < 0 || slot >= currentCycle.Count) return;
 
-            OnEnemyRevealed?.Invoke(slot, currentCycle[slot]);
-            if (verboseLog) Debug.Log($"[Round] 제시 slot{slot}: {currentCycle[slot]?.DisplayName}");
+            Enemy actualEnemy = currentCycle[slot];
+            bool hidden = CurrentPhase != null && CurrentPhase.ShouldHidePreview(actualEnemy);
+            var cue = new EnemyPreviewCue(slot, actualEnemy, hidden);
+            OnEnemyPreviewed?.Invoke(cue);
+            if (verboseLog)
+                Debug.Log($"[Round] 제시 slot{slot}: {(hidden ? "[차폐]" : actualEnemy?.DisplayName)}");
         }
 
         private void LateUpdate()
@@ -319,12 +368,48 @@ namespace BeatMemories
                 Debug.Log($"[Round] {(isMiss ? "무입력" : "응답")} slot{slot}: {enemy?.DisplayName} + {action}{(charged ? "(강)" : "")} → {result.Type} (dmg {result.PlayerDamage}) HP {(player != null ? player.CurrentHp : -1)}");
         }
 
-        private PhaseSO PhaseForCycle(int cycleIndex)
+        private List<Enemy> GenerateCycle(int cycleIndex, int exchangeInPhase, int count, PhaseSO phase)
+        {
+            int n = Mathf.Max(0, count);
+            var generated = new List<Enemy>(n);
+            for (int slot = 0; slot < n; slot++)
+            {
+                if (phase != null
+                    && phase.TryGetAuthoredEnemy(exchangeInPhase, slot, n, out Enemy authored))
+                {
+                    generated.Add(authored);
+                }
+                else
+                {
+                    generated.Add(provider.GetWeighted(cycleIndex, slot, phase));
+                }
+            }
+            return generated;
+        }
+
+        private PhaseSO PhaseForIndex(int phaseIndex)
         {
             if (phases == null || phases.Count == 0) return null;
-            int block = Mathf.Max(1, cyclesPerPhase);
-            int idx = (cycleIndex / block) % phases.Count;
-            return phases[idx];
+            if (phaseIndex < 0) return null;
+            if (repeatPhasePlan) return phases[phaseIndex % phases.Count];
+            return phaseIndex < phases.Count ? phases[phaseIndex] : null;
+        }
+
+        private bool IsPhasePlanComplete(int phaseIndex)
+            => !repeatPhasePlan
+               && phases != null
+               && phases.Count > 0
+               && phaseIndex >= phases.Count;
+
+        private void HandleStageCleared()
+        {
+            if (isOver) return;
+            isOver = true;
+            pendingInputs.Clear();
+            responseEndPending = false;
+            if (conductor != null) conductor.StopClock();
+            OnStageCleared?.Invoke();
+            if (verboseLog) Debug.Log("[Round] ===== STAGE CLEAR =====");
         }
 
         private void HandleDied()
