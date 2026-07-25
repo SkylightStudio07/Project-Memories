@@ -3404,6 +3404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1188105353}
   - component: {fileID: 1188105352}
+  - component: {fileID: 1188105354}
   m_Layer: 0
   m_Name: RoundManager
   m_TagString: Untagged
@@ -3439,8 +3440,29 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1ae94f3d63d39b142b78bfee344ac7ab, type: 2}
   - {fileID: 11400000, guid: 054b40b29d0bc454aaabb343feb3c141, type: 2}
   cyclesPerPhase: 2
+  repeatPhasePlan: 1
   noInputCountsAsMiss: 1
   verboseLog: 1
+--- !u!114 &1188105354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188105351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90d03275e0a042dc9d3f3a92a8d61921, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.PhasePresentationController
+  round: {fileID: 1188105352}
+  conductor: {fileID: 1739020140}
+  background: {fileID: 133834108}
+  globalLight: {fileID: 1029222278}
+  targetCamera: {fileID: 2084326193}
+  snareClip: {fileID: 0}
+  transitionSpeed: 3
+  attackPreparationZoomRatio: 0.85
 --- !u!4 &1188105353
 Transform:
   m_ObjectHideFlags: 0
@@ -6557,7 +6579,7 @@ MonoBehaviour:
   heartEmpty: {r: 0.24, g: 0.2, b: 0.22, a: 1}
   flashFade: 0.35
   actionSpriteHold: 0.3
-  enemyIdleSprite: {fileID: 0}
+  enemyIdleSprite: {fileID: 4089636935794680599, guid: 42d77fc7d15a51d4ab94c4d0ccec3e85, type: 3}
 --- !u!114 &2034283561
 MonoBehaviour:
   m_ObjectHideFlags: 0

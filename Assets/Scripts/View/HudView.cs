@@ -70,15 +70,18 @@ namespace BeatMemories
         private Color playerTarget;
         private float playerFlash;
         private float playerSpriteTimer;
+        private bool enemyPreparationHeld;
 
         private void OnEnable()
         {
             if (round != null)
             {
-                round.OnEnemyRevealed += OnReveal;
+                round.OnEnemyPreviewed += OnPreview;
                 round.OnJudged += OnJudged;
+                round.OnPhasePreparing += OnPhasePreparing;
                 round.OnPhaseChanged += OnPhase;
                 round.OnGameOver += OnGameOver;
+                round.OnStageCleared += OnStageCleared;
             }
             if (conductor != null) conductor.OnBeat += OnBeat;
             if (player != null)
@@ -93,10 +96,12 @@ namespace BeatMemories
         {
             if (round != null)
             {
-                round.OnEnemyRevealed -= OnReveal;
+                round.OnEnemyPreviewed -= OnPreview;
                 round.OnJudged -= OnJudged;
+                round.OnPhasePreparing -= OnPhasePreparing;
                 round.OnPhaseChanged -= OnPhase;
                 round.OnGameOver -= OnGameOver;
+                round.OnStageCleared -= OnStageCleared;
             }
             if (conductor != null) conductor.OnBeat -= OnBeat;
             if (player != null)
@@ -137,7 +142,7 @@ namespace BeatMemories
             // 적: 자세 스프라이트 유지시간 후 idle 복귀. 색은 항상 placeholder/스프라이트를 틴트.
             if (enemySlot != null)
             {
-                if (enemySpriteTimer > 0f)
+                if (!enemyPreparationHeld && enemySpriteTimer > 0f)
                 {
                     enemySpriteTimer -= Time.deltaTime;
                     if (enemySpriteTimer <= 0f) SetEnemyIdle();
@@ -166,8 +171,16 @@ namespace BeatMemories
         private Color ResultColor(OutcomeType t)
             => t == OutcomeType.Cleared ? clearedColor : (t == OutcomeType.Safe ? safeColor : punishedColor);
 
-        private void OnReveal(int slot, Enemy e)
+        private void OnPreview(EnemyPreviewCue cue)
         {
+            if (cue.IsHidden)
+            {
+                if (feedbackLabel != null) feedbackLabel.text = "";
+                return;
+            }
+
+            enemyPreparationHeld = false;
+            Enemy e = cue.VisibleEnemy;
             enemyTarget = PoseColor(e);
             enemyFlash = 1f;
             if (e != null && e.Sprite != null)
@@ -183,6 +196,11 @@ namespace BeatMemories
             Color c = ResultColor(r.Type);
             enemyTarget = c; enemyFlash = 1f;
             playerTarget = c; playerFlash = 1f;
+            if (e != null && e.Sprite != null)
+            {
+                FitSprite(enemySlot, e.Sprite, enemyWorldHeight);
+                enemySpriteTimer = actionSpriteHold;
+            }
             if (feedbackLabel != null)
                 feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
 
@@ -201,14 +219,41 @@ namespace BeatMemories
                 if (enemyCells[i] != null) enemyCells[i].enabled = i < _enemyHp;
         }
 
-        private void OnPhase(int cycle, PhaseSO p)
+        private void OnPhasePreparing(int phaseIndex, PhaseSO p)
         {
+            enemyPreparationHeld = p != null && p.PreparationSprite != null;
+            enemySpriteTimer = 0f;
+            enemyFlash = 1f;
+            enemyTarget = p != null && p.IsAttackPhase ? aggressiveColor : idleColor;
+            if (enemyPreparationHeld)
+                FitSprite(enemySlot, p.PreparationSprite, enemyWorldHeight);
+            else
+                SetEnemyIdle();
+            if (phaseLabel != null)
+                phaseLabel.text = p != null ? $"{p.PhaseName} 준비" : "준비";
+            if (feedbackLabel != null) feedbackLabel.text = "";
+            SetDots(-1);
+        }
+
+        private void OnPhase(int phaseIndex, PhaseSO p)
+        {
+            enemyPreparationHeld = false;
+            SetEnemyIdle();
             if (phaseLabel != null) phaseLabel.text = p != null ? p.PhaseName : "(균등)";
         }
 
         private void OnGameOver()
         {
             if (gameOverLabel != null) { gameOverLabel.enabled = true; gameOverLabel.text = "GAME OVER"; }
+        }
+
+        private void OnStageCleared()
+        {
+            enemyPreparationHeld = false;
+            SetEnemyIdle();
+            if (phaseLabel != null) phaseLabel.text = "STAGE CLEAR";
+            if (feedbackLabel != null) feedbackLabel.text = "";
+            SetDots(-1);
         }
 
         private void OnBeat(int beatInCycle) => SetDots(beatInCycle);

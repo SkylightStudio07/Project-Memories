@@ -25,10 +25,14 @@ namespace BeatMemories
         public RhythmPatternSO pattern;
         public List<PhaseSO> phases = new List<PhaseSO>();
         [Min(1)] public int cyclesPerPhase = 2;
+        [Tooltip("켜면 마지막 페이즈 뒤 처음으로 순환. 끄면 마지막 응답 후 스테이지 클리어")]
+        public bool repeatPhasePlan = true;
 
         [Header("수치")]
         [Min(1f)] public float bpm = 90f;
         [Min(1)] public int playerMaxHp = 8;
+        [Tooltip("첫 준비 4박 전에 둘 별도 무박자 카운트인. Stage 1은 준비가 카운트인을 겸해 0")]
+        [Min(0f)] public float startDelay = 3f;
 
         [Header("배경 (옵션 — 비우면 씬 기존 것 유지)")]
         [Tooltip("씬의 '백그라운드' SpriteRenderer에 바꿔끼울 스프라이트")]

@@ -34,13 +34,13 @@ namespace BeatMemories
 
         private void OnEnable()
         {
-            if (conductor != null) conductor.OnBeat += OnBeat;
+            if (conductor != null) conductor.OnClockBeat += OnBeat;
             Show();
         }
 
         private void OnDisable()
         {
-            if (conductor != null) conductor.OnBeat -= OnBeat;
+            if (conductor != null) conductor.OnClockBeat -= OnBeat;
         }
 
         private void Update()
@@ -55,7 +55,7 @@ namespace BeatMemories
             }
         }
 
-        private void OnBeat(int beatInCycle)
+        private void OnBeat(int totalBeat)
         {
             if (_paused || !syncToBeat || !HasFrames) return;
             _beatCount++;
