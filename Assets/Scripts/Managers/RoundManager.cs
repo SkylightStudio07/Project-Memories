@@ -19,6 +19,7 @@ namespace BeatMemories
     ///   - Success는 선택 행동을 처리한다.
     ///   - Too Late는 Offset 끝에서 쉼으로 처리한다.
     /// </summary>
+    [DefaultExecutionOrder(-60)]
     public class RoundManager : MonoBehaviour
     {
         [Header("스테이지 (지정 시 아래 값을 덮어씀)")]
@@ -279,6 +280,7 @@ namespace BeatMemories
                 OnPhasePreparing?.Invoke(cycleIndex + 1, nextPhase);
                 conductor?.QueuePreparationBeats(phasePreparationBeats);
             }
+            FinalizeResponseEnd(cycleIndex);
         }
 
         // 제시 구간: 네 박 동안 스포트라이트 박마다 적을 드러낸다.
@@ -300,7 +302,7 @@ namespace BeatMemories
             if (verboseLog) Debug.Log($"[Round] 제시 slot{slot}: {currentCycle[slot]?.DisplayName}");
         }
 
-        private void LateUpdate()
+        private void Update()
         {
             if (isOver || conductor == null)
             {
@@ -323,16 +325,20 @@ namespace BeatMemories
             ExpireElapsedNotes(conductor.SongPosition);
 
             if (responseEndPending)
-            {
-                FlushUnanswered();
-                bool stageCleared = stageClearPending && !isOver;
-                responseEndPending = false;
-                responseEndFrame = -1;
-                stageClearPending = false;
-                if (stageCleared)
-                    ResolveEnemyHpDepletion(responseEndCycleIndex);
-                responseEndCycleIndex = -1;
-            }
+                FinalizeResponseEnd(responseEndCycleIndex);
+        }
+
+        private void FinalizeResponseEnd(int cycleIndex)
+        {
+            if (!responseEndPending) return;
+            FlushUnanswered();
+            bool stageCleared = stageClearPending && !isOver;
+            responseEndPending = false;
+            responseEndFrame = -1;
+            stageClearPending = false;
+            responseEndCycleIndex = -1;
+            if (stageCleared)
+                ResolveEnemyHpDepletion(cycleIndex);
         }
 
         private void QueueInput(TimedPlayerAction timedAction)

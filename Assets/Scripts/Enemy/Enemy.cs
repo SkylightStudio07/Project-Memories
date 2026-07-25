@@ -8,7 +8,7 @@ namespace BeatMemories
     /// 액션에 대한 판정 결과 조회를 제공한다.
     /// </summary>
     [CreateAssetMenu(fileName = "Enemy_", menuName = "Beat Memories/Enemy", order = 0)]
-    public class Enemy : ScriptableObject
+    public class Enemy : CharacterData
     {
         [SerializeField] private EnemyData data = new EnemyData();
 
@@ -28,6 +28,9 @@ namespace BeatMemories
         public Vector2 LaserOriginOffset => data.laserOriginOffset;
         public int MaxHp => data.maxHp;
         public int Armor => data.armor;
+        public override string CharacterId => data.id;
+        public override string CharacterDisplayName => data.displayName;
+        public override Sprite DefaultSprite => data.sprite;
 
         /// <summary>
         /// 주어진 액션에 대한 판정 결과를 반환한다.

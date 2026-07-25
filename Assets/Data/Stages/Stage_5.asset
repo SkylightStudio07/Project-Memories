@@ -20,6 +20,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 54f428763a404c0c87b60c3593e178e8, type: 2}
   - {fileID: 11400000, guid: 3589432303ac4af382984a8647224d3f, type: 2}
   - {fileID: 11400000, guid: 2dec8aae5fbb4b839ddccfc123b077e2, type: 2}
+  playerPrefab: {fileID: 4825611272768709046, guid: ff351e35aaf02da4fa6e712193ca25fc, type: 3}
+  enemyPrefab: {fileID: 1751598418395291649, guid: 98e028a83d5f6f04684fcc3ca636df5d, type: 3}
   enemySprite: {fileID: 21300000, guid: 1bdf79295a7341e59133d1a78b950458, type: 3}
   flipEnemyIdleX: 0
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
