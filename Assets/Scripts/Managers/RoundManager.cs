@@ -38,12 +38,10 @@ namespace BeatMemories
         [Header("판정 (인스펙터 조정)")]
         [Tooltip("마감까지 안 답한 박을 오답으로 취급(적 defaultOutcome 적용)")]
         [SerializeField] private bool noInputCountsAsMiss = true;
-        [Tooltip("박 시작 후 입력 창이 열리는 지점(박 길이 비율)")]
-        [SerializeField, Range(0f, 0.45f)] private float inputStartOffset = 0.12f;
         [Tooltip("박 종료 전 입력 창이 닫히는 지점(박 길이 비율)")]
         [SerializeField, Range(0f, 0.45f)] private float inputEndOffset = 0.12f;
         [Tooltip("Miss 직후 다음 입력을 잠그는 시간(초)")]
-        [SerializeField, Min(0f)] private float missInputLockDuration = 0.1f;
+        [SerializeField, Min(0f)] private float missInputLockDuration = 0.005f;
         [SerializeField] private bool verboseLog = true;
 
         [Header("점수 (인스펙터 조정)")]
@@ -69,6 +67,7 @@ namespace BeatMemories
         private sealed class ResponseNote
         {
             public int slot;
+            public int globalBeat;
             public Enemy enemy;
             public double openTime;  // 입력 구간의 시작(SongPosition 기준)
             public double closeTime; // 입력 구간의 끝. [openTime, closeTime)
@@ -83,7 +82,7 @@ namespace BeatMemories
         private bool inResponse;
         private bool responseEndPending;
         private int responseEndFrame = -1;
-        private double inputLockedUntil = double.NegativeInfinity;
+        private double inputLockedUntilRealtime = double.NegativeInfinity;
         private bool isOver;
 
         public int Seed => seed;
@@ -158,7 +157,7 @@ namespace BeatMemories
 
             int count = pattern != null ? pattern.SpotlightCount : 0;
             currentCycle = provider.GenerateCycleWeighted(cycleIndex, count, phase);
-            inputLockedUntil = double.NegativeInfinity;
+            inputLockedUntilRealtime = double.NegativeInfinity;
             OnCycleStarted?.Invoke(cycleIndex);
             if (verboseLog) Debug.Log($"[Round] === 사이클 {cycleIndex} 제시 시작 (적 {count}) ===");
         }
@@ -179,8 +178,9 @@ namespace BeatMemories
                 notes.Add(new ResponseNote
                 {
                     slot = k,
+                    globalBeat = globalBeat,
                     enemy = currentCycle[k],
-                    openTime = beatStart + beatDuration * inputStartOffset,
+                    openTime = beatStart,
                     closeTime = beatEnd - beatDuration * inputEndOffset,
                     consumed = false,
                 });
@@ -233,6 +233,7 @@ namespace BeatMemories
                 return;
             }
 
+            RefreshPendingNoteWindows();
             ExpireElapsedNotes(conductor.SongPosition);
 
             if (responseEndPending)
@@ -253,9 +254,10 @@ namespace BeatMemories
         {
             if (isOver || !inResponse || conductor == null) return;
 
+            RefreshPendingNoteWindows();
             double inputSongTime = conductor.RealtimeToSongPosition(timedAction.Realtime);
             ExpireElapsedNotes(inputSongTime);
-            if (isOver || inputSongTime < inputLockedUntil) return;
+            if (isOver || timedAction.Realtime < inputLockedUntilRealtime) return;
 
             int current = -1;
             for (int i = 0; i < notes.Count; i++)
@@ -282,6 +284,21 @@ namespace BeatMemories
                 timedAction.Action,
                 isMiss: false,
                 responseRatio: responseRatio);
+            conductor.AdvanceResponseBeatNow(notes[current].slot);
+        }
+
+        private void RefreshPendingNoteWindows()
+        {
+            if (conductor == null) return;
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                if (notes[i].consumed) continue;
+                double beatStart = conductor.BeatToTime(notes[i].globalBeat);
+                double beatEnd = conductor.BeatToTime(notes[i].globalBeat + 1);
+                notes[i].openTime = beatStart;
+                notes[i].closeTime = beatEnd - (beatEnd - beatStart) * inputEndOffset;
+            }
         }
 
         private void ExpireElapsedNotes(double now)
@@ -299,12 +316,14 @@ namespace BeatMemories
                         PlayerAction.None,
                         isMiss: true,
                         responseRatio: 1f);
-                    inputLockedUntil = Math.Max(
-                        inputLockedUntil,
-                        notes[i].closeTime + missInputLockDuration);
+                    inputLockedUntilRealtime = Math.Max(
+                        inputLockedUntilRealtime,
+                        Time.realtimeSinceStartupAsDouble + missInputLockDuration);
                 }
 
+                conductor?.AdvanceResponseBeatNow(notes[i].slot);
                 if (isOver) break;
+                break; // 시간축이 다음 Beat 시작으로 이동했으므로 다음 노트는 다음 프레임에 검사
             }
         }
 
@@ -335,14 +354,18 @@ namespace BeatMemories
 
         private void ApplyJudge(int slot, Enemy enemy, PlayerAction action, bool isMiss, float responseRatio)
         {
-            JudgeResult result = JudgeSystem.Judge(enemy, action); // 양측 행동 조합 판정
             bool charged = player != null && player.IsCharged;
+            JudgeResult result = JudgeSystem.Judge(enemy, action, charged); // 양측 행동 조합 판정
 
             // 공격이 '정답'이면 방어력·HP·강공격을 반영
             if (action == PlayerAction.Attack && result.Cleared && enemy != null && player != null)
             {
-                int power = charged ? player.ChargedAttackPower : player.AttackPower;
-                int dmg = (charged && player.ChargedPiercesArmor) ? power : Mathf.Max(0, power - enemy.Armor);
+                float power = charged
+                    ? player.AttackPower * player.ChargedAttackMultiplier
+                    : player.AttackPower;
+                float dmg = (charged && player.ChargedPiercesArmor)
+                    ? power
+                    : Mathf.Max(0f, power - enemy.Armor);
                 if (dmg < enemy.MaxHp)
                     result = new JudgeResult(
                         action,
@@ -361,8 +384,8 @@ namespace BeatMemories
 
             // 차징 처리
             if (action == PlayerAction.Attack && player != null) player.ConsumeCharge();
-            else if (action == PlayerAction.Charge && player != null && result.Type != OutcomeType.Punished)
-                player.SetCharged(true);
+            else if (action == PlayerAction.Charge && player != null)
+                player.SetCharged(result.Type != OutcomeType.Punished);
 
             if (result.PlayerDamage > 0 && player != null) player.TakeDamage(result.PlayerDamage);
             if (result.Cleared) AwardScore(enemy, action, responseRatio);
@@ -403,6 +426,7 @@ namespace BeatMemories
         {
             progress = 0f;
             if (!inResponse || conductor == null) return false;
+            RefreshPendingNoteWindows();
 
             for (int i = 0; i < notes.Count; i++)
             {
@@ -410,7 +434,9 @@ namespace BeatMemories
                 if (note.slot != slot || note.consumed) continue;
 
                 double now = conductor.SongPosition;
-                if (now < note.openTime || now >= note.closeTime || now < inputLockedUntil)
+                if (now < note.openTime
+                    || now >= note.closeTime
+                    || Time.realtimeSinceStartupAsDouble < inputLockedUntilRealtime)
                     return false;
 
                 double duration = note.closeTime - note.openTime;

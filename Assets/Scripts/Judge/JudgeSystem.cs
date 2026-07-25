@@ -7,7 +7,7 @@ namespace BeatMemories
     /// </summary>
     public static class JudgeSystem
     {
-        public static JudgeResult Judge(Enemy enemy, PlayerAction input)
+        public static JudgeResult Judge(Enemy enemy, PlayerAction input, bool chargedAttack = false)
         {
             if (enemy == null)
                 return new JudgeResult(input, OutcomeType.Safe, 0, false, "적 없음");
@@ -21,7 +21,7 @@ namespace BeatMemories
             // 공격은 상대가 가드일 때만 무효화된다. 공격/쉼/차징은 방어 상태가 아니다.
             int playerDamage = enemyAttacks && !playerGuards ? 1 : 0;
             if (playerDamage > 0 && input == PlayerAction.Charge) playerDamage *= 2;
-            bool enemyDamaged = playerAttacks && !enemyGuards;
+            bool enemyDamaged = playerAttacks && (!enemyGuards || chargedAttack);
 
             OutcomeType type = enemyDamaged
                 ? OutcomeType.Cleared
@@ -29,7 +29,7 @@ namespace BeatMemories
 
             string feedback;
             if (enemyDamaged && playerDamage > 0) feedback = "상호 공격";
-            else if (enemyDamaged) feedback = "공격 성공";
+            else if (enemyDamaged) feedback = chargedAttack ? "차징 공격 성공" : "공격 성공";
             else if (playerDamage > 0) feedback = "피격";
             else if (enemyAttacks && playerGuards) feedback = "가드 성공";
             else if (playerAttacks && enemyGuards) feedback = "적 가드에 막힘";

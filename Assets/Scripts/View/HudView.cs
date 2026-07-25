@@ -1,6 +1,7 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace BeatMemories
@@ -70,6 +71,7 @@ namespace BeatMemories
         [SerializeField, Min(0f)] private float spriteFlipDuration = 0.12f;
         [Tooltip("피격 플래시 지속 시간(초)")]
         [SerializeField, Min(0f)] private float damageFlashDuration = 0.16f;
+        [SerializeField, Min(1f)] private float damageFlashDurationMultiplier = 1.25f;
         [Tooltip("피격 플래시 점멸 속도")]
         [SerializeField, Min(0f)] private float damageFlashSpeed = 45f;
         [SerializeField] private Color damageFlashColor = new Color(1f, 0.08f, 0.08f);
@@ -89,11 +91,29 @@ namespace BeatMemories
         [SerializeField] private LineRenderer playerLaser;
         [Tooltip("EnemyActor 자식 발사 위치의 LineRenderer")]
         [SerializeField] private LineRenderer enemyLaser;
+        [SerializeField] private Light2D playerLaserMuzzleGlow;
+        [SerializeField] private Light2D enemyLaserMuzzleGlow;
+        [SerializeField] private Light2D playerLaserHitFlash;
+        [SerializeField] private Light2D enemyLaserHitFlash;
         [SerializeField, Min(0.01f)] private float laserWidth = 0.1f;
+        [SerializeField, Min(1f)] private float laserFlashWidthMultiplier = 1.8f;
+        [SerializeField, Range(0.08f, 0.12f)] private float laserPrepareDuration = 0.1f;
         [SerializeField, Min(0f)] private float laserGrowDuration = 0.08f;
         [SerializeField, Min(0f)] private float laserFadeDuration = 0.1f;
+        [SerializeField, Min(0f)] private float laserGlowIntensity = 1.4f;
+        [SerializeField, Min(0f)] private float laserHitStopDuration = 0.05f;
         [SerializeField] private Color playerLaserColor = new Color(0.2f, 0.95f, 1f, 1f);
         [SerializeField] private Color enemyLaserColor = new Color(1f, 0.18f, 0.18f, 1f);
+
+        [Header("Charge Effect")]
+        [SerializeField] private Light2D chargeGlow;
+        [SerializeField] private LineRenderer chargeRing;
+        private ParticleSystem chargeAura;
+        [SerializeField, Min(0f)] private float chargeFlashIntensity = 1.6f;
+        [SerializeField, Min(0f)] private float chargeSustainIntensity = 0.3f;
+        [SerializeField, Min(0.1f)] private float chargePulsePeriod = 0.5f;
+        [SerializeField, Min(0f)] private float chargeRingDuration = 0.28f;
+        [SerializeField, Min(0.1f)] private float chargeRingRadius = 1.5f;
 
         [Header("Score HUD")]
         [SerializeField, Min(0.1f)] private float floatingScoreDuration = 0.65f;
@@ -120,6 +140,9 @@ namespace BeatMemories
         private float actionEffectTimer;
         private Vector3 playerActionOffset;
         private int floatingScoreOrder;
+        private Coroutine hitStopRoutine;
+        private float timeScaleBeforeHitStop = 1f;
+        private double hitStopStartedAt;
 
         private void OnEnable()
         {
@@ -137,7 +160,7 @@ namespace BeatMemories
             if (player != null)
             {
                 player.OnHealthChanged += OnHealth;
-                player.OnSpriteChanged += OnPlayerSprite;
+                player.OnActionPresented += OnPlayerActionPresented;
                 player.OnChargedChanged += OnCharged;
             }
         }
@@ -158,7 +181,7 @@ namespace BeatMemories
             if (player != null)
             {
                 player.OnHealthChanged -= OnHealth;
-                player.OnSpriteChanged -= OnPlayerSprite;
+                player.OnActionPresented -= OnPlayerActionPresented;
                 player.OnChargedChanged -= OnCharged;
             }
 
@@ -174,6 +197,12 @@ namespace BeatMemories
             }
             StopLaser(playerLaser);
             StopLaser(enemyLaser);
+            StopEffectLight(playerLaserMuzzleGlow);
+            StopEffectLight(enemyLaserMuzzleGlow);
+            StopEffectLight(playerLaserHitFlash);
+            StopEffectLight(enemyLaserHitFlash);
+            StopChargeEffect();
+            RestoreHitStop();
         }
 
         private void Start()
@@ -198,8 +227,9 @@ namespace BeatMemories
             RefreshEnemyCells();
             SetDots(-1);
             InitializeQueues();
-            InitializeLaser(playerLaser);
-            InitializeLaser(enemyLaser);
+            InitializeLaser(playerLaser, playerLaserMuzzleGlow, playerLaserHitFlash);
+            InitializeLaser(enemyLaser, enemyLaserMuzzleGlow, enemyLaserHitFlash);
+            InitializeChargeEffect();
         }
 
         private void Update()
@@ -236,6 +266,7 @@ namespace BeatMemories
                 UpdateShake(playerSlot, ref playerShakeTimer, ref playerShakeOffset);
                 UpdateActionMotion();
             }
+            if (player != null && player.IsCharged) PositionChargeEffect();
         }
 
         private void OnReveal(int slot, Enemy e)
@@ -252,25 +283,29 @@ namespace BeatMemories
 
             if (e != null && e.Sprite != null)
             {
-                SetEnemySprite(e.Sprite);
+                SetEnemySprite(e.Sprite, true);
                 enemySpriteTimer = actionSpriteHold;
             }
 
             if (r.Input == PlayerAction.Attack && enemySlot != null)
-                PlayLaser(playerLaser, enemySlot.bounds.center, playerLaserColor);
+                PlayLaser(
+                    playerLaser,
+                    playerLaserMuzzleGlow,
+                    playerLaserHitFlash,
+                    enemySlot,
+                    playerLaserColor,
+                    r.Cleared);
             if (e != null && e.Action == PlayerAction.Attack && playerSlot != null)
-                PlayLaser(enemyLaser, playerSlot.bounds.center, enemyLaserColor);
+                PlayLaser(
+                    enemyLaser,
+                    enemyLaserMuzzleGlow,
+                    enemyLaserHitFlash,
+                    playerSlot,
+                    enemyLaserColor,
+                    r.PlayerDamage > 0);
 
-            if (r.PlayerDamage > 0)
-            {
-                PlayHit(ref playerDamageFlashTimer, ref playerShakeTimer);
-                if (cameraSway != null) cameraSway.Shake();
-            }
             if (r.Cleared && r.Input == PlayerAction.Attack)
-            {
-                PlayEnemyHit();
                 PlayAttackMotion();
-            }
             ResolveQueueSlot(slot, r);
             if (feedbackLabel != null)
                 feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
@@ -320,16 +355,21 @@ namespace BeatMemories
                     if (hearts[i] != null) hearts[i].enabled = i < current;
         }
 
-        private void OnPlayerSprite(Sprite s)
+        private void OnPlayerActionPresented(PlayerAction action, Sprite sprite)
         {
-            if (s == null) return;
             if (playerIdleAnim != null) playerIdleAnim.Pause(); // 행동 동안 idle 스텝 정지
-            SetPlayerSprite(s); // 행동 스프라이트(원본 비율 자동)
+            SetPlayerSprite(sprite != null ? sprite : playerSlot != null ? playerSlot.sprite : null, true);
             playerSpriteTimer = actionSpriteHold;
         }
 
         private void OnCharged(bool charged)
         {
+            if (presentationInitialized)
+            {
+                if (charged) PlayChargeStart();
+                else PlayChargeRelease();
+            }
+
             if (chargeLabel != null)
             {
                 chargeLabel.enabled = charged;
@@ -353,17 +393,17 @@ namespace BeatMemories
         [Tooltip("적 슬롯 idle(기본) 스프라이트 — 없으면 현재 placeholder 유지")]
         [SerializeField] private Sprite enemyIdleSprite;
 
-        private void SetEnemySprite(Sprite sprite)
+        private void SetEnemySprite(Sprite sprite, bool forceFlip = false)
         {
-            if (enemySlot == null || sprite == null || enemySlot.sprite == sprite) return;
+            if (enemySlot == null || sprite == null || (!forceFlip && enemySlot.sprite == sprite)) return;
             if (enemyFlipRoutine != null) StopCoroutine(enemyFlipRoutine);
             enemySlot.transform.localScale = enemyBaseScale;
             enemyFlipRoutine = StartCoroutine(FlipSprite(enemySlot, sprite, enemyBaseScale, false));
         }
 
-        private void SetPlayerSprite(Sprite sprite)
+        private void SetPlayerSprite(Sprite sprite, bool forceFlip = false)
         {
-            if (playerSlot == null || sprite == null || playerSlot.sprite == sprite) return;
+            if (playerSlot == null || sprite == null || (!forceFlip && playerSlot.sprite == sprite)) return;
             if (playerFlipRoutine != null) StopCoroutine(playerFlipRoutine);
             playerSlot.transform.localScale = playerBaseScale;
             playerFlipRoutine = StartCoroutine(FlipSprite(playerSlot, sprite, playerBaseScale, true));
@@ -411,7 +451,7 @@ namespace BeatMemories
 
         private void PlayHit(ref float flashTimer, ref float shakeTimer)
         {
-            flashTimer = damageFlashDuration;
+            flashTimer = damageFlashDuration * damageFlashDurationMultiplier;
             shakeTimer = hitShakeDuration;
         }
 
@@ -419,10 +459,11 @@ namespace BeatMemories
         {
             if (timer <= 0f || damageFlashDuration <= 0f) return baseColor;
 
+            float totalDuration = damageFlashDuration * damageFlashDurationMultiplier;
             timer = Mathf.Max(0f, timer - Time.deltaTime);
-            float elapsed = damageFlashDuration - timer;
+            float elapsed = totalDuration - timer;
             float pulse = Mathf.Abs(Mathf.Cos(elapsed * damageFlashSpeed));
-            float strength = pulse * (timer / damageFlashDuration);
+            float strength = pulse * (timer / totalDuration);
             return Color.Lerp(baseColor, damageFlashColor, strength);
         }
 
@@ -497,7 +538,7 @@ namespace BeatMemories
 
         private void PlayEnemyHit()
         {
-            enemyDamageFlashTimer = damageFlashDuration;
+            enemyDamageFlashTimer = damageFlashDuration * damageFlashDurationMultiplier;
             if (enemySlot == null) return;
             enemySlot.transform.DOKill();
             enemySlot.transform.DOShakePosition(
@@ -510,30 +551,59 @@ namespace BeatMemories
                 ShakeRandomnessMode.Harmonic);
         }
 
-        private void InitializeLaser(LineRenderer laser)
+        private void InitializeLaser(LineRenderer laser, Light2D muzzleGlow, Light2D hitFlash)
         {
             if (laser == null) return;
             laser.useWorldSpace = true;
             laser.positionCount = 2;
             laser.widthMultiplier = laserWidth;
             laser.enabled = false;
+            InitializeEffectLight(muzzleGlow);
+            InitializeEffectLight(hitFlash);
         }
 
-        private void PlayLaser(LineRenderer laser, Vector3 target, Color color)
+        private void PlayLaser(
+            LineRenderer laser,
+            Light2D muzzleGlow,
+            Light2D hitFlash,
+            SpriteRenderer targetActor,
+            Color color,
+            bool hit)
         {
-            if (laser == null) return;
+            if (laser == null || targetActor == null) return;
 
-            laser.DOKill();
+            StopLaser(laser);
+            StopEffectLight(muzzleGlow);
             Vector3 origin = laser.transform.position;
+            Vector3 target = targetActor.bounds.center;
             float progress = 0f;
-            laser.enabled = true;
-            laser.widthMultiplier = laserWidth;
-            laser.startColor = color;
-            laser.endColor = color;
+            float alpha = 1f;
+            laser.widthMultiplier = laserWidth * laserFlashWidthMultiplier;
+            SetLaserColor(laser, color, alpha);
             laser.SetPosition(0, origin);
             laser.SetPosition(1, origin);
 
             Sequence sequence = DOTween.Sequence().SetTarget(laser);
+            if (muzzleGlow != null)
+            {
+                muzzleGlow.color = color;
+                muzzleGlow.enabled = true;
+                muzzleGlow.intensity = 0f;
+                muzzleGlow.transform.localScale = Vector3.one * 0.75f;
+                sequence.Append(DOTween.To(
+                    () => muzzleGlow.intensity,
+                    value => muzzleGlow.intensity = value,
+                    laserGlowIntensity,
+                    laserPrepareDuration).SetEase(Ease.OutQuad));
+                sequence.Join(muzzleGlow.transform.DOScale(1.15f, laserPrepareDuration)
+                    .SetEase(Ease.OutBack));
+            }
+            else
+            {
+                sequence.AppendInterval(laserPrepareDuration);
+            }
+
+            sequence.AppendCallback(() => laser.enabled = true);
             sequence.Append(DOTween.To(
                 () => progress,
                 value =>
@@ -544,16 +614,106 @@ namespace BeatMemories
                 },
                 1f,
                 laserGrowDuration).SetEase(Ease.OutCubic));
+            sequence.Join(DOTween.To(
+                () => laser.widthMultiplier,
+                value => laser.widthMultiplier = value,
+                laserWidth,
+                laserGrowDuration).SetEase(Ease.OutQuad));
+            if (muzzleGlow != null)
+                sequence.Join(muzzleGlow.transform.DOScale(1f, laserGrowDuration)
+                    .SetEase(Ease.OutQuad));
+            sequence.AppendCallback(() =>
+            {
+                PlayLaserImpact(hitFlash, targetActor, target, color, hit);
+                if (hit) BeginHitStop();
+            });
             sequence.Append(DOTween.To(
+                () => alpha,
+                value =>
+                {
+                    alpha = value;
+                    SetLaserColor(laser, color, value);
+                },
+                0f,
+                laserFadeDuration).SetEase(Ease.InQuad));
+            sequence.Join(DOTween.To(
                 () => laser.widthMultiplier,
                 value => laser.widthMultiplier = value,
                 0f,
                 laserFadeDuration).SetEase(Ease.InQuad));
+            if (muzzleGlow != null)
+                sequence.Join(DOTween.To(
+                    () => muzzleGlow.intensity,
+                    value => muzzleGlow.intensity = value,
+                    0f,
+                    laserFadeDuration));
             sequence.OnComplete(() =>
             {
                 laser.enabled = false;
                 laser.widthMultiplier = laserWidth;
+                if (muzzleGlow != null)
+                {
+                    muzzleGlow.enabled = false;
+                    muzzleGlow.transform.localScale = Vector3.one;
+                }
             });
+        }
+
+        private void PlayLaserImpact(
+            Light2D hitFlash,
+            SpriteRenderer targetActor,
+            Vector3 target,
+            Color color,
+            bool hit)
+        {
+            if (hit)
+            {
+                if (targetActor == enemySlot) PlayEnemyHit();
+                else if (targetActor == playerSlot)
+                    PlayHit(ref playerDamageFlashTimer, ref playerShakeTimer);
+            }
+
+            if (hitFlash == null) return;
+
+            StopEffectLight(hitFlash);
+            hitFlash.transform.position = target;
+            hitFlash.transform.localScale = Vector3.one * 0.35f;
+            hitFlash.color = color;
+            hitFlash.intensity = laserGlowIntensity * 1.25f;
+            hitFlash.enabled = true;
+
+            Sequence spark = DOTween.Sequence().SetTarget(hitFlash);
+            spark.Append(hitFlash.transform.DOScale(1.35f, laserFadeDuration)
+                .SetEase(Ease.OutCubic));
+            spark.Join(DOTween.To(
+                () => hitFlash.intensity,
+                value => hitFlash.intensity = value,
+                0f,
+                laserFadeDuration));
+            spark.OnComplete(() => hitFlash.enabled = false);
+        }
+
+        private static void SetLaserColor(LineRenderer laser, Color color, float alpha)
+        {
+            color.a = alpha;
+            laser.startColor = color;
+            laser.endColor = color;
+        }
+
+        private static void InitializeEffectLight(Light2D light)
+        {
+            if (light == null) return;
+            light.intensity = 0f;
+            light.enabled = false;
+        }
+
+        private static void StopEffectLight(Light2D light)
+        {
+            if (light == null) return;
+            light.DOKill();
+            light.transform.DOKill();
+            light.intensity = 0f;
+            light.enabled = false;
         }
 
         private void StopLaser(LineRenderer laser)
@@ -562,6 +722,242 @@ namespace BeatMemories
             laser.DOKill();
             laser.enabled = false;
             laser.widthMultiplier = laserWidth;
+        }
+
+        private void InitializeChargeEffect()
+        {
+            InitializeEffectLight(chargeGlow);
+            EnsureChargeAura();
+            if (chargeAura != null)
+            {
+                ParticleSystem.MainModule main = chargeAura.main;
+                main.startColor = playerLaserColor;
+                chargeAura.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
+            if (chargeRing == null) return;
+
+            chargeRing.useWorldSpace = false;
+            chargeRing.loop = true;
+            chargeRing.positionCount = 32;
+            chargeRing.widthMultiplier = 0.05f;
+            for (int i = 0; i < chargeRing.positionCount; i++)
+            {
+                float angle = i * Mathf.PI * 2f / chargeRing.positionCount;
+                chargeRing.SetPosition(
+                    i,
+                    new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f) * chargeRingRadius);
+            }
+            SetLaserColor(chargeRing, playerLaserColor, 0f);
+            chargeRing.enabled = false;
+        }
+
+        private void EnsureChargeAura()
+        {
+            if (chargeAura == null && chargeGlow != null)
+            {
+                chargeAura = chargeGlow.GetComponent<ParticleSystem>();
+                if (chargeAura == null) chargeAura = chargeGlow.gameObject.AddComponent<ParticleSystem>();
+            }
+            if (chargeAura == null) return;
+            chargeAura.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            ParticleSystem.MainModule main = chargeAura.main;
+            main.duration = 1f;
+            main.loop = true;
+            main.playOnAwake = false;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(0.45f, 0.7f);
+            main.startSpeed = new ParticleSystem.MinMaxCurve(0.12f, 0.3f);
+            main.startSize = new ParticleSystem.MinMaxCurve(0.06f, 0.15f);
+            main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+            main.startColor = playerLaserColor;
+            main.maxParticles = 48;
+            main.simulationSpace = ParticleSystemSimulationSpace.Local;
+
+            ParticleSystem.EmissionModule emission = chargeAura.emission;
+            emission.enabled = true;
+            emission.rateOverTime = 16f;
+
+            ParticleSystem.ShapeModule shape = chargeAura.shape;
+            shape.enabled = true;
+            shape.shapeType = ParticleSystemShapeType.Circle;
+            shape.radius = 1.15f;
+            shape.radiusThickness = 0.35f;
+
+            var gradient = new Gradient();
+            gradient.SetKeys(
+                new[]
+                {
+                    new GradientColorKey(Color.white, 0f),
+                    new GradientColorKey(Color.white, 1f),
+                },
+                new[]
+                {
+                    new GradientAlphaKey(0f, 0f),
+                    new GradientAlphaKey(0.65f, 0.2f),
+                    new GradientAlphaKey(0f, 1f),
+                });
+            ParticleSystem.ColorOverLifetimeModule colorOverLifetime = chargeAura.colorOverLifetime;
+            colorOverLifetime.enabled = true;
+            colorOverLifetime.color = gradient;
+
+            ParticleSystem.NoiseModule noise = chargeAura.noise;
+            noise.enabled = true;
+            noise.quality = ParticleSystemNoiseQuality.Low;
+            noise.strength = 0.12f;
+            noise.frequency = 0.6f;
+            noise.scrollSpeed = 0.2f;
+
+            ParticleSystemRenderer auraRenderer = chargeAura.GetComponent<ParticleSystemRenderer>();
+            if (auraRenderer != null) auraRenderer.sortingOrder = 22;
+        }
+
+        private void PlayChargeStart()
+        {
+            StopChargeEffect();
+            PositionChargeEffect();
+
+            if (chargeAura != null)
+            {
+                ParticleSystem.MainModule main = chargeAura.main;
+                main.startColor = playerLaserColor;
+                chargeAura.Play(true);
+            }
+
+            if (chargeGlow != null)
+            {
+                chargeGlow.color = playerLaserColor;
+                chargeGlow.intensity = 0f;
+                chargeGlow.enabled = true;
+
+                Sequence glowIntro = DOTween.Sequence().SetTarget(chargeGlow);
+                glowIntro.Append(DOTween.To(
+                    () => chargeGlow.intensity,
+                    value => chargeGlow.intensity = value,
+                    chargeFlashIntensity,
+                    0.1f).SetEase(Ease.OutQuad));
+                glowIntro.Append(DOTween.To(
+                    () => chargeGlow.intensity,
+                    value => chargeGlow.intensity = value,
+                    chargeSustainIntensity,
+                    0.12f).SetEase(Ease.InQuad));
+                glowIntro.OnComplete(StartChargePulse);
+            }
+
+            if (chargeRing != null)
+            {
+                float alpha = 1f;
+                chargeRing.enabled = true;
+                chargeRing.transform.localScale = Vector3.one * 0.3f;
+                SetLaserColor(chargeRing, playerLaserColor, alpha);
+
+                Sequence ring = DOTween.Sequence().SetTarget(chargeRing);
+                ring.Append(chargeRing.transform.DOScale(1.25f, chargeRingDuration)
+                    .SetEase(Ease.OutCubic));
+                ring.Join(DOTween.To(
+                    () => alpha,
+                    value =>
+                    {
+                        alpha = value;
+                        SetLaserColor(chargeRing, playerLaserColor, value);
+                    },
+                    0f,
+                    chargeRingDuration).SetEase(Ease.InQuad));
+                ring.OnComplete(() => chargeRing.enabled = false);
+            }
+        }
+
+        private void StartChargePulse()
+        {
+            if (chargeGlow == null || player == null || !player.IsCharged) return;
+
+            chargeGlow.DOKill();
+            float low = chargeSustainIntensity * 0.7f;
+            float high = chargeSustainIntensity * 1.25f;
+            chargeGlow.intensity = low;
+            DOTween.To(
+                    () => chargeGlow.intensity,
+                    value => chargeGlow.intensity = value,
+                    high,
+                    chargePulsePeriod * 0.5f)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetTarget(chargeGlow);
+        }
+
+        private void PlayChargeRelease()
+        {
+            PositionChargeEffect();
+            if (chargeAura != null)
+                chargeAura.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            if (chargeGlow == null) return;
+
+            chargeGlow.DOKill();
+            chargeGlow.enabled = true;
+            Sequence release = DOTween.Sequence().SetTarget(chargeGlow);
+            release.Append(DOTween.To(
+                () => chargeGlow.intensity,
+                value => chargeGlow.intensity = value,
+                chargeFlashIntensity * 1.35f,
+                0.05f).SetEase(Ease.OutQuad));
+            release.Append(DOTween.To(
+                () => chargeGlow.intensity,
+                value => chargeGlow.intensity = value,
+                0f,
+                0.12f).SetEase(Ease.InQuad));
+            release.OnComplete(() => chargeGlow.enabled = false);
+            if (chargeRing != null) chargeRing.enabled = false;
+        }
+
+        private void PositionChargeEffect()
+        {
+            if (playerSlot == null) return;
+            Vector3 center = playerSlot.bounds.center;
+            if (chargeGlow != null) chargeGlow.transform.position = center;
+            if (chargeRing != null) chargeRing.transform.position = center;
+        }
+
+        private void StopChargeEffect()
+        {
+            StopEffectLight(chargeGlow);
+            if (chargeAura != null)
+                chargeAura.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            if (chargeRing == null) return;
+            chargeRing.DOKill();
+            chargeRing.transform.DOKill();
+            chargeRing.enabled = false;
+            chargeRing.transform.localScale = Vector3.one;
+        }
+
+        private void BeginHitStop()
+        {
+            if (laserHitStopDuration <= 0f || hitStopRoutine != null || Time.timeScale <= 0f)
+                return;
+            hitStopRoutine = StartCoroutine(HitStop());
+        }
+
+        private IEnumerator HitStop()
+        {
+            timeScaleBeforeHitStop = Time.timeScale;
+            hitStopStartedAt = Time.realtimeSinceStartupAsDouble;
+            Time.timeScale = 0f;
+            yield return new WaitForSecondsRealtime(laserHitStopDuration);
+            CompleteHitStop();
+        }
+
+        private void RestoreHitStop()
+        {
+            if (hitStopRoutine == null) return;
+
+            StopCoroutine(hitStopRoutine);
+            CompleteHitStop();
+        }
+
+        private void CompleteHitStop()
+        {
+            double pausedDuration = Time.realtimeSinceStartupAsDouble - hitStopStartedAt;
+            Time.timeScale = timeScaleBeforeHitStop;
+            conductor?.DelayClock(pausedDuration);
+            hitStopRoutine = null;
         }
 
         private void UpdateActionMotion()
