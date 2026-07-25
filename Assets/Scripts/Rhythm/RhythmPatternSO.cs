@@ -5,10 +5,10 @@ namespace BeatMemories
 {
     /// <summary>
     /// 한 마디(4박)의 리듬 패턴을 정의하는 데이터 기반 SO.
-    /// 어느 박이 '스포트라이트'(제시=적 등장 / 응답=입력 판정)인지를 담는다.
+    /// 제시 구간에서 어느 박이 '스포트라이트'(적 등장)인지와 사이클당 행동 수를 담는다.
     ///  - 안1(참는): [F,F,F,T]  → 4박째 1회
     ///  - 안2(몰아치는): [T,T,T,T] → 매 박
-    /// 제시 마디와 응답 마디는 항상 같은 패턴을 쓴다(밀도 일치).
+    /// 현재 Rush 패턴의 응답은 네 번의 제시가 끝난 다음 박부터 행동 수만큼 연속으로 진행한다.
     /// </summary>
     [CreateAssetMenu(fileName = "Rhythm_", menuName = "Beat Memories/Rhythm Pattern", order = 1)]
     public class RhythmPatternSO : ScriptableObject
@@ -17,7 +17,7 @@ namespace BeatMemories
 
         [SerializeField] private string patternName;
 
-        [Tooltip("한 마디(4박)에서 스포트라이트(제시/입력) 박 여부")]
+        [Tooltip("제시 4박에서 스포트라이트(적 등장) 박 여부")]
         [SerializeField] private bool[] spotlightBeats = new bool[BeatsPerMeasure];
 
         public string PatternName => patternName;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace BeatMemories
@@ -9,7 +10,7 @@ namespace BeatMemories
     /// (키보드와 온스크린 버튼이 같은 이벤트로 흐르므로 둘 다 시각 피드백을 받는다).
     /// </summary>
     [RequireComponent(typeof(Button))]
-    public class ActionButton : MonoBehaviour
+    public class ActionButton : MonoBehaviour, IPointerDownHandler
     {
         [SerializeField] private InputReader input;
         [SerializeField] private PlayerAction action = PlayerAction.Guard;
@@ -33,18 +34,19 @@ namespace BeatMemories
             _baseColor = _img != null ? _img.color : Color.white;
         }
 
-        private void OnEnable() { if (input != null) input.OnAction += OnAction; }
-        private void OnDisable() { if (input != null) input.OnAction -= OnAction; }
+        private void OnEnable() { if (input != null) input.OnActionAccepted += OnAction; }
+        private void OnDisable() { if (input != null) input.OnActionAccepted -= OnAction; }
 
-        private void Start()
-        {
-            var button = GetComponent<Button>();
-            if (button != null) button.onClick.AddListener(OnClick);
-        }
-
+        /// <summary>테스트·외부 호출용. 화면 포인터 입력은 지연이 적은 PointerDown을 사용한다.</summary>
         public void OnClick() { if (input != null) input.Press(action); }
 
-        // 이 버튼의 액션 입력이 들어오면 눌림 펄스 시작 (키보드·클릭 공통)
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            var button = GetComponent<Button>();
+            if (button == null || button.IsInteractable()) OnClick();
+        }
+
+        // 판정 구간에 실제 소비된 입력만 눌림 펄스를 시작한다.
         private void OnAction(PlayerAction a) { if (a == action) _t = 1f; }
 
         private void Update()

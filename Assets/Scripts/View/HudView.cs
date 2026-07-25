@@ -269,7 +269,7 @@ namespace BeatMemories
             for (int i = 0; i < beatDots.Length; i++)
             {
                 if (beatDots[i] == null) continue;
-                Color onColor = i < Conductor.BeatsPerMeasure ? presentDotColor : responseDotColor;
+                Color onColor = i < Conductor.ResponseStartBeat ? presentDotColor : responseDotColor;
                 beatDots[i].color = i == active ? onColor : dotOffColor;
             }
         }

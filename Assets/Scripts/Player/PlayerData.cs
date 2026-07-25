@@ -56,8 +56,8 @@ namespace BeatMemories
 
         private void Awake() => ResetState();
 
-        private void OnEnable() { if (input != null) input.OnAction += HandleAction; }
-        private void OnDisable() { if (input != null) input.OnAction -= HandleAction; }
+        private void OnEnable() { if (input != null) input.OnActionAccepted += HandleAction; }
+        private void OnDisable() { if (input != null) input.OnActionAccepted -= HandleAction; }
 
         public void ResetState()
         {
@@ -97,7 +97,7 @@ namespace BeatMemories
             return was;
         }
 
-        // 행동 시 스프라이트 랜덤 픽 (모든 입력 = 행동)
+        // 판정 구간에 실제 소비된 행동만 스프라이트로 표시한다.
         private void HandleAction(PlayerAction action)
         {
             Sprite[] arr = SpritesFor(action);

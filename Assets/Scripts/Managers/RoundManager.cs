@@ -6,9 +6,9 @@ namespace BeatMemories
 {
     /// <summary>
     /// P0 코어 루프 오케스트레이터.
-    /// 제시 마디: 결정론적 시퀀스로 적을 스포트라이트 박마다 순서대로 드러낸다.
-    /// 응답 마디: 각 응답 스포트라이트 박에 <b>타이밍 판정창</b>을 두고,
-    ///   그 창에 <b>가장 먼저 들어온 입력 하나로 그 박을 확정</b>한다.
+    /// 제시 구간: 결정론적 시퀀스로 적을 스포트라이트 박마다 순서대로 드러낸다.
+    /// 응답 구간: 네 번의 제시 직후 이어지는 각 박의
+    ///   <b>가장 먼저 들어온 입력 하나로 그 행동을 확정</b>한다.
     ///   - 틀리게 누르면 그 박은 오답으로 잠긴다(고쳐 눌러도 봐주지 않음).
     ///   - 창을 벗어난 입력은 무시. 마감까지 안 답한 박은 무입력 미스.
     /// </summary>
@@ -61,7 +61,10 @@ namespace BeatMemories
         private List<Enemy> currentCycle = new List<Enemy>();
         private List<int> spotlightBeats = new List<int>();
         private readonly List<ResponseNote> notes = new List<ResponseNote>();
+        private readonly Queue<TimedPlayerAction> pendingInputs = new Queue<TimedPlayerAction>();
         private bool inResponse;
+        private bool responseEndPending;
+        private int responseEndFrame = -1;
         private bool isOver;
 
         public int Seed => seed;
@@ -97,9 +100,10 @@ namespace BeatMemories
             {
                 conductor.OnPresentMeasureStart += HandlePresentStart;
                 conductor.OnResponseMeasureStart += HandleResponseStart;
+                conductor.OnResponseMeasureEnd += HandleResponseEnd;
                 conductor.OnBeat += HandleBeat;
             }
-            if (input != null) input.OnAction += HandleInput;
+            if (input != null) input.OnTimedAction += QueueInput;
             if (player != null) player.OnDied += HandleDied;
         }
 
@@ -109,9 +113,10 @@ namespace BeatMemories
             {
                 conductor.OnPresentMeasureStart -= HandlePresentStart;
                 conductor.OnResponseMeasureStart -= HandleResponseStart;
+                conductor.OnResponseMeasureEnd -= HandleResponseEnd;
                 conductor.OnBeat -= HandleBeat;
             }
-            if (input != null) input.OnAction -= HandleInput;
+            if (input != null) input.OnTimedAction -= QueueInput;
             if (player != null) player.OnDied -= HandleDied;
         }
 
@@ -119,8 +124,9 @@ namespace BeatMemories
         {
             if (isOver) return;
 
-            // 프레임 건너뜀 등으로 직전 응답에 남은 박이 있다면 안전하게 마감한다.
-            FlushUnanswered();
+            // 정상 경계에서는 LateUpdate가 그 프레임 입력을 먼저 소비한 뒤 마감한다.
+            // 종료 이벤트 없이 사이클이 넘어온 경우에만 즉시 안전 마감한다.
+            if (!responseEndPending) FlushUnanswered();
             if (isOver) return;
 
             PhaseSO phase = PhaseForCycle(cycleIndex);
@@ -144,7 +150,7 @@ namespace BeatMemories
             notes.Clear();
             for (int k = 0; k < spotlightBeats.Count && k < currentCycle.Count; k++)
             {
-                int beatInCycle = spotlightBeats[k] + Conductor.BeatsPerMeasure;
+                int beatInCycle = Conductor.ResponseStartBeat + k;
                 int globalBeat = cycleIndex * Conductor.BeatsPerCycle + beatInCycle;
                 double openTime = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0;
                 notes.Add(new ResponseNote
@@ -160,13 +166,22 @@ namespace BeatMemories
             if (verboseLog) Debug.Log($"[Round] --- 사이클 {cycleIndex} 응답 시작 (노트 {notes.Count}) ---");
         }
 
-        // 제시 마디: 스포트라이트 박마다 적을 드러낸다. (응답 판정은 입력 타이밍 기반)
+        private void HandleResponseEnd(int cycleIndex)
+        {
+            if (isOver) return;
+
+            // Input System과 EventSystem이 같은 프레임의 입력을 모두 전달할 때까지 마감을 미룬다.
+            responseEndPending = true;
+            responseEndFrame = Time.frameCount;
+        }
+
+        // 제시 구간: 네 박 동안 스포트라이트 박마다 적을 드러낸다.
         private void HandleBeat(int beatInCycle)
         {
             if (isOver) return;
-            if (beatInCycle >= Conductor.BeatsPerMeasure) return; // 응답 마디는 타이밍 기반
+            if (beatInCycle >= Conductor.ResponseStartBeat) return;
 
-            int beatInMeasure = beatInCycle % Conductor.BeatsPerMeasure;
+            int beatInMeasure = beatInCycle;
             if (pattern == null || !pattern.IsSpotlight(beatInMeasure)) return;
 
             int slot = spotlightBeats.IndexOf(beatInMeasure);
@@ -176,37 +191,70 @@ namespace BeatMemories
             if (verboseLog) Debug.Log($"[Round] 제시 slot{slot}: {currentCycle[slot]?.DisplayName}");
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            if (isOver || !inResponse || conductor == null) return;
+            if (isOver || conductor == null)
+            {
+                pendingInputs.Clear();
+                return;
+            }
+
+            while (pendingInputs.Count > 0 && !isOver)
+                ConsumeInput(pendingInputs.Dequeue());
+
+            if (isOver) return;
+            if (!inResponse)
+            {
+                responseEndPending = false;
+                responseEndFrame = -1;
+                return;
+            }
+
             ExpireElapsedNotes(conductor.SongPosition);
+
+            if (responseEndPending)
+            {
+                FlushUnanswered();
+                responseEndPending = false;
+                responseEndFrame = -1;
+            }
         }
 
-        // 응답 마디 입력: 현재 박의 첫 입력으로 해당 행동을 즉시 확정
-        private void HandleInput(PlayerAction action)
+        private void QueueInput(TimedPlayerAction timedAction)
+        {
+            if (!isOver) pendingInputs.Enqueue(timedAction);
+        }
+
+        // 입력이 처리된 프레임이 아니라 Input System이 기록한 실제 발생 시각으로 행동 구간을 찾는다.
+        private void ConsumeInput(TimedPlayerAction timedAction)
         {
             if (isOver || !inResponse || conductor == null) return;
 
-            double now = conductor.SongPosition;
-            // InputReader와 Update 실행 순서에 관계없이 이미 닫힌 행동은 먼저 마감한다.
-            ExpireElapsedNotes(now);
-            if (isOver) return;
-
+            double inputSongTime = conductor.RealtimeToSongPosition(timedAction.Realtime);
             int current = -1;
             for (int i = 0; i < notes.Count; i++)
             {
                 if (notes[i].consumed) continue;
-                if (now >= notes[i].openTime && now < notes[i].closeTime)
+                if (inputSongTime >= notes[i].openTime && inputSongTime < notes[i].closeTime)
                 {
                     current = i;
                     break;
                 }
             }
 
+            // UI 포인터 이벤트는 Conductor 뒤에 전달될 수 있다. 같은 경계 프레임의 입력은
+            // 새 제시 구간이 입력을 받지 않으므로 직전 네 번째 행동에 우선 귀속한다.
+            if (current < 0 && responseEndPending && timedAction.Frame == responseEndFrame)
+            {
+                int last = notes.Count - 1;
+                if (last >= 0 && !notes[last].consumed) current = last;
+            }
+
             if (current < 0) return;
 
             notes[current].consumed = true;
-            ApplyJudge(notes[current].slot, notes[current].enemy, action, isMiss: false);
+            input?.NotifyAccepted(timedAction.Action);
+            ApplyJudge(notes[current].slot, notes[current].enemy, timedAction.Action, isMiss: false);
         }
 
         private void ExpireElapsedNotes(double now)
@@ -239,6 +287,8 @@ namespace BeatMemories
 
             notes.Clear();
             inResponse = false;
+            responseEndPending = false;
+            responseEndFrame = -1;
         }
 
         private void ApplyJudge(int slot, Enemy enemy, PlayerAction action, bool isMiss)
@@ -281,6 +331,8 @@ namespace BeatMemories
         {
             if (isOver) return;
             isOver = true;
+            pendingInputs.Clear();
+            responseEndPending = false;
             if (conductor != null) conductor.StopClock();
             OnGameOver?.Invoke();
             if (verboseLog) Debug.Log("[Round] ===== GAME OVER =====");

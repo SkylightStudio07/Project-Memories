@@ -5,7 +5,7 @@ namespace BeatMemories
     /// <summary>
     /// 비트 타임라인 커서. 자기 담당 박 구간(<see cref="beatOffset"/>부터 dots 개수만큼)에서만
     /// 해당 박의 점(dot) 트랜스폼 위치로 이동하고, 이동할 때마다 펄스를 준다.
-    /// 예) 플레이어 커서: offset 0 + PresentDot0~3 / 적 커서: offset 4 + ResponseDot0~3.
+    /// 예) 제시 커서: offset 0 + PresentDot0~3 / 응답 커서: offset 4 + ResponseDot0~3.
     /// 담당 밖의 박에서는 움직이지 않는다(마지막 위치 유지).
     /// </summary>
     public class BeatCursor : MonoBehaviour
