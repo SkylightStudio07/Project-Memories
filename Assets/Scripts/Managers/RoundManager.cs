@@ -54,12 +54,14 @@ namespace BeatMemories
         // 이벤트 (UI가 구독)
         public event Action<int, Enemy> OnEnemyRevealed;              // (slot, enemy) 제시
         public event Action<int, Enemy, JudgeResult> OnJudged;       // (slot, enemy, result) 판정
+        public event Action<int, PhaseSO> OnPhasePreparing;          // (cycleIndex, phase) 페이즈 준비(전환 직전)
         public event Action<int, PhaseSO> OnPhaseChanged;            // (cycleIndex, phase) 페이즈 시작
         public event Action<int> OnCycleStarted;                     // 큐 등 사이클 단위 표시 초기화
         public event Action<int> OnScoreChanged;
         public event Action<int, bool> OnScoreAwarded;               // (획득량, 처치 보너스 여부)
         public event Action<bool> OnAttackLanded;                    // 강공격 여부
         public event Action OnGameOver;
+        public event Action OnStageCleared;                          // 스테이지 클리어(현재 모델 미발생 — 연출 구독용)
 
         public PhaseSO CurrentPhase { get; private set; }
         public int Score { get; private set; }
@@ -151,6 +153,7 @@ namespace BeatMemories
             if (phase != CurrentPhase)
             {
                 CurrentPhase = phase;
+                OnPhasePreparing?.Invoke(cycleIndex, phase);
                 OnPhaseChanged?.Invoke(cycleIndex, phase);
                 if (verboseLog) Debug.Log($"[Round] >> 페이즈: {(phase != null ? phase.PhaseName : "(균등)")}");
             }
