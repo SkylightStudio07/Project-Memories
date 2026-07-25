@@ -20,15 +20,12 @@ MonoBehaviour:
     weight: 1
   - answerAction: 2
     weight: 1
-  authoredSequence:
-  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
-  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
-  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
-  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
-  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
-  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
-  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
-  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
+  enemyWeights:
+  - enemy: {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
+    weight: 2
+  - enemy: {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
+    weight: 1
+  authoredSequence: []
   preparationSprite: {fileID: 0}
   cueColor: {r: 1, g: 1, b: 1, a: 1}
   preparationTintStrength: 0

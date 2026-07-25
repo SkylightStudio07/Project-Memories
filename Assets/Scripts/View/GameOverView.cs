@@ -15,6 +15,7 @@ namespace BeatMemories
 
         [Header("참조")]
         [SerializeField] private RoundManager round;
+        [SerializeField] private StageManager stageManager;
         [SerializeField] private GameObject gameOverRoot;
 
         [Header("게임오버 시 숨길 전투 UI")]
@@ -96,11 +97,13 @@ namespace BeatMemories
         {
             Scene activeScene = SceneManager.GetActiveScene();
             if (!activeScene.IsValid() || string.IsNullOrEmpty(activeScene.name)) return;
+            if (stageManager != null) stageManager.RememberCurrentStageForRetry();
             SceneManager.LoadScene(activeScene.name);
         }
 
         public void GoToTitle()
         {
+            StageManager.ClearPendingRetry();
             SceneManager.LoadScene(TitleSceneName);
         }
     }

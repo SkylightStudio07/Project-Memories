@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0266438f14afc8499f466710926eea9, type: 3}
+  m_Name: Stage 3 Charge
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.Enemy
+  data:
+    id: stage3_charge
+    displayName: "\uC801 \uCDA9\uC804"
+    sprite: {fileID: -8380145206358370378, guid: d99f64baced9b454eb41d36e12278d6a, type: 3}
+    action: 4
+    attackDamage: 1
+    unblockableAttack: 0
+    invulnerableWhileActing: 0
+    fixedAttackDamage: 0
+    forcedFollowUp: {fileID: 11400000, guid: 58cf79ab38dd46dabb8823921429bef0, type: 2}
+    interruptedFollowUp: {fileID: 11400000, guid: 68636cdef75d4b4d8fae0be355587f25, type: 2}
+    laserOriginOffset: {x: 0, y: 0}
+    maxHp: 1
+    armor: 0
+    outcomes:
+    - action: 2
+      type: 0
+      playerDamage: 0
+      feedback: "\uCDA9\uC804 \uCDE8\uC18C"
+    - action: 1
+      type: 1
+      playerDamage: 0
+      feedback: "\uCDA9\uC804 \uACC4\uC18D"
+    - action: 4
+      type: 1
+      playerDamage: 0
+      feedback: "\uCDA9\uC804 \uACC4\uC18D"
+    defaultOutcome:
+      action: 0
+      type: 1
+      playerDamage: 0
+      feedback: "\uCDA9\uC804 \uACC4\uC18D"

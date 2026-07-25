@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0266438f14afc8499f466710926eea9, type: 3}
+  m_Name: Stage 5 Charge
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.Enemy
+  data:
+    id: stage5_charge
+    displayName: "\uC801 \uCDA9\uC804"
+    sprite: {fileID: 21300000, guid: 1bdf79295a7341e59133d1a78b950458, type: 3}
+    action: 4
+    attackDamage: 1
+    unblockableAttack: 0
+    invulnerableWhileActing: 0
+    fixedAttackDamage: 0
+    forcedFollowUp: {fileID: 11400000, guid: 68c5313ea517406da96f90b6c4f92b38, type: 2}
+    interruptedFollowUp: {fileID: 11400000, guid: 2dec8aae5fbb4b839ddccfc123b077e2, type: 2}
+    laserOriginOffset: {x: 0, y: 0}
+    maxHp: 1
+    armor: 0
+    outcomes: []
+    defaultOutcome:
+      action: 0
+      type: 1
+      playerDamage: 0
+      feedback: "\uCDA9\uC804 \uC911"

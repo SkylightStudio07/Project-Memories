@@ -104,8 +104,55 @@ namespace BeatMemories
         private void CacheReferences()
         {
             if (rimGlow == null) rimGlow = GetComponent<Light2D>();
-            if (energyWisps == null) energyWisps = GetComponent<ParticleSystem>();
+            if (energyWisps == null)
+            {
+                energyWisps = GetComponent<ParticleSystem>();
+                if (energyWisps == null)
+                {
+                    energyWisps = gameObject.AddComponent<ParticleSystem>();
+                    ConfigureRuntimeParticles();
+                }
+            }
             if (readyRing == null) readyRing = GetComponent<LineRenderer>();
+        }
+
+        private void ConfigureRuntimeParticles()
+        {
+            ParticleSystem.MainModule main = energyWisps.main;
+            main.playOnAwake = false;
+            main.loop = true;
+            main.startLifetime = 0.7f;
+            main.startSpeed = 0.45f;
+            main.startSize = 0.08f;
+            main.maxParticles = 32;
+            main.simulationSpace = ParticleSystemSimulationSpace.World;
+
+            ParticleSystem.EmissionModule emission = energyWisps.emission;
+            emission.rateOverTime = 18f;
+
+            ParticleSystem.ShapeModule shape = energyWisps.shape;
+            shape.enabled = true;
+            shape.shapeType = ParticleSystemShapeType.Circle;
+            shape.radius = 0.65f;
+            shape.radiusThickness = 0.15f;
+
+            ParticleSystem.ColorOverLifetimeModule colorOverLifetime =
+                energyWisps.colorOverLifetime;
+            colorOverLifetime.enabled = true;
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(
+                new[]
+                {
+                    new GradientColorKey(Color.white, 0f),
+                    new GradientColorKey(Color.white, 1f)
+                },
+                new[]
+                {
+                    new GradientAlphaKey(0f, 0f),
+                    new GradientAlphaKey(0.85f, 0.2f),
+                    new GradientAlphaKey(0f, 1f)
+                });
+            colorOverLifetime.color = gradient;
         }
 
         private void ApplyColor()

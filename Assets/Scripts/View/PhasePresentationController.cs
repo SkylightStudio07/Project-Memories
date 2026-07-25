@@ -94,8 +94,10 @@ namespace BeatMemories
                 round.OnPhaseChanged += OnPhaseActive;
                 round.OnGameOver += OnBattleEnded;
                 round.OnStageCleared += OnBattleEnded;
+                round.OnStageApplied += OnStageApplied;
             }
             if (conductor != null) conductor.OnClockBeat += OnClockBeat;
+            if (conductor != null) conductor.OnPreparationBeat += OnPreparationBeat;
         }
 
         private void Start()
@@ -116,8 +118,10 @@ namespace BeatMemories
                 round.OnPhaseChanged -= OnPhaseActive;
                 round.OnGameOver -= OnBattleEnded;
                 round.OnStageCleared -= OnBattleEnded;
+                round.OnStageApplied -= OnStageApplied;
             }
             if (conductor != null) conductor.OnClockBeat -= OnClockBeat;
+            if (conductor != null) conductor.OnPreparationBeat -= OnPreparationBeat;
             RestoreImmediately();
         }
 
@@ -154,9 +158,29 @@ namespace BeatMemories
 
         private void OnClockBeat(int totalBeat)
         {
-            if (_phase == null || snareClip == null || _audioSource == null) return;
-            float volume = _preparing ? _phase.PreparationSnareVolume : _phase.ActiveSnareVolume;
+            if (!_preparing || _phase == null || snareClip == null || _audioSource == null)
+                return;
+            float volume = _phase.PreparationSnareVolume;
             if (volume > 0.001f) _audioSource.PlayOneShot(snareClip, volume);
+        }
+
+        private void OnPreparationBeat(int beat)
+        {
+            if (_phase == null || snareClip == null || _audioSource == null) return;
+            float volume = _phase.PreparationSnareVolume;
+            if (volume > 0.001f) _audioSource.PlayOneShot(snareClip, volume);
+        }
+
+        private void OnStageApplied(StageSO appliedStage)
+        {
+            RestoreImmediately();
+            if (background != null) _baseBackgroundColor = background.color;
+            if (globalLight != null) _baseLightColor = globalLight.color;
+            if (targetCamera != null && targetCamera.orthographic)
+                _baseOrthographicSize = targetCamera.orthographicSize;
+            _phase = null;
+            _preparing = false;
+            ApplyTargets();
         }
 
         private void ApplyTargets()

@@ -21,6 +21,7 @@ namespace BeatMemories
         [SerializeField] private RoundManager round;
         [SerializeField] private Conductor conductor;
         [SerializeField] private PlayerData player;
+        [SerializeField] private StageManager stageManager;
         [SerializeField] private CameraSway cameraSway;
 
         [Header("캐릭터 (월드 SpriteRenderer)")]
@@ -40,7 +41,7 @@ namespace BeatMemories
         [SerializeField] private Image[] hearts;
         [Tooltip("적 HP 칸(세그먼트)")]
         [SerializeField] private Image[] enemyCells;
-        [Tooltip("적 HP 최대치(칸 수와 맞춤). 처리(Clear)마다 1 감소하며 0에서 사망 연출 실행.")]
+        [Tooltip("RoundManager가 없을 때만 사용하는 적 HP 표시 기본값")]
         [SerializeField, Min(1)] private int enemyMaxHp = 7;
         [SerializeField] private Text phaseLabel;
         [SerializeField] private Text feedbackLabel;
@@ -221,14 +222,17 @@ namespace BeatMemories
         {
             if (round != null)
             {
-                round.OnEnemyRevealed += OnReveal;
+                round.OnEnemyPreviewed += OnPreview;
                 round.OnJudged += OnJudged;
                 round.OnTimingJudged += OnTimingJudged;
                 round.OnPhaseChanged += OnPhase;
                 round.OnCycleStarted += OnCycleStarted;
                 round.OnScoreAwarded += OnScoreAwarded;
                 round.OnScoreChanged += OnScoreChanged;
+                round.OnEnemyHealthChanged += OnEnemyHealthChanged;
                 round.OnGameOver += OnGameOver;
+                round.OnStageApplied += OnStageApplied;
+                round.OnFinalStageCleared += OnFinalStageCleared;
             }
             if (conductor != null) conductor.OnBeat += OnBeat;
             if (player != null)
@@ -243,14 +247,17 @@ namespace BeatMemories
         {
             if (round != null)
             {
-                round.OnEnemyRevealed -= OnReveal;
+                round.OnEnemyPreviewed -= OnPreview;
                 round.OnJudged -= OnJudged;
                 round.OnTimingJudged -= OnTimingJudged;
                 round.OnPhaseChanged -= OnPhase;
                 round.OnCycleStarted -= OnCycleStarted;
                 round.OnScoreAwarded -= OnScoreAwarded;
                 round.OnScoreChanged -= OnScoreChanged;
+                round.OnEnemyHealthChanged -= OnEnemyHealthChanged;
                 round.OnGameOver -= OnGameOver;
+                round.OnStageApplied -= OnStageApplied;
+                round.OnFinalStageCleared -= OnFinalStageCleared;
             }
             if (conductor != null) conductor.OnBeat -= OnBeat;
             if (player != null)
@@ -303,12 +310,13 @@ namespace BeatMemories
             if (chargeLabel != null) chargeLabel.enabled = false;
             if (phaseLabel != null) phaseLabel.text = "";
             if (feedbackLabel != null) feedbackLabel.text = "";
-            SetEnemyIdle();
+            SyncStageHud();
             SetPlayerIdle();
             InitializeScoreDisplay(round != null ? round.Score : 0);
             if (player != null) OnHealth(player.CurrentHp, player.MaxHp);
-            _enemyHp = enemyMaxHp;
-            RefreshEnemyCells();
+            OnEnemyHealthChanged(
+                round != null ? round.CurrentEnemyHp : enemyMaxHp,
+                round != null ? round.EnemyMaxHp : enemyMaxHp);
             SetDots(-1);
             InitializeQueues();
             InitializeLaser(playerLaser, playerLaserOuter, playerLaserMuzzleGlow, playerLaserHitFlash);
@@ -356,17 +364,25 @@ namespace BeatMemories
             }
         }
 
-        private void OnReveal(int slot, Enemy e)
+        private void OnPreview(EnemyPreviewCue cue)
         {
-            if (slot >= 0 && slot < revealedEnemies.Length) revealedEnemies[slot] = e;
-            SetQueueSlot(enemyQueueSlots, slot, QueueSprite(e), Color.white);
-            if (feedbackLabel != null) feedbackLabel.text = e != null ? e.DisplayName : "";
+            int slot = cue.Slot;
+            Enemy enemy = cue.VisibleEnemy;
+            if (slot >= 0 && slot < revealedEnemies.Length) revealedEnemies[slot] = enemy;
+            SetQueueSlot(
+                enemyQueueSlots,
+                slot,
+                cue.IsHidden ? emptyQueueSprite : QueueSprite(enemy),
+                cue.IsHidden ? queueEmptyColor : Color.white);
+            if (feedbackLabel != null)
+                feedbackLabel.text = cue.IsHidden || enemy == null ? "" : enemy.DisplayName;
         }
 
         private void OnJudged(int slot, Enemy e, JudgeResult r)
         {
             StopEnemyIdleBounce();
             if (e != null && e.Action == PlayerAction.Attack) StopPlayerIdleBounce();
+            if (enemySlot != null) enemySlot.flipX = false;
 
             if (enemyLaser != null && e != null)
                 enemyLaser.transform.localPosition = e.LaserOriginOffset;
@@ -398,19 +414,8 @@ namespace BeatMemories
                     enemyLaserColor,
                     r.PlayerDamage > 0);
 
-            bool enemyDamaged = r.Cleared;
-            if (enemyDamaged)
-            {
-                _enemyHp = Mathf.Max(0, _enemyHp - 1);
-                RefreshEnemyCells();
-            }
-
-            if (enemyDamaged && r.Input == PlayerAction.Attack)
-            {
+            if (r.Cleared && r.Input == PlayerAction.Attack)
                 PlayAttackMotion();
-                if (_enemyHp <= 0 && enemyDeathRoutine == null)
-                    enemyDeathRoutine = StartCoroutine(BeginEnemyDeathAfterLaser());
-            }
 
             ResolveQueueSlot(slot, r);
             if (feedbackLabel != null)
@@ -501,6 +506,44 @@ namespace BeatMemories
                 if (enemyCells[i] != null) enemyCells[i].enabled = i < _enemyHp;
         }
 
+        private void OnEnemyHealthChanged(int currentHp, int maxHp)
+        {
+            _enemyHp = Mathf.Clamp(currentHp, 0, Mathf.Max(1, maxHp));
+            RefreshEnemyCells();
+        }
+
+        private void OnStageApplied(StageSO appliedStage)
+        {
+            SyncStageHud(appliedStage);
+        }
+
+        private void SyncStageHud(StageSO appliedStage = null)
+        {
+            StageSO currentStage = appliedStage != null
+                ? appliedStage
+                : stageManager != null ? stageManager.CurrentStage : null;
+            if (currentStage != null)
+            {
+                enemyIdleSprite = currentStage.enemySprite;
+                if (enemyIdleSprite == null && currentStage.enemyPool != null)
+                {
+                    for (int i = 0; i < currentStage.enemyPool.Count; i++)
+                    {
+                        Enemy enemy = currentStage.enemyPool[i];
+                        if (enemy == null || enemy.Sprite == null) continue;
+                        enemyIdleSprite = enemy.Sprite;
+                        break;
+                    }
+                }
+            }
+
+            OnEnemyHealthChanged(
+                round != null ? round.CurrentEnemyHp : enemyMaxHp,
+                round != null ? round.EnemyMaxHp : enemyMaxHp);
+            ResetQueues();
+            SetEnemyIdle();
+        }
+
         private void OnPhase(int cycle, PhaseSO p)
         {
             if (phaseLabel != null) phaseLabel.text = p != null ? p.PhaseName : "(균등)";
@@ -511,6 +554,15 @@ namespace BeatMemories
             if (gameOverLabel != null) { gameOverLabel.enabled = true; gameOverLabel.text = "GAME OVER"; }
             if (playerDeathRoutine == null)
                 playerDeathRoutine = StartCoroutine(BeginPlayerDeath());
+        }
+
+        private void OnFinalStageCleared()
+        {
+            if (gameOverLabel != null)
+            {
+                gameOverLabel.enabled = true;
+                gameOverLabel.text = "STAGE CLEAR";
+            }
         }
 
         private void OnBeat(int beatInCycle)
@@ -559,6 +611,8 @@ namespace BeatMemories
 
         private void SetEnemyIdle()
         {
+            StageSO currentStage = stageManager != null ? stageManager.CurrentStage : null;
+            if (enemySlot != null) enemySlot.flipX = currentStage != null && currentStage.flipEnemyIdleX;
             SetEnemySprite(enemyIdleSprite); // null이면 현재 placeholder 유지
             StartEnemyIdleBounce();
         }
