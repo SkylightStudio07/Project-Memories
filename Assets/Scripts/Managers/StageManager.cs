@@ -37,6 +37,8 @@ namespace BeatMemories
         [SerializeField, Min(0f)] private float holdBlackSeconds = 0.6f;
         [Tooltip("모든 스테이지 클리어 시 켤 게임 클리어 UI(옵션)")]
         [SerializeField] private GameObject gameClearScreen;
+        [Tooltip("Act 1~4 클리어 배너 연출(비우면 배너 없이 전환)")]
+        [SerializeField] private StageClearBanner stageClearBanner;
 
         public event System.Action OnGameCleared;
 
@@ -96,11 +98,17 @@ namespace BeatMemories
         {
             transitioning = true;
             round?.PauseForStageTransition();
-            yield return Fade(1f);
 
             int nextIndex = CurrentIndex + 1;
-            if (roster != null && roster.Get(nextIndex) != null)
+            bool hasNext = roster != null && roster.Get(nextIndex) != null;
+
+            if (hasNext)
             {
+                // Act(1~4) 클리어 배너를 현재 스테이지 위에 연출 → 암전 → 다음 스테이지
+                if (stageClearBanner != null && CurrentStage != null)
+                    yield return stageClearBanner.PlayActClear(CurrentStage.stageNumber);
+
+                yield return Fade(1f);
                 ApplyStage(nextIndex);
                 if (holdBlackSeconds > 0f)
                     yield return new WaitForSecondsRealtime(holdBlackSeconds);
@@ -109,6 +117,7 @@ namespace BeatMemories
             }
             else
             {
+                // 최종(Act5): 게임클리어 배너 + 리트라이/타이틀 — GameOverView가 OnFinalStageCleared로 재사용
                 round?.StopAtStageClear();
                 if (gameClearScreen != null) gameClearScreen.SetActive(true);
                 OnGameCleared?.Invoke();

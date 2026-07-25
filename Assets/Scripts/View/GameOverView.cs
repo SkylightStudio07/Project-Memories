@@ -2,6 +2,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace BeatMemories
 {
@@ -27,18 +28,34 @@ namespace BeatMemories
         [SerializeField, Range(0.1f, 1f)] private float impactStartScale = 0.68f;
         [SerializeField, Min(1f)] private float impactOvershootScale = 1.12f;
 
+        [Header("게임 클리어(승리) 재사용")]
+        [Tooltip("최종 클리어 시 배너에 끼울 게임클리어 스프라이트")]
+        [SerializeField] private Sprite gameClearBanner;
+        [Tooltip("승리 시 스프라이트를 교체할 배너 Image(보통 GameOverBanner)")]
+        [SerializeField] private Image bannerImage;
+        [Tooltip("승리 시엔 숨길 죽음 연출(스캔라인/글리치/BrokenTimeline 등)")]
+        [SerializeField] private GameObject[] hideOnVictory;
+
         private bool _shown;
         private Coroutine _showRoutine;
         private Vector3 _gameOverBaseScale = Vector3.one;
 
         private void OnEnable()
         {
-            if (round != null) round.OnGameOver += Show;
+            if (round != null)
+            {
+                round.OnGameOver += Show;
+                round.OnFinalStageCleared += ShowVictory;
+            }
         }
 
         private void OnDisable()
         {
-            if (round != null) round.OnGameOver -= Show;
+            if (round != null)
+            {
+                round.OnGameOver -= Show;
+                round.OnFinalStageCleared -= ShowVictory;
+            }
             if (_showRoutine != null) StopCoroutine(_showRoutine);
             _showRoutine = null;
             if (gameOverRoot != null) gameOverRoot.transform.DOKill();
@@ -64,33 +81,48 @@ namespace BeatMemories
         private IEnumerator ShowAfterDeathPresentation()
         {
             if (showDelay > 0f) yield return new WaitForSecondsRealtime(showDelay);
-
-            if (hideOnGameOver != null)
-            {
-                foreach (GameObject target in hideOnGameOver)
-                {
-                    if (target != null) target.SetActive(false);
-                }
-            }
-
-            if (gameOverRoot != null)
-            {
-                Transform rootTransform = gameOverRoot.transform;
-                rootTransform.DOKill();
-                rootTransform.localScale = _gameOverBaseScale * impactStartScale;
-                gameOverRoot.SetActive(true);
-                rootTransform.SetAsLastSibling();
-
-                float punchDuration = Mathf.Max(0.05f, impactDuration);
-                Sequence impact = DOTween.Sequence().SetUpdate(true).SetTarget(rootTransform);
-                impact.Append(rootTransform
-                    .DOScale(_gameOverBaseScale * impactOvershootScale, punchDuration * 0.6f)
-                    .SetEase(Ease.OutBack));
-                impact.Append(rootTransform
-                    .DOScale(_gameOverBaseScale, punchDuration * 0.4f)
-                    .SetEase(Ease.InOutSine));
-            }
+            HideCombatUI();
+            PresentRoot();
             _showRoutine = null;
+        }
+
+        /// <summary>최종 스테이지 클리어(승리) — 같은 패널·버튼 재사용: 배너 교체 + 죽음 연출 숨김, 즉시 등장.</summary>
+        public void ShowVictory()
+        {
+            if (_shown) return;
+            _shown = true;
+            if (bannerImage != null && gameClearBanner != null) bannerImage.sprite = gameClearBanner;
+            if (hideOnVictory != null)
+                foreach (GameObject target in hideOnVictory)
+                    if (target != null) target.SetActive(false);
+            HideCombatUI();
+            PresentRoot();
+        }
+
+        private void HideCombatUI()
+        {
+            if (hideOnGameOver == null) return;
+            foreach (GameObject target in hideOnGameOver)
+                if (target != null) target.SetActive(false);
+        }
+
+        private void PresentRoot()
+        {
+            if (gameOverRoot == null) return;
+            Transform rootTransform = gameOverRoot.transform;
+            rootTransform.DOKill();
+            rootTransform.localScale = _gameOverBaseScale * impactStartScale;
+            gameOverRoot.SetActive(true);
+            rootTransform.SetAsLastSibling();
+
+            float punchDuration = Mathf.Max(0.05f, impactDuration);
+            Sequence impact = DOTween.Sequence().SetUpdate(true).SetTarget(rootTransform);
+            impact.Append(rootTransform
+                .DOScale(_gameOverBaseScale * impactOvershootScale, punchDuration * 0.6f)
+                .SetEase(Ease.OutBack));
+            impact.Append(rootTransform
+                .DOScale(_gameOverBaseScale, punchDuration * 0.4f)
+                .SetEase(Ease.InOutSine));
         }
 
         public void RetryCurrentBattle()
