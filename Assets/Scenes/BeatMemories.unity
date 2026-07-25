@@ -381,6 +381,7 @@ GameObject:
   - component: {fileID: 126524590}
   - component: {fileID: 126524592}
   - component: {fileID: 126524591}
+  - component: {fileID: 126524593}
   m_Layer: 0
   m_Name: PlayerChargeEffect
   m_TagString: Untagged
@@ -565,6 +566,26 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &126524593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 126524589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0893ab567510a7046bcb0452c1e7c932, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.ChargeAuraEffect
+  rimGlow: {fileID: 126524592}
+  energyWisps: {fileID: 0}
+  readyRing: {fileID: 126524591}
+  flashIntensity: 1.6
+  sustainIntensity: 0.3
+  pulsePeriod: 0.5
+  ringDuration: 0.28
+  ringRadius: 1.5
 --- !u!1 &133834107
 GameObject:
   m_ObjectHideFlags: 0
@@ -6541,6 +6562,7 @@ MonoBehaviour:
   laserHitStopDuration: 0.05
   playerLaserColor: {r: 0.2, g: 0.95, b: 1, a: 1}
   enemyLaserColor: {r: 1, g: 0.18, b: 0.18, a: 1}
+  chargeAura: {fileID: 126524593}
   chargeGlow: {fileID: 126524592}
   chargeRing: {fileID: 126524591}
   chargeFlashIntensity: 1.6

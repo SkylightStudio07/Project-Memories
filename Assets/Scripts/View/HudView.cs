@@ -137,8 +137,6 @@ namespace BeatMemories
         private Coroutine hitStopRoutine;
         private float timeScaleBeforeHitStop = 1f;
         private double hitStopStartedAt;
-        private bool stageRefreshPending;
-
         private void OnEnable()
         {
             if (round != null)
@@ -151,7 +149,7 @@ namespace BeatMemories
                 round.OnScoreChanged += OnScoreChanged;
                 round.OnEnemyHealthChanged += OnEnemyHealthChanged;
                 round.OnGameOver += OnGameOver;
-                round.OnStageCleared += QueueStageRefresh;
+                round.OnStageApplied += OnStageApplied;
                 round.OnFinalStageCleared += OnFinalStageCleared;
             }
             if (conductor != null) conductor.OnBeat += OnBeat;
@@ -175,7 +173,7 @@ namespace BeatMemories
                 round.OnScoreChanged -= OnScoreChanged;
                 round.OnEnemyHealthChanged -= OnEnemyHealthChanged;
                 round.OnGameOver -= OnGameOver;
-                round.OnStageCleared -= QueueStageRefresh;
+                round.OnStageApplied -= OnStageApplied;
                 round.OnFinalStageCleared -= OnFinalStageCleared;
             }
             if (conductor != null) conductor.OnBeat -= OnBeat;
@@ -240,12 +238,6 @@ namespace BeatMemories
 
         private void Update()
         {
-            if (stageRefreshPending)
-            {
-                stageRefreshPending = false;
-                SyncStageHud();
-            }
-
             if (countdownLabel != null && conductor != null)
             {
                 double t = conductor.TimeUntilStart;
@@ -351,14 +343,16 @@ namespace BeatMemories
             RefreshEnemyCells();
         }
 
-        private void QueueStageRefresh()
+        private void OnStageApplied(StageSO appliedStage)
         {
-            stageRefreshPending = true;
+            SyncStageHud(appliedStage);
         }
 
-        private void SyncStageHud()
+        private void SyncStageHud(StageSO appliedStage = null)
         {
-            StageSO currentStage = stageManager != null ? stageManager.CurrentStage : null;
+            StageSO currentStage = appliedStage != null
+                ? appliedStage
+                : stageManager != null ? stageManager.CurrentStage : null;
             if (currentStage != null)
             {
                 enemyIdleSprite = currentStage.enemySprite;
