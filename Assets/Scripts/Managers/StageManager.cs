@@ -22,6 +22,8 @@ namespace BeatMemories
         [SerializeField] private SpriteRenderer background;
         [Tooltip("씬의 '바닥' SpriteRenderer")]
         [SerializeField] private SpriteRenderer floor;
+        [Tooltip("씬의 EnemyActor SpriteRenderer — 시작 시 적 스프라이트를 미리 세팅(카운트인 동안 이전 적 안 남게)")]
+        [SerializeField] private SpriteRenderer enemyActor;
 
         public int CurrentIndex { get; private set; } = -1;
         public StageSO CurrentStage => roster != null ? roster.Get(CurrentIndex) : null;
@@ -44,9 +46,22 @@ namespace BeatMemories
 
             if (background != null && s.backgroundSprite != null) background.sprite = s.backgroundSprite;
             if (floor != null && s.floorSprite != null) floor.sprite = s.floorSprite;
+            if (enemyActor != null)
+            {
+                Sprite es = s.enemySprite != null ? s.enemySprite : FirstPoolSprite(s);
+                if (es != null) enemyActor.sprite = es; // 카운트인 전에 즉시 반영
+            }
             if (round != null) round.SetStage(s);
 
             Debug.Log($"[Stage] 적용: idx {index} → 스테이지 {s.stageNumber} '{s.displayName}'");
+        }
+
+        private static Sprite FirstPoolSprite(StageSO s)
+        {
+            if (s.enemyPool == null) return null;
+            for (int i = 0; i < s.enemyPool.Count; i++)
+                if (s.enemyPool[i] != null && s.enemyPool[i].Sprite != null) return s.enemyPool[i].Sprite;
+            return null;
         }
     }
 }

@@ -6371,10 +6371,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageManager
   roster: {fileID: 11400000, guid: 715e0bfb4a141f043965a1555cc8a0b5, type: 2}
-  startStageIndex: 0
+  startStageIndex: 4
   round: {fileID: 1188105352}
   background: {fileID: 133834108}
   floor: {fileID: 236057548}
+  enemyActor: {fileID: 1825124097}
 --- !u!4 &2032315197
 Transform:
   m_ObjectHideFlags: 0

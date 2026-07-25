@@ -20,6 +20,8 @@ namespace BeatMemories
 
         [Header("적 풀 (이 스테이지에 나오는 적)")]
         public List<Enemy> enemyPool = new List<Enemy>();
+        [Tooltip("시작(카운트인) 시 EnemyActor에 미리 표시할 스프라이트. 비우면 풀의 첫 적 스프라이트")]
+        public Sprite enemySprite;
 
         [Header("리듬 / 페이즈")]
         public RhythmPatternSO pattern;

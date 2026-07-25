@@ -25,6 +25,6 @@ MonoBehaviour:
   cyclesPerPhase: 2
   bpm: 90
   playerMaxHp: 7
-  backgroundSprite: {fileID: 0}
-  floorSprite: {fileID: 0}
-  backgroundPrefab: {fileID: 0}
+  backgroundSprite: {fileID: -6889251806150270578, guid: 4d527f3dcf6fd7d48b244f176c022691, type: 3}
+  floorSprite: {fileID: 2746419046620943619, guid: 19fcddebb5327c2458c58c38339eb75e, type: 3}
+  backgroundPrefab: {fileID: 3528886555057984073, guid: eb9adc3f83f8ecd4e9819555733d5580, type: 3}
