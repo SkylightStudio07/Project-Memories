@@ -25,6 +25,9 @@ namespace BeatMemories
         public float SecondsPerBeat => 60f / bpm;
         public bool IsRunning { get; private set; }
 
+        /// <summary>오디오 DSP 기준 첫 박(카운트인 종료) 예약 시각. PlayScheduled 동기용.</summary>
+        public double ScheduledStartDspTime { get; private set; }
+
         /// <summary>시작(첫 박)까지 남은 시간(초). 카운트인 표시용. 시작 후 0.</summary>
         public double TimeUntilStart => IsRunning ? System.Math.Max(0.0, startTime - Time.realtimeSinceStartupAsDouble) : startDelay;
 
@@ -50,6 +53,10 @@ namespace BeatMemories
         private double startTime;
         private bool pendingBeatDispatch;
 
+        /// <summary>매 박 정각(전역 박 인덱스). 카운트인 이후 모든 박에서 발생. 애니·연출 클록용.</summary>
+        public event Action<int> OnClockBeat;
+        /// <summary>준비 마디 시작. (현재 비트 모델엔 준비 마디가 없어 미발생 — 배너는 Start에서 자체 초기화.)</summary>
+        public event Action<int> OnPreparationMeasureStart;
         /// <summary>매 박 정각. 인자: 사이클 내 박(0..7).</summary>
         public event Action<int> OnBeat;
         /// <summary>제시 마디 시작(BeatInCycle==0). 인자: cycleIndex.</summary>
@@ -70,6 +77,7 @@ namespace BeatMemories
             TotalBeats = -1;
             pendingBeatDispatch = false;
             startTime = Time.realtimeSinceStartupAsDouble + startDelay; // 카운트인만큼 미룬다
+            ScheduledStartDspTime = AudioSettings.dspTime + startDelay;  // 오디오 예약 재생 동기용
         }
 
         public void StopClock() => IsRunning = false;
@@ -140,6 +148,7 @@ namespace BeatMemories
             if (BeatInCycle == 0)
                 OnPresentMeasureStart?.Invoke(CycleIndex);
 
+            OnClockBeat?.Invoke(TotalBeats);
             OnBeat?.Invoke(BeatInCycle);
             if (BeatInCycle == ResponseStartBeat)
                 OnResponseMeasureStart?.Invoke(CycleIndex);

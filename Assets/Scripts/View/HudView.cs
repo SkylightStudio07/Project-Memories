@@ -106,14 +106,7 @@ namespace BeatMemories
         [SerializeField] private Color enemyLaserColor = new Color(1f, 0.18f, 0.18f, 1f);
 
         [Header("Charge Effect")]
-        [SerializeField] private Light2D chargeGlow;
-        [SerializeField] private LineRenderer chargeRing;
-        private ParticleSystem chargeAura;
-        [SerializeField, Min(0f)] private float chargeFlashIntensity = 1.6f;
-        [SerializeField, Min(0f)] private float chargeSustainIntensity = 0.3f;
-        [SerializeField, Min(0.1f)] private float chargePulsePeriod = 0.5f;
-        [SerializeField, Min(0f)] private float chargeRingDuration = 0.28f;
-        [SerializeField, Min(0.1f)] private float chargeRingRadius = 1.5f;
+        [SerializeField] private ChargeAuraEffect chargeAura;
 
         [Header("Score HUD")]
         [SerializeField, Min(0.1f)] private float floatingScoreDuration = 0.65f;
@@ -229,7 +222,11 @@ namespace BeatMemories
             InitializeQueues();
             InitializeLaser(playerLaser, playerLaserMuzzleGlow, playerLaserHitFlash);
             InitializeLaser(enemyLaser, enemyLaserMuzzleGlow, enemyLaserHitFlash);
-            InitializeChargeEffect();
+            if (chargeAura != null)
+            {
+                chargeAura.Initialize(playerSlot, playerLaserColor);
+                chargeAura.SetReady(player != null && player.IsCharged);
+            }
         }
 
         private void Update()
@@ -266,7 +263,6 @@ namespace BeatMemories
                 UpdateShake(playerSlot, ref playerShakeTimer, ref playerShakeOffset);
                 UpdateActionMotion();
             }
-            if (player != null && player.IsCharged) PositionChargeEffect();
         }
 
         private void OnReveal(int slot, Enemy e)
@@ -365,10 +361,7 @@ namespace BeatMemories
         private void OnCharged(bool charged)
         {
             if (presentationInitialized)
-            {
-                if (charged) PlayChargeStart();
-                else PlayChargeRelease();
-            }
+                chargeAura?.SetReady(charged);
 
             if (chargeLabel != null)
             {
@@ -724,208 +717,9 @@ namespace BeatMemories
             laser.widthMultiplier = laserWidth;
         }
 
-        private void InitializeChargeEffect()
-        {
-            InitializeEffectLight(chargeGlow);
-            EnsureChargeAura();
-            if (chargeAura != null)
-            {
-                ParticleSystem.MainModule main = chargeAura.main;
-                main.startColor = playerLaserColor;
-                chargeAura.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            }
-            if (chargeRing == null) return;
-
-            chargeRing.useWorldSpace = false;
-            chargeRing.loop = true;
-            chargeRing.positionCount = 32;
-            chargeRing.widthMultiplier = 0.05f;
-            for (int i = 0; i < chargeRing.positionCount; i++)
-            {
-                float angle = i * Mathf.PI * 2f / chargeRing.positionCount;
-                chargeRing.SetPosition(
-                    i,
-                    new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f) * chargeRingRadius);
-            }
-            SetLaserColor(chargeRing, playerLaserColor, 0f);
-            chargeRing.enabled = false;
-        }
-
-        private void EnsureChargeAura()
-        {
-            if (chargeAura == null && chargeGlow != null)
-            {
-                chargeAura = chargeGlow.GetComponent<ParticleSystem>();
-                if (chargeAura == null) chargeAura = chargeGlow.gameObject.AddComponent<ParticleSystem>();
-            }
-            if (chargeAura == null) return;
-            chargeAura.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-
-            ParticleSystem.MainModule main = chargeAura.main;
-            main.duration = 1f;
-            main.loop = true;
-            main.playOnAwake = false;
-            main.startLifetime = new ParticleSystem.MinMaxCurve(0.45f, 0.7f);
-            main.startSpeed = new ParticleSystem.MinMaxCurve(0.12f, 0.3f);
-            main.startSize = new ParticleSystem.MinMaxCurve(0.06f, 0.15f);
-            main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
-            main.startColor = playerLaserColor;
-            main.maxParticles = 48;
-            main.simulationSpace = ParticleSystemSimulationSpace.Local;
-
-            ParticleSystem.EmissionModule emission = chargeAura.emission;
-            emission.enabled = true;
-            emission.rateOverTime = 16f;
-
-            ParticleSystem.ShapeModule shape = chargeAura.shape;
-            shape.enabled = true;
-            shape.shapeType = ParticleSystemShapeType.Circle;
-            shape.radius = 1.15f;
-            shape.radiusThickness = 0.35f;
-
-            var gradient = new Gradient();
-            gradient.SetKeys(
-                new[]
-                {
-                    new GradientColorKey(Color.white, 0f),
-                    new GradientColorKey(Color.white, 1f),
-                },
-                new[]
-                {
-                    new GradientAlphaKey(0f, 0f),
-                    new GradientAlphaKey(0.65f, 0.2f),
-                    new GradientAlphaKey(0f, 1f),
-                });
-            ParticleSystem.ColorOverLifetimeModule colorOverLifetime = chargeAura.colorOverLifetime;
-            colorOverLifetime.enabled = true;
-            colorOverLifetime.color = gradient;
-
-            ParticleSystem.NoiseModule noise = chargeAura.noise;
-            noise.enabled = true;
-            noise.quality = ParticleSystemNoiseQuality.Low;
-            noise.strength = 0.12f;
-            noise.frequency = 0.6f;
-            noise.scrollSpeed = 0.2f;
-
-            ParticleSystemRenderer auraRenderer = chargeAura.GetComponent<ParticleSystemRenderer>();
-            if (auraRenderer != null) auraRenderer.sortingOrder = 22;
-        }
-
-        private void PlayChargeStart()
-        {
-            StopChargeEffect();
-            PositionChargeEffect();
-
-            if (chargeAura != null)
-            {
-                ParticleSystem.MainModule main = chargeAura.main;
-                main.startColor = playerLaserColor;
-                chargeAura.Play(true);
-            }
-
-            if (chargeGlow != null)
-            {
-                chargeGlow.color = playerLaserColor;
-                chargeGlow.intensity = 0f;
-                chargeGlow.enabled = true;
-
-                Sequence glowIntro = DOTween.Sequence().SetTarget(chargeGlow);
-                glowIntro.Append(DOTween.To(
-                    () => chargeGlow.intensity,
-                    value => chargeGlow.intensity = value,
-                    chargeFlashIntensity,
-                    0.1f).SetEase(Ease.OutQuad));
-                glowIntro.Append(DOTween.To(
-                    () => chargeGlow.intensity,
-                    value => chargeGlow.intensity = value,
-                    chargeSustainIntensity,
-                    0.12f).SetEase(Ease.InQuad));
-                glowIntro.OnComplete(StartChargePulse);
-            }
-
-            if (chargeRing != null)
-            {
-                float alpha = 1f;
-                chargeRing.enabled = true;
-                chargeRing.transform.localScale = Vector3.one * 0.3f;
-                SetLaserColor(chargeRing, playerLaserColor, alpha);
-
-                Sequence ring = DOTween.Sequence().SetTarget(chargeRing);
-                ring.Append(chargeRing.transform.DOScale(1.25f, chargeRingDuration)
-                    .SetEase(Ease.OutCubic));
-                ring.Join(DOTween.To(
-                    () => alpha,
-                    value =>
-                    {
-                        alpha = value;
-                        SetLaserColor(chargeRing, playerLaserColor, value);
-                    },
-                    0f,
-                    chargeRingDuration).SetEase(Ease.InQuad));
-                ring.OnComplete(() => chargeRing.enabled = false);
-            }
-        }
-
-        private void StartChargePulse()
-        {
-            if (chargeGlow == null || player == null || !player.IsCharged) return;
-
-            chargeGlow.DOKill();
-            float low = chargeSustainIntensity * 0.7f;
-            float high = chargeSustainIntensity * 1.25f;
-            chargeGlow.intensity = low;
-            DOTween.To(
-                    () => chargeGlow.intensity,
-                    value => chargeGlow.intensity = value,
-                    high,
-                    chargePulsePeriod * 0.5f)
-                .SetEase(Ease.InOutSine)
-                .SetLoops(-1, LoopType.Yoyo)
-                .SetTarget(chargeGlow);
-        }
-
-        private void PlayChargeRelease()
-        {
-            PositionChargeEffect();
-            if (chargeAura != null)
-                chargeAura.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-            if (chargeGlow == null) return;
-
-            chargeGlow.DOKill();
-            chargeGlow.enabled = true;
-            Sequence release = DOTween.Sequence().SetTarget(chargeGlow);
-            release.Append(DOTween.To(
-                () => chargeGlow.intensity,
-                value => chargeGlow.intensity = value,
-                chargeFlashIntensity * 1.35f,
-                0.05f).SetEase(Ease.OutQuad));
-            release.Append(DOTween.To(
-                () => chargeGlow.intensity,
-                value => chargeGlow.intensity = value,
-                0f,
-                0.12f).SetEase(Ease.InQuad));
-            release.OnComplete(() => chargeGlow.enabled = false);
-            if (chargeRing != null) chargeRing.enabled = false;
-        }
-
-        private void PositionChargeEffect()
-        {
-            if (playerSlot == null) return;
-            Vector3 center = playerSlot.bounds.center;
-            if (chargeGlow != null) chargeGlow.transform.position = center;
-            if (chargeRing != null) chargeRing.transform.position = center;
-        }
-
         private void StopChargeEffect()
         {
-            StopEffectLight(chargeGlow);
-            if (chargeAura != null)
-                chargeAura.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            if (chargeRing == null) return;
-            chargeRing.DOKill();
-            chargeRing.transform.DOKill();
-            chargeRing.enabled = false;
-            chargeRing.transform.localScale = Vector3.one;
+            chargeAura?.StopImmediate();
         }
 
         private void BeginHitStop()
