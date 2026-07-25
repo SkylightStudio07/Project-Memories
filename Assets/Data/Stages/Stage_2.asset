@@ -16,19 +16,19 @@ MonoBehaviour:
   displayName: "\uBCF8\uD3B8 1 (\uC801 \uAD50\uCCB4)"
   keyMode: 1
   enemyPool:
-  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
-  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
-  - {fileID: 11400000, guid: f1ed1f2c4bc0ba144bd3e06340f985d0, type: 2}
-  enemySprite: {fileID: -4976960352493729061, guid: 19257f613dc4ff543b001c502cc78bb4, type: 3}
+  - {fileID: 11400000, guid: eda428c129164c5ebdc57e60fe4119a5, type: 2}
+  - {fileID: 11400000, guid: 84876b543d1d4697a96d1e14dd35a9f6, type: 2}
+  - {fileID: 11400000, guid: a3c6f3409bc949baa1b4f1624987aa5d, type: 2}
+  enemySprite: {fileID: 6485069653137293177, guid: 98ae2358737b33e4484df4e479f1be5c, type: 3}
+  flipEnemyIdleX: 1
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
   phases:
-  - {fileID: 11400000, guid: 1ae94f3d63d39b142b78bfee344ac7ab, type: 2}
-  - {fileID: 11400000, guid: 054b40b29d0bc454aaabb343feb3c141, type: 2}
+  - {fileID: 11400000, guid: 472b95ef51174c8da598a84907796e37, type: 2}
   cyclesPerPhase: 2
-  repeatPhasePlan: 1
+  repeatPhasePlan: 0
   bpm: 90
   playerMaxHp: 7
-  startDelay: 3
-  backgroundSprite: {fileID: -6889251806150270578, guid: 4d527f3dcf6fd7d48b244f176c022691, type: 3}
-  floorSprite: {fileID: 2746419046620943619, guid: 19fcddebb5327c2458c58c38339eb75e, type: 3}
-  backgroundPrefab: {fileID: 3528886555057984073, guid: eb9adc3f83f8ecd4e9819555733d5580, type: 3}
+  enemyMaxHp: 8
+  backgroundSprite: {fileID: 3621925518522577735, guid: 6c18c42c221c047429b2f836fd017952, type: 3}
+  floorSprite: {fileID: -8522455415725479746, guid: b30a3745adb99e94ebde7f49c61d7eeb, type: 3}
+  backgroundPrefab: {fileID: 840358950603511695, guid: 646fcf3e26373ae44b78566a99c1b38d, type: 3}

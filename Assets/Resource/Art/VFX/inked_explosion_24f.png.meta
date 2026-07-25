@@ -1,0 +1,1031 @@
+fileFormatVersion: 2
+guid: bc2a335748b721645a55f5b60d612e9b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2305643618586666827
+    second: inked_explosion_24f_0
+  - first:
+      213: -1408610414763547245
+    second: inked_explosion_24f_1
+  - first:
+      213: 4622201957738531192
+    second: inked_explosion_24f_2
+  - first:
+      213: -8118527529910278984
+    second: inked_explosion_24f_3
+  - first:
+      213: -538988771576437499
+    second: inked_explosion_24f_4
+  - first:
+      213: -6836730430779283145
+    second: inked_explosion_24f_5
+  - first:
+      213: -407288777795192248
+    second: inked_explosion_24f_6
+  - first:
+      213: 6068989551394192713
+    second: inked_explosion_24f_7
+  - first:
+      213: 1138915766049133800
+    second: inked_explosion_24f_8
+  - first:
+      213: -2410962269300516479
+    second: inked_explosion_24f_9
+  - first:
+      213: 4727890859639196435
+    second: inked_explosion_24f_10
+  - first:
+      213: 8723238938253939841
+    second: inked_explosion_24f_11
+  - first:
+      213: 3369349479189401699
+    second: inked_explosion_24f_12
+  - first:
+      213: -8729820038840778785
+    second: inked_explosion_24f_13
+  - first:
+      213: 5802326273540493462
+    second: inked_explosion_24f_14
+  - first:
+      213: -2153512408017322239
+    second: inked_explosion_24f_15
+  - first:
+      213: -2295914474911364836
+    second: inked_explosion_24f_16
+  - first:
+      213: 6670543624822766859
+    second: inked_explosion_24f_17
+  - first:
+      213: -390785588608326409
+    second: inked_explosion_24f_18
+  - first:
+      213: -1130729791769660775
+    second: inked_explosion_24f_19
+  - first:
+      213: 2924456255401750567
+    second: inked_explosion_24f_20
+  - first:
+      213: 1464289680276220507
+    second: inked_explosion_24f_21
+  - first:
+      213: 4442566030600535829
+    second: inked_explosion_24f_22
+  - first:
+      213: -3045373634823978774
+    second: inked_explosion_24f_23
+  - first:
+      213: -4416256394129921573
+    second: inked_explosion_24f_24
+  - first:
+      213: 9025059381215182247
+    second: inked_explosion_24f_25
+  - first:
+      213: -260621794310750005
+    second: inked_explosion_24f_26
+  - first:
+      213: -13250326165356306
+    second: inked_explosion_24f_27
+  - first:
+      213: -6052642398350270442
+    second: inked_explosion_24f_28
+  - first:
+      213: 2071196740013301489
+    second: inked_explosion_24f_29
+  - first:
+      213: -3232055817067322499
+    second: inked_explosion_24f_30
+  - first:
+      213: -4870563735052847450
+    second: inked_explosion_24f_31
+  - first:
+      213: -598426543490482245
+    second: inked_explosion_24f_32
+  - first:
+      213: 1527163121043130226
+    second: inked_explosion_24f_33
+  - first:
+      213: -4005696682903131506
+    second: inked_explosion_24f_34
+  - first:
+      213: 2935641715522221291
+    second: inked_explosion_24f_35
+  - first:
+      213: 5463548696547963516
+    second: inked_explosion_24f_36
+  - first:
+      213: -5532447879319602089
+    second: inked_explosion_24f_37
+  - first:
+      213: -5321817463735320590
+    second: inked_explosion_24f_38
+  - first:
+      213: 2869470995619575546
+    second: inked_explosion_24f_39
+  - first:
+      213: -5020878944259554631
+    second: inked_explosion_24f_40
+  - first:
+      213: 7540188435291616692
+    second: inked_explosion_24f_41
+  - first:
+      213: 1864119962015297751
+    second: inked_explosion_24f_42
+  - first:
+      213: -7808406813238771639
+    second: inked_explosion_24f_43
+  - first:
+      213: -607605057144141924
+    second: inked_explosion_24f_44
+  - first:
+      213: 632102868562606302
+    second: inked_explosion_24f_45
+  - first:
+      213: -3869065013322149438
+    second: inked_explosion_24f_46
+  - first:
+      213: -3822464230632717744
+    second: inked_explosion_24f_47
+  - first:
+      213: 3433893128386912728
+    second: inked_explosion_24f_48
+  - first:
+      213: 4958817844817507819
+    second: inked_explosion_24f_49
+  - first:
+      213: -5266967519124385400
+    second: inked_explosion_24f_50
+  - first:
+      213: 1404436739811737956
+    second: inked_explosion_24f_51
+  - first:
+      213: -1019428750380585959
+    second: inked_explosion_24f_52
+  - first:
+      213: 7374558331833557549
+    second: inked_explosion_24f_53
+  - first:
+      213: 5090035681246968764
+    second: inked_explosion_24f_54
+  - first:
+      213: -5830699728648012971
+    second: inked_explosion_24f_55
+  - first:
+      213: -6680902278981522372
+    second: inked_explosion_24f_56
+  - first:
+      213: -7771828720848531126
+    second: inked_explosion_24f_57
+  - first:
+      213: 5157253400543258261
+    second: inked_explosion_24f_58
+  - first:
+      213: -5901722333622018643
+    second: inked_explosion_24f_59
+  - first:
+      213: -6382976038699237320
+    second: inked_explosion_24f_60
+  - first:
+      213: 6942702842809474408
+    second: inked_explosion_24f_61
+  - first:
+      213: 7719033037825528592
+    second: inked_explosion_24f_62
+  - first:
+      213: -2928647197745218207
+    second: inked_explosion_24f_63
+  - first:
+      213: 7986988787714167885
+    second: inked_explosion_24f_64
+  - first:
+      213: -2442129541726791544
+    second: inked_explosion_24f_65
+  - first:
+      213: -947815336004163582
+    second: inked_explosion_24f_66
+  - first:
+      213: 7345388135659692752
+    second: inked_explosion_24f_67
+  - first:
+      213: 7806660354930230232
+    second: inked_explosion_24f_68
+  - first:
+      213: 3947622905479602432
+    second: inked_explosion_24f_69
+  - first:
+      213: 2858671496939199696
+    second: inked_explosion_24f_70
+  - first:
+      213: 4116349723433095784
+    second: inked_explosion_24f_71
+  - first:
+      213: -7024425862784143430
+    second: inked_explosion_24f_72
+  - first:
+      213: 2129456215898750144
+    second: inked_explosion_24f_73
+  - first:
+      213: -459358678854242321
+    second: inked_explosion_24f_74
+  - first:
+      213: -7335053892672557026
+    second: inked_explosion_24f_75
+  - first:
+      213: 7798564386585993367
+    second: inked_explosion_24f_76
+  - first:
+      213: 1442764932549745351
+    second: inked_explosion_24f_77
+  - first:
+      213: 4023776922488408684
+    second: inked_explosion_24f_78
+  - first:
+      213: -5198878895541871906
+    second: inked_explosion_24f_79
+  - first:
+      213: -1117066636237668479
+    second: inked_explosion_24f_80
+  - first:
+      213: -3126857411638251882
+    second: inked_explosion_24f_81
+  - first:
+      213: -558244231879744408
+    second: inked_explosion_24f_82
+  - first:
+      213: -4510836671677375412
+    second: inked_explosion_24f_83
+  - first:
+      213: 1314918391522786174
+    second: inked_explosion_24f_84
+  - first:
+      213: -5053411967633201114
+    second: inked_explosion_24f_85
+  - first:
+      213: 4950571033664032232
+    second: inked_explosion_24f_86
+  - first:
+      213: 3814666623400335142
+    second: inked_explosion_24f_87
+  - first:
+      213: 209687069566332603
+    second: inked_explosion_24f_88
+  - first:
+      213: 9112760200349507469
+    second: inked_explosion_24f_89
+  - first:
+      213: 1528534609117817675
+    second: inked_explosion_24f_90
+  - first:
+      213: -3193604799340394418
+    second: inked_explosion_24f_91
+  - first:
+      213: 6497933769930143171
+    second: inked_explosion_24f_92
+  - first:
+      213: -1252026272149515559
+    second: inked_explosion_24f_93
+  - first:
+      213: -8224532688472651163
+    second: inked_explosion_24f_94
+  - first:
+      213: 757471786068504242
+    second: inked_explosion_24f_95
+  - first:
+      213: -6094015081809594116
+    second: inked_explosion_24f_96
+  - first:
+      213: 8531855465503066325
+    second: inked_explosion_24f_97
+  - first:
+      213: 7372136782473296038
+    second: inked_explosion_24f_98
+  - first:
+      213: -5957597731980117430
+    second: inked_explosion_24f_99
+  - first:
+      213: -9092708797382757012
+    second: inked_explosion_24f_100
+  - first:
+      213: 516662983409567162
+    second: inked_explosion_24f_101
+  - first:
+      213: -749951053232528697
+    second: inked_explosion_24f_102
+  - first:
+      213: -847619327986453041
+    second: inked_explosion_24f_103
+  - first:
+      213: 5093128407785531120
+    second: inked_explosion_24f_104
+  - first:
+      213: -4013479230351495024
+    second: inked_explosion_24f_105
+  - first:
+      213: 5226321268476900167
+    second: inked_explosion_24f_106
+  - first:
+      213: -7202001914652627541
+    second: inked_explosion_24f_107
+  - first:
+      213: -3279567580660460233
+    second: inked_explosion_24f_108
+  - first:
+      213: -2382283087594169214
+    second: inked_explosion_24f_109
+  - first:
+      213: -3648168726857432058
+    second: inked_explosion_24f_110
+  - first:
+      213: 1387022330953044368
+    second: inked_explosion_24f_111
+  - first:
+      213: -8850148895458476745
+    second: inked_explosion_24f_112
+  - first:
+      213: 8033477562544241021
+    second: inked_explosion_24f_113
+  - first:
+      213: -5247091081002193334
+    second: inked_explosion_24f_114
+  - first:
+      213: 3576728292618421071
+    second: inked_explosion_24f_115
+  - first:
+      213: -4629598533455690754
+    second: inked_explosion_24f_116
+  - first:
+      213: -415954208155136801
+    second: inked_explosion_24f_117
+  - first:
+      213: 6180944622014676069
+    second: inked_explosion_24f_118
+  - first:
+      213: -3640629215417964508
+    second: inked_explosion_24f_119
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: inked_explosion_24f_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b8de7f3855b000e0800000000000000
+      internalID: -2305643618586666827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3956a197a4c937ce0800000000000000
+      internalID: -1408610414763547245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_2
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 879ce1be03c552040800000000000000
+      internalID: 4622201957738531192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_3
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b4e770b932355f80800000000000000
+      internalID: -8118527529910278984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_4
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 768
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 505234461902588f0800000000000000
+      internalID: -538988771576437499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_5
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 768
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7392c4055ed0f11a0800000000000000
+      internalID: -6836730430779283145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 84ab386b305095af0800000000000000
+      internalID: -407288777795192248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_7
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94d786497d1693450800000000000000
+      internalID: 6068989551394192713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e45370eadd3ecf00800000000000000
+      internalID: 1138915766049133800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_9
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1891973079a8a8ed0800000000000000
+      internalID: -2410962269300516479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_10
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 512
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31b4c99ffa7dc9140800000000000000
+      internalID: 4727890859639196435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_11
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 512
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1845b7db89b2f0970800000000000000
+      internalID: 8723238938253939841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3605b3fef7552ce20800000000000000
+      internalID: 3369349479189401699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_13
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fdffecf5de279d680800000000000000
+      internalID: -8729820038840778785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_14
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6901c45f001068050800000000000000
+      internalID: 5802326273540493462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_15
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10f3bbcefdf2d12e0800000000000000
+      internalID: -2153512408017322239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_16
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 256
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c190b3803f54320e0800000000000000
+      internalID: -2295914474911364836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_17
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 256
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0dbe40b518829c50800000000000000
+      internalID: 6670543624822766859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_18
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f4a8afd396a39af0800000000000000
+      internalID: -390785588608326409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_19
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9923e98ce37de40f0800000000000000
+      internalID: -1130729791769660775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_20
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 720f3684871c59820800000000000000
+      internalID: 2924456255401750567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_21
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5a6221c4b3325410800000000000000
+      internalID: 1464289680276220507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_22
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51f7921644a27ad30800000000000000
+      internalID: 4442566030600535829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: inked_explosion_24f_23
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 256
+        height: 256
+      alignment: 8
+      pivot: {x: 1, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ae00aff60d8acb5d0800000000000000
+      internalID: -3045373634823978774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 7c40e03947ef5e3469b94fb02c3045a7
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":6.0,"y":4.0},"gridSpriteSize":{"x":256.0,"y":256.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":1.0,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":8,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      inked_explosion_24f_0: -2305643618586666827
+      inked_explosion_24f_1: -1408610414763547245
+      inked_explosion_24f_10: 4727890859639196435
+      inked_explosion_24f_11: 8723238938253939841
+      inked_explosion_24f_12: 3369349479189401699
+      inked_explosion_24f_13: -8729820038840778785
+      inked_explosion_24f_14: 5802326273540493462
+      inked_explosion_24f_15: -2153512408017322239
+      inked_explosion_24f_16: -2295914474911364836
+      inked_explosion_24f_17: 6670543624822766859
+      inked_explosion_24f_18: -390785588608326409
+      inked_explosion_24f_19: -1130729791769660775
+      inked_explosion_24f_2: 4622201957738531192
+      inked_explosion_24f_20: 2924456255401750567
+      inked_explosion_24f_21: 1464289680276220507
+      inked_explosion_24f_22: 4442566030600535829
+      inked_explosion_24f_23: -3045373634823978774
+      inked_explosion_24f_3: -8118527529910278984
+      inked_explosion_24f_4: -538988771576437499
+      inked_explosion_24f_5: -6836730430779283145
+      inked_explosion_24f_6: -407288777795192248
+      inked_explosion_24f_7: 6068989551394192713
+      inked_explosion_24f_8: 1138915766049133800
+      inked_explosion_24f_9: -2410962269300516479
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

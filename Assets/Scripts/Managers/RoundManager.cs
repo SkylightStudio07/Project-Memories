@@ -4,18 +4,27 @@ using UnityEngine;
 
 namespace BeatMemories
 {
+    public enum RhythmTimingResult
+    {
+        Success,
+        TooEarly,
+        TooLate,
+    }
+
     /// <summary>
     /// P0 코어 루프 오케스트레이터.
     /// 제시 구간: 결정론적 시퀀스로 적을 스포트라이트 박마다 순서대로 드러낸다.
-    /// 응답 구간: 네 번의 제시 직후 이어지는 각 박의
-    ///   <b>가장 먼저 들어온 입력 하나로 그 행동을 확정</b>한다.
-    ///   - 틀리게 누르면 그 박은 오답으로 잠긴다(고쳐 눌러도 봐주지 않음).
-    ///   - 창을 벗어난 입력은 무시. 마감까지 안 답한 박은 무입력 미스.
+    /// 응답 구간: 각 박의 슬롯 게이지와 전역 Early/Late Offset으로 입력을 판정한다.
+    ///   - Too Early는 행동을 잠그고 정박에서 쉼으로 처리한다.
+    ///   - Success는 선택 행동을 처리한다.
+    ///   - Too Late는 Offset 끝에서 쉼으로 처리한다.
     /// </summary>
     public class RoundManager : MonoBehaviour
     {
         [Header("스테이지 (지정 시 아래 값을 덮어씀)")]
         [SerializeField] private StageSO stage;
+        [Tooltip("씬에서 지정한 입력 모드를 유지한다. 개별 기능 테스트 씬에서만 사용.")]
+        [SerializeField] private bool keepSceneInputMode;
 
         [Header("참조")]
         [SerializeField] private Conductor conductor;
@@ -34,12 +43,10 @@ namespace BeatMemories
         [SerializeField] private List<PhaseSO> phases = new List<PhaseSO>();
         [Tooltip("한 페이즈가 유지되는 사이클 수")]
         [SerializeField, Min(1)] private int cyclesPerPhase = 2;
+        [SerializeField] private bool repeatPhasePlan = true;
+        [SerializeField, Min(0)] private int phasePreparationBeats;
 
         [Header("판정 (인스펙터 조정)")]
-        [Tooltip("마감까지 안 답한 박을 오답으로 취급(적 defaultOutcome 적용)")]
-        [SerializeField] private bool noInputCountsAsMiss = true;
-        [Tooltip("박 종료 전 입력 창이 닫히는 지점(박 길이 비율)")]
-        [SerializeField, Range(0f, 0.45f)] private float inputEndOffset = 0.12f;
         [Tooltip("Miss 직후 다음 입력을 잠그는 시간(초)")]
         [SerializeField, Min(0f)] private float missInputLockDuration = 0.005f;
         [SerializeField] private bool verboseLog = true;
@@ -51,36 +58,44 @@ namespace BeatMemories
         [SerializeField, Min(0)] private int hpScoreWeight = 25;
         [SerializeField, Min(0)] private int armorScoreWeight = 50;
 
-        [Header("적 처치 (인스펙터 조정)")]
-        [Tooltip("스테이지 적(보스) HP. 성공 공격마다 1 감소, 0이면 스테이지 클리어")]
-        [SerializeField, Min(1)] private int enemyBarHp = 7;
-
         // 이벤트 (UI가 구독)
         public event Action<int, Enemy> OnEnemyRevealed;              // (slot, enemy) 제시
+        public event Action<EnemyPreviewCue> OnEnemyPreviewed;
         public event Action<int, Enemy, JudgeResult> OnJudged;       // (slot, enemy, result) 판정
+        public event Action<int, RhythmTimingResult> OnTimingJudged; // 빠름/정확/느림 판정
+        public event Action<int, RhythmTimingResult, double> OnTimingFrameResolved;
         public event Action<int, PhaseSO> OnPhasePreparing;          // (cycleIndex, phase) 페이즈 준비(전환 직전)
         public event Action<int, PhaseSO> OnPhaseChanged;            // (cycleIndex, phase) 페이즈 시작
         public event Action<int> OnCycleStarted;                     // 큐 등 사이클 단위 표시 초기화
         public event Action<int> OnScoreChanged;
         public event Action<int, bool> OnScoreAwarded;               // (획득량, 처치 보너스 여부)
         public event Action<bool> OnAttackLanded;                    // 강공격 여부
+        public event Action<int, int> OnEnemyHealthChanged;          // (현재 HP, 최대 HP)
         public event Action OnGameOver;
-        public event Action OnStageCleared;                          // 적 HP 0 → 스테이지 클리어
-        public event Action<int, int> OnEnemyBarChanged;             // (현재, 최대) 적 보스 HP
+        public event Action OnStageCleared;                          // 적 HP가 0이 된 응답 종료
+        public event Action OnFinalStageCleared;
+        public event Action<StageSO> OnStageApplied;
+        public event Action<int, int, int> OnEnemyPageTransitionStarted;
 
         public PhaseSO CurrentPhase { get; private set; }
+        public StageSO CurrentStage => stage;
         public int Score { get; private set; }
-        public int EnemyBarCurrent => _enemyBarCurrent;
-        public int EnemyBarMax => enemyBarHp;
+        public int CurrentEnemyHp { get; private set; }
+        public int EnemyMaxHp { get; private set; } = 1;
+        public int CurrentEnemyPage { get; private set; } = 1;
+        public int EnemyPageCount { get; private set; } = 1;
 
         private sealed class ResponseNote
         {
             public int slot;
             public int globalBeat;
             public Enemy enemy;
-            public double openTime;  // 입력 구간의 시작(SongPosition 기준)
-            public double closeTime; // 입력 구간의 끝. [openTime, closeTime)
+            public double openTime;   // 슬롯 게이지 시작
+            public double earlyTime;  // 성공 판정 시작
+            public double targetTime; // 정박
+            public double closeTime;  // 느림 Offset 끝
             public bool consumed; // 이미 입력으로 확정됐는가
+            public bool lockedByEarlyInput;
         }
 
         private EnemySequenceProvider provider;
@@ -93,21 +108,27 @@ namespace BeatMemories
         private int responseEndFrame = -1;
         private double inputLockedUntilRealtime = double.NegativeInfinity;
         private bool isOver;
-        private int _enemyBarCurrent;
-        private bool _stageTransitioning;
+        private bool initialized;
+        private bool stageClearPending;
+        private int stageStartCycleIndex;
+        private int responseEndCycleIndex = -1;
+        private GameObject backgroundInstance;
 
         public int Seed => seed;
 
         /// <summary>스테이지 지정(StageManager가 Awake 전에 호출 — DefaultExecutionOrder).</summary>
-        public void SetStage(StageSO s) => stage = s;
+        public void SetStage(StageSO s)
+        {
+            stage = s;
+            if (initialized && stage != null) ApplyStage(stage);
+        }
 
         private void Awake()
         {
-            if (stage != null) ApplyStage(stage);
             if (randomizeSeed) seed = Environment.TickCount;
-            provider = new EnemySequenceProvider(seed, enemyPool);
-            spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
-            ResetEnemyBar();
+            initialized = true;
+            if (stage != null) ApplyStage(stage);
+            else RebuildStageRuntime();
         }
 
         /// <summary>스테이지 데이터로 이 매니저·플레이어·입력·비트를 구성한다.</summary>
@@ -117,11 +138,43 @@ namespace BeatMemories
             if (s.pattern != null) pattern = s.pattern;
             if (s.phases != null) phases = new List<PhaseSO>(s.phases);
             cyclesPerPhase = Mathf.Max(1, s.cyclesPerPhase);
-            if (input != null) input.Mode = s.keyMode;
+            repeatPhasePlan = s.repeatPhasePlan;
+            phasePreparationBeats = Mathf.Max(0, s.phasePreparationBeats);
+            if (input != null && !keepSceneInputMode) input.Mode = s.keyMode;
             if (conductor != null) conductor.Bpm = s.bpm;
             if (player != null) player.SetMaxHp(s.playerMaxHp);
-            if (s.backgroundPrefab != null) Instantiate(s.backgroundPrefab);
+            if (backgroundInstance != null) Destroy(backgroundInstance);
+            backgroundInstance = s.backgroundPrefab != null ? Instantiate(s.backgroundPrefab) : null;
+            EnemyMaxHp = Mathf.Max(1, s.enemyMaxHp);
+            CurrentEnemyHp = EnemyMaxHp;
+            EnemyPageCount = Mathf.Max(1, s.enemyPageCount);
+            CurrentEnemyPage = 1;
+
+            stageStartCycleIndex = conductor != null && conductor.IsRunning
+                ? conductor.CycleIndex + 1
+                : 0;
+            stageClearPending = false;
+            isOver = false;
+            CurrentPhase = null;
+            currentCycle.Clear();
+            notes.Clear();
+            pendingInputs.Clear();
+            inResponse = false;
+            responseEndPending = false;
+            responseEndFrame = -1;
+            responseEndCycleIndex = -1;
+            inputLockedUntilRealtime = double.NegativeInfinity;
+            RebuildStageRuntime();
+            OnStageApplied?.Invoke(s);
+            OnEnemyHealthChanged?.Invoke(CurrentEnemyHp, EnemyMaxHp);
+
             if (verboseLog) Debug.Log($"[Round] 스테이지 적용: {s.stageNumber} {s.displayName} (키 {s.keyMode}, 적 {(s.enemyPool != null ? s.enemyPool.Count : 0)})");
+        }
+
+        private void RebuildStageRuntime()
+        {
+            provider = new EnemySequenceProvider(seed, enemyPool);
+            spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
         }
 
         private void OnEnable()
@@ -163,7 +216,6 @@ namespace BeatMemories
             if (phase != CurrentPhase)
             {
                 CurrentPhase = phase;
-                OnPhasePreparing?.Invoke(cycleIndex, phase);
                 OnPhaseChanged?.Invoke(cycleIndex, phase);
                 if (verboseLog) Debug.Log($"[Round] >> 페이즈: {(phase != null ? phase.PhaseName : "(균등)")}");
             }
@@ -188,14 +240,24 @@ namespace BeatMemories
                 double beatStart = conductor != null ? conductor.BeatToTime(globalBeat) : 0.0;
                 double beatEnd = conductor != null ? conductor.BeatToTime(globalBeat + 1) : beatStart;
                 double beatDuration = beatEnd - beatStart;
+                double lateOffset = conductor != null
+                    ? Math.Min(conductor.LateOffset, beatDuration * 0.45)
+                    : 0.0;
+                double targetTime = beatEnd - lateOffset;
+                double earlyOffset = conductor != null
+                    ? Math.Min(conductor.EarlyOffset, targetTime - beatStart)
+                    : 0.0;
                 notes.Add(new ResponseNote
                 {
                     slot = k,
                     globalBeat = globalBeat,
                     enemy = currentCycle[k],
                     openTime = beatStart,
-                    closeTime = beatEnd - beatDuration * inputEndOffset,
+                    earlyTime = targetTime - earlyOffset,
+                    targetTime = targetTime,
+                    closeTime = beatEnd,
                     consumed = false,
+                    lockedByEarlyInput = false,
                 });
             }
             inResponse = true;
@@ -209,6 +271,14 @@ namespace BeatMemories
             // Input System과 EventSystem이 같은 프레임의 입력을 모두 전달할 때까지 마감을 미룬다.
             responseEndPending = true;
             responseEndFrame = Time.frameCount;
+            responseEndCycleIndex = cycleIndex;
+            stageClearPending |= CurrentEnemyHp <= 0;
+            if (!stageClearPending && StartsPhasePreparation(cycleIndex))
+            {
+                PhaseSO nextPhase = PhaseForCycle(cycleIndex + 1);
+                OnPhasePreparing?.Invoke(cycleIndex + 1, nextPhase);
+                conductor?.QueuePreparationBeats(phasePreparationBeats);
+            }
         }
 
         // 제시 구간: 네 박 동안 스포트라이트 박마다 적을 드러낸다.
@@ -223,13 +293,16 @@ namespace BeatMemories
             int slot = spotlightBeats.IndexOf(beatInMeasure);
             if (slot < 0 || slot >= currentCycle.Count) return;
 
-            OnEnemyRevealed?.Invoke(slot, currentCycle[slot]);
+            Enemy enemy = currentCycle[slot];
+            bool hidden = CurrentPhase != null && CurrentPhase.ShouldHidePreview(enemy);
+            OnEnemyPreviewed?.Invoke(new EnemyPreviewCue(slot, enemy, hidden));
+            if (!hidden) OnEnemyRevealed?.Invoke(slot, enemy);
             if (verboseLog) Debug.Log($"[Round] 제시 slot{slot}: {currentCycle[slot]?.DisplayName}");
         }
 
         private void LateUpdate()
         {
-            if (isOver || _stageTransitioning || conductor == null)
+            if (isOver || conductor == null)
             {
                 pendingInputs.Clear();
                 return;
@@ -252,14 +325,20 @@ namespace BeatMemories
             if (responseEndPending)
             {
                 FlushUnanswered();
+                bool stageCleared = stageClearPending && !isOver;
                 responseEndPending = false;
                 responseEndFrame = -1;
+                stageClearPending = false;
+                if (stageCleared)
+                    ResolveEnemyHpDepletion(responseEndCycleIndex);
+                responseEndCycleIndex = -1;
             }
         }
 
         private void QueueInput(TimedPlayerAction timedAction)
         {
-            if (!isOver && !_stageTransitioning) pendingInputs.Enqueue(timedAction);
+            if (!isOver && (conductor == null || !conductor.IsPreparing))
+                pendingInputs.Enqueue(timedAction);
         }
 
         // 입력이 처리된 프레임이 아니라 Input System이 기록한 실제 발생 시각으로 행동 구간을 찾는다.
@@ -285,22 +364,32 @@ namespace BeatMemories
 
             if (current < 0) return;
 
-            notes[current].consumed = true;
+            ResponseNote note = notes[current];
+            if (note.lockedByEarlyInput) return;
+            if (inputSongTime < note.earlyTime)
+            {
+                note.lockedByEarlyInput = true;
+                ResolveTimingFrame(note, RhythmTimingResult.TooEarly, inputSongTime);
+                OnTimingJudged?.Invoke(note.slot, RhythmTimingResult.TooEarly);
+                return;
+            }
+
+            note.consumed = true;
             input?.NotifyAccepted(timedAction.Action);
-            // 클리어 처치로 노트가 비워질 수 있어 슬롯/적을 미리 캡처한다.
-            int resolvedSlot = notes[current].slot;
-            Enemy resolvedEnemy = notes[current].enemy;
-            double duration = notes[current].closeTime - notes[current].openTime;
-            float responseRatio = duration > 0.0
-                ? Mathf.Clamp01((float)((inputSongTime - notes[current].openTime) / duration))
+            ResolveTimingFrame(note, RhythmTimingResult.Success, inputSongTime);
+            OnTimingJudged?.Invoke(note.slot, RhythmTimingResult.Success);
+            double timingRange = inputSongTime <= note.targetTime
+                ? note.targetTime - note.earlyTime
+                : note.closeTime - note.targetTime;
+            float responseRatio = timingRange > 0.0
+                ? Mathf.Clamp01((float)(Math.Abs(inputSongTime - note.targetTime) / timingRange))
                 : 1f;
             ApplyJudge(
-                resolvedSlot,
-                resolvedEnemy,
+                note.slot,
+                note.enemy,
                 timedAction.Action,
                 isMiss: false,
                 responseRatio: responseRatio);
-            if (!_stageTransitioning) conductor.AdvanceResponseBeatNow(resolvedSlot);
         }
 
         private void RefreshPendingNoteWindows()
@@ -312,8 +401,14 @@ namespace BeatMemories
                 if (notes[i].consumed) continue;
                 double beatStart = conductor.BeatToTime(notes[i].globalBeat);
                 double beatEnd = conductor.BeatToTime(notes[i].globalBeat + 1);
+                double beatDuration = beatEnd - beatStart;
+                double lateOffset = Math.Min(conductor.LateOffset, beatDuration * 0.45);
+                double targetTime = beatEnd - lateOffset;
+                double earlyOffset = Math.Min(conductor.EarlyOffset, targetTime - beatStart);
                 notes[i].openTime = beatStart;
-                notes[i].closeTime = beatEnd - (beatEnd - beatStart) * inputEndOffset;
+                notes[i].earlyTime = targetTime - earlyOffset;
+                notes[i].targetTime = targetTime;
+                notes[i].closeTime = beatEnd;
             }
         }
 
@@ -321,25 +416,34 @@ namespace BeatMemories
         {
             for (int i = 0; i < notes.Count; i++)
             {
-                if (notes[i].consumed || now < notes[i].closeTime) continue;
-
-                notes[i].consumed = true;
-                if (noInputCountsAsMiss)
+                ResponseNote note = notes[i];
+                if (note.consumed) continue;
+                if (note.lockedByEarlyInput && now >= note.targetTime)
                 {
+                    note.consumed = true;
                     ApplyJudge(
-                        notes[i].slot,
-                        notes[i].enemy,
+                        note.slot,
+                        note.enemy,
                         PlayerAction.None,
                         isMiss: true,
                         responseRatio: 1f);
-                    inputLockedUntilRealtime = Math.Max(
-                        inputLockedUntilRealtime,
-                        Time.realtimeSinceStartupAsDouble + missInputLockDuration);
+                    continue;
                 }
+                if (now < note.closeTime) continue;
 
-                conductor?.AdvanceResponseBeatNow(notes[i].slot);
+                note.consumed = true;
+                ResolveTimingFrame(note, RhythmTimingResult.TooLate, note.closeTime);
+                OnTimingJudged?.Invoke(note.slot, RhythmTimingResult.TooLate);
+                ApplyJudge(
+                    note.slot,
+                    note.enemy,
+                    PlayerAction.None,
+                    isMiss: true,
+                    responseRatio: 1f);
+                inputLockedUntilRealtime = Math.Max(
+                    inputLockedUntilRealtime,
+                    Time.realtimeSinceStartupAsDouble + missInputLockDuration);
                 if (isOver) break;
-                break; // 시간축이 다음 Beat 시작으로 이동했으므로 다음 노트는 다음 프레임에 검사
             }
         }
 
@@ -352,13 +456,17 @@ namespace BeatMemories
                 if (notes[i].consumed) continue;
 
                 notes[i].consumed = true;
-                if (noInputCountsAsMiss)
-                    ApplyJudge(
-                        notes[i].slot,
-                        notes[i].enemy,
-                        PlayerAction.None,
-                        isMiss: true,
-                        responseRatio: 1f);
+                ResolveTimingFrame(
+                    notes[i],
+                    RhythmTimingResult.TooLate,
+                    notes[i].closeTime);
+                OnTimingJudged?.Invoke(notes[i].slot, RhythmTimingResult.TooLate);
+                ApplyJudge(
+                    notes[i].slot,
+                    notes[i].enemy,
+                    PlayerAction.None,
+                    isMiss: true,
+                    responseRatio: 1f);
                 if (isOver) break;
             }
 
@@ -398,14 +506,17 @@ namespace BeatMemories
                         "강공격! 방어 관통");
             }
 
+            if (result.Cleared)
+                ReplaceInterruptedFollowUp(slot, enemy);
+
             // 차징 처리
             if (action == PlayerAction.Attack && player != null) player.ConsumeCharge();
             else if (action == PlayerAction.Charge && player != null)
                 player.SetCharged(result.Type != OutcomeType.Punished);
 
             if (result.PlayerDamage > 0 && player != null) player.TakeDamage(result.PlayerDamage);
+            if (result.Cleared) DamageEnemy();
             if (result.Cleared) AwardScore(enemy, action, responseRatio);
-            if (result.Cleared) DamageEnemyBar();
             if (action == PlayerAction.Attack && result.Cleared) OnAttackLanded?.Invoke(charged);
             OnJudged?.Invoke(slot, enemy, result);
             if (verboseLog)
@@ -414,13 +525,35 @@ namespace BeatMemories
 
         private void AwardScore(Enemy enemy, PlayerAction action, float responseRatio)
         {
-            if (action == PlayerAction.Attack) QueueScore(hitScore, false);
-
             int strengthBonus = enemy != null
                 ? enemy.MaxHp * hpScoreWeight + enemy.Armor * armorScoreWeight
                 : 0;
             int timingBonus = Mathf.RoundToInt((1f - Mathf.Clamp01(responseRatio)) * maxTimingBonus);
-            QueueScore(clearScore + strengthBonus + timingBonus, true);
+            int totalPoints = clearScore + strengthBonus + timingBonus;
+            if (action == PlayerAction.Attack) totalPoints += hitScore;
+            QueueScore(totalPoints, true);
+        }
+
+        private void ReplaceInterruptedFollowUp(int slot, Enemy enemy)
+        {
+            Enemy replacement = enemy != null ? enemy.InterruptedFollowUp : null;
+            int nextSlot = slot + 1;
+            if (replacement == null
+                || nextSlot < 0
+                || nextSlot >= currentCycle.Count
+                || currentCycle[nextSlot] != enemy.ForcedFollowUp)
+                return;
+
+            currentCycle[nextSlot] = replacement;
+            for (int i = 0; i < notes.Count; i++)
+            {
+                if (notes[i].slot != nextSlot || notes[i].consumed) continue;
+                notes[i].enemy = replacement;
+                break;
+            }
+
+            if (verboseLog)
+                Debug.Log($"[Round] slot{nextSlot}: {enemy.ForcedFollowUp?.DisplayName} interrupted -> {replacement.DisplayName}");
         }
 
         private void QueueScore(int points, bool isClearBonus)
@@ -438,25 +571,23 @@ namespace BeatMemories
             OnScoreChanged?.Invoke(Score);
         }
 
-        /// <summary>응답 슬롯의 현재 입력 가능 여부와 Cursor 진행률을 반환한다.</summary>
-        public bool TryGetInputWindowProgress(int slot, out float progress)
+        /// <summary>응답 슬롯 게이지의 BPM 기반 진행률(슬롯 시작→정박)을 반환한다.</summary>
+        public bool TryGetTimingSlotProgress(int slot, out float progress)
         {
             progress = 0f;
-            if (!inResponse || conductor == null) return false;
+            if (isOver || !inResponse || conductor == null) return false;
             RefreshPendingNoteWindows();
 
             for (int i = 0; i < notes.Count; i++)
             {
                 ResponseNote note = notes[i];
-                if (note.slot != slot || note.consumed) continue;
+                if (note.slot != slot) continue;
 
                 double now = conductor.SongPosition;
-                if (now < note.openTime
-                    || now >= note.closeTime
-                    || Time.realtimeSinceStartupAsDouble < inputLockedUntilRealtime)
+                if (now < note.openTime || now >= note.closeTime)
                     return false;
 
-                double duration = note.closeTime - note.openTime;
+                double duration = note.targetTime - note.openTime;
                 progress = duration > 0.0
                     ? Mathf.Clamp01((float)((now - note.openTime) / duration))
                     : 1f;
@@ -465,78 +596,196 @@ namespace BeatMemories
             return false;
         }
 
+        /// <summary>
+        /// 판정 프레임 Scale. Early 시작 Min, 정박 1, Late 끝 Max.
+        /// </summary>
+        public bool TryGetTimingFrameScale(int slot, out float scale)
+        {
+            return TryGetTimingFrameScale(slot, new Vector2(0f, 1.25f), out scale);
+        }
+
+        public bool TryGetTimingFrameScale(
+            int slot,
+            Vector2 scaleRange,
+            out float scale)
+        {
+            scale = 0f;
+            if (isOver || !inResponse || conductor == null) return false;
+            RefreshPendingNoteWindows();
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                ResponseNote note = notes[i];
+                if (note.slot != slot) continue;
+
+                double now = conductor.SongPosition;
+                if (now < note.openTime || now >= note.closeTime) return false;
+                scale = CalculateTimingFrameScale(note, now, scaleRange);
+                return true;
+            }
+            return false;
+        }
+
+        private void ResolveTimingFrame(
+            ResponseNote note,
+            RhythmTimingResult result,
+            double songTime)
+        {
+            OnTimingFrameResolved?.Invoke(note.slot, result, songTime);
+        }
+
+        public bool TryGetTimingFrameScaleAt(
+            int slot,
+            double songTime,
+            Vector2 scaleRange,
+            out float scale)
+        {
+            scale = Mathf.Clamp(scaleRange.x, 0f, 1f);
+            for (int i = 0; i < notes.Count; i++)
+            {
+                ResponseNote note = notes[i];
+                if (note.slot != slot) continue;
+                scale = CalculateTimingFrameScale(note, songTime, scaleRange);
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>슬롯 포커스가 가장 작아져야 하는 실제 Perfect 시각.</summary>
+        public bool TryGetTimingFrameTargetTime(int slot, out double targetTime)
+        {
+            targetTime = 0.0;
+            if (isOver || !inResponse || conductor == null) return false;
+            RefreshPendingNoteWindows();
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                if (notes[i].slot != slot) continue;
+                targetTime = notes[i].targetTime;
+                return true;
+            }
+            return false;
+        }
+
+        private static float CalculateTimingFrameScale(
+            ResponseNote note,
+            double songTime,
+            Vector2 scaleRange)
+        {
+            float minScale = Mathf.Clamp(scaleRange.x, 0f, 1f);
+            float maxScale = Mathf.Max(1f, scaleRange.y);
+
+            if (songTime <= note.earlyTime) return minScale;
+            if (songTime <= note.targetTime)
+            {
+                double earlyDuration = note.targetTime - note.earlyTime;
+                float earlyProgress = earlyDuration > 0.0
+                    ? Mathf.Clamp01((float)((songTime - note.earlyTime) / earlyDuration))
+                    : 1f;
+                return Mathf.Lerp(minScale, 1f, earlyProgress);
+            }
+
+            double lateDuration = note.closeTime - note.targetTime;
+            float lateProgress = lateDuration > 0.0
+                ? Mathf.Clamp01((float)((songTime - note.targetTime) / lateDuration))
+                : 1f;
+            return Mathf.Lerp(1f, maxScale, lateProgress);
+        }
+
+        /// <summary>기존 Cursor 호출 호환용. 새 UI는 <see cref="TryGetTimingSlotProgress"/>를 사용한다.</summary>
+        public bool TryGetInputWindowProgress(int slot, out float progress) =>
+            TryGetTimingSlotProgress(slot, out progress);
+
         private PhaseSO PhaseForCycle(int cycleIndex)
         {
             if (phases == null || phases.Count == 0) return null;
             int block = Mathf.Max(1, cyclesPerPhase);
-            int idx = (cycleIndex / block) % phases.Count;
+            int localCycle = Mathf.Max(0, cycleIndex - stageStartCycleIndex);
+            int idx = localCycle / block;
+            idx = repeatPhasePlan ? idx % phases.Count : Mathf.Min(idx, phases.Count - 1);
             return phases[idx];
         }
 
-        // ── 적 보스 HP / 스테이지 클리어 ─────────────────────────────
-        private void ResetEnemyBar()
+        private bool StartsPhasePreparation(int cycleIndex)
         {
-            _enemyBarCurrent = enemyBarHp;
-            OnEnemyBarChanged?.Invoke(_enemyBarCurrent, enemyBarHp);
+            if (phasePreparationBeats <= 0 || phases == null || phases.Count < 2)
+                return false;
+
+            PhaseSO current = PhaseForCycle(cycleIndex);
+            PhaseSO next = PhaseForCycle(cycleIndex + 1);
+            return current != next;
         }
 
-        private void DamageEnemyBar()
+        private void DamageEnemy()
         {
-            if (isOver || _stageTransitioning || _enemyBarCurrent <= 0) return;
-            _enemyBarCurrent = Mathf.Max(0, _enemyBarCurrent - 1);
-            OnEnemyBarChanged?.Invoke(_enemyBarCurrent, enemyBarHp);
-            if (_enemyBarCurrent == 0) BeginStageClear();
+            if (CurrentEnemyHp <= 0) return;
+
+            CurrentEnemyHp = Mathf.Max(0, CurrentEnemyHp - 1);
+            stageClearPending |= CurrentEnemyHp == 0;
+            OnEnemyHealthChanged?.Invoke(CurrentEnemyHp, EnemyMaxHp);
         }
 
-        private void BeginStageClear()
+        private void BeginNextEnemyPage(int completedCycleIndex)
         {
-            if (_stageTransitioning) return;
-            _stageTransitioning = true;
-
-            // 진행 중이던 응답/입력을 정리하고 클록을 멈춘다(전환 연출 동안 정지).
-            notes.Clear();
-            pendingInputs.Clear();
-            inResponse = false;
-            responseEndPending = false;
-            responseEndFrame = -1;
-            if (conductor != null) conductor.StopClock();
-
-            if (verboseLog) Debug.Log("[Round] ===== 스테이지 클리어 (적 처치) =====");
-            OnStageCleared?.Invoke();
-        }
-
-        /// <summary>새 스테이지로 이 라운드를 재구성한다(StageManager가 전환 중 호출).
-        /// startClock=false면 카운트인은 <see cref="StartRound"/>로 공개 후 시작한다.</summary>
-        public void RestartForStage(StageSO s, bool startClock = true)
-        {
-            if (s != null) { stage = s; ApplyStage(s); }
-
-            provider = new EnemySequenceProvider(seed, enemyPool);
-            spotlightBeats = pattern != null ? pattern.SpotlightBeatIndices() : new List<int>();
-
+            stageClearPending = false;
+            CurrentEnemyPage++;
+            CurrentEnemyHp = EnemyMaxHp;
+            stageStartCycleIndex = Mathf.Max(0, completedCycleIndex + 1);
+            CurrentPhase = null;
             currentCycle.Clear();
             notes.Clear();
             pendingInputs.Clear();
             inResponse = false;
-            responseEndPending = false;
-            responseEndFrame = -1;
             inputLockedUntilRealtime = double.NegativeInfinity;
-            CurrentPhase = null;
-            isOver = false;
-            _stageTransitioning = false;
 
-            ResetEnemyBar();
-            if (conductor != null)
-            {
-                if (startClock) conductor.StartClock();
-                else conductor.ArmForStart(); // 전환 연출 후 StartRound에서 시작
-            }
-            if (verboseLog) Debug.Log($"[Round] 새 스테이지 재구성: {(s != null ? s.displayName : "(유지)")} startClock={startClock}");
+            int transitionBeats = stage != null
+                ? Mathf.Max(0, stage.enemyPageTransitionBeats)
+                : 0;
+            OnEnemyHealthChanged?.Invoke(CurrentEnemyHp, EnemyMaxHp);
+            OnEnemyPageTransitionStarted?.Invoke(
+                CurrentEnemyPage,
+                EnemyPageCount,
+                transitionBeats);
+            conductor?.QueuePreparationBeats(transitionBeats);
+
+            if (verboseLog)
+                Debug.Log(
+                    $"[Round] 보스 페이지 {CurrentEnemyPage}/{EnemyPageCount} 시작 " +
+                    $"(HP {CurrentEnemyHp}, 전환 {transitionBeats}비트)");
         }
 
-        /// <summary>전환 연출(암전→공개) 후 새 스테이지 카운트인을 시작한다.</summary>
+        private void ResolveEnemyHpDepletion(int completedCycleIndex)
+        {
+            if (CurrentEnemyPage < EnemyPageCount)
+                BeginNextEnemyPage(completedCycleIndex);
+            else
+                OnStageCleared?.Invoke();
+        }
+
+        public void StopAtStageClear()
+        {
+            if (isOver) return;
+            isOver = true;
+            pendingInputs.Clear();
+            responseEndPending = false;
+            if (conductor != null) conductor.StopClock();
+            OnFinalStageCleared?.Invoke();
+        }
+
+        public void PauseForStageTransition()
+        {
+            pendingInputs.Clear();
+            notes.Clear();
+            inResponse = false;
+            responseEndPending = false;
+            responseEndFrame = -1;
+            responseEndCycleIndex = -1;
+            if (conductor != null) conductor.StopClock();
+        }
+
         public void StartRound()
         {
+            isOver = false;
             if (conductor != null) conductor.StartClock();
         }
 

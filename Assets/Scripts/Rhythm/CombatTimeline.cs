@@ -122,7 +122,7 @@ namespace BeatMemories
         {
             if (exchangesPerPhase < 1)
                 throw new ArgumentOutOfRangeException(nameof(exchangesPerPhase));
-            if (preparationBeats < 1)
+            if (preparationBeats < 0)
                 throw new ArgumentOutOfRangeException(nameof(preparationBeats));
         }
     }

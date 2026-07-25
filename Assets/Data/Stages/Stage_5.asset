@@ -12,23 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c927ff0c756228489da7844910e7b67, type: 3}
   m_Name: Stage_5
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageSO
-  stageNumber: 4
-  displayName: "\uC2A4\uD14C\uC774\uC9C0 4"
+  stageNumber: 5
+  displayName: "\uC2A4\uD14C\uC774\uC9C0 5 (\uBCF4\uC2A4)"
   keyMode: 1
   enemyPool:
-  - {fileID: 11400000, guid: e3a0734efbeecca4d969d07684ffcdaf, type: 2}
-  - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
-  - {fileID: 11400000, guid: f1ed1f2c4bc0ba144bd3e06340f985d0, type: 2}
-  enemySprite: {fileID: 4276949625366853428, guid: 74a3ac680153b9140aa29477ac725e20, type: 3}
+  - {fileID: 11400000, guid: 4ab86ce901b349289aaf07dbea51bd90, type: 2}
+  - {fileID: 11400000, guid: 54f428763a404c0c87b60c3593e178e8, type: 2}
+  - {fileID: 11400000, guid: 3589432303ac4af382984a8647224d3f, type: 2}
+  - {fileID: 11400000, guid: 2dec8aae5fbb4b839ddccfc123b077e2, type: 2}
+  enemySprite: {fileID: 21300000, guid: 1bdf79295a7341e59133d1a78b950458, type: 3}
+  flipEnemyIdleX: 0
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
   phases:
-  - {fileID: 11400000, guid: 1ae94f3d63d39b142b78bfee344ac7ab, type: 2}
-  - {fileID: 11400000, guid: 054b40b29d0bc454aaabb343feb3c141, type: 2}
+  - {fileID: 11400000, guid: c3ab9891d98d4464a858c94f7b4598c7, type: 2}
+  - {fileID: 11400000, guid: d86e1d532fea4cc9a7adca803799e861, type: 2}
   cyclesPerPhase: 2
-  repeatPhasePlan: 1
+  phasePreparationBeats: 4
+  repeatPhasePlan: 0
   bpm: 90
   playerMaxHp: 7
-  startDelay: 3
-  backgroundSprite: {fileID: 3670592728298037066, guid: 6fd20dbf978310548b65c4b9096ad5f9, type: 3}
-  floorSprite: {fileID: 5548167994591598614, guid: c9101b459cbb671489ffda5ec0aa0602, type: 3}
-  backgroundPrefab: {fileID: 6325322317993969736, guid: 8980443e010c57146ad6bfc2fc610004, type: 3}
+  enemyMaxHp: 8
+  startDelay: 0
+  enemyPageCount: 2
+  enemyPageTransitionBeats: 4
+  cutPreviewBottomHalfOnSecondPage: 1
+  enemyPageTransitionSprite: {fileID: 21300000, guid: 2d45c0db7c5442bd9f4eb85d9173e47c, type: 3}
+  backgroundSprite: {fileID: 3621925518522577735, guid: 6c18c42c221c047429b2f836fd017952, type: 3}
+  floorSprite: {fileID: -8522455415725479746, guid: b30a3745adb99e94ebde7f49c61d7eeb, type: 3}
+  backgroundPrefab: {fileID: 840358950603511695, guid: 646fcf3e26373ae44b78566a99c1b38d, type: 3}

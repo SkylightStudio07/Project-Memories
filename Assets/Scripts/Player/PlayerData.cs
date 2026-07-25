@@ -28,6 +28,8 @@ namespace BeatMemories
         [SerializeField] private Sprite[] guardSprites;
         [SerializeField] private Sprite[] attackSprites;
         [SerializeField] private Sprite[] chargeSprites;
+        [Tooltip("너무 빠르거나 늦은 입력으로 쉼 상태가 될 때 Flip해서 보여줄 스프라이트.")]
+        [SerializeField] private Sprite timingMistakeSprite;
         [Tooltip("여기 입력을 구독해 행동 시 스프라이트를 뽑는다")]
         [SerializeField] private InputReader input;
 
@@ -49,6 +51,7 @@ namespace BeatMemories
         // ── 스프라이트 ──
         /// <summary>기본(idle) 스프라이트. 행동이 끝나면 뷰가 이걸로 복귀시킨다.</summary>
         public Sprite IdleSprite => idleSprite;
+        public Sprite TimingMistakeSprite => timingMistakeSprite;
         public Sprite CurrentSprite { get; private set; }
         public event Action<Sprite> OnSpriteChanged;
         public event Action<PlayerAction, Sprite> OnActionPresented;

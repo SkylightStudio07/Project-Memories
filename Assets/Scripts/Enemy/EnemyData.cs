@@ -23,6 +23,16 @@ namespace BeatMemories
         [Tooltip("이 적이 현재 박자에 수행하는 행동")]
         public PlayerAction action = PlayerAction.None;
 
+        [Header("Enemy Combat Traits")]
+        [Min(0)]
+        public int attackDamage = 1;
+
+        public bool unblockableAttack;
+        public bool invulnerableWhileActing;
+        public bool fixedAttackDamage;
+        public Enemy forcedFollowUp;
+        public Enemy interruptedFollowUp;
+
         [Tooltip("EnemyActor 기준 레이저 발사 위치의 로컬 오프셋")]
         public Vector2 laserOriginOffset;
 

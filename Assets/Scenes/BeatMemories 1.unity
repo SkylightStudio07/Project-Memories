@@ -3943,7 +3943,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e888e8c73d8459b48bfcfa03db9b06e8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.BeatCursor
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.RhythmTimingDisplay
   conductor: {fileID: 1739020140}
   cursor: {fileID: 1456166133}
   beatOffset: 4
@@ -5986,7 +5986,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e888e8c73d8459b48bfcfa03db9b06e8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.BeatCursor
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.RhythmTimingDisplay
   conductor: {fileID: 1739020140}
   cursor: {fileID: 1928498284}
   beatOffset: 0

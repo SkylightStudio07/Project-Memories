@@ -39,6 +39,11 @@ namespace BeatMemories
         private void Update()
         {
             if (conductor == null || _img == null) return;
+            if (!conductor.IsRunning || !conductor.IsCountingDown)
+            {
+                _img.enabled = false;
+                return;
+            }
             double t = conductor.TimeUntilStart;
             int n = Mathf.CeilToInt((float)t);
             if (t <= 0.001 || n < 1 || n > 3) { _img.enabled = false; return; }

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace BeatMemories
@@ -20,6 +21,11 @@ namespace BeatMemories
         [SerializeField, Min(1f)] private float strongAttackMultiplier = 1.8f;
 
         private Vector3 start;
+        private Camera targetCamera;
+        private float baseOrthographicSize;
+        private Vector3 focusOffset;
+        private float focusOrthographicSize;
+        private bool focusActive;
         private float hitTimer;
         private float hitStrength;
         private bool initialized;
@@ -27,6 +33,9 @@ namespace BeatMemories
         private void Start()
         {
             start = transform.position;
+            targetCamera = GetComponent<Camera>();
+            if (targetCamera != null && targetCamera.orthographic)
+                baseOrthographicSize = targetCamera.orthographicSize;
             initialized = true;
         }
 
@@ -35,6 +44,61 @@ namespace BeatMemories
         {
             hitTimer = hitDuration;
             hitStrength = strongAttack ? strongAttackMultiplier : 1f;
+        }
+
+        /// <summary>기존 Sway 위에 사망 대상 방향의 클로즈업 오프셋과 줌을 적용한다.</summary>
+        public void FocusOn(Vector3 worldPosition, float zoomRatio, float duration)
+        {
+            if (!initialized) return;
+
+            DOTween.Kill(this);
+            focusActive = true;
+            focusOffset = Vector3.zero;
+            focusOrthographicSize = targetCamera != null ? targetCamera.orthographicSize : 0f;
+            Vector3 destination = worldPosition - start;
+            destination.z = 0f;
+
+            DOTween.To(
+                    () => focusOffset,
+                    value => focusOffset = value,
+                    destination,
+                    Mathf.Max(0.01f, duration))
+                .SetEase(Ease.OutCubic)
+                .SetUpdate(true)
+                .SetTarget(this);
+
+            if (targetCamera != null && targetCamera.orthographic)
+            {
+                float targetSize = baseOrthographicSize * Mathf.Clamp(zoomRatio, 0.35f, 1f);
+                DOTween.To(
+                        () => focusOrthographicSize,
+                        value => focusOrthographicSize = value,
+                        targetSize,
+                        Mathf.Max(0.01f, duration))
+                    .SetEase(Ease.OutCubic)
+                    .SetUpdate(true)
+                    .SetTarget(this);
+            }
+        }
+
+        public void RestoreFocus(float duration)
+        {
+            if (!focusActive) return;
+
+            DOTween.Kill(this);
+            Sequence restore = DOTween.Sequence().SetUpdate(true).SetTarget(this);
+            restore.Join(DOTween.To(
+                () => focusOffset,
+                value => focusOffset = value,
+                Vector3.zero,
+                Mathf.Max(0.01f, duration)).SetEase(Ease.InOutSine));
+            if (targetCamera != null && targetCamera.orthographic)
+                restore.Join(DOTween.To(
+                    () => focusOrthographicSize,
+                    value => focusOrthographicSize = value,
+                    baseOrthographicSize,
+                    Mathf.Max(0.01f, duration)).SetEase(Ease.InOutSine));
+            restore.OnComplete(() => focusActive = false);
         }
 
         private void LateUpdate()
@@ -49,12 +113,22 @@ namespace BeatMemories
                 Vector2 randomOffset = Random.insideUnitCircle * strength;
                 impact = new Vector3(randomOffset.x, randomOffset.y, 0f);
             }
-            transform.position = start + new Vector3(x, y, 0f) + impact;
+            transform.position = start + new Vector3(x, y, 0f) + impact + focusOffset;
+            if (focusActive && targetCamera != null && targetCamera.orthographic)
+                targetCamera.orthographicSize = focusOrthographicSize;
         }
 
         private void OnDisable()
         {
-            if (initialized) transform.position = start;
+            DOTween.Kill(this);
+            if (initialized)
+            {
+                transform.position = start;
+                if (targetCamera != null && targetCamera.orthographic)
+                    targetCamera.orthographicSize = baseOrthographicSize;
+            }
+            focusOffset = Vector3.zero;
+            focusActive = false;
         }
     }
 }
