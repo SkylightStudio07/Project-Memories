@@ -15,7 +15,7 @@ MonoBehaviour:
   data:
     id: stage4_guard
     displayName: "\uBC29\uC5B4"
-    sprite: {fileID: 4276949625366853428, guid: 74a3ac680153b9140aa29477ac725e20, type: 3}
+    sprite: {fileID: -2353252506475649133, guid: 210ae6d0dc0868447ba2a7c807ec5bf9, type: 3}
     action: 1
     attackDamage: 1
     unblockableAttack: 0

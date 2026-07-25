@@ -60,6 +60,8 @@ namespace BeatMemories
         [SerializeField] private GameObject gameClearScreen;
         [Tooltip("Act 1~4 클리어 배너 연출(비우면 배너 없이 전환)")]
         [SerializeField] private StageClearBanner stageClearBanner;
+        [Tooltip("스테이지 시작 전(프롤로그)·전환 시 대사 재생. 비우면 대사 없이 바로 카운트인")]
+        [SerializeField] private DialogueViewer dialogueViewer;
 
         public event System.Action OnGameCleared;
 
@@ -75,6 +77,22 @@ namespace BeatMemories
                 : startStageIndex;
             pendingRetryStageIndex = -1;
             ApplyStage(initialIndex);
+            StartCoroutine(PrologueThenStart());
+        }
+
+        // 클록은 자동 시작하지 않는다(Conductor.playOnStart=false 전제) — 프롤로그 대사가
+        // 끝난 뒤에야(없으면 즉시) 카운트인을 시작해 대사 중 카운팅되는 것을 막는다.
+        private IEnumerator PrologueThenStart()
+        {
+            yield return PlayIntroDialogue();
+            round?.StartRound();
+        }
+
+        private IEnumerator PlayIntroDialogue()
+        {
+            StageSO s = CurrentStage;
+            if (dialogueViewer != null && s != null && s.introDialogue != null)
+                yield return dialogueViewer.PlayRoutine(s.introDialogue);
         }
 
         private IEnumerator Start()
@@ -189,6 +207,8 @@ namespace BeatMemories
                 if (holdBlackSeconds > 0f)
                     yield return new WaitForSecondsRealtime(holdBlackSeconds);
                 yield return Fade(0f);
+                // 다음 스테이지가 공개된 채로 대사가 끝난 뒤에야 카운트인을 시작한다.
+                yield return PlayIntroDialogue();
                 round?.StartRound();
             }
             else

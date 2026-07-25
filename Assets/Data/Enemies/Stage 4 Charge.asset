@@ -15,7 +15,7 @@ MonoBehaviour:
   data:
     id: stage4_charge
     displayName: "\uC801 \uCDA9\uC804"
-    sprite: {fileID: 4276949625366853428, guid: 74a3ac680153b9140aa29477ac725e20, type: 3}
+    sprite: {fileID: 877906564130832552, guid: b50b0c09930d86844b1a3b87554214f9, type: 3}
     action: 4
     attackDamage: 1
     unblockableAttack: 0

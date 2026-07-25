@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 847f4c1c8e10cbe46a6b957043c80246, type: 3}
+  m_Name: Stage 5
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.DialogueSO
+  lines:
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: 8075468258146922719, guid: 450e97ac77dd1f44bae79ad3a64a650f, type: 3}
+    text: "\uD06C... \uC73C\uC73D...!"
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: 8075468258146922719, guid: 450e97ac77dd1f44bae79ad3a64a650f, type: 3}
+    text: "\uB098, \uB098\uB294 \uCE5C\uAD6C\uB85C\uC11C \uC774\uC57C\uAE30\uB97C
+      \uD558\uB824 \uD588\uC744 \uBFD0\uC774\uC57C!\r\n\uC5B4\uC9F8\uC11C, \uAE30\uC2B5\uC744...!
+      \uB2E4\uB97C\uB808\uC559!"
+  - speaker: 0
+    speakerName: "\uB2E4\uB97C\uB808\uC559"
+    portrait: {fileID: -534251805290457002, guid: bef4f956e7b2a2a4b995a88a9ba908eb, type: 3}
+    text: "...\uB124\uAC00 \uB0B4 \uCE5C\uAD6C\uC600\uB2E4\uBA74, \uB098\uB97C \uB193\uC544\uBCF4\uB0B4\uAC70\uB098...
+      \uD558\uB2E4\uBABB\uD574. \uADF8 \uAC80\uC5D0 \uB9DE\uC544\uC11C \uC8FD\uC5C8\uC5B4\uC57C
+      \uD588\uC5B4."
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: 8075468258146922719, guid: 450e97ac77dd1f44bae79ad3a64a650f, type: 3}
+    text: "\uB2E4\uB97C\uB808\uC559?! \uB300\uCCB4 \uBB34\uC2A8 \uC18C\uB9AC\uB97C...!"
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: -6071435802697707932, guid: d06bf404d4d79a74fa5c41cdc0c9bf3b, type: 3}
+    text: "\uBD80\uD0C1\uC774\uC57C...! \uB0B4\uAC00! \uC815\uB9D0 \uBB50\uB77C\uB3C4
+      \uD560\uAC8C! \uC81C\uBC1C... \uB3CC\uC544\uAC00\uC790! \uB2E4\uB97C\uB808\uC559!"
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: 8075468258146922719, guid: 450e97ac77dd1f44bae79ad3a64a650f, type: 3}
+    text: "\uC815\uB9D0, \uC774\uB300\uB85C \uB85C\uADF8 \uC0AC\uC774\uBCF4\uADF8\uAC00
+      \uB418\uBA74 \uB3CC\uC774\uD0AC \uC218 \uC5C6\uC5B4\uC838\uBC84\uB824...! \uB3D9\uD3EC\uB4E4\uC758
+      \uB9D0\uB85C, \uBD24\uC796\uC544...!"
+  - speaker: 0
+    speakerName: "\uB2E4\uB97C\uB808\uC559"
+    portrait: {fileID: -7828949313565039875, guid: f3a58cbc1101d3941a48501574c0f48e, type: 3}
+    text: "\uADF8\uB807\uAE30\uC5D0, \uC774 \uB3C4\uC2DC\uC5D0\uC11C \uB098\uAC00\uB824\uB294
+      \uAC70\uC57C.\r\n...\uC124\uB839 \uB2E4\uB978 \uC778\uAC04\uB4E4\uC5D0\uAC8C
+      \uBAA9\uC904\uC774 \uCC28\uC774\uB354\uB77C\uB3C4."
+  - speaker: 0
+    speakerName: "\uB2E4\uB97C\uB808\uC559"
+    portrait: {fileID: -7828949313565039875, guid: f3a58cbc1101d3941a48501574c0f48e, type: 3}
+    text: "\uB098\uB294, \uC774 \uB3C4\uC2DC\uB97C \uD30C\uBA78\uC2DC\uD0A8\uB2E4.\r\n\uB0B4
+      \uBAA8\uB4E0 \uAC83\uC744 \uBE7C\uC557\uC740 \uC774 \uB3C4\uC2DC\uB97C.\n\uADF8\uAC70\uBA74
+      \uC871\uD574."
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: -6071435802697707932, guid: d06bf404d4d79a74fa5c41cdc0c9bf3b, type: 3}
+    text: "\uB2E4\uB97C\uB808\uC559.......... \uC81C\uBC1C...."
+  - speaker: 0
+    speakerName: "\uB2E4\uB97C\uB808\uC559"
+    portrait: {fileID: -7828949313565039875, guid: f3a58cbc1101d3941a48501574c0f48e, type: 3}
+    text: "\uB9C9\uACE0 \uC2F6\uB2E4\uBA74..... \uC804\uD22C \uC2A4\uD0E0\uC2A4\uB97C
+      \uCDE8\uD574.\r\n\uC774\uC81C\uBD80\uD130\uB294, \uC8FD\uAC70\uB098 \uC8FD\uC774\uAC70\uB098\uB2C8\uAE4C."
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: 8075468258146922719, guid: 450e97ac77dd1f44bae79ad3a64a650f, type: 3}
+    text: "......\uADF8\uB798. \uAF2D \uB110 \uB370\uB824\uAC08 \uAC70\uB2C8\uAE4C."
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: -6071435802697707932, guid: d06bf404d4d79a74fa5c41cdc0c9bf3b, type: 3}
+    text: "(...\uBC29\uAE08 \uAE30\uC2B5\uC73C\uB85C \uBBF8\uB798 \uC608\uCE21 \uBAA8\uB378\uC774
+      \uC0C1\uD588\uC5B4.\r\n\uAC80\uD754\uC73C\uB85C... \uACC4\uC18D\uD574\uC11C
+      \uB2E4\uB97C\uB808\uC559\uC758 \uD574\uD0B9 \uC2DC\uB3C4\uAC00.)"
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: -6071435802697707932, guid: d06bf404d4d79a74fa5c41cdc0c9bf3b, type: 3}
+    text: "(\uB2E4\uB97C\uB808\uC559\uC740 L.L.M \uD654\uB825\uC870 \uBC31\uBCD1\uC804
+      \uCD5C\uAC15...\r\n...\uADF8\uB7FC\uC5D0\uB3C4, \uB108\uB97C, \uD3EC\uAE30\uD560
+      \uC218\uB294 \uC5C6\uC5B4...)"
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: 4127289246860661910, guid: 794ea1fe10c1d724eaaf18b64de13f0d, type: 3}
+    text: "(\uB108\uB294 \uB098\uACE0, \uB098\uB294... \uB108\uB2C8\uAE4C.)"
