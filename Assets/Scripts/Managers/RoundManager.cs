@@ -65,13 +65,16 @@ namespace BeatMemories
         public event Action<int> OnScoreChanged;
         public event Action<int, bool> OnScoreAwarded;               // (획득량, 처치 보너스 여부)
         public event Action<bool> OnAttackLanded;                    // 강공격 여부
+        public event Action<int, int> OnEnemyHealthChanged;          // (현재 HP, 최대 HP)
         public event Action OnGameOver;
-        public event Action OnStageCleared;                          // 반복하지 않는 페이즈 계획의 마지막 응답 종료
+        public event Action OnStageCleared;                          // 적 HP가 0이 된 응답 종료
         public event Action OnFinalStageCleared;
         public event Action<StageSO> OnStageApplied;
 
         public PhaseSO CurrentPhase { get; private set; }
         public int Score { get; private set; }
+        public int CurrentEnemyHp { get; private set; }
+        public int EnemyMaxHp { get; private set; } = 1;
 
         private sealed class ResponseNote
         {
@@ -129,6 +132,8 @@ namespace BeatMemories
             if (player != null) player.SetMaxHp(s.playerMaxHp);
             if (backgroundInstance != null) Destroy(backgroundInstance);
             backgroundInstance = s.backgroundPrefab != null ? Instantiate(s.backgroundPrefab) : null;
+            EnemyMaxHp = Mathf.Max(1, s.enemyMaxHp);
+            CurrentEnemyHp = EnemyMaxHp;
 
             stageStartCycleIndex = conductor != null && conductor.IsRunning
                 ? conductor.CycleIndex + 1
@@ -145,6 +150,7 @@ namespace BeatMemories
             inputLockedUntilRealtime = double.NegativeInfinity;
             RebuildStageRuntime();
             OnStageApplied?.Invoke(s);
+            OnEnemyHealthChanged?.Invoke(CurrentEnemyHp, EnemyMaxHp);
 
             if (verboseLog) Debug.Log($"[Round] 스테이지 적용: {s.stageNumber} {s.displayName} (키 {s.keyMode}, 적 {(s.enemyPool != null ? s.enemyPool.Count : 0)})");
         }
@@ -239,7 +245,7 @@ namespace BeatMemories
             // Input System과 EventSystem이 같은 프레임의 입력을 모두 전달할 때까지 마감을 미룬다.
             responseEndPending = true;
             responseEndFrame = Time.frameCount;
-            stageClearPending = CompletesStage(cycleIndex);
+            stageClearPending |= CurrentEnemyHp <= 0;
             if (!stageClearPending && StartsPhasePreparation(cycleIndex))
             {
                 PhaseSO nextPhase = PhaseForCycle(cycleIndex + 1);
@@ -448,6 +454,7 @@ namespace BeatMemories
                 player.SetCharged(result.Type != OutcomeType.Punished);
 
             if (result.PlayerDamage > 0 && player != null) player.TakeDamage(result.PlayerDamage);
+            if (result.Cleared) DamageEnemy();
             if (result.Cleared) AwardScore(enemy, action, responseRatio);
             if (action == PlayerAction.Attack && result.Cleared) OnAttackLanded?.Invoke(charged);
             OnJudged?.Invoke(slot, enemy, result);
@@ -550,12 +557,13 @@ namespace BeatMemories
             return current != next;
         }
 
-        private bool CompletesStage(int cycleIndex)
+        private void DamageEnemy()
         {
-            if (repeatPhasePlan || phases == null || phases.Count == 0) return false;
-            int localCycle = Mathf.Max(0, cycleIndex - stageStartCycleIndex);
-            int totalCycles = Mathf.Max(1, cyclesPerPhase) * phases.Count;
-            return localCycle + 1 >= totalCycles;
+            if (CurrentEnemyHp <= 0) return;
+
+            CurrentEnemyHp = Mathf.Max(0, CurrentEnemyHp - 1);
+            stageClearPending |= CurrentEnemyHp == 0;
+            OnEnemyHealthChanged?.Invoke(CurrentEnemyHp, EnemyMaxHp);
         }
 
         public void StopAtStageClear()

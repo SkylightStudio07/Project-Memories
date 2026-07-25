@@ -148,6 +148,10 @@ namespace BeatMemories.Tests
         {
             UnityEngine.Object phase =
                 Load("Assets/Data/Phases/Phase_Stage4_HiddenAttack.asset");
+            var serializedPhase = new SerializedObject(phase);
+            Assert.That(
+                serializedPhase.FindProperty("activeTintStrength").floatValue,
+                Is.EqualTo(0.85f));
             MethodInfo shouldHide = phase.GetType().GetMethod("ShouldHidePreview");
             UnityEngine.Object attack = Load("Assets/Data/Enemies/Stage 4 Attack.asset");
             UnityEngine.Object chargedAttack =

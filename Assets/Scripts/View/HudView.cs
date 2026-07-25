@@ -40,7 +40,7 @@ namespace BeatMemories
         [SerializeField] private Image[] hearts;
         [Tooltip("적 HP 칸(세그먼트)")]
         [SerializeField] private Image[] enemyCells;
-        [Tooltip("적 HP 최대치(칸 수와 맞춤). ※구동은 임시: 처리(Clear)마다 1 감소")]
+        [Tooltip("RoundManager가 없을 때만 사용하는 적 HP 표시 기본값")]
         [SerializeField, Min(1)] private int enemyMaxHp = 7;
         [SerializeField] private Text phaseLabel;
         [SerializeField] private Text feedbackLabel;
@@ -149,6 +149,7 @@ namespace BeatMemories
                 round.OnCycleStarted += OnCycleStarted;
                 round.OnScoreAwarded += OnScoreAwarded;
                 round.OnScoreChanged += OnScoreChanged;
+                round.OnEnemyHealthChanged += OnEnemyHealthChanged;
                 round.OnGameOver += OnGameOver;
                 round.OnStageCleared += QueueStageRefresh;
                 round.OnFinalStageCleared += OnFinalStageCleared;
@@ -172,6 +173,7 @@ namespace BeatMemories
                 round.OnCycleStarted -= OnCycleStarted;
                 round.OnScoreAwarded -= OnScoreAwarded;
                 round.OnScoreChanged -= OnScoreChanged;
+                round.OnEnemyHealthChanged -= OnEnemyHealthChanged;
                 round.OnGameOver -= OnGameOver;
                 round.OnStageCleared -= QueueStageRefresh;
                 round.OnFinalStageCleared -= OnFinalStageCleared;
@@ -222,8 +224,9 @@ namespace BeatMemories
                 scoreLabel.text = $"SCORE  {(round != null ? round.Score : 0):N0}";
             }
             if (player != null) OnHealth(player.CurrentHp, player.MaxHp);
-            _enemyHp = enemyMaxHp;
-            RefreshEnemyCells();
+            OnEnemyHealthChanged(
+                round != null ? round.CurrentEnemyHp : enemyMaxHp,
+                round != null ? round.EnemyMaxHp : enemyMaxHp);
             SetDots(-1);
             InitializeQueues();
             InitializeLaser(playerLaser, playerLaserMuzzleGlow, playerLaserHitFlash);
@@ -327,12 +330,6 @@ namespace BeatMemories
             if (feedbackLabel != null)
                 feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
 
-            // [임시] 적을 처리(Clear)하면 적 HP 1 감소 — 실제 구동 규칙은 추후
-            if (r.Cleared)
-            {
-                _enemyHp = Mathf.Max(0, _enemyHp - 1);
-                RefreshEnemyCells();
-            }
         }
 
         private void OnCycleStarted(int cycle)
@@ -346,6 +343,12 @@ namespace BeatMemories
             if (enemyCells == null) return;
             for (int i = 0; i < enemyCells.Length; i++)
                 if (enemyCells[i] != null) enemyCells[i].enabled = i < _enemyHp;
+        }
+
+        private void OnEnemyHealthChanged(int currentHp, int maxHp)
+        {
+            _enemyHp = Mathf.Clamp(currentHp, 0, Mathf.Max(1, maxHp));
+            RefreshEnemyCells();
         }
 
         private void QueueStageRefresh()
@@ -371,8 +374,9 @@ namespace BeatMemories
                 }
             }
 
-            _enemyHp = enemyMaxHp;
-            RefreshEnemyCells();
+            OnEnemyHealthChanged(
+                round != null ? round.CurrentEnemyHp : enemyMaxHp,
+                round != null ? round.EnemyMaxHp : enemyMaxHp);
             ResetQueues();
             SetEnemyIdle();
         }

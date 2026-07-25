@@ -31,12 +31,14 @@ namespace BeatMemories
         [Min(1)] public int cyclesPerPhase = 2;
         [Tooltip("Preparation beats inserted between phases. Zero preserves the legacy timeline.")]
         [Min(0)] public int phasePreparationBeats;
-        [Tooltip("켜면 마지막 페이즈 뒤 처음으로 순환. 끄면 마지막 응답 후 스테이지 클리어")]
+        [Tooltip("켜면 마지막 페이즈 뒤 처음으로 순환. 끄면 마지막 페이즈를 적 HP가 0이 될 때까지 유지")]
         public bool repeatPhasePlan = true;
 
         [Header("수치")]
         [Min(1f)] public float bpm = 96f;
         [Min(1)] public int playerMaxHp = 8;
+        [Tooltip("이 스테이지 적의 최대 HP. 처리(Cleared) 판정마다 1 감소")]
+        [Min(1)] public int enemyMaxHp = 8;
         [Tooltip("첫 준비 4박 전에 둘 별도 무박자 카운트인. Stage 1은 준비가 카운트인을 겸해 0")]
         [Min(0f)] public float startDelay = 3f;
 
