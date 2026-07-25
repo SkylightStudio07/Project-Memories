@@ -15,6 +15,11 @@ namespace BeatMemories
         [SerializeField] private InputReader input;
         [SerializeField] private PlayerAction action = PlayerAction.Guard;
 
+        [Tooltip("현재 키 모드에서 못 쓰는 액션이면 버튼을 숨긴다 (2키 스테이지의 차징 등)")]
+        [SerializeField] private bool hideWhenUnavailable = true;
+        [Tooltip("키 모드를 스테이지마다 갱신하기 위해 구독할 RoundManager. 비우면 씬에서 탐색")]
+        [SerializeField] private RoundManager round;
+
         [Header("눌림 효과 (인스펙터 조정)")]
         [SerializeField, Range(0.5f, 1f)] private float pressScale = 0.86f;
         [SerializeField] private Color pressTint = new Color(0.98f, 0.92f, 0.55f);
@@ -32,10 +37,34 @@ namespace BeatMemories
             _rt = (RectTransform)transform;
             _baseScale = _rt.localScale;
             _baseColor = _img != null ? _img.color : Color.white;
+            if (round == null) round = FindFirstObjectByType<RoundManager>();
         }
 
-        private void OnEnable() { if (input != null) input.OnActionAccepted += OnAction; }
-        private void OnDisable() { if (input != null) input.OnActionAccepted -= OnAction; }
+        private void OnEnable()
+        {
+            if (input != null) input.OnActionAccepted += OnAction;
+            if (round != null) round.OnStageApplied += OnStageApplied;
+            RefreshAvailability();
+        }
+
+        private void OnDisable()
+        {
+            if (input != null) input.OnActionAccepted -= OnAction;
+            if (round != null) round.OnStageApplied -= OnStageApplied;
+        }
+
+        // 스테이지가 바뀌면 키 모드도 바뀌므로 버튼 노출을 다시 판단한다.
+        private void OnStageApplied(StageSO stage) => RefreshAvailability();
+
+        /// <summary>현재 키 모드에서 못 쓰는 액션이면 버튼을 숨긴다.</summary>
+        private void RefreshAvailability()
+        {
+            if (!hideWhenUnavailable || input == null) return;
+            bool available = input.IsActionAvailable(action);
+            if (_img != null) _img.enabled = available;
+            var button = GetComponent<Button>();
+            if (button != null) button.interactable = available;
+        }
 
         /// <summary>테스트·외부 호출용. 화면 포인터 입력은 지연이 적은 PointerDown을 사용한다.</summary>
         public void OnClick() { if (input != null) input.Press(action); }
