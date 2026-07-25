@@ -20,6 +20,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f1895b7e0bcb44e8a39f66771fac0f53, type: 2}
   - {fileID: 11400000, guid: 07b24e64a97a41baaaaa9989951ce18d, type: 2}
   - {fileID: 11400000, guid: ddcca76e5c364424a4a430e37c167072, type: 2}
+  playerPrefab: {fileID: 4825611272768709046, guid: ff351e35aaf02da4fa6e712193ca25fc, type: 3}
+  enemyPrefab: {fileID: 4431738091006914680, guid: 0b710209e64ea8e438336736b092828a, type: 3}
   enemySprite: {fileID: 4276949625366853428, guid: 74a3ac680153b9140aa29477ac725e20, type: 3}
   flipEnemyIdleX: 0
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
@@ -33,6 +35,10 @@ MonoBehaviour:
   playerMaxHp: 7
   enemyMaxHp: 8
   startDelay: 0
+  enemyPageCount: 1
+  enemyPageTransitionBeats: 0
+  cutPreviewBottomHalfOnSecondPage: 0
+  enemyPageTransitionSprite: {fileID: 0}
   backgroundSprite: {fileID: 3670592728298037066, guid: 6fd20dbf978310548b65c4b9096ad5f9, type: 3}
   floorSprite: {fileID: 5548167994591598614, guid: c9101b459cbb671489ffda5ec0aa0602, type: 3}
   backgroundPrefab: {fileID: 6325322317993969736, guid: 8980443e010c57146ad6bfc2fc610004, type: 3}

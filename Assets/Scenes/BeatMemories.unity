@@ -6968,16 +6968,16 @@ MonoBehaviour:
   chargeLabel: {fileID: 1077026690}
   scoreLabel: {fileID: 443091246}
   scoreDigitSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1337456628975419980, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
+  - {fileID: -7025427682187295067, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
+  - {fileID: 3345274703670009667, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
+  - {fileID: -7643151437274377888, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
+  - {fileID: 2271344392836856775, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
+  - {fileID: 5241784950068273062, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
+  - {fileID: -888322631944473767, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
+  - {fileID: -6432456609310516327, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
+  - {fileID: -2889967451887957344, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
+  - {fileID: -5898765030038986354, guid: 31a6095b542445ab9344ab13512922c3, type: 3}
   scoreDigitSize: {x: 52, y: 52}
   scoreDigitSpacing: -5
   enemyQueueSlots:

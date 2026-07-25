@@ -97,7 +97,6 @@ namespace BeatMemories
                 round.OnStageApplied += OnStageApplied;
             }
             if (conductor != null) conductor.OnClockBeat += OnClockBeat;
-            if (conductor != null) conductor.OnPreparationBeat += OnPreparationBeat;
         }
 
         private void Start()
@@ -121,7 +120,6 @@ namespace BeatMemories
                 round.OnStageApplied -= OnStageApplied;
             }
             if (conductor != null) conductor.OnClockBeat -= OnClockBeat;
-            if (conductor != null) conductor.OnPreparationBeat -= OnPreparationBeat;
             RestoreImmediately();
         }
 
@@ -160,13 +158,6 @@ namespace BeatMemories
         {
             if (!_preparing || _phase == null || snareClip == null || _audioSource == null)
                 return;
-            float volume = _phase.PreparationSnareVolume;
-            if (volume > 0.001f) _audioSource.PlayOneShot(snareClip, volume);
-        }
-
-        private void OnPreparationBeat(int beat)
-        {
-            if (_phase == null || snareClip == null || _audioSource == null) return;
             float volume = _phase.PreparationSnareVolume;
             if (volume > 0.001f) _audioSource.PlayOneShot(snareClip, volume);
         }

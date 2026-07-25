@@ -20,6 +20,13 @@ namespace BeatMemories
 
         [Header("적 풀 (이 스테이지에 나오는 적)")]
         public List<Enemy> enemyPool = new List<Enemy>();
+
+        [Header("Character Prefabs")]
+        [Tooltip("플레이어 객체/Anchor 프리팹. 비어 있으면 씬의 기존 SpriteRenderer를 사용한다.")]
+        public CharacterView playerPrefab;
+        [Tooltip("이 스테이지 적 객체/Anchor 프리팹. 비어 있으면 씬의 기존 SpriteRenderer를 사용한다.")]
+        public CharacterView enemyPrefab;
+
         [Tooltip("시작(카운트인) 시 EnemyActor에 미리 표시할 스프라이트. 비우면 풀의 첫 적 스프라이트")]
         public Sprite enemySprite;
         [Tooltip("EnemyActor idle 스프라이트만 좌우 반전")]

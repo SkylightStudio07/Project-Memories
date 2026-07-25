@@ -40,15 +40,15 @@ namespace BeatMemories
 
         /// <summary>시작(첫 박)까지 남은 시간(초). 카운트인 표시용. 시작 후 0.</summary>
         public double TimeUntilStart => IsRunning && TotalBeats < 0
-            ? System.Math.Max(0.0, startTime - Time.realtimeSinceStartupAsDouble)
+            ? System.Math.Max(0.0, gameplayStartDspTime - AudioSettings.dspTime)
             : 0.0;
 
         /// <summary>카운트인 중인가(박이 아직 시작 안 함).</summary>
         public bool IsCountingDown
-            => IsRunning && TotalBeats < 0 && Time.realtimeSinceStartupAsDouble < startTime;
+            => IsRunning && TotalBeats < 0 && AudioSettings.dspTime < gameplayStartDspTime;
 
         /// <summary>첫 박(beat 0) 기준 경과 시간(초). 카운트인 중엔 음수.</summary>
-        public double SongPosition => Time.realtimeSinceStartupAsDouble - startTime;
+        public double SongPosition => AudioSettings.dspTime - gameplayStartDspTime;
 
         /// <summary>Input System의 실시간 타임스탬프를 곡 시작 기준 시간으로 변환한다.</summary>
         public double RealtimeToSongPosition(double realtimeTime) => realtimeTime - startTime;
@@ -58,18 +58,24 @@ namespace BeatMemories
 
         /// <summary>시작 후 누적 박 수(첫 박 = 0). 시작 전 -1.</summary>
         public int TotalBeats { get; private set; } = -1;
+        public int ClockBeats { get; private set; } = -1;
         public int CycleIndex { get; private set; }
         public int BeatInCycle { get; private set; }
         public int BeatInMeasure => IsResponseMeasure ? BeatInCycle - ResponseStartBeat : BeatInCycle;
         public bool IsResponseMeasure => BeatInCycle >= ResponseStartBeat;
 
         private double startTime;
-        private readonly AudioSource[] metronomeSources = new AudioSource[2];
+        private double gameplayStartDspTime;
+        private const int MetronomeSourceCount = 8;
+        private const int MetronomeLookaheadBeats = 4;
+        private readonly AudioSource[] metronomeSources =
+            new AudioSource[MetronomeSourceCount];
+        private int nextMetronomeBeatToSchedule;
         private bool pendingBeatDispatch;
         private int queuedPreparationBeats;
         private int preparationBeatCount;
         private int preparationBeatIndex = -1;
-        private double preparationStartRealtime;
+        private double preparationStartDspTime;
 
         public bool IsPreparing => preparationBeatCount > 0;
 
@@ -105,14 +111,8 @@ namespace BeatMemories
             }
         }
 
-        private void OnEnable()
-        {
-            OnClockBeat += ScheduleFollowingMetronomeBeat;
-        }
-
         private void OnDisable()
         {
-            OnClockBeat -= ScheduleFollowingMetronomeBeat;
             StopMetronome();
         }
 
@@ -125,14 +125,17 @@ namespace BeatMemories
         {
             IsRunning = true;
             TotalBeats = -1;
+            ClockBeats = -1;
             pendingBeatDispatch = false;
             queuedPreparationBeats = 0;
             preparationBeatCount = 0;
             preparationBeatIndex = -1;
             startTime = Time.realtimeSinceStartupAsDouble + startDelay; // 카운트인만큼 미룬다
             ScheduledStartDspTime = AudioSettings.dspTime + startDelay;  // 오디오 예약 재생 동기용
+            gameplayStartDspTime = ScheduledStartDspTime;
+            nextMetronomeBeatToSchedule = 0;
             StopMetronome();
-            ScheduleMetronomeBeat(0);
+            ScheduleMetronomeLookahead();
         }
 
         public void StopClock()
@@ -153,27 +156,18 @@ namespace BeatMemories
         /// </summary>
         public bool AdvanceResponseBeatNow(int resolvedSlot)
         {
-            if (!IsRunning) return false;
-            if (BeatInCycle != ResponseStartBeat + resolvedSlot) return false;
-
-            TotalBeats++;
-            startTime = Time.realtimeSinceStartupAsDouble - BeatToTime(TotalBeats);
-            AdvanceBeat();
-            return true;
+            return false;
         }
 
         /// <summary>Hit Stop처럼 실시간 정지가 발생한 만큼 비트 기준시각도 함께 뒤로 민다.</summary>
         public void DelayClock(double seconds)
         {
-            if (!IsRunning || seconds <= 0.0) return;
-            startTime += seconds;
-            ScheduledStartDspTime += seconds;
-            ScheduleMetronomeBeat(Mathf.Max(0, TotalBeats + 1));
         }
 
         private void Update()
         {
             if (!IsRunning) return;
+            ScheduleMetronomeLookahead();
 
             // 응답 종료 프레임의 입력·미입력 판정이 LateUpdate에서 끝난 다음 프레임에
             // 새 사이클 첫 제시를 보낸다. 비트 수를 늘리지 않고 화면상 순서만 보장한다.
@@ -196,7 +190,7 @@ namespace BeatMemories
                 return;
             }
 
-            double elapsed = Time.realtimeSinceStartupAsDouble - startTime;
+            double elapsed = AudioSettings.dspTime - gameplayStartDspTime;
             if (elapsed < 0.0) return; // 카운트인 중 — 아직 박 시작 전
             int beatsNow = (int)(elapsed / SecondsPerBeat);
             while (beatsNow > TotalBeats)
@@ -217,8 +211,8 @@ namespace BeatMemories
                     BeginPreparation();
                     return false;
                 }
-                pendingBeatDispatch = true;
-                return false;
+                DispatchCurrentBeat();
+                return IsRunning;
             }
 
             DispatchCurrentBeat();
@@ -233,21 +227,37 @@ namespace BeatMemories
             if (BeatInCycle == 0)
                 OnPresentMeasureStart?.Invoke(CycleIndex);
 
-            OnClockBeat?.Invoke(TotalBeats);
+            DispatchClockBeat();
             OnBeat?.Invoke(BeatInCycle);
             if (BeatInCycle == ResponseStartBeat)
                 OnResponseMeasureStart?.Invoke(CycleIndex);
         }
 
-        private void ScheduleFollowingMetronomeBeat(int totalBeat)
+        private void DispatchClockBeat()
         {
-            ScheduleMetronomeBeat(totalBeat + 1);
+            ClockBeats++;
+            OnClockBeat?.Invoke(ClockBeats);
         }
 
-        private void ScheduleMetronomeBeat(int totalBeat)
+        private void ScheduleMetronomeLookahead()
         {
             if (timingSettings == null || metronomeSources[0] == null) return;
-            int beatInMeasure = totalBeat % BeatsPerMeasure;
+
+            double scheduleUntil =
+                AudioSettings.dspTime + SecondsPerBeat * MetronomeLookaheadBeats;
+            while (ScheduledStartDspTime
+                   + nextMetronomeBeatToSchedule * (double)SecondsPerBeat
+                   <= scheduleUntil)
+            {
+                ScheduleMetronomeBeat(nextMetronomeBeatToSchedule);
+                nextMetronomeBeatToSchedule++;
+            }
+        }
+
+        private void ScheduleMetronomeBeat(int clockBeat)
+        {
+            if (timingSettings == null || metronomeSources[0] == null) return;
+            int beatInMeasure = clockBeat % BeatsPerMeasure;
             AudioClip clip = beatInMeasure == 0
                 ? timingSettings.Tick
                 : timingSettings.Tack;
@@ -255,12 +265,11 @@ namespace BeatMemories
 
             // 현재 박 이벤트에서 다음 박을 DSP 시간으로 미리 예약한다.
             // 두 Source를 번갈아 사용해 재생 중인 Clip 교체와 프레임 지연을 피한다.
-            AudioSource source = metronomeSources[totalBeat % metronomeSources.Length];
-            source.Stop();
+            AudioSource source = metronomeSources[clockBeat % metronomeSources.Length];
             source.clip = clip;
             source.volume = timingSettings.MetronomeVolume;
             double beatDspTime =
-                ScheduledStartDspTime + totalBeat * (double)SecondsPerBeat;
+                ScheduledStartDspTime + clockBeat * (double)SecondsPerBeat;
             source.PlayScheduled(beatDspTime);
             source.SetScheduledEndTime(
                 beatDspTime + Math.Min(clip.length, SecondsPerBeat));
@@ -270,6 +279,7 @@ namespace BeatMemories
         {
             for (int i = 0; i < metronomeSources.Length; i++)
                 metronomeSources[i]?.Stop();
+            nextMetronomeBeatToSchedule = 0;
         }
 
         private void BeginPreparation()
@@ -277,30 +287,29 @@ namespace BeatMemories
             preparationBeatCount = queuedPreparationBeats;
             queuedPreparationBeats = 0;
             preparationBeatIndex = -1;
-            preparationStartRealtime = startTime + BeatToTime(TotalBeats);
+            preparationStartDspTime = gameplayStartDspTime + BeatToTime(TotalBeats);
             startTime += preparationBeatCount * (double)SecondsPerBeat;
-            ScheduledStartDspTime += preparationBeatCount * (double)SecondsPerBeat;
-            StopMetronome();
-            ScheduleMetronomeBeat(TotalBeats);
+            gameplayStartDspTime += preparationBeatCount * (double)SecondsPerBeat;
             OnPreparationMeasureStart?.Invoke(TotalBeats / BeatsPerCycle);
         }
 
         private void UpdatePreparation()
         {
-            double now = Time.realtimeSinceStartupAsDouble;
+            double now = AudioSettings.dspTime;
             while (preparationBeatIndex + 1 < preparationBeatCount)
             {
                 int nextBeat = preparationBeatIndex + 1;
                 double beatTime =
-                    preparationStartRealtime + nextBeat * (double)SecondsPerBeat;
+                    preparationStartDspTime + nextBeat * (double)SecondsPerBeat;
                 if (now < beatTime) break;
 
                 preparationBeatIndex = nextBeat;
+                DispatchClockBeat();
                 OnPreparationBeat?.Invoke(preparationBeatIndex);
             }
 
             double endTime =
-                preparationStartRealtime + preparationBeatCount * (double)SecondsPerBeat;
+                preparationStartDspTime + preparationBeatCount * (double)SecondsPerBeat;
             if (now < endTime) return;
 
             preparationBeatCount = 0;

@@ -27,6 +27,23 @@ namespace BeatMemories
         [SerializeField] private SpriteRenderer floor;
         [Tooltip("씬의 EnemyActor SpriteRenderer — 시작 시 적 스프라이트를 미리 세팅(카운트인 동안 이전 적 안 남게)")]
         [SerializeField] private SpriteRenderer enemyActor;
+        [Tooltip("씬의 PlayerActor SpriteRenderer. 비어 있으면 이름으로 한 번 탐색한다.")]
+        [SerializeField] private SpriteRenderer playerActor;
+        [SerializeField] private PlayerData playerData;
+
+        private CharacterView playerCharacterInstance;
+        private CharacterView enemyCharacterInstance;
+
+        public CharacterView PlayerCharacter => playerCharacterInstance;
+        public CharacterView EnemyCharacter => enemyCharacterInstance;
+        public SpriteRenderer PlayerActor =>
+            playerCharacterInstance != null && playerCharacterInstance.Renderer != null
+                ? playerCharacterInstance.Renderer
+                : playerActor;
+        public SpriteRenderer EnemyActor =>
+            enemyCharacterInstance != null && enemyCharacterInstance.Renderer != null
+                ? enemyCharacterInstance.Renderer
+                : enemyActor;
 
         [Header("전환 연출 (인스펙터 조정)")]
         [Tooltip("전체화면 검은 오버레이 CanvasGroup. 비우면 암전 없이 즉시 전환")]
@@ -48,6 +65,7 @@ namespace BeatMemories
 
         private void Awake()
         {
+            ResolveLegacyActors();
             int initialIndex = pendingRetryStageIndex >= 0
                 ? pendingRetryStageIndex
                 : startStageIndex;
@@ -83,6 +101,7 @@ namespace BeatMemories
                 Sprite es = s.enemySprite != null ? s.enemySprite : FirstPoolSprite(s);
                 if (es != null) enemyActor.sprite = es; // 카운트인 전에 즉시 반영
             }
+            ApplyCharacterPrefabs(s);
             if (round != null) round.SetStage(s);
 
             Debug.Log($"[Stage] 적용: idx {index} → 스테이지 {s.stageNumber} '{s.displayName}'");
@@ -183,6 +202,82 @@ namespace BeatMemories
             for (int i = 0; i < s.enemyPool.Count; i++)
                 if (s.enemyPool[i] != null && s.enemyPool[i].Sprite != null) return s.enemyPool[i].Sprite;
             return null;
+        }
+
+        private void ResolveLegacyActors()
+        {
+            if (playerData == null)
+                playerData = FindFirstObjectByType<PlayerData>();
+            if (playerActor == null)
+            {
+                GameObject actor = GameObject.Find("PlayerActor");
+                if (actor != null) playerActor = actor.GetComponent<SpriteRenderer>();
+            }
+            if (enemyActor == null)
+            {
+                GameObject actor = GameObject.Find("EnemyActor");
+                if (actor != null) enemyActor = actor.GetComponent<SpriteRenderer>();
+            }
+        }
+
+        private void ApplyCharacterPrefabs(StageSO s)
+        {
+            ReplaceCharacter(
+                s != null ? s.playerPrefab : null,
+                playerActor,
+                ref playerCharacterInstance);
+            ReplaceCharacter(
+                s != null ? s.enemyPrefab : null,
+                enemyActor,
+                ref enemyCharacterInstance);
+            if (playerData != null
+                && playerCharacterInstance != null
+                && playerCharacterInstance.Data is PlayerCharacterData definition)
+            {
+                playerData.SetCharacterData(definition);
+            }
+        }
+
+        private static void ReplaceCharacter(
+            CharacterView prefab,
+            SpriteRenderer legacyActor,
+            ref CharacterView instance)
+        {
+            if (instance != null)
+            {
+                instance.gameObject.SetActive(false);
+                Destroy(instance.gameObject);
+                instance = null;
+            }
+
+            if (legacyActor == null) return;
+            if (prefab == null)
+            {
+                SetLegacyPresentationEnabled(legacyActor, true);
+                return;
+            }
+
+            SetLegacyPresentationEnabled(legacyActor, false);
+            instance = Instantiate(prefab, legacyActor.transform);
+            Transform instanceTransform = instance.transform;
+            instanceTransform.localPosition = Vector3.zero;
+            instanceTransform.localRotation = Quaternion.identity;
+            instanceTransform.localScale = Vector3.one;
+        }
+
+        private static void SetLegacyPresentationEnabled(
+            SpriteRenderer legacyActor,
+            bool enabled)
+        {
+            legacyActor.enabled = enabled;
+
+            KeyframeAnimator keyframeAnimator =
+                legacyActor.GetComponent<KeyframeAnimator>();
+            if (keyframeAnimator != null) keyframeAnimator.enabled = enabled;
+
+            Transform legacyShadow = legacyActor.transform.Find("Shadow");
+            if (legacyShadow != null)
+                legacyShadow.gameObject.SetActive(enabled);
         }
     }
 }

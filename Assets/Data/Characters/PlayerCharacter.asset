@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb52a1f08aed0ef4eb6eeb69f9d445dc, type: 3}
+  m_Name: PlayerCharacter
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.PlayerCharacterData
+  id: player
+  displayName: Player
+  maxHp: 7
+  attackPower: 1
+  chargedAttackMultiplier: 2.5
+  chargedPiercesArmor: 1
+  idleSprite: {fileID: 2957193128944724991, guid: d94a466251b596146824e30d525b89da, type: 3}
+  guardSprites:
+  - {fileID: -8129890049021116422, guid: a4dc611f7d55f48438db93b6ac215f55, type: 3}
+  attackSprites:
+  - {fileID: 6368293324628230288, guid: 10297f3ed7ba01944931b08484e240d1, type: 3}
+  chargeSprites:
+  - {fileID: -6972310057853034769, guid: d5660862ec2b54c4392e9423471dbd8d, type: 3}
+  timingMistakeSprite: {fileID: 0}

@@ -202,13 +202,7 @@ namespace BeatMemories
         private Coroutine playerDeathRoutine;
         private Coroutine enemyDeathRoutine;
         private bool deathPresentationActive;
-        private bool deathHitStopActive;
-        private float deathPreviousTimeScale = 1f;
-        private double deathHitStopStartedAt;
         private int floatingScoreOrder;
-        private Coroutine hitStopRoutine;
-        private float timeScaleBeforeHitStop = 1f;
-        private double hitStopStartedAt;
         private SpriteNumberVisual scoreNumberVisual;
 
         private sealed class SpriteNumberVisual
@@ -291,17 +285,16 @@ namespace BeatMemories
                 combatUiGroup.alpha = 1f;
             }
             cameraSway?.RestoreFocus(0.01f);
-            RestoreDeathHitStop();
             StopEffectLight(playerLaserMuzzleGlow);
             StopEffectLight(enemyLaserMuzzleGlow);
             StopEffectLight(playerLaserHitFlash);
             StopEffectLight(enemyLaserHitFlash);
             StopChargeEffect();
-            RestoreHitStop();
         }
 
         private void Start()
         {
+            RefreshCharacterViews();
             if (enemySlot != null) enemyBaseScale = enemySlot.transform.localScale;
             if (playerSlot != null) playerBaseScale = playerSlot.transform.localScale;
             presentationInitialized = true;
@@ -384,9 +377,9 @@ namespace BeatMemories
             if (e != null && e.Action == PlayerAction.Attack) StopPlayerIdleBounce();
             if (enemySlot != null) enemySlot.flipX = false;
 
-            if (enemyLaser != null && e != null)
+            if (stageManager?.EnemyCharacter == null && enemyLaser != null && e != null)
                 enemyLaser.transform.localPosition = e.LaserOriginOffset;
-            if (enemyLaserOuter != null && e != null)
+            if (stageManager?.EnemyCharacter == null && enemyLaserOuter != null && e != null)
                 enemyLaserOuter.transform.localPosition = e.LaserOriginOffset;
 
             if (e != null && e.Sprite != null)
@@ -402,6 +395,8 @@ namespace BeatMemories
                     playerLaserMuzzleGlow,
                     playerLaserHitFlash,
                     enemySlot,
+                    ResolveLaserOrigin(true, playerLaser),
+                    ResolveHitPosition(false, enemySlot),
                     playerLaserColor,
                     r.Cleared);
             if (e != null && e.Action == PlayerAction.Attack && playerSlot != null)
@@ -411,6 +406,8 @@ namespace BeatMemories
                     enemyLaserMuzzleGlow,
                     enemyLaserHitFlash,
                     playerSlot,
+                    ResolveLaserOrigin(false, enemyLaser),
+                    ResolveHitPosition(true, playerSlot),
                     enemyLaserColor,
                     r.PlayerDamage > 0);
 
@@ -510,10 +507,13 @@ namespace BeatMemories
         {
             _enemyHp = Mathf.Clamp(currentHp, 0, Mathf.Max(1, maxHp));
             RefreshEnemyCells();
+            if (_enemyHp == 0 && enemyDeathRoutine == null)
+                enemyDeathRoutine = StartCoroutine(BeginEnemyDeathAfterLaser());
         }
 
         private void OnStageApplied(StageSO appliedStage)
         {
+            RefreshCharacterViews();
             SyncStageHud(appliedStage);
         }
 
@@ -880,12 +880,79 @@ namespace BeatMemories
             laser.enabled = false;
         }
 
+        private void RefreshCharacterViews()
+        {
+            if (stageManager == null)
+                stageManager = FindFirstObjectByType<StageManager>();
+
+            SpriteRenderer nextPlayer =
+                stageManager != null ? stageManager.PlayerActor : null;
+            SpriteRenderer nextEnemy =
+                stageManager != null ? stageManager.EnemyActor : null;
+
+            if (nextPlayer != null && nextPlayer != playerSlot)
+            {
+                StopPlayerIdleBounce();
+                playerSlot = nextPlayer;
+                playerBaseScale = playerSlot.transform.localScale;
+                CharacterView view = stageManager.PlayerCharacter;
+                KeyframeAnimator prefabAnimator =
+                    view != null ? view.GetComponent<KeyframeAnimator>() : null;
+                if (prefabAnimator != null) playerIdleAnim = prefabAnimator;
+                if (presentationInitialized)
+                {
+                    chargeAura?.Initialize(playerSlot, playerLaserColor);
+                    chargeAura?.SetReady(player != null && player.IsCharged);
+                }
+            }
+
+            if (nextEnemy != null && nextEnemy != enemySlot)
+            {
+                StopEnemyIdleBounce();
+                enemySlot = nextEnemy;
+                enemyBaseScale = enemySlot.transform.localScale;
+            }
+        }
+
+        private Vector3 ResolveLaserOrigin(bool playerSource, LineRenderer fallback)
+        {
+            CharacterView view = stageManager != null
+                ? playerSource
+                    ? stageManager.PlayerCharacter
+                    : stageManager.EnemyCharacter
+                : null;
+            if (view != null)
+                return view.GetAnchorPosition(CharacterAnchorType.LaserMuzzle);
+            return fallback != null ? fallback.transform.position : Vector3.zero;
+        }
+
+        private Vector3 ResolveCurrentLaserOrigin(LineRenderer laser, Vector3 fallback)
+        {
+            if (laser == playerLaser) return ResolveLaserOrigin(true, laser);
+            if (laser == enemyLaser) return ResolveLaserOrigin(false, laser);
+            return fallback;
+        }
+
+        private Vector3 ResolveHitPosition(bool playerTarget, SpriteRenderer fallback)
+        {
+            CharacterView view = stageManager != null
+                ? playerTarget
+                    ? stageManager.PlayerCharacter
+                    : stageManager.EnemyCharacter
+                : null;
+            if (view != null)
+                return view.GetAnchorPosition(CharacterAnchorType.Hit);
+            return fallback != null ? fallback.bounds.center : Vector3.zero;
+        }
+
         private void PlayLaser(
             LineRenderer laser,
             LineRenderer outerLaser,
             Light2D muzzleGlow,
             Light2D hitFlash,
             SpriteRenderer targetActor,
+            Vector3 origin,
+            Vector3 target,
             Color color,
             bool hit)
         {
@@ -893,8 +960,9 @@ namespace BeatMemories
 
             StopLaser(laser, outerLaser);
             StopEffectLight(muzzleGlow);
-            Vector3 origin = laser.transform.position;
-            Vector3 target = targetActor.bounds.center;
+            laser.transform.position = origin;
+            if (outerLaser != null) outerLaser.transform.position = origin;
+            if (muzzleGlow != null) muzzleGlow.transform.position = origin;
             float progress = 0f;
             float alpha = 1f;
             laser.widthMultiplier = laserWidth * laserFlashWidthMultiplier;
@@ -937,7 +1005,7 @@ namespace BeatMemories
                 value =>
                 {
                     progress = value;
-                    Vector3 currentOrigin = laser.transform.position;
+                    Vector3 currentOrigin = ResolveCurrentLaserOrigin(laser, origin);
                     SetLaserPositions(
                         laser,
                         outerLaser,
@@ -963,7 +1031,6 @@ namespace BeatMemories
             sequence.AppendCallback(() =>
             {
                 PlayLaserImpact(hitFlash, targetActor, target, color, hit);
-                if (hit) BeginHitStop();
             });
             sequence.Append(DOTween.To(
                 () => alpha,
@@ -1096,47 +1163,12 @@ namespace BeatMemories
             chargeAura?.StopImmediate();
         }
 
-        private void BeginHitStop()
-        {
-            if (deathPresentationActive
-                || laserHitStopDuration <= 0f
-                || hitStopRoutine != null
-                || Time.timeScale <= 0f)
-                return;
-            hitStopRoutine = StartCoroutine(HitStop());
-        }
-
-        private IEnumerator HitStop()
-        {
-            timeScaleBeforeHitStop = Time.timeScale;
-            hitStopStartedAt = Time.realtimeSinceStartupAsDouble;
-            Time.timeScale = 0f;
-            yield return new WaitForSecondsRealtime(laserHitStopDuration);
-            CompleteHitStop();
-        }
-
-        private void RestoreHitStop()
-        {
-            if (hitStopRoutine == null) return;
-
-            StopCoroutine(hitStopRoutine);
-            CompleteHitStop();
-        }
-
-        private void CompleteHitStop()
-        {
-            double pausedDuration = Time.realtimeSinceStartupAsDouble - hitStopStartedAt;
-            Time.timeScale = timeScaleBeforeHitStop;
-            conductor?.DelayClock(pausedDuration);
-            hitStopRoutine = null;
-        }
-
         private IEnumerator BeginEnemyDeathAfterLaser()
         {
             float laserLead = laserPrepareDuration + laserGrowDuration + laserHitStopDuration;
             if (laserLead > 0f) yield return new WaitForSecondsRealtime(laserLead);
             if (!deathPresentationActive)
-                yield return PlayDeathSequence(enemySlot, false);
+                yield return PlayDeathSequence(enemySlot, true);
             enemyDeathRoutine = null;
         }
 
@@ -1151,19 +1183,8 @@ namespace BeatMemories
             if (actor == null || deathPresentationActive) yield break;
             deathPresentationActive = true;
             HideCombatUi();
-            if (actor != playerSlot && conductor != null)
-            {
-                double presentationDuration = deathCameraDuration
-                    + deathShakeDuration
-                    + explosionInterval * 2f
-                    + explosionFlyDelay
-                    + deathFlyDuration;
-                conductor.DelayClock(presentationDuration);
-            }
-
             if (actor == playerSlot) StopPlayerIdleBounce();
             else StopEnemyIdleBounce();
-            RestoreHitStop();
 
             Transform actorTransform = actor.transform;
             actorTransform.DOKill();
@@ -1172,12 +1193,13 @@ namespace BeatMemories
             Vector3 originalScale = actorTransform.localScale;
             bool originalEnabled = actor.enabled;
 
-            BeginDeathHitStop();
             if (deathHitStopDuration > 0f)
                 yield return new WaitForSecondsRealtime(deathHitStopDuration);
-            RestoreDeathHitStop();
 
-            Vector3 focusPosition = actor.bounds.center;
+            CharacterView actorView = CharacterViewFor(actor);
+            Vector3 focusPosition = actorView != null
+                ? actorView.GetAnchorPosition(CharacterAnchorType.Hit)
+                : actor.bounds.center;
             cameraSway?.FocusOn(focusPosition, deathCameraZoomRatio, deathCameraDuration);
             yield return new WaitForSecondsRealtime(deathCameraDuration);
 
@@ -1192,7 +1214,9 @@ namespace BeatMemories
                 .SetUpdate(true);
             yield return new WaitForSecondsRealtime(deathShakeDuration);
 
-            Vector3 explosionCenter = actor.bounds.center;
+            Vector3 explosionCenter = actorView != null
+                ? actorView.GetAnchorPosition(CharacterAnchorType.Effect)
+                : actor.bounds.center;
             for (int i = 0; i < 3; i++)
             {
                 SpawnExplosion(explosionCenter, i);
@@ -1233,23 +1257,12 @@ namespace BeatMemories
             deathPresentationActive = false;
         }
 
-        private void BeginDeathHitStop()
+        private CharacterView CharacterViewFor(SpriteRenderer actor)
         {
-            if (deathHitStopDuration <= 0f || deathHitStopActive) return;
-            deathPreviousTimeScale = Time.timeScale;
-            deathHitStopStartedAt = Time.realtimeSinceStartupAsDouble;
-            deathHitStopActive = true;
-            Time.timeScale = 0f;
-        }
-
-        private void RestoreDeathHitStop()
-        {
-            if (!deathHitStopActive) return;
-            double pausedDuration =
-                Time.realtimeSinceStartupAsDouble - deathHitStopStartedAt;
-            Time.timeScale = deathPreviousTimeScale;
-            conductor?.DelayClock(pausedDuration);
-            deathHitStopActive = false;
+            if (stageManager == null || actor == null) return null;
+            if (actor == playerSlot) return stageManager.PlayerCharacter;
+            if (actor == enemySlot) return stageManager.EnemyCharacter;
+            return null;
         }
 
         private void FadeCombatUi(float alpha)

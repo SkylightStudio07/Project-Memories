@@ -11,6 +11,10 @@ namespace BeatMemories
     /// </summary>
     public class PlayerData : MonoBehaviour
     {
+        [Header("Character Definition")]
+        [Tooltip("Prefab과 공유하는 정적 캐릭터 데이터. 비어 있으면 아래 기존 필드를 사용한다.")]
+        [SerializeField] private PlayerCharacterData characterData;
+
         [Header("체력 (인스펙터 조정)")]
         [SerializeField, Min(1)] private int maxHp = 8;
         [SerializeField] private int currentHp = 8;
@@ -41,17 +45,27 @@ namespace BeatMemories
         public event Action OnDied;
 
         // ── 공격/차징 ──
-        public int AttackPower => attackPower;
-        public int ChargedAttackPower => Mathf.CeilToInt(attackPower * chargedAttackMultiplier);
-        public float ChargedAttackMultiplier => chargedAttackMultiplier;
-        public bool ChargedPiercesArmor => chargedPiercesArmor;
+        public PlayerCharacterData CharacterData => characterData;
+        public int AttackPower => characterData != null ? characterData.AttackPower : attackPower;
+        public int ChargedAttackPower =>
+            Mathf.CeilToInt(AttackPower * ChargedAttackMultiplier);
+        public float ChargedAttackMultiplier =>
+            characterData != null
+                ? characterData.ChargedAttackMultiplier
+                : chargedAttackMultiplier;
+        public bool ChargedPiercesArmor =>
+            characterData != null
+                ? characterData.ChargedPiercesArmor
+                : chargedPiercesArmor;
         public bool IsCharged { get; private set; }
         public event Action<bool> OnChargedChanged;
 
         // ── 스프라이트 ──
         /// <summary>기본(idle) 스프라이트. 행동이 끝나면 뷰가 이걸로 복귀시킨다.</summary>
-        public Sprite IdleSprite => idleSprite;
-        public Sprite TimingMistakeSprite => timingMistakeSprite;
+        public Sprite IdleSprite =>
+            characterData != null ? characterData.IdleSprite : idleSprite;
+        public Sprite TimingMistakeSprite =>
+            characterData != null ? characterData.TimingMistakeSprite : timingMistakeSprite;
         public Sprite CurrentSprite { get; private set; }
         public event Action<Sprite> OnSpriteChanged;
         public event Action<PlayerAction, Sprite> OnActionPresented;
@@ -59,7 +73,20 @@ namespace BeatMemories
         // 게임플레이 시드와 독립적인 연출용 난수
         private readonly System.Random spriteRng = new System.Random();
 
-        private void Awake() => ResetState();
+        public void SetCharacterData(PlayerCharacterData value)
+        {
+            if (value == null || characterData == value) return;
+            characterData = value;
+            maxHp = value.MaxHp;
+            ResetState();
+        }
+
+        private void Awake()
+        {
+            if (characterData != null)
+                maxHp = characterData.MaxHp;
+            ResetState();
+        }
 
         private void OnEnable() { if (input != null) input.OnActionAccepted += HandleAction; }
         private void OnDisable() { if (input != null) input.OnActionAccepted -= HandleAction; }
@@ -116,6 +143,9 @@ namespace BeatMemories
 
         private Sprite[] SpritesFor(PlayerAction action)
         {
+            if (characterData != null)
+                return characterData.SpritesFor(action);
+
             switch (action)
             {
                 case PlayerAction.Guard: return guardSprites;
