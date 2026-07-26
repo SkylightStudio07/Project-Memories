@@ -59,6 +59,9 @@ namespace BeatMemories
             guardAction = new InputAction("Guard", InputActionType.Button, "<Keyboard>/leftArrow");
             attackAction = new InputAction("Attack", InputActionType.Button, "<Keyboard>/rightArrow");
             chargeAction = new InputAction("Charge", InputActionType.Button, "<Keyboard>/downArrow");
+            guardAction.AddBinding("<Keyboard>/a");
+            attackAction.AddBinding("<Keyboard>/d");
+            chargeAction.AddBinding("<Keyboard>/s");
 
             guardAction.performed += OnGuard;
             attackAction.performed += OnAttack;

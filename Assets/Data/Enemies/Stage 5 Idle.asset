@@ -15,7 +15,7 @@ MonoBehaviour:
   data:
     id: stage5_idle
     displayName: "\uAE30\uBCF8 \uC0C1\uD0DC"
-    sprite: {fileID: 21300000, guid: 1bdf79295a7341e59133d1a78b950458, type: 3}
+    sprite: {fileID: 4195282247415659508, guid: 54a26cd9301337c459d381a7afd0cbbe, type: 3}
     action: 0
     attackDamage: 1
     unblockableAttack: 0

@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,10 @@ namespace BeatMemories
         [SerializeField, Range(0.1f, 1f)] private float startScale = 0.6f;
         [Tooltip("등장 시 기울기(도) → 0으로 정렬")]
         [SerializeField] private float startRotate = 8f;
+        [SerializeField, Min(1f)] private float impactStartScale = 1.45f;
+        [SerializeField, Range(0.6f, 1f)] private float impactSquashScale = 0.88f;
+        [SerializeField, Range(0f, 0.3f)] private float punchStrength = 0.08f;
+        [SerializeField, Min(1f)] private float displayScaleMultiplier = 2f;
 
         private Image _img;
         private RectTransform _rt;
@@ -50,39 +55,48 @@ namespace BeatMemories
             _img.enabled = true;
             _rt.SetAsLastSibling();
 
-            // 등장: 작게+기울여서 → 커지며 정렬(ease-out), 알파 0→1
-            float t = 0f;
-            while (t < growDuration)
-            {
-                t += Time.unscaledDeltaTime;
-                float p = Mathf.Clamp01(t / growDuration);
-                float e = 1f - (1f - p) * (1f - p);
-                _rt.localScale = _baseScale * Mathf.Lerp(startScale, 1f, e);
-                _rt.localRotation = Quaternion.Euler(0f, 0f, Mathf.Lerp(-startRotate, 0f, e));
-                SetAlpha(Mathf.Clamp01(p * 2f));
-                yield return null;
-            }
-            _rt.localScale = _baseScale;
-            _rt.localRotation = Quaternion.identity;
-            SetAlpha(1f);
+            _rt.DOKill();
+            _img.DOKill();
+            Vector3 displayScale = _baseScale * displayScaleMultiplier;
+            _rt.localScale = displayScale * impactStartScale;
+            _rt.localRotation = Quaternion.Euler(0f, 0f, -startRotate);
+            SetAlpha(0f);
+
+            float squashScale = Mathf.Max(startScale, impactSquashScale);
+            float impactDuration = Mathf.Max(0.05f, growDuration * 0.38f);
+            float settleDuration = Mathf.Max(0.05f, growDuration - impactDuration);
+            Sequence impact = DOTween.Sequence().SetUpdate(true);
+            impact.Append(_img.DOFade(1f, impactDuration * 0.45f));
+            impact.Join(_rt.DOScale(
+                    displayScale * squashScale,
+                    impactDuration)
+                .SetEase(Ease.InExpo));
+            impact.Join(_rt.DORotate(Vector3.zero, impactDuration)
+                .SetEase(Ease.OutQuad));
+            impact.Append(_rt.DOScale(displayScale, settleDuration)
+                .SetEase(Ease.OutBack, 2.2f));
+            if (punchStrength > 0f)
+                impact.Append(_rt.DOPunchScale(
+                    displayScale * punchStrength,
+                    0.16f,
+                    7,
+                    0.65f));
+            yield return impact.WaitForCompletion();
 
             if (holdSeconds > 0f) yield return new WaitForSecondsRealtime(holdSeconds);
 
-            // 퇴장: 페이드아웃 + 살짝 더 커짐
-            t = 0f;
-            while (t < fadeDuration)
-            {
-                t += Time.unscaledDeltaTime;
-                float p = Mathf.Clamp01(t / fadeDuration);
-                _rt.localScale = _baseScale * Mathf.Lerp(1f, 1.08f, p);
-                SetAlpha(1f - p);
-                yield return null;
-            }
+            Sequence outro = DOTween.Sequence().SetUpdate(true);
+            outro.Append(_img.DOFade(0f, fadeDuration).SetEase(Ease.InQuad));
+            outro.Join(_rt.DOScale(displayScale * 1.08f, fadeDuration)
+                .SetEase(Ease.InQuad));
+            yield return outro.WaitForCompletion();
             Hide();
         }
 
         public void Hide()
         {
+            if (_rt != null) _rt.DOKill();
+            if (_img != null) _img.DOKill();
             if (_img != null) { _img.enabled = false; SetAlpha(1f); }
             if (_rt != null) { _rt.localScale = _baseScale; _rt.localRotation = Quaternion.identity; }
         }

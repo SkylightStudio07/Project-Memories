@@ -33,6 +33,7 @@ namespace BeatMemories
         [SerializeField] private InputReader input;
         [SerializeField] private RhythmPatternSO pattern;
         [SerializeField] private List<Enemy> enemyPool = new List<Enemy>();
+        [SerializeField] private CombatBalanceSettings combatBalance;
 
         [Header("시퀀스 (인스펙터 조정)")]
         [Tooltip("고정 시드 → 재현 가능. 랜덤화 시 매판 달라짐")]
@@ -77,6 +78,7 @@ namespace BeatMemories
         public event Action OnFinalStageCleared;
         public event Action<StageSO> OnStageApplied;
         public event Action<int, int, int> OnEnemyPageTransitionStarted;
+        public event Action<bool> OnEnemyChargedChanged;
 
         public PhaseSO CurrentPhase { get; private set; }
         public StageSO CurrentStage => stage;
@@ -85,6 +87,11 @@ namespace BeatMemories
         public int EnemyMaxHp { get; private set; } = 1;
         public int CurrentEnemyPage { get; private set; } = 1;
         public int EnemyPageCount { get; private set; } = 1;
+        public bool IsEnemyCharged { get; private set; }
+        public bool CurrentJudgePlayerChargedAttack { get; private set; }
+        public bool CurrentJudgeEnemyChargedAttack { get; private set; }
+        public float ChargedLaserWidthMultiplier =>
+            combatBalance != null ? combatBalance.ChargedLaserWidthMultiplier : 3f;
 
         private sealed class ResponseNote
         {
@@ -114,6 +121,8 @@ namespace BeatMemories
         private int stageStartCycleIndex;
         private int responseEndCycleIndex = -1;
         private GameObject backgroundInstance;
+        private bool resolvingJudge;
+        private bool deathPending;
 
         public int Seed => seed;
 
@@ -126,6 +135,7 @@ namespace BeatMemories
 
         private void Awake()
         {
+            if (combatBalance == null) combatBalance = CombatBalanceSettings.Load();
             if (randomizeSeed) seed = Environment.TickCount;
             initialized = true;
             if (stage != null) ApplyStage(stage);
@@ -150,6 +160,7 @@ namespace BeatMemories
             CurrentEnemyHp = EnemyMaxHp;
             EnemyPageCount = Mathf.Max(1, s.enemyPageCount);
             CurrentEnemyPage = 1;
+            SetEnemyCharged(false);
 
             stageStartCycleIndex = conductor != null && conductor.IsRunning
                 ? conductor.CycleIndex + 1
@@ -164,6 +175,8 @@ namespace BeatMemories
             responseEndPending = false;
             responseEndFrame = -1;
             responseEndCycleIndex = -1;
+            resolvingJudge = false;
+            deathPending = false;
             inputLockedUntilRealtime = double.NegativeInfinity;
             RebuildStageRuntime();
             OnStageApplied?.Invoke(s);
@@ -280,7 +293,6 @@ namespace BeatMemories
                 OnPhasePreparing?.Invoke(cycleIndex + 1, nextPhase);
                 conductor?.QueuePreparationBeats(phasePreparationBeats);
             }
-            FinalizeResponseEnd(cycleIndex);
         }
 
         // 제시 구간: 네 박 동안 스포트라이트 박마다 적을 드러낸다.
@@ -310,21 +322,26 @@ namespace BeatMemories
                 return;
             }
 
-            while (pendingInputs.Count > 0 && !isOver)
-                ConsumeInput(pendingInputs.Dequeue());
-
-            if (isOver) return;
             if (!inResponse)
             {
+                // RoundManager가 Conductor보다 먼저 Update되므로, 응답 시작과 같은 프레임의
+                // 입력은 다음 프레임까지 보존한다. 그보다 오래된 제시 구간 입력만 버린다.
+                while (pendingInputs.Count > 0
+                    && pendingInputs.Peek().Frame < Time.frameCount)
+                    pendingInputs.Dequeue();
                 responseEndPending = false;
                 responseEndFrame = -1;
                 return;
             }
 
+            while (pendingInputs.Count > 0 && !isOver)
+                ConsumeInput(pendingInputs.Dequeue());
+
+            if (isOver) return;
             RefreshPendingNoteWindows();
             ExpireElapsedNotes(conductor.SongPosition);
 
-            if (responseEndPending)
+            if (responseEndPending && Time.frameCount > responseEndFrame)
                 FinalizeResponseEnd(responseEndCycleIndex);
         }
 
@@ -343,8 +360,11 @@ namespace BeatMemories
 
         private void QueueInput(TimedPlayerAction timedAction)
         {
-            if (!isOver && (conductor == null || !conductor.IsPreparing))
-                pendingInputs.Enqueue(timedAction);
+            if (isOver) return;
+            if (conductor != null
+                && (!conductor.IsRunning || conductor.IsPreparing))
+                return;
+            pendingInputs.Enqueue(timedAction);
         }
 
         // 입력이 처리된 프레임이 아니라 Input System이 기록한 실제 발생 시각으로 행동 구간을 찾는다.
@@ -355,8 +375,9 @@ namespace BeatMemories
             RefreshPendingNoteWindows();
             double inputSongTime = conductor.RealtimeToSongPosition(timedAction.Realtime)
                 + GameSettings.InputOffsetSeconds;
+            if (timedAction.Realtime < inputLockedUntilRealtime) return;
             ExpireElapsedNotes(inputSongTime);
-            if (isOver || timedAction.Realtime < inputLockedUntilRealtime) return;
+            if (isOver) return;
 
             int current = -1;
             for (int i = 0; i < notes.Count; i++)
@@ -486,13 +507,31 @@ namespace BeatMemories
         private void ApplyJudge(int slot, Enemy enemy, PlayerAction action, bool isMiss, float responseRatio)
         {
             bool charged = player != null && player.IsCharged;
+            bool enemyChargedAttack =
+                IsEnemyCharged && enemy != null && enemy.Action == PlayerAction.Attack;
+            CurrentJudgePlayerChargedAttack =
+                charged && action == PlayerAction.Attack;
+            CurrentJudgeEnemyChargedAttack = enemyChargedAttack;
+            float chargedDamageMultiplier = combatBalance != null
+                ? combatBalance.ChargedAttackDamageMultiplier
+                : 3f;
             JudgeResult result = JudgeSystem.Judge(enemy, action, charged); // 양측 행동 조합 판정
 
             // 공격이 '정답'이면 방어력·HP·강공격을 반영
+            if (enemyChargedAttack && result.PlayerDamage > 0)
+            {
+                result = new JudgeResult(
+                    result.Input,
+                    result.Type,
+                    Mathf.CeilToInt(result.PlayerDamage * chargedDamageMultiplier),
+                    result.Cleared,
+                    result.Feedback);
+            }
+
             if (action == PlayerAction.Attack && result.Cleared && enemy != null && player != null)
             {
                 float power = charged
-                    ? player.AttackPower * player.ChargedAttackMultiplier
+                    ? player.AttackPower * chargedDamageMultiplier
                     : player.AttackPower;
                 float dmg = (charged && player.ChargedPiercesArmor)
                     ? power
@@ -521,6 +560,9 @@ namespace BeatMemories
             else if (action == PlayerAction.Charge && player != null)
                 player.SetCharged(result.Type != OutcomeType.Punished);
 
+            if (enemy != null && enemy.Action == PlayerAction.Charge)
+                SetEnemyCharged(!result.Cleared);
+
             // 적 HP가 이미 0이면(같은 응답 마디에 남은 슬롯) 쓰러진 적은 더 이상 반격하지 못한다.
             // 이 처리가 없으면 '죽은 적의 발악'으로 플레이어가 피해를 입고, 그 피격으로 사망 시
             // FinalizeResponseEnd의 `stageClearPending && !isOver`가 뒤집혀 클리어가 게임오버로 덮인다.
@@ -533,11 +575,22 @@ namespace BeatMemories
                     result.Cleared,
                     "적 격파 — 반격 무효");
 
+            resolvingJudge = true;
             if (result.PlayerDamage > 0 && player != null) player.TakeDamage(result.PlayerDamage);
-            if (result.Cleared) DamageEnemy();
+            if (result.Cleared)
+                DamageEnemy(CurrentJudgePlayerChargedAttack, chargedDamageMultiplier);
             if (result.Cleared) AwardScore(enemy, action, responseRatio);
             if (action == PlayerAction.Attack && result.Cleared) OnAttackLanded?.Invoke(charged);
             OnJudged?.Invoke(slot, enemy, result);
+            resolvingJudge = false;
+            if (deathPending)
+            {
+                deathPending = false;
+                HandleDied();
+            }
+            if (enemyChargedAttack) SetEnemyCharged(false);
+            CurrentJudgePlayerChargedAttack = false;
+            CurrentJudgeEnemyChargedAttack = false;
             if (verboseLog)
                 Debug.Log($"[Round] {(isMiss ? "무입력" : "응답")} slot{slot}: {enemy?.DisplayName} + {action}{(charged ? "(강)" : "")} → {result.Type} (dmg {result.PlayerDamage}) HP {(player != null ? player.CurrentHp : -1)}");
         }
@@ -735,11 +788,14 @@ namespace BeatMemories
             return current != next;
         }
 
-        private void DamageEnemy()
+        private void DamageEnemy(bool chargedAttack, float chargedDamageMultiplier)
         {
             if (CurrentEnemyHp <= 0) return;
 
-            CurrentEnemyHp = Mathf.Max(0, CurrentEnemyHp - 1);
+            int damage = chargedAttack
+                ? Mathf.Max(1, Mathf.RoundToInt(chargedDamageMultiplier))
+                : 1;
+            CurrentEnemyHp = Mathf.Max(0, CurrentEnemyHp - damage);
             stageClearPending |= CurrentEnemyHp == 0;
             OnEnemyHealthChanged?.Invoke(CurrentEnemyHp, EnemyMaxHp);
         }
@@ -747,6 +803,7 @@ namespace BeatMemories
         private void BeginNextEnemyPage(int completedCycleIndex)
         {
             stageClearPending = false;
+            SetEnemyCharged(false);
             CurrentEnemyPage++;
             CurrentEnemyHp = EnemyMaxHp;
             stageStartCycleIndex = Mathf.Max(0, completedCycleIndex + 1);
@@ -787,6 +844,7 @@ namespace BeatMemories
             isOver = true;
             pendingInputs.Clear();
             responseEndPending = false;
+            SetEnemyCharged(false);
             if (conductor != null) conductor.StopClock();
             OnFinalStageCleared?.Invoke();
         }
@@ -799,6 +857,7 @@ namespace BeatMemories
             responseEndPending = false;
             responseEndFrame = -1;
             responseEndCycleIndex = -1;
+            SetEnemyCharged(false);
             if (conductor != null) conductor.StopClock();
         }
 
@@ -810,13 +869,26 @@ namespace BeatMemories
 
         private void HandleDied()
         {
+            if (resolvingJudge)
+            {
+                deathPending = true;
+                return;
+            }
             if (isOver) return;
             isOver = true;
             pendingInputs.Clear();
             responseEndPending = false;
+            SetEnemyCharged(false);
             if (conductor != null) conductor.StopClock();
             OnGameOver?.Invoke();
             if (verboseLog) Debug.Log("[Round] ===== GAME OVER =====");
+        }
+
+        private void SetEnemyCharged(bool charged)
+        {
+            if (IsEnemyCharged == charged) return;
+            IsEnemyCharged = charged;
+            OnEnemyChargedChanged?.Invoke(charged);
         }
     }
 }

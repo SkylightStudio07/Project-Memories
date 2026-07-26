@@ -166,22 +166,56 @@ namespace BeatMemories
             transitioning = false;
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
+#if UNITY_EDITOR
         private void OnGUI()
         {
-            const float width = 180f;
-            const float height = 44f;
+            const float width = 220f;
+            const float rowHeight = 34f;
             const float margin = 16f;
-            Rect buttonRect = new Rect(Screen.width - width - margin, margin, width, height);
-            bool previousEnabled = GUI.enabled;
-            GUI.enabled = roster != null && roster.Get(CurrentIndex + 1) != null;
+            int count = roster != null ? roster.Count : 0;
+            if (count <= 0) return;
 
-            if (GUI.Button(buttonRect, "DEV  다음 스테이지"))
+            Rect panel = new Rect(
+                Screen.width - width - margin,
+                margin,
+                width,
+                30f + rowHeight * count);
+            GUI.Box(panel, "EDITOR STAGE DEBUG");
+            for (int i = 0; i < count; i++)
             {
-                HandleStageCleared();
+                StageSO debugStage = roster.Get(i);
+                Rect button = new Rect(
+                    panel.x + 8f,
+                    panel.y + 26f + rowHeight * i,
+                    panel.width - 16f,
+                    rowHeight - 4f);
+                bool previousEnabled = GUI.enabled;
+                GUI.enabled = !transitioning && i != CurrentIndex;
+                string label = debugStage != null
+                    ? $"Stage {debugStage.stageNumber}  {debugStage.displayName}"
+                    : $"Stage Index {i}";
+                if (GUI.Button(button, label))
+                    DebugSwitchStage(i);
+                GUI.enabled = previousEnabled;
             }
+        }
 
-            GUI.enabled = previousEnabled;
+        private void DebugSwitchStage(int index)
+        {
+            if (transitioning || roster == null || roster.Get(index) == null) return;
+
+            StopAllCoroutines();
+            dialogueViewer?.StopAndHide();
+            stageClearBanner?.Hide();
+            if (blackout != null)
+            {
+                blackout.alpha = 0f;
+                blackout.blocksRaycasts = false;
+            }
+            transitioning = false;
+            round?.PauseForStageTransition();
+            ApplyStage(index);
+            round?.StartRound();
         }
 #endif
 

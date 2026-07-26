@@ -2,6 +2,7 @@ using System.Collections;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace BeatMemories
@@ -20,10 +21,14 @@ namespace BeatMemories
         [SerializeField] private GameObject root;
         [Tooltip("화면 전체를 덮어 클릭으로 다음 줄 진행 + 뒤 UI 입력 차단")]
         [SerializeField] private Button advanceButton;
+        [SerializeField] private Image dimBackground;
+        [SerializeField] private Color dimBackgroundColor =
+            new Color(0f, 0f, 0f, 0.58f);
 
         [Header("타자기 연출 (인스펙터 조정)")]
         [Tooltip("초당 표시할 글자 수. 0이면 즉시 전체 표시")]
         [SerializeField, Min(0f)] private float charsPerSecond = 40f;
+        [SerializeField] private DialogueTypingSettings typingSettings;
 
         [Header("적 대사창 (우측 하단)")]
         [SerializeField] private GameObject enemyWindow;
@@ -46,6 +51,7 @@ namespace BeatMemories
         private Coroutine _typingRoutine;
         private TMP_Text _typingTarget;
         private string _typingFullText;
+        private AudioSource _typingAudio;
 
         public bool IsPlaying { get; private set; }
 
@@ -55,6 +61,28 @@ namespace BeatMemories
         private void Awake()
         {
             if (advanceButton != null) advanceButton.onClick.AddListener(OnAdvanceClicked);
+            if (dimBackground == null && advanceButton != null)
+                dimBackground = advanceButton.targetGraphic as Image;
+            if (dimBackground != null)
+            {
+                dimBackground.color = dimBackgroundColor;
+                dimBackground.raycastTarget = true;
+                dimBackground.rectTransform.SetAsFirstSibling();
+            }
+            if (typingSettings == null) typingSettings = DialogueTypingSettings.Load();
+            _typingAudio = GetComponent<AudioSource>();
+            if (_typingAudio == null) _typingAudio = gameObject.AddComponent<AudioSource>();
+            _typingAudio.playOnAwake = false;
+            _typingAudio.loop = false;
+            _typingAudio.spatialBlend = 0f;
+        }
+
+        private void Update()
+        {
+            Keyboard keyboard = Keyboard.current;
+            if (!IsPlaying || keyboard == null) return;
+            if (keyboard.spaceKey.wasPressedThisFrame || keyboard.fKey.wasPressedThisFrame)
+                OnAdvanceClicked();
         }
 
         private void OnDestroy()
@@ -125,7 +153,10 @@ namespace BeatMemories
             _typingFullText = fullText;
             if (target == null) return;
 
-            if (charsPerSecond <= 0f || string.IsNullOrEmpty(fullText))
+            float speed = typingSettings != null
+                ? typingSettings.CharactersPerSecond
+                : charsPerSecond;
+            if (speed <= 0f || string.IsNullOrEmpty(fullText))
             {
                 target.text = fullText;
                 return;
@@ -139,11 +170,15 @@ namespace BeatMemories
         private IEnumerator TypeText(TMP_Text target, string fullText)
         {
             var sb = new StringBuilder();
-            float delay = 1f / charsPerSecond;
+            float speed = typingSettings != null
+                ? typingSettings.CharactersPerSecond
+                : charsPerSecond;
+            float delay = 1f / Mathf.Max(0.01f, speed);
             for (int i = 0; i < fullText.Length; i++)
             {
                 sb.Append(fullText[i]);
                 target.text = sb.ToString();
+                PlayTypingBleep(fullText[i], i);
                 yield return new WaitForSecondsRealtime(delay);
             }
             _typing = false;
@@ -157,6 +192,7 @@ namespace BeatMemories
             _typingRoutine = null;
             _typing = false;
             if (_typingTarget != null) _typingTarget.text = _typingFullText;
+            if (_typingAudio != null) _typingAudio.Stop();
         }
 
         private void StopTyping()
@@ -164,6 +200,24 @@ namespace BeatMemories
             if (_typingRoutine != null) StopCoroutine(_typingRoutine);
             _typingRoutine = null;
             _typing = false;
+            if (_typingAudio != null) _typingAudio.Stop();
+        }
+
+        private void PlayTypingBleep(char character, int characterIndex)
+        {
+            if (typingSettings == null || _typingAudio == null || char.IsWhiteSpace(character))
+                return;
+            if (characterIndex % typingSettings.BleepEveryCharacters != 0) return;
+
+            AudioClip[] clips = typingSettings.BleepClips;
+            if (clips == null || clips.Length == 0) return;
+            AudioClip clip = clips[Random.Range(0, clips.Length)];
+            if (clip == null) return;
+
+            _typingAudio.pitch = Random.Range(
+                typingSettings.MinPitch,
+                typingSettings.MaxPitch);
+            _typingAudio.PlayOneShot(clip, typingSettings.BleepVolume);
         }
 
         private static void SetPortrait(Image image, Sprite sprite)
@@ -177,6 +231,16 @@ namespace BeatMemories
         {
             if (_typing) SkipTyping();
             else _advanced = true;
+        }
+
+        public void StopAndHide()
+        {
+            StopTyping();
+            _advanced = true;
+            IsPlaying = false;
+            if (enemyWindow != null) enemyWindow.SetActive(false);
+            if (playerWindow != null) playerWindow.SetActive(false);
+            if (root != null) root.SetActive(false);
         }
     }
 }

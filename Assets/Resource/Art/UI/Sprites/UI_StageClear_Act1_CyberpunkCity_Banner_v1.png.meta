@@ -55,7 +55,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -112,12 +112,12 @@ TextureImporter:
       name: UI_StageClear_Act1_CyberpunkCity_Banner_v1_0
       rect:
         serializedVersion: 2
-        x: 156
-        y: 112
-        width: 1426
-        height: 788
+        x: 4
+        y: 0
+        width: 1490
+        height: 867
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -130,77 +130,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: UI_StageClear_Act1_CyberpunkCity_Banner_v1_1
-      rect:
-        serializedVersion: 2
-        x: 1482
-        y: 652
-        width: 112
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3642d3a50e2364130800000000000000
-      internalID: 3550581295396234339
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_StageClear_Act1_CyberpunkCity_Banner_v1_2
-      rect:
-        serializedVersion: 2
-        x: 146
-        y: 408
-        width: 66
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d1727839dc1087ab0800000000000000
-      internalID: -5010252602994645219
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_StageClear_Act1_CyberpunkCity_Banner_v1_3
-      rect:
-        serializedVersion: 2
-        x: 269
-        y: 77
-        width: 144
-        height: 122
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8f9a4d0bb507de830800000000000000
-      internalID: 4102058374715451896
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 855e7ea5c5366874abf116f87d173250
     internalID: 0
     vertices: []
     indices: 

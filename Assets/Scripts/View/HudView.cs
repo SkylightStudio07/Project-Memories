@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
@@ -23,6 +24,9 @@ namespace BeatMemories
         [SerializeField] private PlayerData player;
         [SerializeField] private StageManager stageManager;
         [SerializeField] private CameraSway cameraSway;
+
+        [Header("Player Action Audio")]
+        [SerializeField] private PlayerActionAudioSettings playerActionAudioSettings;
 
         [Header("캐릭터 (월드 SpriteRenderer)")]
         [SerializeField] private SpriteRenderer enemySlot;
@@ -133,6 +137,23 @@ namespace BeatMemories
 
         [Header("Charge Effect")]
         [SerializeField] private ChargeAuraEffect chargeAura;
+        [SerializeField] private ChargeAuraEffect enemyChargeAura;
+
+        [Header("Guard Shield Effect")]
+        [SerializeField] private Sprite guardShieldSprite;
+        [SerializeField, Min(0.1f)] private float guardShieldWorldHeight = 2.2f;
+        [SerializeField, Min(0.01f)] private float guardShieldDuration = 0.28f;
+        [SerializeField] private Color guardShieldColor = Color.white;
+
+        [Header("Player Damage Vignette")]
+        [SerializeField] private Volume damageVignetteVolume;
+        [SerializeField] private Color damageVignetteColor = new Color(0.7f, 0f, 0f, 1f);
+        [SerializeField, Range(0f, 1f)] private float damageVignetteBaseIntensity = 0.22f;
+        [SerializeField, Range(0f, 1f)] private float damageVignetteStackIntensity = 0.1f;
+        [SerializeField, Range(0f, 1f)] private float damageVignetteMaxIntensity = 0.65f;
+        [SerializeField, Min(0.01f)] private float damageVignetteFlashDuration = 0.08f;
+        [SerializeField, Min(0f)] private float damageVignetteHoldDuration = 0.08f;
+        [SerializeField, Min(0.01f)] private float damageVignetteRestoreDuration = 0.8f;
 
         [Header("BPM Scale Bounce")]
         [Tooltip("정박 순간 적용할 Y Scale 배율.")]
@@ -204,12 +225,29 @@ namespace BeatMemories
         private bool deathPresentationActive;
         private int floatingScoreOrder;
         private SpriteNumberVisual scoreNumberVisual;
+        private SpriteRenderer playerGuardShield;
+        private SpriteRenderer enemyGuardShield;
+        private Vignette damageVignette;
+        private VolumeProfile runtimeVignetteProfile;
+        private int previousPlayerHp = -1;
+        private int previousPlayerMaxHp = -1;
+        private AudioSource playerActionAudio;
 
         private sealed class SpriteNumberVisual
         {
             public RectTransform Root;
             public CanvasGroup Group;
             public readonly List<Image> Digits = new List<Image>();
+        }
+
+        private void Awake()
+        {
+            if (playerActionAudioSettings == null)
+                playerActionAudioSettings = PlayerActionAudioSettings.Load();
+            playerActionAudio = gameObject.AddComponent<AudioSource>();
+            playerActionAudio.playOnAwake = false;
+            playerActionAudio.loop = false;
+            playerActionAudio.spatialBlend = 0f;
         }
 
         private void OnEnable()
@@ -227,6 +265,7 @@ namespace BeatMemories
                 round.OnGameOver += OnGameOver;
                 round.OnStageApplied += OnStageApplied;
                 round.OnFinalStageCleared += OnFinalStageCleared;
+                round.OnEnemyChargedChanged += OnEnemyCharged;
             }
             if (conductor != null) conductor.OnBeat += OnBeat;
             if (player != null)
@@ -252,6 +291,7 @@ namespace BeatMemories
                 round.OnGameOver -= OnGameOver;
                 round.OnStageApplied -= OnStageApplied;
                 round.OnFinalStageCleared -= OnFinalStageCleared;
+                round.OnEnemyChargedChanged -= OnEnemyCharged;
             }
             if (conductor != null) conductor.OnBeat -= OnBeat;
             if (player != null)
@@ -290,6 +330,16 @@ namespace BeatMemories
             StopEffectLight(playerLaserHitFlash);
             StopEffectLight(enemyLaserHitFlash);
             StopChargeEffect();
+            StopGuardShield(playerGuardShield);
+            StopGuardShield(enemyGuardShield);
+            StopDamageVignette();
+        }
+
+        private void OnDestroy()
+        {
+            if (playerGuardShield != null) Destroy(playerGuardShield.gameObject);
+            if (enemyGuardShield != null) Destroy(enemyGuardShield.gameObject);
+            if (runtimeVignetteProfile != null) Destroy(runtimeVignetteProfile);
         }
 
         private void Start()
@@ -314,11 +364,9 @@ namespace BeatMemories
             InitializeQueues();
             InitializeLaser(playerLaser, playerLaserOuter, playerLaserMuzzleGlow, playerLaserHitFlash);
             InitializeLaser(enemyLaser, enemyLaserOuter, enemyLaserMuzzleGlow, enemyLaserHitFlash);
-            if (chargeAura != null)
-            {
-                chargeAura.Initialize(playerSlot, playerLaserColor);
-                chargeAura.SetReady(player != null && player.IsCharged);
-            }
+            InitializeChargeEffects();
+            InitializeGuardShields();
+            InitializeDamageVignette();
         }
 
         private void Update()
@@ -388,7 +436,12 @@ namespace BeatMemories
                 enemySpriteTimer = actionSpriteHold;
             }
 
-            if (r.Input == PlayerAction.Attack && enemySlot != null)
+            bool playerBeamFired =
+                r.Input == PlayerAction.Attack && enemySlot != null && playerLaser != null;
+            bool enemyBeamFired =
+                e != null && e.Action == PlayerAction.Attack
+                && playerSlot != null && enemyLaser != null;
+            if (playerBeamFired)
                 PlayLaser(
                     playerLaser,
                     playerLaserOuter,
@@ -398,8 +451,11 @@ namespace BeatMemories
                     ResolveLaserOrigin(true, playerLaser),
                     ResolveHitPosition(false, enemySlot),
                     playerLaserColor,
-                    r.Cleared);
-            if (e != null && e.Action == PlayerAction.Attack && playerSlot != null)
+                    r.Cleared,
+                    round != null && round.CurrentJudgePlayerChargedAttack
+                        ? round.ChargedLaserWidthMultiplier
+                        : 1f);
+            if (enemyBeamFired)
                 PlayLaser(
                     enemyLaser,
                     enemyLaserOuter,
@@ -409,7 +465,25 @@ namespace BeatMemories
                     ResolveLaserOrigin(false, enemyLaser),
                     ResolveHitPosition(true, playerSlot),
                     enemyLaserColor,
-                    r.PlayerDamage > 0);
+                    r.PlayerDamage > 0,
+                    round != null && round.CurrentJudgeEnemyChargedAttack
+                        ? round.ChargedLaserWidthMultiplier
+                        : 1f);
+            if (playerBeamFired || enemyBeamFired)
+                PlayPlayerVoice(playerActionAudioSettings != null
+                    ? playerActionAudioSettings.BeamEffect
+                    : null,
+                    playerActionAudioSettings != null
+                        ? playerActionAudioSettings.BeamVolume
+                        : 1f);
+
+            if (r.Input == PlayerAction.Guard)
+                PlayGuardShield(playerGuardShield, playerSlot, enemySlot);
+            if (e != null && e.Action == PlayerAction.Guard)
+                PlayGuardShield(enemyGuardShield, enemySlot, playerSlot);
+
+            PlayResolvedActionEffect(e, r);
+            PlayPlayerJudgementVoice(r);
 
             if (r.Cleared && r.Input == PlayerAction.Attack)
                 PlayAttackMotion();
@@ -419,9 +493,71 @@ namespace BeatMemories
                 feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
         }
 
+        private void PlayPlayerJudgementVoice(JudgeResult result)
+        {
+            if (playerActionAudioSettings == null || result.Input == PlayerAction.None)
+                return;
+
+            if (result.Input == PlayerAction.Attack)
+            {
+                if (!result.Cleared)
+                {
+                    PlayPlayerVoice(playerActionAudioSettings.MistakeVoices);
+                    return;
+                }
+
+                AudioClip[] attackVoices =
+                    round != null && round.CurrentJudgePlayerChargedAttack
+                        ? playerActionAudioSettings.ChargedAttackVoices
+                        : playerActionAudioSettings.AttackVoices;
+                PlayPlayerVoice(attackVoices);
+                return;
+            }
+
+            bool chargeFailed = result.Input == PlayerAction.Charge
+                && result.Type == OutcomeType.Punished;
+            bool guardFailed = result.Input == PlayerAction.Guard
+                && result.PlayerDamage > 0;
+            if (chargeFailed || guardFailed)
+                PlayPlayerVoice(playerActionAudioSettings.MistakeVoices);
+        }
+
+        private void PlayResolvedActionEffect(Enemy enemy, JudgeResult result)
+        {
+            if (playerActionAudioSettings == null) return;
+
+            bool playerParried = result.Input == PlayerAction.Guard
+                && enemy != null
+                && enemy.Action == PlayerAction.Attack
+                && enemy.AttackDamage > 0
+                && result.PlayerDamage <= 0
+                && (round == null || round.CurrentEnemyHp > 0);
+            bool enemyParried = result.Input == PlayerAction.Attack
+                && enemy != null
+                && enemy.Action == PlayerAction.Guard
+                && !result.Cleared;
+            if (playerParried || enemyParried)
+            {
+                PlayPlayerVoice(playerActionAudioSettings.ParryEffect);
+                return;
+            }
+
+            bool playerCharged = result.Input == PlayerAction.Charge
+                && result.Type != OutcomeType.Punished;
+            bool enemyCharged = enemy != null
+                && enemy.Action == PlayerAction.Charge
+                && !result.Cleared;
+            if (playerCharged || enemyCharged)
+                PlayPlayerVoice(playerActionAudioSettings.ChargeEffect);
+        }
+
         private void OnTimingJudged(int slot, RhythmTimingResult result)
         {
             if (result == RhythmTimingResult.Success) return;
+            PlayPlayerVoice(
+                playerActionAudioSettings != null
+                    ? playerActionAudioSettings.MistakeVoices
+                    : null);
             if (player != null && player.TimingMistakeSprite != null)
             {
                 StopPlayerIdleBounce();
@@ -582,6 +718,18 @@ namespace BeatMemories
 
         private void OnHealth(int current, int max)
         {
+            if (previousPlayerHp >= 0
+                && max == previousPlayerMaxHp
+                && current < previousPlayerHp)
+            {
+                PlayDamageVignette(previousPlayerHp - current);
+                PlayPlayerVoice(
+                    playerActionAudioSettings != null
+                        ? playerActionAudioSettings.DamageVoices
+                        : null);
+            }
+            previousPlayerHp = current;
+            previousPlayerMaxHp = max;
             if (hpFill != null) hpFill.fillAmount = max > 0 ? (float)current / max : 0f;
             // HP 칸(세그먼트): 현재 HP만큼만 켠다(나머지는 꺼서 빈 칸이 보이게)
             if (hearts != null)
@@ -607,6 +755,42 @@ namespace BeatMemories
                 chargeLabel.enabled = charged;
                 if (charged) chargeLabel.text = "⚡ 충전";
             }
+        }
+
+        private void PlayPlayerVoice(AudioClip[] clips)
+        {
+            if (playerActionAudio == null
+                || playerActionAudioSettings == null
+                || clips == null
+                || clips.Length == 0)
+                return;
+
+            AudioClip clip = clips[Random.Range(0, clips.Length)];
+            if (clip != null)
+                playerActionAudio.PlayOneShot(
+                    clip,
+                    playerActionAudioSettings.Volume);
+        }
+
+        private void PlayPlayerVoice(AudioClip clip)
+        {
+            if (playerActionAudio == null
+                || playerActionAudioSettings == null
+                || clip == null)
+                return;
+            playerActionAudio.PlayOneShot(clip, playerActionAudioSettings.Volume);
+        }
+
+        private void PlayPlayerVoice(AudioClip clip, float volume)
+        {
+            if (playerActionAudio == null || clip == null) return;
+            playerActionAudio.PlayOneShot(clip, Mathf.Clamp01(volume));
+        }
+
+        private void OnEnemyCharged(bool charged)
+        {
+            if (presentationInitialized)
+                enemyChargeAura?.SetReady(charged);
         }
 
         private void SetEnemyIdle()
@@ -911,6 +1095,11 @@ namespace BeatMemories
                 StopEnemyIdleBounce();
                 enemySlot = nextEnemy;
                 enemyBaseScale = enemySlot.transform.localScale;
+                if (presentationInitialized)
+                {
+                    enemyChargeAura?.Initialize(enemySlot, enemyLaserColor);
+                    enemyChargeAura?.SetReady(round != null && round.IsEnemyCharged);
+                }
             }
         }
 
@@ -954,10 +1143,12 @@ namespace BeatMemories
             Vector3 origin,
             Vector3 target,
             Color color,
-            bool hit)
+            bool hit,
+            float widthMultiplier)
         {
             if (laser == null || targetActor == null) return;
 
+            float activeWidth = laserWidth * Mathf.Max(1f, widthMultiplier);
             StopLaser(laser, outerLaser);
             StopEffectLight(muzzleGlow);
             laser.transform.position = origin;
@@ -965,12 +1156,12 @@ namespace BeatMemories
             if (muzzleGlow != null) muzzleGlow.transform.position = origin;
             float progress = 0f;
             float alpha = 1f;
-            laser.widthMultiplier = laserWidth * laserFlashWidthMultiplier;
+            laser.widthMultiplier = activeWidth * laserFlashWidthMultiplier;
             SetLaserColor(laser, color, alpha);
             if (outerLaser != null)
             {
                 outerLaser.widthMultiplier =
-                    laserWidth * laserOuterWidthMultiplier * laserFlashWidthMultiplier;
+                    activeWidth * laserOuterWidthMultiplier * laserFlashWidthMultiplier;
                 SetLaserColor(outerLaser, Color.white, alpha);
             }
             SetLaserPositions(laser, outerLaser, origin, origin);
@@ -1017,13 +1208,13 @@ namespace BeatMemories
             sequence.Join(DOTween.To(
                 () => laser.widthMultiplier,
                 value => laser.widthMultiplier = value,
-                laserWidth,
+                activeWidth,
                 laserGrowDuration).SetEase(Ease.OutQuad));
             if (outerLaser != null)
                 sequence.Join(DOTween.To(
                     () => outerLaser.widthMultiplier,
                     value => outerLaser.widthMultiplier = value,
-                    laserWidth * laserOuterWidthMultiplier,
+                    activeWidth * laserOuterWidthMultiplier,
                     laserGrowDuration).SetEase(Ease.OutQuad));
             if (muzzleGlow != null)
                 sequence.Join(muzzleGlow.transform.DOScale(1f, laserGrowDuration)
@@ -1161,6 +1352,197 @@ namespace BeatMemories
         private void StopChargeEffect()
         {
             chargeAura?.StopImmediate();
+            enemyChargeAura?.StopImmediate();
+        }
+
+        private void InitializeChargeEffects()
+        {
+            if (chargeAura != null)
+            {
+                chargeAura.Initialize(playerSlot, playerLaserColor);
+                chargeAura.SetReady(player != null && player.IsCharged);
+            }
+
+            if (enemyChargeAura == null || enemyChargeAura == chargeAura)
+            {
+                if (chargeAura != null)
+                    enemyChargeAura = Instantiate(
+                        chargeAura,
+                        chargeAura.transform.parent);
+                else
+                {
+                    GameObject auraObject = new GameObject("EnemyChargeAura");
+                    auraObject.transform.SetParent(transform, false);
+                    enemyChargeAura = auraObject.AddComponent<ChargeAuraEffect>();
+                }
+                enemyChargeAura.name = "EnemyChargeAura";
+            }
+
+            enemyChargeAura.Initialize(enemySlot, enemyLaserColor);
+            enemyChargeAura.SetReady(round != null && round.IsEnemyCharged);
+        }
+
+        private void InitializeGuardShields()
+        {
+            playerGuardShield = CreateGuardShield(
+                playerGuardShield,
+                "PlayerGuardShield");
+            enemyGuardShield = CreateGuardShield(
+                enemyGuardShield,
+                "EnemyGuardShield");
+        }
+
+        private SpriteRenderer CreateGuardShield(
+            SpriteRenderer current,
+            string objectName)
+        {
+            if (current != null || guardShieldSprite == null) return current;
+
+            GameObject shieldObject = new GameObject(objectName);
+            SpriteRenderer shield = shieldObject.AddComponent<SpriteRenderer>();
+            shield.sprite = guardShieldSprite;
+            shield.color = new Color(
+                guardShieldColor.r,
+                guardShieldColor.g,
+                guardShieldColor.b,
+                0f);
+            shield.enabled = false;
+            return shield;
+        }
+
+        private void PlayGuardShield(
+            SpriteRenderer shield,
+            SpriteRenderer guardedActor,
+            SpriteRenderer opposingActor)
+        {
+            if (shield == null || guardedActor == null || shield.sprite == null) return;
+
+            Transform shieldTransform = shield.transform;
+            shield.DOKill();
+            shieldTransform.DOKill();
+
+            Vector3 guardedCenter = guardedActor.bounds.center;
+            float direction = opposingActor != null
+                ? Mathf.Sign(opposingActor.bounds.center.x - guardedCenter.x)
+                : guardedActor == playerSlot ? 1f : -1f;
+            if (Mathf.Approximately(direction, 0f)) direction = 1f;
+            float offset = guardedActor.bounds.extents.x * 0.72f;
+            shieldTransform.position = guardedCenter + Vector3.right * direction * offset;
+            float spriteHeight = Mathf.Max(0.01f, shield.sprite.bounds.size.y);
+            float scale = guardShieldWorldHeight / spriteHeight;
+            shieldTransform.localScale = Vector3.one * scale * 0.72f;
+            shield.flipX = direction < 0f;
+            shield.sortingLayerID = guardedActor.sortingLayerID;
+            shield.sortingOrder = guardedActor.sortingOrder + 2;
+            shield.color = new Color(
+                guardShieldColor.r,
+                guardShieldColor.g,
+                guardShieldColor.b,
+                0f);
+            shield.enabled = true;
+
+            float alpha = 0f;
+            Sequence sequence = DOTween.Sequence().SetTarget(shield);
+            sequence.Append(DOTween.To(
+                () => alpha,
+                value =>
+                {
+                    alpha = value;
+                    Color color = guardShieldColor;
+                    color.a *= value;
+                    shield.color = color;
+                },
+                1f,
+                guardShieldDuration * 0.3f));
+            sequence.Join(shieldTransform.DOScale(
+                    Vector3.one * scale,
+                    guardShieldDuration * 0.45f)
+                .SetEase(Ease.OutBack));
+            sequence.AppendInterval(guardShieldDuration * 0.2f);
+            sequence.Append(DOTween.To(
+                () => alpha,
+                value =>
+                {
+                    alpha = value;
+                    Color color = guardShieldColor;
+                    color.a *= value;
+                    shield.color = color;
+                },
+                0f,
+                guardShieldDuration * 0.35f));
+            sequence.OnComplete(() => shield.enabled = false);
+        }
+
+        private static void StopGuardShield(SpriteRenderer shield)
+        {
+            if (shield == null) return;
+            shield.DOKill();
+            shield.transform.DOKill();
+            shield.enabled = false;
+        }
+
+        private void InitializeDamageVignette()
+        {
+            if (damageVignetteVolume == null)
+            {
+                damageVignetteVolume = gameObject.AddComponent<Volume>();
+                damageVignetteVolume.isGlobal = true;
+                damageVignetteVolume.priority = 100f;
+                runtimeVignetteProfile = ScriptableObject.CreateInstance<VolumeProfile>();
+                damageVignetteVolume.profile = runtimeVignetteProfile;
+            }
+
+            VolumeProfile profile = damageVignetteVolume.profile;
+            if (profile == null)
+            {
+                runtimeVignetteProfile = ScriptableObject.CreateInstance<VolumeProfile>();
+                damageVignetteVolume.profile = runtimeVignetteProfile;
+                profile = runtimeVignetteProfile;
+            }
+            if (!profile.TryGet(out damageVignette))
+                damageVignette = profile.Add<Vignette>(true);
+
+            damageVignette.active = true;
+            damageVignette.color.Override(damageVignetteColor);
+            damageVignette.smoothness.Override(0.45f);
+            damageVignette.intensity.Override(0f);
+        }
+
+        private void PlayDamageVignette(int damage)
+        {
+            if (damageVignette == null) InitializeDamageVignette();
+            if (damageVignette == null) return;
+
+            DOTween.Kill(damageVignette);
+            float current = damageVignette.intensity.value;
+            float target = Mathf.Clamp(
+                current > 0.01f
+                    ? current + damageVignetteStackIntensity * Mathf.Max(1, damage)
+                    : damageVignetteBaseIntensity
+                        + damageVignetteStackIntensity * Mathf.Max(0, damage - 1),
+                0f,
+                damageVignetteMaxIntensity);
+
+            Sequence sequence = DOTween.Sequence().SetTarget(damageVignette);
+            sequence.Append(DOTween.To(
+                () => damageVignette.intensity.value,
+                value => damageVignette.intensity.Override(value),
+                target,
+                damageVignetteFlashDuration).SetEase(Ease.OutQuad));
+            if (damageVignetteHoldDuration > 0f)
+                sequence.AppendInterval(damageVignetteHoldDuration);
+            sequence.Append(DOTween.To(
+                () => damageVignette.intensity.value,
+                value => damageVignette.intensity.Override(value),
+                0f,
+                damageVignetteRestoreDuration).SetEase(Ease.OutSine));
+        }
+
+        private void StopDamageVignette()
+        {
+            if (damageVignette == null) return;
+            DOTween.Kill(damageVignette);
+            damageVignette.intensity.Override(0f);
         }
 
         private IEnumerator BeginEnemyDeathAfterLaser()

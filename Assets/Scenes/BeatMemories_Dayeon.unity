@@ -8234,15 +8234,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageClearBanner
   actBanners:
-  - {fileID: 21300000, guid: 45cd4a3bea223f042a4d922e914e379a, type: 3}
-  - {fileID: 21300000, guid: c0be04485d54cff409c81344e2b96072, type: 3}
-  - {fileID: 21300000, guid: f43e77b53b2e6b143b8fff3973b7d800, type: 3}
-  - {fileID: 21300000, guid: 3bdae97c9b9aa324ab4bd29aa0acc3e2, type: 3}
+  - {fileID: 21300000, guid: c23a3777cc77760479a7ee83596a3262, type: 3}
+  - {fileID: 1943670197215385112, guid: 0ab561a9874cef143842113c047c1dc5, type: 3}
+  - {fileID: -7047583320152506935, guid: 177984710898ccb46bc78f71caef6be3, type: 3}
+  - {fileID: -1116788102483584858, guid: 3980dd19ea8d0ce4b8183b5f5faca1cd, type: 3}
   growDuration: 0.35
-  holdSeconds: 1.1
+  holdSeconds: 1.7
   fadeDuration: 0.45
   startScale: 0.6
   startRotate: 8
+  impactStartScale: 1.45
+  impactSquashScale: 0.88
+  punchStrength: 0.08
+  displayScaleMultiplier: 2
 --- !u!114 &1159290628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8550,6 +8554,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c4b39144d90d682429ed755e5f79f88c, type: 2}
   - {fileID: 11400000, guid: f1ed1f2c4bc0ba144bd3e06340f985d0, type: 2}
   - {fileID: 11400000, guid: 1b11b3e1f3538be4aa83cec62c2e679c, type: 2}
+  combatBalance: {fileID: 0}
   seed: 12345
   randomizeSeed: 0
   phases:
@@ -12117,6 +12122,7 @@ MonoBehaviour:
   player: {fileID: 1716380266}
   stageManager: {fileID: 0}
   cameraSway: {fileID: 2084326195}
+  playerActionAudioSettings: {fileID: 0}
   enemySlot: {fileID: 1825124097}
   playerSlot: {fileID: 1177499417}
   playerIdleAnim: {fileID: 1177499420}
@@ -12221,6 +12227,19 @@ MonoBehaviour:
   playerLaserColor: {r: 0.2, g: 0.95, b: 1, a: 1}
   enemyLaserColor: {r: 1, g: 0.18, b: 0.18, a: 1}
   chargeAura: {fileID: 126524593}
+  enemyChargeAura: {fileID: 0}
+  guardShieldSprite: {fileID: 939396076582988340, guid: c7760859fa3ab9f45a97d82e25f0ae9f, type: 3}
+  guardShieldWorldHeight: 2.2
+  guardShieldDuration: 0.28
+  guardShieldColor: {r: 1, g: 1, b: 1, a: 1}
+  damageVignetteVolume: {fileID: 0}
+  damageVignetteColor: {r: 0.7, g: 0, b: 0, a: 1}
+  damageVignetteBaseIntensity: 0.22
+  damageVignetteStackIntensity: 0.1
+  damageVignetteMaxIntensity: 0.65
+  damageVignetteFlashDuration: 0.08
+  damageVignetteHoldDuration: 0.08
+  damageVignetteRestoreDuration: 0.8
   idleBeatSquash: 0.95
   idleBeatRestoreRatio: 0.5
   idleBeatRestoreEase: 27
@@ -12716,7 +12735,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -13016,6 +13035,10 @@ PrefabInstance:
       propertyPath: playerName
       value: 
       objectReference: {fileID: 1130114645}
+    - target: {fileID: 3906577639793091603, guid: aee2d838d99a1ec46af2f3f3b816453a, type: 3}
+      propertyPath: dimBackgroundColor.a
+      value: 0.88235295
+      objectReference: {fileID: 0}
     - target: {fileID: 4796188827773814721, guid: aee2d838d99a1ec46af2f3f3b816453a, type: 3}
       propertyPath: m_IsActive
       value: 0

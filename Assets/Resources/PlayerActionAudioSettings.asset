@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52db84f61a53427fbc1369de70a29c48, type: 3}
+  m_Name: PlayerActionAudioSettings
+  m_EditorClassIdentifier: 
+  volume: 1
+  attackVoices:
+  - {fileID: 8300000, guid: cfc431f9af7014f469c8279978482c2c, type: 3}
+  - {fileID: 8300000, guid: 939de8b9bafbeb34b93440dd542b3cd8, type: 3}
+  chargedAttackVoices:
+  - {fileID: 8300000, guid: ce3ff48e7cb58f44d91ec5aa9dad8edc, type: 3}
+  damageVoices:
+  - {fileID: 8300000, guid: db7aac798134fe44f94a677e46144369, type: 3}
+  - {fileID: 8300000, guid: baae98c7609236b4f90800923218f2ce, type: 3}
+  mistakeVoices:
+  - {fileID: 8300000, guid: d7caf6e65185ee74db63f8c0d34cb76f, type: 3}
+  - {fileID: 8300000, guid: 9ec573755a68c9d428a2b496fa094112, type: 3}
+  - {fileID: 8300000, guid: 3c44eff3760f9f74ab6ded79450be133, type: 3}
+  beamEffect: {fileID: 8300000, guid: 82a5f6b7c81d4e3f9a2075b641ce8d30, type: 3}
+  beamVolume: 1
+  parryEffect: {fileID: 8300000, guid: 0ba24d97992a6654eb92ece9d131b3b8, type: 3}
+  chargeEffect: {fileID: 8300000, guid: 693a33292f0b92845a71ce580088b6de, type: 3}
