@@ -125,6 +125,8 @@ namespace BeatMemories
         private GameObject backgroundInstance;
         private bool resolvingJudge;
         private bool deathPending;
+        // 페이지 돌입 대사로 클록을 멈춘 동안 보류해 둔 준비 비트 수(재개 시 다시 큐잉).
+        private int pendingPageTransitionBeats;
 
         public int Seed => seed;
 
@@ -181,6 +183,7 @@ namespace BeatMemories
             responseEndCycleIndex = -1;
             resolvingJudge = false;
             deathPending = false;
+            pendingPageTransitionBeats = 0; // 이전 스테이지의 보스 페이지 예약이 새 스테이지로 새지 않게
             inputLockedUntilRealtime = double.NegativeInfinity;
             RebuildStageRuntime();
             OnStageApplied?.Invoke(s);
@@ -834,9 +837,13 @@ namespace BeatMemories
                 PauseForStageTransition();
                 // 클록이 카운트인부터 다시 시작되므로 페이즈 계산 기준도 0으로 맞춘다.
                 stageStartCycleIndex = 0;
+                // 준비 비트는 지금 큐잉해봐야 StartClock에서 초기화된다.
+                // 보스 예고 차폐(BossPagePresentationController)는 OnPreparationBeat에서
+                // 발동하므로, 대사 후 재개 시점에 다시 큐잉해야 기믹이 살아난다.
+                pendingPageTransitionBeats = transitionBeats;
                 OnEnemyPageDialogueRequested?.Invoke(CurrentEnemyPage);
                 if (verboseLog)
-                    Debug.Log($"[Round] 보스 페이지 {CurrentEnemyPage} 돌입 대사 대기 (클록 정지)");
+                    Debug.Log($"[Round] 보스 페이지 {CurrentEnemyPage} 돌입 대사 대기 (클록 정지, 준비 {transitionBeats}비트 예약)");
                 return;
             }
 
@@ -898,7 +905,18 @@ namespace BeatMemories
         public void StartRound()
         {
             isOver = false;
-            if (conductor != null) conductor.StartClock();
+            if (conductor == null) return;
+
+            conductor.StartClock();
+            // StartClock이 준비 비트 큐를 비우므로 그 뒤에 다시 넣어야 한다.
+            // (보스 페이지 돌입 대사로 미뤄둔 준비 비트 — 예고 차폐·검격 연출이 여기서 발동)
+            if (pendingPageTransitionBeats > 0)
+            {
+                conductor.QueuePreparationBeats(pendingPageTransitionBeats);
+                if (verboseLog)
+                    Debug.Log($"[Round] 대사 후 재개 — 준비 {pendingPageTransitionBeats}비트 큐잉");
+                pendingPageTransitionBeats = 0;
+            }
         }
 
         private void HandleDied()
