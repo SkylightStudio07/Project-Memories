@@ -161,3 +161,17 @@
 - `dotnet build Project-Memories.slnx --no-restore` 성공
 - 신규 컴파일 오류 0개
 - 기존 `HudView` 미사용 필드 경고 2개만 확인
+
+## 2026-07-26 — 타이틀 BGM 및 전역 BGM 음량
+
+### 구현 내용
+
+- `Soul Funk Blues by Audio Library Beats (No Copyright Background Music) Dreamscape.mp3`를
+  타이틀의 반복 BGM으로 연결하고 긴 음원에 맞게 Streaming으로 임포트한다.
+- 타이틀 BGM과 Stage 1~5·Boss BGM을 `Dayeon_BGM_Mixer/Music` 그룹으로 통일했다.
+- `BGMSlider`는 `0..1`의 선형 음량을 `settings.bgmVolume`에 저장하고,
+  `MusicVolumeDb`로 변환해 Music 그룹에 즉시 적용한다.
+- 저장값이 없는 첫 실행의 기본 음량은 `1.0`(100%)이다.
+- `Start` 클릭 시 공유 Music 그룹은 유지하고 타이틀 AudioSource의 로컬 음량만
+  0.3초 동안 페이드아웃한 뒤 `BeatMemories_Dayeon` 씬을 로드한다.
+- SFX 슬라이더와 Metronome 그룹 음량은 이번 작업에서 변경하지 않는다.

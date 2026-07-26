@@ -44,6 +44,10 @@ public class Title : MonoBehaviour
     [SerializeField, Min(0f)] private float optionsHorizontalOffset = 1800f;
     [SerializeField, Range(0.01f, 1f)] private float hiddenMainUiScale = 0.94f;
 
+    [Header("Title Audio")]
+    [SerializeField] private AudioSource titleMusicSource;
+    [SerializeField, Min(0f)] private float gameStartMusicFadeDuration = 0.3f;
+
     private ElementState wooferLeftState;
     private ElementState wooferRightState;
     private ElementState characterState;
@@ -55,6 +59,7 @@ public class Title : MonoBehaviour
     private ElementState backButtonState;
     private Sequence introSequence;
     private Sequence viewSequence;
+    private Tween musicFadeTween;
     private bool optionsOpen;
     private bool isTransitioning;
 
@@ -71,6 +76,11 @@ public class Title : MonoBehaviour
 
     private void Start()
     {
+        if (titleMusicSource != null && !titleMusicSource.isPlaying)
+        {
+            titleMusicSource.Play();
+        }
+
         PlayIntro();
     }
 
@@ -78,6 +88,7 @@ public class Title : MonoBehaviour
     {
         introSequence?.Kill();
         viewSequence?.Kill();
+        musicFadeTween?.Kill();
     }
 
     public void PlayIntro()
@@ -168,6 +179,24 @@ public class Title : MonoBehaviour
         introSequence?.Kill();
         viewSequence?.Kill();
         SetMainButtonsInteraction(false);
+        isTransitioning = true;
+
+        if (titleMusicSource == null || gameStartMusicFadeDuration <= 0f)
+        {
+            LoadGameScene();
+            return;
+        }
+
+        musicFadeTween?.Kill();
+        musicFadeTween = titleMusicSource
+            .DOFade(0f, gameStartMusicFadeDuration)
+            .SetTarget(this)
+            .SetUpdate(true)
+            .OnComplete(LoadGameScene);
+    }
+
+    private static void LoadGameScene()
+    {
         SceneManager.LoadScene(BeatMemoriesSceneName);
     }
 
