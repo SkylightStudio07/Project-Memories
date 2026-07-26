@@ -12144,7 +12144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageManager
   roster: {fileID: 11400000, guid: 715e0bfb4a141f043965a1555cc8a0b5, type: 2}
-  startStageIndex: 0
+  startStageIndex: 3
   round: {fileID: 1188105352}
   rhythmAudio: {fileID: 1188105356}
   gateClockUntilAudioReady: 1

@@ -518,7 +518,9 @@ namespace BeatMemories
             if (r.Cleared && r.Input == PlayerAction.Attack)
                 PlayAttackMotion();
 
-            ResolveQueueSlot(slot, r);
+            // 판정 시점의 실제 적을 함께 넘긴다 — EnemyPreviewCue는 차폐 시 적 참조를 주지 않으므로
+            // (UI 우회 노출 방지), 노이즈로 가려졌던 슬롯을 공개하려면 이 경로가 유일하다.
+            ResolveQueueSlot(slot, e, r);
             if (feedbackLabel != null)
                 feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
         }
@@ -1033,7 +1035,7 @@ namespace BeatMemories
             slot.rectTransform.localScale = Vector3.one * scale;
         }
 
-        private void ResolveQueueSlot(int slot, JudgeResult result)
+        private void ResolveQueueSlot(int slot, Enemy revealedEnemy, JudgeResult result)
         {
             if (slot < 0 || slot >= QueueSlotCount) return;
 
@@ -1048,7 +1050,10 @@ namespace BeatMemories
             {
                 // 차폐(노이즈)됐던 슬롯도 판정이 끝나면 실제 자세를 공개한다.
                 // 플레이어가 "무엇이 왔는지"를 사후에 확인하고 학습할 수 있어야 하기 때문.
-                Enemy revealed = slot < revealedEnemies.Length ? revealedEnemies[slot] : null;
+                // 차폐 시 revealedEnemies는 비어 있으므로 판정이 넘겨준 적을 우선 사용한다.
+                Enemy revealed = revealedEnemy != null
+                    ? revealedEnemy
+                    : (slot < revealedEnemies.Length ? revealedEnemies[slot] : null);
                 if (revealed != null) queueSlot.sprite = QueueSprite(revealed);
 
                 queueSlot.color = resultColor;
