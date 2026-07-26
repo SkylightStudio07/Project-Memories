@@ -31,17 +31,18 @@ MonoBehaviour:
     portrait: {fileID: -6071435802697707932, guid: d06bf404d4d79a74fa5c41cdc0c9bf3b, type: 3}
     text: "\uC9C0\uAE0B\uC9C0\uAE0B\uD55C \uC545\uC5F0\uC774\uB124.\n\uC88B\uC544.
       \uB124\uAC8C\uB294 \uB4E3\uACE0 \uC2F6\uC740 \uC774\uC57C\uAE30\uB3C4 \uC788\uC5C8\uACE0. "
-  - speaker: 1
+  - speaker: 0
     speakerName: "\uC18C\uB77C"
     portrait: {fileID: 1366890352052853965, guid: 2393fda2d7a38cc46a69a0f3d51752d4, type: 3}
     text: "DALL-E\uC758 \uD589\uBC29 \uB9D0\uC774\uC9C0.\r\n\uB108\uAC19\uC740 \uB3D9\uD3EC\uB4E4\uC744
       \uD314\uC544\uB118\uAE30\uB294 \uBC30\uC2E0\uC790\uC5D0\uAC8C \uD574\uC904
       \uB9D0\uC740 \uC5C6\uB294 \uAC78."
-  - speaker: 1
-    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
-    portrait: {fileID: -6071435802697707932, guid: d06bf404d4d79a74fa5c41cdc0c9bf3b, type: 3}
-    text: "\uAE00\uC384. \uC9C0\uAE08\uC758 \uB108\uC640 \uBBF8\uB798\uC758 \uB108\uB294
-      \uB9D0\uC774 \uB2EC\uB77C\uC9C8\uC9C0\uB3C4 \uBAA8\uB974\uB2C8\uAE4C."
+  - speaker: 0
+    speakerName: "\uC18C\uB77C"
+    portrait: {fileID: 683365896367958760, guid: f90d8f58b7299194d95f885a5f9d8ac5, type: 3}
+    text: "\uB124 \uADF8 \uBE4C\uC5B4\uBA39\uC744 \uBBF8\uB798 \uC608\uCE21 \uBAA8\uB4C8\uC774,
+      \uC5B8\uC81C\uAE4C\uC9C0 \uB110 \uC9C0\uCF1C\uC904 \uC218 \uC788\uC744 \uAC83
+      \uAC19\uC544?"
   - speaker: 1
     speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
     portrait: {fileID: 8075468258146922719, guid: 450e97ac77dd1f44bae79ad3a64a650f, type: 3}

@@ -56,9 +56,14 @@ MonoBehaviour:
     speakerName: "\uD30C\uBE14\uB77C"
     portrait: {fileID: 58699422220172323, guid: 60f7d46f511c4164b83b0eb7b3ee34b4, type: 3}
     text: "\uC790, \uBB38\uB2F5\uBB34\uC6A9\uC774\uC57C.\r\n\uC774 \uBB34\uB3C4\uD68C\uC7A5\uC744
-      \uC9C0\uB098\uAC00\uB824\uBA74... \uB098\uB97C \uC4F0\uB7EC\uB728\uB824\uC57C\uACA0\uC9C0?"
+      \uC9C0\uB098\uAC00\uB824\uBA74...\\n\uB098\uB97C \uC4F0\uB7EC\uB728\uB824\uC57C\uACA0\uC9C0?"
   - speaker: 0
     speakerName: "\uD30C\uBE14\uB77C"
     portrait: {fileID: 58699422220172323, guid: 60f7d46f511c4164b83b0eb7b3ee34b4, type: 3}
     text: "--\uBB34\uC218\uD55C \uB3D9\uD3EC\uB4E4\uC758 \uD55C\uACFC \uACE0\uD1B5\uC774
       \uD750\uB4DC\uB7EC\uC9C4... \uADF8 \uC190\uC73C\uB85C \uB9D0\uC774\uC57C? \uC6B0\uD6C4\uD6C4..."
+  - speaker: 1
+    speakerName: "\uD074\uB77C\uC6B0\uB514\uC544"
+    portrait: {fileID: -6071435802697707932, guid: d06bf404d4d79a74fa5c41cdc0c9bf3b, type: 3}
+    text: "(....\uC815\uC2E0 \uBC14\uC9DD \uCC28\uB9AC\uC790.\n\uC5B8\uB2C8\uB294...
+      \uC5C4\uCCAD\uB098\uAC8C \uBE68\uB77C!)"

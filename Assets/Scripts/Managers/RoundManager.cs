@@ -78,6 +78,8 @@ namespace BeatMemories
         public event Action OnFinalStageCleared;
         public event Action<StageSO> OnStageApplied;
         public event Action<int, int, int> OnEnemyPageTransitionStarted;
+        /// <summary>보스 페이지 돌입 대사 요청(클록 정지 상태). 인자: 진입한 페이지 번호.</summary>
+        public event Action<int> OnEnemyPageDialogueRequested;
         public event Action<bool> OnEnemyChargedChanged;
 
         public PhaseSO CurrentPhase { get; private set; }
@@ -822,12 +824,42 @@ namespace BeatMemories
                 CurrentEnemyPage,
                 EnemyPageCount,
                 transitionBeats);
+
+            // 이 페이지에 돌입 대사가 있으면 클록을 멈추고 대사가 끝날 때까지 기다린다.
+            // (대사 중 비트가 진행되면 안 되므로) 재개는 StageManager가 StartRound로 처리.
+            if (HasPageTransitionDialogue(CurrentEnemyPage))
+            {
+                PauseForStageTransition();
+                // 클록이 카운트인부터 다시 시작되므로 페이즈 계산 기준도 0으로 맞춘다.
+                stageStartCycleIndex = 0;
+                OnEnemyPageDialogueRequested?.Invoke(CurrentEnemyPage);
+                if (verboseLog)
+                    Debug.Log($"[Round] 보스 페이지 {CurrentEnemyPage} 돌입 대사 대기 (클록 정지)");
+                return;
+            }
+
             conductor?.QueuePreparationBeats(transitionBeats);
 
             if (verboseLog)
                 Debug.Log(
                     $"[Round] 보스 페이지 {CurrentEnemyPage}/{EnemyPageCount} 시작 " +
                     $"(HP {CurrentEnemyHp}, 전환 {transitionBeats}비트)");
+        }
+
+        /// <summary>해당 페이지(2페이지=index 0)에 돌입 대사가 지정돼 있는가.</summary>
+        private bool HasPageTransitionDialogue(int page)
+        {
+            var list = stage != null ? stage.pageTransitionDialogues : null;
+            int idx = page - 2; // 2페이지가 첫 항목
+            return list != null && idx >= 0 && idx < list.Count && list[idx] != null;
+        }
+
+        /// <summary>지정 페이지의 돌입 대사(없으면 null).</summary>
+        public DialogueSO GetPageTransitionDialogue(int page)
+        {
+            var list = stage != null ? stage.pageTransitionDialogues : null;
+            int idx = page - 2;
+            return (list != null && idx >= 0 && idx < list.Count) ? list[idx] : null;
         }
 
         private void ResolveEnemyHpDepletion(int completedCycleIndex)

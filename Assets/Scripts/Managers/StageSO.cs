@@ -63,6 +63,12 @@ namespace BeatMemories
         [Tooltip("비우면 다이얼로그 없이 바로 카운트인 시작")]
         public DialogueSO introDialogue;
 
+        [Tooltip("이 스테이지의 적을 처치한 직후 재생. 마지막 스테이지면 게임 클리어 화면 직전에 나온다")]
+        public DialogueSO outroDialogue;
+
+        [Tooltip("보스 2페이지부터의 돌입 대사. 인덱스 0 = 2페이지 진입 시. 비우면 대사 없이 전환")]
+        public List<DialogueSO> pageTransitionDialogues = new List<DialogueSO>();
+
         [Header("배경 (옵션 — 비우면 씬 기존 것 유지)")]
         [Tooltip("씬의 '백그라운드' SpriteRenderer에 바꿔끼울 스프라이트")]
         public Sprite backgroundSprite;

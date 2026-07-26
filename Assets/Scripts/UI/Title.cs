@@ -48,6 +48,18 @@ public class Title : MonoBehaviour
     [SerializeField] private AudioSource titleMusicSource;
     [SerializeField, Min(0f)] private float gameStartMusicFadeDuration = 0.3f;
 
+    [Header("Beat Pulse")]
+    [Tooltip("타이틀 BGM의 BPM")]
+    [SerializeField, Min(1f)] private float titleMusicBpm = 94f;
+    [Tooltip("음원 시작부터 첫 박까지의 시간(초)")]
+    [SerializeField, Min(0f)] private float firstBeatOffset;
+    [Tooltip("비트 순간 Woofer의 원본 대비 크기")]
+    [SerializeField, Range(1f, 1.25f)] private float wooferBeatScale = 1.07f;
+    [Tooltip("비트 순간 Text Art의 원본 대비 크기")]
+    [SerializeField, Range(1f, 1.15f)] private float textArtBeatScale = 1.035f;
+    [SerializeField, Min(0.01f)] private float beatPulseAttack = 0.08f;
+    [SerializeField, Min(0.01f)] private float beatPulseRelease = 0.18f;
+
     private ElementState wooferLeftState;
     private ElementState wooferRightState;
     private ElementState characterState;
@@ -59,7 +71,13 @@ public class Title : MonoBehaviour
     private ElementState backButtonState;
     private Sequence introSequence;
     private Sequence viewSequence;
+    private Sequence wooferLeftPulseSequence;
+    private Sequence wooferRightPulseSequence;
+    private Sequence textArtPulseSequence;
     private Tween musicFadeTween;
+    private int lastBeatIndex = -1;
+    private int previousMusicTimeSamples = -1;
+    private bool canPulseTitleArt;
     private bool optionsOpen;
     private bool isTransitioning;
 
@@ -88,7 +106,13 @@ public class Title : MonoBehaviour
     {
         introSequence?.Kill();
         viewSequence?.Kill();
+        KillBeatPulseSequences();
         musicFadeTween?.Kill();
+    }
+
+    private void Update()
+    {
+        TrackTitleMusicBeat();
     }
 
     public void PlayIntro()
@@ -100,6 +124,7 @@ public class Title : MonoBehaviour
 
         introSequence?.Kill();
         viewSequence?.Kill();
+        StopBeatPulse();
         optionsOpen = false;
         isTransitioning = false;
         RestoreFinalState();
@@ -118,6 +143,9 @@ public class Title : MonoBehaviour
 
         stageStart += characterDuration + elementGap;
         AddTextArtTween(stageStart);
+        introSequence.InsertCallback(
+            stageStart + textArtDuration,
+            EnableBeatPulse);
 
         stageStart += textArtDuration + buttonDelay;
         AddButtonTween(startButtonState, startButton, stageStart);
@@ -137,6 +165,7 @@ public class Title : MonoBehaviour
         }
 
         introSequence?.Kill();
+        StopTextArtBeatPulse();
         SetMainButtonsInteraction(false);
         backButton.SetInteractionEnabled(false);
         isTransitioning = true;
@@ -178,6 +207,7 @@ public class Title : MonoBehaviour
 
         introSequence?.Kill();
         viewSequence?.Kill();
+        StopBeatPulse();
         SetMainButtonsInteraction(false);
         isTransitioning = true;
 
@@ -236,7 +266,122 @@ public class Title : MonoBehaviour
                 optionsOpen = false;
                 isTransitioning = false;
                 SetMainButtonsInteraction(true);
+                EnableBeatPulse();
             });
+    }
+
+    private void TrackTitleMusicBeat()
+    {
+        if (titleMusicSource == null
+            || titleMusicSource.clip == null
+            || !titleMusicSource.isPlaying)
+        {
+            previousMusicTimeSamples = -1;
+            lastBeatIndex = -1;
+            return;
+        }
+
+        int currentTimeSamples = titleMusicSource.timeSamples;
+        if (previousMusicTimeSamples >= 0 && currentTimeSamples < previousMusicTimeSamples)
+        {
+            lastBeatIndex = -1;
+        }
+
+        previousMusicTimeSamples = currentTimeSamples;
+        double musicTime = (double)currentTimeSamples / titleMusicSource.clip.frequency;
+        double beatPosition = (musicTime - firstBeatOffset) * titleMusicBpm / 60.0;
+        if (beatPosition < 0.0)
+        {
+            return;
+        }
+
+        int beatIndex = Mathf.FloorToInt((float)beatPosition);
+        if (beatIndex == lastBeatIndex)
+        {
+            return;
+        }
+
+        lastBeatIndex = beatIndex;
+        if (canPulseTitleArt)
+        {
+            PlayBeatPulse();
+        }
+    }
+
+    private void EnableBeatPulse()
+    {
+        canPulseTitleArt = true;
+    }
+
+    private void StopBeatPulse()
+    {
+        canPulseTitleArt = false;
+        KillBeatPulseSequences();
+
+        if (wooferLeftState.RectTransform != null)
+        {
+            wooferLeftState.RectTransform.localScale = wooferLeftState.LocalScale;
+            wooferRightState.RectTransform.localScale = wooferRightState.LocalScale;
+            textArtState.RectTransform.localScale = textArtState.LocalScale;
+        }
+    }
+
+    private void PlayBeatPulse()
+    {
+        wooferLeftPulseSequence = CreateBeatPulse(
+            wooferLeftState,
+            wooferBeatScale,
+            wooferLeftPulseSequence);
+        wooferRightPulseSequence = CreateBeatPulse(
+            wooferRightState,
+            wooferBeatScale,
+            wooferRightPulseSequence);
+
+        if (!optionsOpen && !isTransitioning)
+        {
+            textArtPulseSequence = CreateBeatPulse(
+                textArtState,
+                textArtBeatScale,
+                textArtPulseSequence);
+        }
+    }
+
+    private void StopTextArtBeatPulse()
+    {
+        textArtPulseSequence?.Kill();
+        textArtPulseSequence = null;
+        textArtState.RectTransform.localScale = textArtState.LocalScale;
+    }
+
+    private Sequence CreateBeatPulse(
+        ElementState state,
+        float scaleMultiplier,
+        Sequence previousSequence)
+    {
+        previousSequence?.Kill();
+        state.RectTransform.localScale = state.LocalScale;
+
+        return DOTween.Sequence()
+            .SetTarget(this)
+            .SetUpdate(true)
+            .Append(
+                state.RectTransform
+                    .DOScale(state.LocalScale * scaleMultiplier, beatPulseAttack)
+                    .SetEase(Ease.OutQuad))
+            .Append(
+                state.RectTransform
+                    .DOScale(state.LocalScale, beatPulseRelease)
+                    .SetEase(Ease.OutBack));
+    }
+
+    private void KillBeatPulseSequences()
+    {
+        wooferLeftPulseSequence?.Kill();
+        wooferRightPulseSequence?.Kill();
+        textArtPulseSequence?.Kill();
+        wooferLeftPulseSequence = null;
+        wooferRightPulseSequence = null;
+        textArtPulseSequence = null;
     }
 
     private bool TryCacheElementStates()

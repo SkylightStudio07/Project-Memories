@@ -113,18 +113,44 @@ namespace BeatMemories
         private IEnumerator PlayIntroDialogue()
         {
             StageSO s = CurrentStage;
-            if (dialogueViewer != null && s != null && s.introDialogue != null)
-                yield return dialogueViewer.PlayRoutine(s.introDialogue);
+            yield return PlayDialogue(s != null ? s.introDialogue : null);
+        }
+
+        /// <summary>대사 SO를 재생(비어 있으면 즉시 반환).</summary>
+        private IEnumerator PlayDialogue(DialogueSO dialogue)
+        {
+            if (dialogueViewer != null && dialogue != null)
+                yield return dialogueViewer.PlayRoutine(dialogue);
         }
 
         private void OnEnable()
         {
-            if (round != null) round.OnStageCleared += HandleStageCleared;
+            if (round != null)
+            {
+                round.OnStageCleared += HandleStageCleared;
+                round.OnEnemyPageDialogueRequested += HandlePageDialogue;
+            }
         }
 
         private void OnDisable()
         {
-            if (round != null) round.OnStageCleared -= HandleStageCleared;
+            if (round != null)
+            {
+                round.OnStageCleared -= HandleStageCleared;
+                round.OnEnemyPageDialogueRequested -= HandlePageDialogue;
+            }
+        }
+
+        // 보스 페이지 돌입 대사 — RoundManager가 클록을 멈춘 상태로 호출한다.
+        private void HandlePageDialogue(int page)
+        {
+            StartCoroutine(PageDialogueThenResume(page));
+        }
+
+        private IEnumerator PageDialogueThenResume(int page)
+        {
+            yield return PlayDialogue(round != null ? round.GetPageTransitionDialogue(page) : null);
+            round?.StartRound(); // 대사 후 카운트인부터 재개
         }
 
         /// <summary>지정 인덱스 스테이지 적용: 배경/바닥 스왑 + RoundManager에 전달.</summary>
@@ -164,6 +190,10 @@ namespace BeatMemories
 
             int nextIndex = CurrentIndex + 1;
             bool hasNext = roster != null && roster.Get(nextIndex) != null;
+
+            // 적을 처치한 직후 대사(있으면). 다음 스테이지 진행/게임 클리어보다 먼저 나온다.
+            StageSO clearedStage = CurrentStage;
+            yield return PlayDialogue(clearedStage != null ? clearedStage.outroDialogue : null);
 
             if (hasNext)
             {

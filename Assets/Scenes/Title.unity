@@ -2918,6 +2918,12 @@ MonoBehaviour:
   hiddenMainUiScale: 0.94
   titleMusicSource: {fileID: 1130899959}
   gameStartMusicFadeDuration: 0.3
+  titleMusicBpm: 94
+  firstBeatOffset: 0
+  wooferBeatScale: 1.2
+  textArtBeatScale: 1.05
+  beatPulseAttack: 0.08
+  beatPulseRelease: 0.18
 --- !u!82 &1130899959
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2928,7 +2934,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -7217165172241731015, guid: 73f7eb39e5c8aa741b33e9675c1c5660, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 2e10e47d1df9f134dbeb732e6a1fc9df, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 2e10e47d1df9f134dbeb732e6a1fc9df, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -3467,7 +3473,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31b746f20d394e89a5c7d1382f64bc90, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.OptionsSettingsController
   inputOffsetLeftButton: {fileID: 1917802841}
   inputOffsetRightButton: {fileID: 252940053}
