@@ -52,12 +52,16 @@ namespace BeatMemories
         [SerializeField] private Slider bgmVolumeSlider;
         [SerializeField] private AudioMixer bgmMixer;
 
+        [Header("SFX + Metronome Volume")]
+        [SerializeField] private Slider sfxVolumeSlider;
+
         private readonly List<Vector2Int> resolutions = new List<Vector2Int>();
         private int inputOffsetMilliseconds;
         private int resolutionIndex;
         private int windowModeIndex;
         private int vSyncCount;
         private float bgmVolume;
+        private float sfxVolume;
 
         private void Awake()
         {
@@ -99,6 +103,7 @@ namespace BeatMemories
                 && vSyncRightButton != null
                 && vSyncValue != null
                 && bgmVolumeSlider != null
+                && sfxVolumeSlider != null
                 && bgmMixer != null;
 
             if (!valid)
@@ -170,6 +175,8 @@ namespace BeatMemories
 
             bgmVolume = GameSettings.BgmVolume;
             bgmVolumeSlider.SetValueWithoutNotify(bgmVolume);
+            sfxVolume = GameSettings.SfxVolume;
+            sfxVolumeSlider.SetValueWithoutNotify(sfxVolume);
         }
 
         private int FindClosestResolution(int width, int height)
@@ -218,6 +225,7 @@ namespace BeatMemories
             vSyncLeftButton.onClick.AddListener(ToggleVSync);
             vSyncRightButton.onClick.AddListener(ToggleVSync);
             bgmVolumeSlider.onValueChanged.AddListener(SetBgmVolume);
+            sfxVolumeSlider.onValueChanged.AddListener(SetSfxVolume);
         }
 
         private void UnregisterListeners()
@@ -231,6 +239,7 @@ namespace BeatMemories
             vSyncLeftButton?.onClick.RemoveListener(ToggleVSync);
             vSyncRightButton?.onClick.RemoveListener(ToggleVSync);
             bgmVolumeSlider?.onValueChanged.RemoveListener(SetBgmVolume);
+            sfxVolumeSlider?.onValueChanged.RemoveListener(SetSfxVolume);
         }
 
         private void DecreaseInputOffset()
@@ -306,9 +315,25 @@ namespace BeatMemories
                 GameSettings.BgmVolumeToDecibels(bgmVolume));
         }
 
+        private void SetSfxVolume(float value)
+        {
+            sfxVolume = Mathf.Clamp01(value);
+            sfxVolumeSlider.SetValueWithoutNotify(sfxVolume);
+            PlayerPrefs.SetFloat(GameSettings.SfxVolumeKey, sfxVolume);
+            PlayerPrefs.Save();
+            ApplySfxVolume();
+        }
+
+        private void ApplySfxVolume()
+        {
+            GameSettings.ApplySfxVolume(bgmMixer);
+        }
+
         private void ApplyAllSettings()
         {
             QualitySettings.vSyncCount = vSyncCount;
+            ApplyBgmVolume();
+            ApplySfxVolume();
             ApplyResolutionAndWindowMode();
         }
 

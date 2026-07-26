@@ -17,6 +17,12 @@ MonoBehaviour:
     displayName: "\uACF5\uACA9"
     sprite: {fileID: 8808962097276391257, guid: 575a6fab8b63b86408965f0f041834ad, type: 3}
     action: 2
+    attackDamage: 1
+    unblockableAttack: 0
+    invulnerableWhileActing: 0
+    fixedAttackDamage: 0
+    forcedFollowUp: {fileID: 0}
+    interruptedFollowUp: {fileID: 0}
     laserOriginOffset: {x: -1.2, y: 0.35}
     maxHp: 1
     armor: 0

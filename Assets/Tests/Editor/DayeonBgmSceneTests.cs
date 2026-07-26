@@ -512,8 +512,9 @@ namespace BeatMemories.Tests
                 stageObject.FindProperty("bpm").floatValue,
                 Is.EqualTo(90f));
             Assert.That(
-                timingObject.FindProperty("bpm").floatValue,
-                Is.EqualTo(121f));
+                timingObject.FindProperty("bpm"),
+                Is.Null,
+                "BPM belongs to the soundtrack catalog, not timing settings.");
 
             string productionScene = File.ReadAllText(ScenePath);
             string catalogGuid =

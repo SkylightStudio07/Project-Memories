@@ -21,6 +21,7 @@ namespace BeatMemories
 
         [Header("참조")]
         [SerializeField] private RoundManager round;
+        [SerializeField] private HudView hud;
         [Tooltip("복제 씬에서만 사용하는 DSP BGM 로더. 비우면 기존 시작 흐름을 유지한다.")]
         [SerializeField] private RhythmAudioController rhythmAudio;
         [Tooltip("BGM 로딩 완료 후 Round의 DSP 시계를 시작한다. Conductor의 Play On Start를 함께 꺼야 한다.")]
@@ -71,6 +72,7 @@ namespace BeatMemories
 
         private void Awake()
         {
+            if (hud == null) hud = FindFirstObjectByType<HudView>();
             ResolveLegacyActors();
             int initialIndex = pendingRetryStageIndex >= 0
                 ? pendingRetryStageIndex
@@ -165,6 +167,9 @@ namespace BeatMemories
             int nextIndex = CurrentIndex + 1;
             bool hasNext = roster != null && roster.Get(nextIndex) != null;
 
+            if (hud != null)
+                yield return hud.WaitForEnemyExit();
+
             if (hasNext)
             {
                 // Act(1~4) 클리어 배너를 현재 스테이지 위에 연출 → 암전 → 다음 스테이지
@@ -172,6 +177,7 @@ namespace BeatMemories
                     yield return stageClearBanner.PlayActClear(CurrentStage.stageNumber);
 
                 yield return Fade(1f);
+                hud?.RestoreEnemyAfterExit();
                 ApplyStage(nextIndex);
                 if (gateClockUntilAudioReady)
                 {
@@ -265,6 +271,7 @@ namespace BeatMemories
             }
             transitioning = true;
             round?.PauseForStageTransition();
+            hud?.RestoreEnemyAfterExit();
             ApplyStage(index);
             StartCoroutine(DebugStartStage());
         }

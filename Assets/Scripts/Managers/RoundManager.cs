@@ -152,6 +152,8 @@ namespace BeatMemories
             repeatPhasePlan = s.repeatPhasePlan;
             phasePreparationBeats = Mathf.Max(0, s.phasePreparationBeats);
             if (input != null && !keepSceneInputMode) input.Mode = s.keyMode;
+            // Legacy fallback for scenes without a soundtrack catalog.
+            // RhythmAudioController replaces this with the selected BGM cue BPM.
             if (conductor != null) conductor.Bpm = s.bpm;
             if (player != null) player.SetMaxHp(s.playerMaxHp);
             if (backgroundInstance != null) Destroy(backgroundInstance);

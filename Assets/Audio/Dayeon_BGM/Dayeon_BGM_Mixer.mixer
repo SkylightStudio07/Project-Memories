@@ -51,6 +51,8 @@ AudioMixerController:
   m_ExposedParameters:
   - guid: c9090b748616d6b448f1dc980062486d
     name: MusicVolumeDb
+  - guid: 197ed96a866458249aab7026feee25a4
+    name: SfxVolumeDb
   m_AudioMixerGroupViews: []
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}

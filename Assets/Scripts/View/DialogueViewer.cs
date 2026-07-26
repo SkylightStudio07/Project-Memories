@@ -75,6 +75,8 @@ namespace BeatMemories
             _typingAudio.playOnAwake = false;
             _typingAudio.loop = false;
             _typingAudio.spatialBlend = 0f;
+            if (typingSettings != null)
+                _typingAudio.outputAudioMixerGroup = typingSettings.Output;
         }
 
         private void Update()

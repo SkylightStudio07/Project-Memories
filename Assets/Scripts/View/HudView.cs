@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -56,9 +55,6 @@ namespace BeatMemories
 
         [Header("스프라이트 점수")]
         [Tooltip("0부터 9 순서의 숫자 Sprite.")]
-        [SerializeField] private Sprite[] scoreDigitSprites = new Sprite[10];
-        [SerializeField] private Vector2 scoreDigitSize = new Vector2(52f, 52f);
-        [SerializeField] private float scoreDigitSpacing = -5f;
 
         [Header("통합 Queue (기존 Enemy Queue 슬롯 재사용)")]
         [SerializeField] private Image[] enemyQueueSlots = new Image[QueueSlotCount];
@@ -203,6 +199,10 @@ namespace BeatMemories
         [SerializeField] private Vector2 floatingScoreRandomOffset = new Vector2(0.3f, 0.18f);
         [SerializeField] private Color hitScoreColor = new Color(0.3f, 1f, 0.55f);
         [SerializeField] private Color clearBonusColor = new Color(1f, 0.82f, 0.25f);
+        [Header("Score Count Up")]
+        [SerializeField, Min(0.05f)] private float scoreCountMinDuration = 0.16f;
+        [SerializeField, Min(0.05f)] private float scoreCountMaxDuration = 0.9f;
+        [SerializeField, Min(0.001f)] private float scoreCountSecondsPerPoint = 0.018f;
 
         private int _enemyHp;
         private float enemySpriteTimer;
@@ -228,7 +228,8 @@ namespace BeatMemories
         private Coroutine enemyDeathRoutine;
         private bool deathPresentationActive;
         private int floatingScoreOrder;
-        private SpriteNumberVisual scoreNumberVisual;
+        private int displayedScore;
+        private Tween scoreCountTween;
         private SpriteRenderer playerGuardShield;
         private SpriteRenderer enemyGuardShield;
         private Vignette damageVignette;
@@ -236,13 +237,6 @@ namespace BeatMemories
         private int previousPlayerHp = -1;
         private int previousPlayerMaxHp = -1;
         private AudioSource playerActionAudio;
-
-        private sealed class SpriteNumberVisual
-        {
-            public RectTransform Root;
-            public CanvasGroup Group;
-            public readonly List<Image> Digits = new List<Image>();
-        }
 
         private void Awake()
         {
@@ -341,6 +335,7 @@ namespace BeatMemories
 
         private void OnDestroy()
         {
+            scoreCountTween?.Kill();
             if (playerGuardShield != null) Destroy(playerGuardShield.gameObject);
             if (enemyGuardShield != null) Destroy(enemyGuardShield.gameObject);
             if (runtimeVignetteProfile != null) Destroy(runtimeVignetteProfile);
@@ -557,6 +552,15 @@ namespace BeatMemories
             if (playerParried || enemyParried)
             {
                 PlayPlayerVoice(playerActionAudioSettings.ParryEffect);
+                return;
+            }
+
+            bool playerGuarded = result.Input == PlayerAction.Guard;
+            bool enemyGuarded = enemy != null
+                && enemy.Action == PlayerAction.Guard;
+            if (playerGuarded || enemyGuarded)
+            {
+                PlayPlayerVoice(playerActionAudioSettings.GuardEffect);
                 return;
             }
 
@@ -1791,11 +1795,6 @@ namespace BeatMemories
         private void OnScoreAwarded(int points, bool isClearBonus)
         {
             if (round == null) return;
-            if (scoreNumberVisual != null && enemySlot != null)
-            {
-                ShowFloatingSpriteScore(points, isClearBonus);
-                return;
-            }
             if (scoreLabel == null || enemySlot == null)
             {
                 round.CommitScore(points);
@@ -1848,111 +1847,45 @@ namespace BeatMemories
 
         private void OnScoreChanged(int score)
         {
-            if (scoreNumberVisual != null)
-                SetSpriteNumber(scoreNumberVisual, score, Color.white);
-            else if (scoreLabel != null)
-                scoreLabel.text = $"SCORE  {score:N0}";
+            if (scoreLabel == null) return;
+
+            scoreCountTween?.Kill();
+            int difference = Mathf.Abs(score - displayedScore);
+            if (difference == 0)
+            {
+                SetDisplayedScore(score);
+                return;
+            }
+
+            float duration = Mathf.Clamp(
+                difference * scoreCountSecondsPerPoint,
+                scoreCountMinDuration,
+                Mathf.Max(scoreCountMinDuration, scoreCountMaxDuration));
+            scoreCountTween = DOTween.To(
+                    () => displayedScore,
+                    SetDisplayedScore,
+                    score,
+                    duration)
+                .SetEase(Ease.OutCubic)
+                .SetTarget(scoreLabel)
+                .OnComplete(() => scoreCountTween = null);
         }
 
         private void InitializeScoreDisplay(int score)
         {
-            if (!HasScoreDigitSprites() || scoreLabel == null)
-            {
-                if (scoreLabel != null)
-                {
-                    scoreLabel.enabled = true;
-                    scoreLabel.text = $"SCORE  {score:N0}";
-                }
-                return;
-            }
-
-            RectTransform labelRect = scoreLabel.rectTransform;
-            scoreNumberVisual = CreateSpriteNumberVisual(
-                "ScoreDigits",
-                labelRect.parent,
-                labelRect.anchoredPosition,
-                labelRect.anchorMin,
-                labelRect.anchorMax,
-                labelRect.pivot);
-            scoreLabel.enabled = false;
-            SetSpriteNumber(scoreNumberVisual, score, Color.white);
+            scoreCountTween?.Kill();
+            scoreCountTween = null;
+            displayedScore = Mathf.Max(0, score);
+            if (scoreLabel == null) return;
+            scoreLabel.enabled = true;
+            SetDisplayedScore(displayedScore);
         }
 
-        private void ShowFloatingSpriteScore(int points, bool isClearBonus)
+        private void SetDisplayedScore(int score)
         {
-            RectTransform parent = scoreNumberVisual.Root.parent as RectTransform;
-            if (parent == null || enemySlot == null)
-            {
-                round.CommitScore(points);
-                return;
-            }
-
-            Canvas canvas = parent.GetComponentInParent<Canvas>();
-            Camera uiCamera = canvas != null && canvas.renderMode != RenderMode.ScreenSpaceOverlay
-                ? canvas.worldCamera
-                : null;
-            Camera worldCamera = Camera.main;
-            Vector2 localOrigin = scoreNumberVisual.Root.anchoredPosition;
-            if (worldCamera != null)
-            {
-                Vector2 randomOffset = RandomFloatingScoreOffset();
-                Vector3 worldOrigin = enemySlot.bounds.max
-                    + new Vector3(
-                        floatingScoreBaseOffset.x + randomOffset.x,
-                        floatingScoreBaseOffset.y + randomOffset.y,
-                        0f);
-                Vector2 screenOrigin =
-                    RectTransformUtility.WorldToScreenPoint(worldCamera, worldOrigin);
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    parent,
-                    screenOrigin,
-                    uiCamera,
-                    out localOrigin);
-            }
-
-            SpriteNumberVisual floating = CreateSpriteNumberVisual(
-                "FloatingScore",
-                parent,
-                localOrigin,
-                new Vector2(0.5f, 0.5f),
-                new Vector2(0.5f, 0.5f),
-                new Vector2(0.5f, 0.5f));
-            SetSpriteNumber(
-                floating,
-                points,
-                Color.white);
-
-            float valueRatio = Mathf.InverseLerp(0f, floatingScoreMaxValue, points);
-            float scale = Mathf.Lerp(
-                floatingScoreMinScale,
-                floatingScoreMaxScale,
-                valueRatio);
-            floating.Root.localScale = Vector3.one * scale;
-            floatingScoreOrder = (floatingScoreOrder + 1) % QueueSlotCount;
-
-            Sequence sequence = DOTween.Sequence().SetTarget(floating.Root);
-            sequence.Append(floating.Root.DOPunchScale(
-                Vector3.one * 0.3f,
-                0.16f,
-                6,
-                0.5f));
-            sequence.Append(floating.Root.DOMove(
-                    scoreNumberVisual.Root.position,
-                    floatingScoreDuration)
-                .SetEase(Ease.InCubic));
-            sequence.Join(floating.Group.DOFade(0.25f, floatingScoreDuration)
-                .SetEase(Ease.InQuad));
-            sequence.OnComplete(() =>
-            {
-                round.CommitScore(points);
-                scoreNumberVisual.Root.DOKill();
-                scoreNumberVisual.Root.DOPunchScale(
-                    Vector3.one * 0.2f,
-                    0.2f,
-                    6,
-                    0.5f);
-                Destroy(floating.Root.gameObject);
-            });
+            displayedScore = Mathf.Max(0, score);
+            if (scoreLabel != null)
+                scoreLabel.text = $"SCORE  {displayedScore:N0}";
         }
 
         private Vector2 RandomFloatingScoreOffset()
@@ -1964,94 +1897,6 @@ namespace BeatMemories
             return new Vector2(
                 side * xMagnitude,
                 Random.Range(-floatingScoreRandomOffset.y, floatingScoreRandomOffset.y));
-        }
-
-        private SpriteNumberVisual CreateSpriteNumberVisual(
-            string objectName,
-            Transform parent,
-            Vector2 anchoredPosition,
-            Vector2 anchorMin,
-            Vector2 anchorMax,
-            Vector2 pivot)
-        {
-            GameObject rootObject = new GameObject(
-                objectName,
-                typeof(RectTransform),
-                typeof(CanvasGroup));
-            RectTransform root = (RectTransform)rootObject.transform;
-            root.SetParent(parent, false);
-            root.anchorMin = anchorMin;
-            root.anchorMax = anchorMax;
-            root.pivot = pivot;
-            root.anchoredPosition = anchoredPosition;
-            root.sizeDelta = scoreDigitSize;
-            return new SpriteNumberVisual
-            {
-                Root = root,
-                Group = rootObject.GetComponent<CanvasGroup>(),
-            };
-        }
-
-        private void SetSpriteNumber(
-            SpriteNumberVisual visual,
-            int value,
-            Color color)
-        {
-            if (visual == null || visual.Root == null) return;
-            string digits = Mathf.Max(0, value).ToString();
-            EnsureDigitImages(visual, digits.Length);
-
-            float step = scoreDigitSize.x + scoreDigitSpacing;
-            float width = scoreDigitSize.x + step * (digits.Length - 1);
-            visual.Root.sizeDelta = new Vector2(width, scoreDigitSize.y);
-            float firstX = -width * 0.5f + scoreDigitSize.x * 0.5f;
-            float y = visual.Root.pivot.y >= 0.99f
-                ? -scoreDigitSize.y * 0.5f
-                : 0f;
-
-            for (int i = 0; i < visual.Digits.Count; i++)
-            {
-                Image image = visual.Digits[i];
-                bool active = i < digits.Length;
-                image.gameObject.SetActive(active);
-                if (!active) continue;
-                int digit = digits[i] - '0';
-                image.sprite = scoreDigitSprites[digit];
-                image.color = color;
-                image.rectTransform.anchoredPosition =
-                    new Vector2(firstX + step * i, y);
-            }
-        }
-
-        private void EnsureDigitImages(SpriteNumberVisual visual, int count)
-        {
-            while (visual.Digits.Count < count)
-            {
-                GameObject digitObject = new GameObject(
-                    $"Digit{visual.Digits.Count}",
-                    typeof(RectTransform),
-                    typeof(CanvasRenderer),
-                    typeof(Image));
-                RectTransform rect = (RectTransform)digitObject.transform;
-                rect.SetParent(visual.Root, false);
-                rect.anchorMin = new Vector2(0.5f, 0.5f);
-                rect.anchorMax = new Vector2(0.5f, 0.5f);
-                rect.pivot = new Vector2(0.5f, 0.5f);
-                rect.sizeDelta = scoreDigitSize;
-                Image image = digitObject.GetComponent<Image>();
-                image.preserveAspect = true;
-                image.raycastTarget = false;
-                visual.Digits.Add(image);
-            }
-        }
-
-        private bool HasScoreDigitSprites()
-        {
-            if (scoreDigitSprites == null || scoreDigitSprites.Length < 10)
-                return false;
-            for (int i = 0; i < 10; i++)
-                if (scoreDigitSprites[i] == null) return false;
-            return true;
         }
 
         private void UpdateShake(SpriteRenderer slot, ref float timer, ref Vector3 offset)

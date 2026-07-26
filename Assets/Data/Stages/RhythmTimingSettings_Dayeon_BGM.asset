@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f414b1352c34fef93ee416d76fb0342, type: 3}
   m_Name: RhythmTimingSettings_Dayeon_BGM
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.RhythmTimingSettings
-  bpm: 94
   earlyOffset: 0.35
   lateOffset: 0.35
   tick: {fileID: 8300000, guid: f326586ded1d4487bc74603165677fb3, type: 3}
   tack: {fileID: 8300000, guid: 1b38de357c484892a6641c1aaceba0e0, type: 3}
   metronomeVolume: 0.65
-  metronomeOutput: {fileID: 2766579881010251300, guid: 73f7eb39e5c8aa741b33e9675c1c5660, type: 2}
+  metronomeOutput: {fileID: 6250886845190978808, guid: 73f7eb39e5c8aa741b33e9675c1c5660, type: 2}

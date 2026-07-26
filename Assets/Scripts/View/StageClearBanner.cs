@@ -31,9 +31,14 @@ namespace BeatMemories
         [SerializeField, Range(0.6f, 1f)] private float impactSquashScale = 0.88f;
         [SerializeField, Range(0f, 0.3f)] private float punchStrength = 0.08f;
         [SerializeField, Min(1f)] private float displayScaleMultiplier = 2f;
+        [Header("Dim Background")]
+        [SerializeField] private Image dimBackground;
+        [SerializeField] private Color dimBackgroundColor =
+            new Color(0f, 0f, 0f, 225f / 255f);
 
         private Image _img;
         private RectTransform _rt;
+        private RectTransform _dimRt;
         private Vector3 _baseScale = Vector3.one;
 
         private void Awake()
@@ -42,6 +47,8 @@ namespace BeatMemories
             _rt = (RectTransform)transform;
             _baseScale = _rt.localScale;
             _img.enabled = false;
+            EnsureDimBackground();
+            if (dimBackground != null) dimBackground.enabled = false;
         }
 
         /// <summary>Act 번호(1~4) 배너를 연출과 함께 표시하고, 끝날 때까지 대기한다.</summary>
@@ -53,10 +60,19 @@ namespace BeatMemories
 
             _img.sprite = sp;
             _img.enabled = true;
+            EnsureDimBackground();
+            if (dimBackground != null)
+            {
+                dimBackground.enabled = true;
+                dimBackground.raycastTarget = true;
+                SetDimAlpha(0f);
+                _dimRt.SetAsLastSibling();
+            }
             _rt.SetAsLastSibling();
 
             _rt.DOKill();
             _img.DOKill();
+            dimBackground?.DOKill();
             Vector3 displayScale = _baseScale * displayScaleMultiplier;
             _rt.localScale = displayScale * impactStartScale;
             _rt.localRotation = Quaternion.Euler(0f, 0f, -startRotate);
@@ -67,6 +83,10 @@ namespace BeatMemories
             float settleDuration = Mathf.Max(0.05f, growDuration - impactDuration);
             Sequence impact = DOTween.Sequence().SetUpdate(true);
             impact.Append(_img.DOFade(1f, impactDuration * 0.45f));
+            if (dimBackground != null)
+                impact.Join(dimBackground
+                    .DOFade(dimBackgroundColor.a, impactDuration * 0.75f)
+                    .SetEase(Ease.OutQuad));
             impact.Join(_rt.DOScale(
                     displayScale * squashScale,
                     impactDuration)
@@ -87,6 +107,9 @@ namespace BeatMemories
 
             Sequence outro = DOTween.Sequence().SetUpdate(true);
             outro.Append(_img.DOFade(0f, fadeDuration).SetEase(Ease.InQuad));
+            if (dimBackground != null)
+                outro.Join(dimBackground.DOFade(0f, fadeDuration)
+                    .SetEase(Ease.InQuad));
             outro.Join(_rt.DOScale(displayScale * 1.08f, fadeDuration)
                 .SetEase(Ease.InQuad));
             yield return outro.WaitForCompletion();
@@ -97,14 +120,56 @@ namespace BeatMemories
         {
             if (_rt != null) _rt.DOKill();
             if (_img != null) _img.DOKill();
+            if (dimBackground != null) dimBackground.DOKill();
             if (_img != null) { _img.enabled = false; SetAlpha(1f); }
+            if (dimBackground != null)
+            {
+                dimBackground.enabled = false;
+                SetDimAlpha(0f);
+            }
             if (_rt != null) { _rt.localScale = _baseScale; _rt.localRotation = Quaternion.identity; }
+        }
+
+        private void EnsureDimBackground()
+        {
+            if (dimBackground != null)
+            {
+                _dimRt = dimBackground.rectTransform;
+                dimBackground.color = dimBackgroundColor;
+                return;
+            }
+            if (_rt == null || _rt.parent == null) return;
+
+            GameObject dimObject = new GameObject(
+                "StageClearDimBackground",
+                typeof(RectTransform),
+                typeof(CanvasRenderer),
+                typeof(Image));
+            dimObject.layer = gameObject.layer;
+            _dimRt = (RectTransform)dimObject.transform;
+            _dimRt.SetParent(_rt.parent, false);
+            _dimRt.anchorMin = Vector2.zero;
+            _dimRt.anchorMax = Vector2.one;
+            _dimRt.offsetMin = Vector2.zero;
+            _dimRt.offsetMax = Vector2.zero;
+            _dimRt.localScale = Vector3.one;
+            dimBackground = dimObject.GetComponent<Image>();
+            dimBackground.color = dimBackgroundColor;
+            dimBackground.raycastTarget = true;
         }
 
         private void SetAlpha(float a)
         {
             if (_img == null) return;
             var c = _img.color; c.a = Mathf.Clamp01(a); _img.color = c;
+        }
+
+        private void SetDimAlpha(float a)
+        {
+            if (dimBackground == null) return;
+            Color color = dimBackgroundColor;
+            color.a = Mathf.Clamp01(a);
+            dimBackground.color = color;
         }
     }
 }

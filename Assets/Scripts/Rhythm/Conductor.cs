@@ -15,9 +15,9 @@ namespace BeatMemories
         public const int BeatsPerCycle = ResponseStartBeat + BeatsPerMeasure;
 
         [Header("Tempo")]
-        [Tooltip("Shared BPM, judgment offsets, and metronome clips.")]
+        [Tooltip("Shared judgment offsets and metronome clips.")]
         [SerializeField] private RhythmTimingSettings timingSettings;
-        [Tooltip("Fallback BPM used only when no timing settings asset is assigned.")]
+        [Tooltip("Fallback BPM used until the BGM catalog supplies its runtime tempo.")]
         [SerializeField, Min(1f)] private float bpm = 90f;
         [SerializeField] private bool playOnStart = true;
 
@@ -107,9 +107,7 @@ namespace BeatMemories
 
         private float ConfiguredBpm => runtimeTempoEnabled
             ? Mathf.Max(1f, runtimeBpm)
-            : timingSettings != null
-                ? timingSettings.Bpm
-                : Mathf.Max(1f, bpm);
+            : Mathf.Max(1f, bpm);
 
         private float ConfiguredStartDelay => runtimeTempoEnabled
             ? Mathf.Max(0f, runtimeStartDelay)

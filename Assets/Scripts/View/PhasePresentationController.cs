@@ -71,6 +71,10 @@ namespace BeatMemories
                 _audioSource.playOnAwake = false;
                 _audioSource.loop = false;
                 _audioSource.spatialBlend = 0f;
+                PlayerActionAudioSettings actionAudio =
+                    PlayerActionAudioSettings.Load();
+                if (actionAudio != null)
+                    _audioSource.outputAudioMixerGroup = actionAudio.Output;
 
                 if (backgroundMusic != null)
                 {

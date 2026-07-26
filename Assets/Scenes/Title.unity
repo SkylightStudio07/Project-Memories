@@ -3483,6 +3483,7 @@ MonoBehaviour:
   vSyncValue: {fileID: 271700214}
   bgmVolumeSlider: {fileID: 1835899997}
   bgmMixer: {fileID: 24100000, guid: 73f7eb39e5c8aa741b33e9675c1c5660, type: 2}
+  sfxVolumeSlider: {fileID: 448752310}
 --- !u!1 &1662270140
 GameObject:
   m_ObjectHideFlags: 0

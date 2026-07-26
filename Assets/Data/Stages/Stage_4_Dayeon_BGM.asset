@@ -28,7 +28,7 @@ MonoBehaviour:
   phases:
   - {fileID: 11400000, guid: b6adee7f404a43dbb14cd9aa7b66309d, type: 2}
   - {fileID: 11400000, guid: 43d9a5eb1ded4229a88e059f28790715, type: 2}
-  cyclesPerPhase: 2
+  cyclesPerPhase: 1
   phasePreparationBeats: 4
   repeatPhasePlan: 0
   bpm: 93

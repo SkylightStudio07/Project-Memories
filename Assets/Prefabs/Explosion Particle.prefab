@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2398340321006969651}
   - component: {fileID: 6982336503781267501}
   - component: {fileID: 532462303294832640}
+  - component: {fileID: 7341029837461205591}
   m_Layer: 0
   m_Name: Explosion Particle
   m_TagString: Untagged
@@ -18,6 +19,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &7341029837461205591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2994249750073730769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14c3c2b9a8f4c6ea1b7d5093e82f641, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.DeathExplosionEffect
+  explosionClip: {fileID: 8300000, guid: 4afb970a71331cc4d97541bdc6780f4b, type: 3}
+  output: {fileID: 6250886845190978808, guid: 73f7eb39e5c8aa741b33e9675c1c5660, type: 2}
+  volume: 0.75
+  minPitch: 0.88
+  maxPitch: 1.12
+  repeatInterval: 0.11
 --- !u!4 &2398340321006969651
 Transform:
   m_ObjectHideFlags: 0

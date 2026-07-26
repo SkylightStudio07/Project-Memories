@@ -2,4 +2,5 @@
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="BeatMemories.EditModeTests.csproj" />
   <Project Path="Assembly-CSharp-firstpass.csproj" />
+  <Project Path="BeatMemories.PlayModeTests.csproj" />
 </Solution>

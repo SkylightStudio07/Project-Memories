@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charactersPerSecond: 40
   bleepVolume: 0.35
+  output: {fileID: 6250886845190978808, guid: 73f7eb39e5c8aa741b33e9675c1c5660, type: 2}
   minPitch: 0.94
   maxPitch: 1.06
   bleepEveryCharacters: 1

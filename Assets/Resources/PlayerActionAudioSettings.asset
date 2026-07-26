@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerActionAudioSettings
   m_EditorClassIdentifier: 
   volume: 1
+  output: {fileID: 6250886845190978808, guid: 73f7eb39e5c8aa741b33e9675c1c5660, type: 2}
   attackVoices:
   - {fileID: 8300000, guid: cfc431f9af7014f469c8279978482c2c, type: 3}
   - {fileID: 8300000, guid: 939de8b9bafbeb34b93440dd542b3cd8, type: 3}
@@ -26,6 +27,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9ec573755a68c9d428a2b496fa094112, type: 3}
   - {fileID: 8300000, guid: 3c44eff3760f9f74ab6ded79450be133, type: 3}
   beamEffect: {fileID: 8300000, guid: 82a5f6b7c81d4e3f9a2075b641ce8d30, type: 3}
-  beamVolume: 1
+  beamVolume: 0.4
+  guardEffect: {fileID: 8300000, guid: a03fc7dfb61b4bf43b0fe8796a2d0b06, type: 3}
   parryEffect: {fileID: 8300000, guid: 0ba24d97992a6654eb92ece9d131b3b8, type: 3}
   chargeEffect: {fileID: 8300000, guid: 693a33292f0b92845a71ce580088b6de, type: 3}
