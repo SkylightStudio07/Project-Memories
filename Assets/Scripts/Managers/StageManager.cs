@@ -77,30 +77,25 @@ namespace BeatMemories
                 : startStageIndex;
             pendingRetryStageIndex = -1;
             ApplyStage(initialIndex);
-            StartCoroutine(PrologueThenStart());
         }
 
         // 클록은 자동 시작하지 않는다(Conductor.playOnStart=false 전제) — 프롤로그 대사가
         // 끝난 뒤에야(없으면 즉시) 카운트인을 시작해 대사 중 카운팅되는 것을 막는다.
-        private IEnumerator PrologueThenStart()
-        {
-            yield return PlayIntroDialogue();
-            round?.StartRound();
-        }
-
-        private IEnumerator PlayIntroDialogue()
-        {
-            StageSO s = CurrentStage;
-            if (dialogueViewer != null && s != null && s.introDialogue != null)
-                yield return dialogueViewer.PlayRoutine(s.introDialogue);
-        }
-
         private IEnumerator Start()
         {
-            if (!gateClockUntilAudioReady) yield break;
+            yield return PlayIntroDialogue();
 
-            if (rhythmAudio != null)
+            if (gateClockUntilAudioReady)
             {
+                if (rhythmAudio == null)
+                {
+                    Debug.LogError(
+                        "[Stage] DSP clock start aborted because the " +
+                        "audio-ready gate has no RhythmAudioController.",
+                        this);
+                    yield break;
+                }
+
                 yield return rhythmAudio.PrepareCurrentClip();
                 if (!rhythmAudio.IsCurrentClipReady)
                 {
@@ -111,16 +106,15 @@ namespace BeatMemories
                     yield break;
                 }
             }
-            else
-            {
-                Debug.LogError(
-                    "[Stage] DSP clock start aborted because the audio-ready " +
-                    "gate has no RhythmAudioController.",
-                    this);
-                yield break;
-            }
 
             round?.StartRound();
+        }
+
+        private IEnumerator PlayIntroDialogue()
+        {
+            StageSO s = CurrentStage;
+            if (dialogueViewer != null && s != null && s.introDialogue != null)
+                yield return dialogueViewer.PlayRoutine(s.introDialogue);
         }
 
         private void OnEnable()

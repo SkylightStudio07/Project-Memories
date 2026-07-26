@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 2
   m_VerticalFit: 0
@@ -8376,7 +8376,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageClearBanner
   actBanners:
-  - {fileID: -5010252602994645219, guid: c23a3777cc77760479a7ee83596a3262, type: 3}
+  - {fileID: 384427853100260225, guid: c23a3777cc77760479a7ee83596a3262, type: 3}
   - {fileID: 1943670197215385112, guid: 0ab561a9874cef143842113c047c1dc5, type: 3}
   - {fileID: -7047583320152506935, guid: 177984710898ccb46bc78f71caef6be3, type: 3}
   - {fileID: -1116788102483584858, guid: 3980dd19ea8d0ce4b8183b5f5faca1cd, type: 3}
@@ -8662,6 +8662,7 @@ GameObject:
   - component: {fileID: 1188105352}
   - component: {fileID: 1188105355}
   - component: {fileID: 1188105354}
+  - component: {fileID: 1188105356}
   m_Layer: 0
   m_Name: RoundManager
   m_TagString: Untagged
@@ -8736,6 +8737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.BossPagePresentationController
   round: {fileID: 1188105352}
   conductor: {fileID: 1739020140}
+  stageManager: {fileID: 2032315196}
   enemyActor: {fileID: 1825124097}
   previewSlots:
   - {fileID: 889482538}
@@ -8764,11 +8766,33 @@ MonoBehaviour:
   background: {fileID: 133834108}
   globalLight: {fileID: 1029222278}
   targetCamera: {fileID: 2084326193}
+  rhythmAudio: {fileID: 1188105356}
   snareClip: {fileID: 0}
   backgroundMusic: {fileID: 0}
-  backgroundMusicVolume: 0.45
+  backgroundMusicVolume: 0.35
+  backgroundMusicFirstBeatOffset: 0
   transitionSpeed: 3
   attackPreparationZoomRatio: 0.85
+--- !u!114 &1188105356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188105351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee88b2d8356844118f32a214dfe9f2d6, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.RhythmAudioController
+  round: {fileID: 1188105352}
+  conductor: {fileID: 1739020140}
+  catalog: {fileID: 11400000, guid: 8033ede17c94d7345a35944d20ecb1b6, type: 2}
+  musicOutput: {fileID: -7217165172241731015, guid: 73f7eb39e5c8aa741b33e9675c1c5660, type: 2}
+  sfxOutput: {fileID: 6250886845190978808, guid: 73f7eb39e5c8aa741b33e9675c1c5660, type: 2}
+  preparationSnare: {fileID: 8300000, guid: f2e7bf2abce6dca4781c72c8fc768884, type: 3}
+  preparationSnareScale: 1
+  preparationSnareVolumeOverride: 0.8
 --- !u!1 &1189869869
 GameObject:
   m_ObjectHideFlags: 0
@@ -10458,85 +10482,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &1629390136
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1629390139}
-  - component: {fileID: 1629390138}
-  - component: {fileID: 1629390137}
-  m_Layer: 0
-  m_Name: PhaseLabel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1629390137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629390136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 4
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
-    m_LineSpacing: 1
-  m_Text: PHASE
---- !u!222 &1629390138
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629390136}
-  m_CullTransparentMesh: 1
---- !u!224 &1629390139
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629390136}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2034283564}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -400}
-  m_SizeDelta: {x: 700, y: 60}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1640719637
 GameObject:
   m_ObjectHideFlags: 0
@@ -11110,7 +11055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb4747a72f7fa44e916d36f115c807b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.Conductor
-  timingSettings: {fileID: 11400000, guid: 2df0f3eb77bc4b92a56dfb3cff178937, type: 2}
+  timingSettings: {fileID: 11400000, guid: e65078ca718e4bdbb28785b0aa7ef5f8, type: 2}
   bpm: 121
   playOnStart: 0
   startDelay: 3
@@ -12196,6 +12141,8 @@ MonoBehaviour:
   roster: {fileID: 11400000, guid: 715e0bfb4a141f043965a1555cc8a0b5, type: 2}
   startStageIndex: 0
   round: {fileID: 1188105352}
+  rhythmAudio: {fileID: 1188105356}
+  gateClockUntilAudioReady: 1
   background: {fileID: 133834108}
   floor: {fileID: 236057548}
   enemyActor: {fileID: 0}
@@ -12286,7 +12233,7 @@ MonoBehaviour:
   - {fileID: 482184693}
   - {fileID: 2127887478}
   enemyMaxHp: 8
-  phaseLabel: {fileID: 1629390137}
+  phaseLabel: {fileID: 0}
   feedbackLabel: {fileID: 0}
   gameOverLabel: {fileID: 0}
   countdownLabel: {fileID: 0}
@@ -12365,6 +12312,8 @@ MonoBehaviour:
   playerLaserColor: {r: 0.2, g: 0.95, b: 1, a: 1}
   enemyLaserColor: {r: 1, g: 0.18, b: 0.18, a: 1}
   chargeAura: {fileID: 126524593}
+  useDspSyncedIdleBounce: 1
+  visualBeatOffsetMilliseconds: 0
   idleBeatSquash: 0.95
   idleBeatRestoreRatio: 0.5
   idleBeatRestoreEase: 27
@@ -12475,7 +12424,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1629390139}
   - {fileID: 756925735}
   - {fileID: 1689178878}
   - {fileID: 1898841572}
@@ -12520,7 +12468,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 756925734}
   - {fileID: 0}
-  - {fileID: 1629390136}
+  - {fileID: 0}
   - {fileID: 1456166132}
   - {fileID: 0}
   - {fileID: 0}

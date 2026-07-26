@@ -15,9 +15,9 @@ namespace BeatMemories.Tests
     public class DayeonBgmSceneTests
     {
         private const string ScenePath =
-            "Assets/Scenes/BeatMemories_Dayeon_BGM.unity";
+            "Assets/Scenes/BeatMemories_Dayeon.unity";
         private const string RosterPath =
-            "Assets/Data/Stages/StageRoster_Dayeon_BGM.asset";
+            "Assets/Data/Stages/StageRoster.asset";
         private const string TimingPath =
             "Assets/Data/Stages/RhythmTimingSettings_Dayeon_BGM.asset";
         private const string CatalogPath =
@@ -35,7 +35,7 @@ namespace BeatMemories.Tests
         {
             new TrackSpec(
                 "Assets/Audio/Dayeon_BGM/Stage_1_94BPM_Loop.wav",
-                "Assets/Data/Stages/Stage_1_Dayeon_BGM.asset",
+                "Assets/Data/Stages/Stage_1.asset",
                 1,
                 94f,
                 32,
@@ -44,7 +44,7 @@ namespace BeatMemories.Tests
                 AudioClipLoadType.DecompressOnLoad),
             new TrackSpec(
                 "Assets/Audio/Dayeon_BGM/Stage_2_97BPM_Loop.wav",
-                "Assets/Data/Stages/Stage_2_Dayeon_BGM.asset",
+                "Assets/Data/Stages/Stage_2.asset",
                 1,
                 97f,
                 256,
@@ -53,7 +53,7 @@ namespace BeatMemories.Tests
                 AudioClipLoadType.Streaming),
             new TrackSpec(
                 "Assets/Audio/Dayeon_BGM/Stage_3_137BPM_Loop.wav",
-                "Assets/Data/Stages/Stage_3_Dayeon_BGM.asset",
+                "Assets/Data/Stages/Stage_3.asset",
                 1,
                 137f,
                 48,
@@ -62,7 +62,7 @@ namespace BeatMemories.Tests
                 AudioClipLoadType.DecompressOnLoad),
             new TrackSpec(
                 "Assets/Audio/Dayeon_BGM/Stage_4_93BPM_Loop.wav",
-                "Assets/Data/Stages/Stage_4_Dayeon_BGM.asset",
+                "Assets/Data/Stages/Stage_4.asset",
                 1,
                 93f,
                 40,
@@ -71,7 +71,7 @@ namespace BeatMemories.Tests
                 AudioClipLoadType.DecompressOnLoad),
             new TrackSpec(
                 "Assets/Audio/Dayeon_BGM/Boss_1_95BPM_Loop.wav",
-                "Assets/Data/Stages/Stage_5_Dayeon_BGM.asset",
+                "Assets/Data/Stages/Stage_5.asset",
                 1,
                 95f,
                 184,
@@ -80,7 +80,7 @@ namespace BeatMemories.Tests
                 AudioClipLoadType.Streaming),
             new TrackSpec(
                 "Assets/Audio/Dayeon_BGM/Boss_2_92BPM_Loop.wav",
-                "Assets/Data/Stages/Stage_5_Dayeon_BGM.asset",
+                "Assets/Data/Stages/Stage_5.asset",
                 2,
                 92f,
                 228,
@@ -155,7 +155,7 @@ namespace BeatMemories.Tests
         }
 
         [Test]
-        public void CatalogRosterAndStageBpmsMatchAllSixCues()
+        public void CatalogUsesSharedRosterAndKeepsAllSixCueTempos()
         {
             Type catalogType = RuntimeType(
                 "BeatMemories.StageSoundtrackCatalogSO");
@@ -217,14 +217,20 @@ namespace BeatMemories.Tests
                     var stageObject = new SerializedObject(stage);
                     Assert.That(
                         stageObject.FindProperty("bpm").floatValue,
-                        Is.EqualTo(Tracks[rosterIndex].Bpm)
-                            .Within(0.0001f));
+                        Is.EqualTo(90f).Within(0.0001f));
+                    Assert.That(
+                        stageObject.FindProperty("keyMode").enumValueIndex,
+                        Is.EqualTo(1));
+                    Assert.That(
+                        stageObject.FindProperty("introDialogue")
+                            .objectReferenceValue,
+                        Is.Not.Null);
                 }
             }
         }
 
         [Test]
-        public void CloneSceneUsesDspAudioGateBounceAndBossPagePresentation()
+        public void ProductionSceneUsesDspAudioGateBounceAndBossPresentation()
         {
             Type roundType = RuntimeType("BeatMemories.RoundManager");
             Type conductorType = RuntimeType("BeatMemories.Conductor");
@@ -281,7 +287,7 @@ namespace BeatMemories.Tests
                     Is.SameAs(firstStage));
                 Assert.That(
                     roundObject.FindProperty("keepSceneInputMode").boolValue,
-                    Is.False);
+                    Is.True);
 
                 var conductorObject = new SerializedObject(conductor);
                 Assert.That(
@@ -305,6 +311,18 @@ namespace BeatMemories.Tests
                     managerObject.FindProperty("gateClockUntilAudioReady")
                         .boolValue,
                     Is.True);
+                Assert.That(
+                    managerObject.FindProperty("dialogueViewer")
+                        .objectReferenceValue,
+                    Is.Not.Null);
+                Assert.That(
+                    managerObject.FindProperty("stageClearBanner")
+                        .objectReferenceValue,
+                    Is.Not.Null);
+                Assert.That(
+                    managerObject.FindProperty("blackout")
+                        .objectReferenceValue,
+                    Is.Not.Null);
 
                 var audioObject = new SerializedObject(audio);
                 Assert.That(
@@ -479,7 +497,7 @@ namespace BeatMemories.Tests
         }
 
         [Test]
-        public void SharedStageTimingAndOriginalDayeonSceneStayIndependent()
+        public void ProductionSceneIsBuiltAndSharedGameplayDataStaysCurrent()
         {
             UnityEngine.Object sharedStage =
                 AssetDatabase.LoadMainAssetAtPath(
@@ -497,11 +515,23 @@ namespace BeatMemories.Tests
                 timingObject.FindProperty("bpm").floatValue,
                 Is.EqualTo(121f));
 
-            string originalScene = File.ReadAllText(
-                "Assets/Scenes/BeatMemories_Dayeon.unity");
+            string productionScene = File.ReadAllText(ScenePath);
             string catalogGuid =
                 AssetDatabase.AssetPathToGUID(CatalogPath);
-            StringAssert.DoesNotContain(catalogGuid, originalScene);
+            StringAssert.Contains(catalogGuid, productionScene);
+            StringAssert.Contains("m_Name: ChargeButton", productionScene);
+
+            string[] enabledScenePaths = EditorBuildSettings.scenes
+                .Where(scene => scene.enabled)
+                .Select(scene => scene.path)
+                .ToArray();
+            CollectionAssert.Contains(enabledScenePaths, ScenePath);
+            CollectionAssert.DoesNotContain(
+                enabledScenePaths,
+                "Assets/Scenes/BeatMemories_Dayeon_BGM.unity");
+            Assert.That(
+                File.Exists("Assets/Scenes/BeatMemories_Dayeon_BGM.unity"),
+                Is.True);
         }
 
         private static void AssertPcmImporter(
