@@ -1,15 +1,18 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 namespace BeatMemories
 {
+    [DefaultExecutionOrder(-100)]
     public sealed class OptionsSettingsController : MonoBehaviour
     {
         private const int InputOffsetStep = 10;
         private const int MinimumInputOffset = -200;
         private const int MaximumInputOffset = 200;
+        private const string MusicVolumeParameter = "MusicVolumeDb";
 
         private static readonly FullScreenMode[] WindowModes =
         {
@@ -45,11 +48,16 @@ namespace BeatMemories
         [SerializeField] private Button vSyncRightButton;
         [SerializeField] private TMP_Text vSyncValue;
 
+        [Header("BGM Volume")]
+        [SerializeField] private Slider bgmVolumeSlider;
+        [SerializeField] private AudioMixer bgmMixer;
+
         private readonly List<Vector2Int> resolutions = new List<Vector2Int>();
         private int inputOffsetMilliseconds;
         private int resolutionIndex;
         private int windowModeIndex;
         private int vSyncCount;
+        private float bgmVolume;
 
         private void Awake()
         {
@@ -64,6 +72,11 @@ namespace BeatMemories
             RegisterListeners();
             ApplyAllSettings();
             RefreshLabels();
+        }
+
+        private void Start()
+        {
+            ApplyBgmVolume();
         }
 
         private void OnDestroy()
@@ -84,11 +97,13 @@ namespace BeatMemories
                 && windowModeValue != null
                 && vSyncLeftButton != null
                 && vSyncRightButton != null
-                && vSyncValue != null;
+                && vSyncValue != null
+                && bgmVolumeSlider != null
+                && bgmMixer != null;
 
             if (!valid)
             {
-                Debug.LogError($"{nameof(OptionsSettingsController)} has missing button or text references.", this);
+                Debug.LogError($"{nameof(OptionsSettingsController)} has missing settings references.", this);
             }
 
             return valid;
@@ -152,6 +167,9 @@ namespace BeatMemories
                 PlayerPrefs.GetInt(GameSettings.VSyncKey, QualitySettings.vSyncCount > 0 ? 1 : 0),
                 0,
                 1);
+
+            bgmVolume = GameSettings.BgmVolume;
+            bgmVolumeSlider.SetValueWithoutNotify(bgmVolume);
         }
 
         private int FindClosestResolution(int width, int height)
@@ -199,6 +217,7 @@ namespace BeatMemories
             windowModeRightButton.onClick.AddListener(NextWindowMode);
             vSyncLeftButton.onClick.AddListener(ToggleVSync);
             vSyncRightButton.onClick.AddListener(ToggleVSync);
+            bgmVolumeSlider.onValueChanged.AddListener(SetBgmVolume);
         }
 
         private void UnregisterListeners()
@@ -211,6 +230,7 @@ namespace BeatMemories
             windowModeRightButton?.onClick.RemoveListener(NextWindowMode);
             vSyncLeftButton?.onClick.RemoveListener(ToggleVSync);
             vSyncRightButton?.onClick.RemoveListener(ToggleVSync);
+            bgmVolumeSlider?.onValueChanged.RemoveListener(SetBgmVolume);
         }
 
         private void DecreaseInputOffset()
@@ -267,6 +287,23 @@ namespace BeatMemories
             PlayerPrefs.SetInt(GameSettings.VSyncKey, vSyncCount);
             PlayerPrefs.Save();
             RefreshLabels();
+        }
+
+        private void SetBgmVolume(float value)
+        {
+            bgmVolume = Mathf.Clamp01(value);
+            bgmVolumeSlider.SetValueWithoutNotify(bgmVolume);
+            ApplyBgmVolume();
+
+            PlayerPrefs.SetFloat(GameSettings.BgmVolumeKey, bgmVolume);
+            PlayerPrefs.Save();
+        }
+
+        private void ApplyBgmVolume()
+        {
+            bgmMixer.SetFloat(
+                MusicVolumeParameter,
+                GameSettings.BgmVolumeToDecibels(bgmVolume));
         }
 
         private void ApplyAllSettings()

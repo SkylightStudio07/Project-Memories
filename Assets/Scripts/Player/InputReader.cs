@@ -97,8 +97,17 @@ namespace BeatMemories
             if (keyMode == KeyMode.ThreeKey) Emit(PlayerAction.Charge, context.time);
         }
 
-        /// <summary>온스크린 버튼 등 외부 입력 주입(같은 이벤트로 흐른다).</summary>
-        public void Press(PlayerAction action) => Emit(action, InputState.currentTime);
+        /// <summary>현재 키 모드에서 사용할 수 있는 액션인가(2키 스테이지에선 차징 불가).</summary>
+        public bool IsActionAvailable(PlayerAction action)
+            => action != PlayerAction.Charge || keyMode == KeyMode.ThreeKey;
+
+        /// <summary>온스크린 버튼 등 외부 입력 주입(같은 이벤트로 흐른다).
+        /// 키보드와 동일하게 키 모드 제한을 적용한다 — 2키 스테이지에서 차징 버튼을 눌러도 무시.</summary>
+        public void Press(PlayerAction action)
+        {
+            if (!IsActionAvailable(action)) return;
+            Emit(action, InputState.currentTime);
+        }
 
         private void Emit(PlayerAction action, double realtime)
         {

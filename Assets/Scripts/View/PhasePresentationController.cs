@@ -17,9 +17,13 @@ namespace BeatMemories
         [SerializeField] private SpriteRenderer background;
         [SerializeField] private Light2D globalLight;
         [SerializeField] private Camera targetCamera;
+        [Tooltip("연결하면 BGM/준비 스네어를 DSP 예약 컨트롤러에 위임합니다.")]
+        [SerializeField] private RhythmAudioController rhythmAudio;
         [SerializeField] private AudioClip snareClip;
         [SerializeField] private AudioClip backgroundMusic;
         [SerializeField, Range(0f, 1f)] private float backgroundMusicVolume = 0.45f;
+        [Tooltip("음원 클립 시작부터 실제 첫 강박까지의 시간(초). BGM을 이만큼 먼저 예약합니다.")]
+        [SerializeField, Min(0f)] private float backgroundMusicFirstBeatOffset;
 
         [Header("전환")]
         [SerializeField, Min(0.1f)] private float transitionSpeed = 3f;
@@ -60,26 +64,29 @@ namespace BeatMemories
                 _targetOrthographicSize = _baseOrthographicSize;
             }
 
-            _audioSource = GetComponent<AudioSource>();
-            if (_audioSource == null) _audioSource = gameObject.AddComponent<AudioSource>();
-            _audioSource.playOnAwake = false;
-            _audioSource.loop = false;
-            _audioSource.spatialBlend = 0f;
-
-            if (backgroundMusic != null)
+            if (rhythmAudio == null)
             {
-                _backgroundMusicSource = gameObject.AddComponent<AudioSource>();
-                _backgroundMusicSource.clip = backgroundMusic;
-                _backgroundMusicSource.playOnAwake = false;
-                _backgroundMusicSource.loop = true;
-                _backgroundMusicSource.spatialBlend = 0f;
-                _backgroundMusicSource.volume = backgroundMusicVolume;
+                _audioSource = GetComponent<AudioSource>();
+                if (_audioSource == null) _audioSource = gameObject.AddComponent<AudioSource>();
+                _audioSource.playOnAwake = false;
+                _audioSource.loop = false;
+                _audioSource.spatialBlend = 0f;
+
+                if (backgroundMusic != null)
+                {
+                    _backgroundMusicSource = gameObject.AddComponent<AudioSource>();
+                    _backgroundMusicSource.clip = backgroundMusic;
+                    _backgroundMusicSource.playOnAwake = false;
+                    _backgroundMusicSource.loop = true;
+                    _backgroundMusicSource.spatialBlend = 0f;
+                    _backgroundMusicSource.volume = backgroundMusicVolume;
+                }
             }
 
             if (FindFirstObjectByType<AudioListener>() == null && Camera.main != null)
                 Camera.main.gameObject.AddComponent<AudioListener>();
 
-            if (snareClip == null)
+            if (rhythmAudio == null && snareClip == null)
             {
                 _runtimeSnare = CreateFallbackSnare();
                 snareClip = _runtimeSnare;
@@ -96,17 +103,46 @@ namespace BeatMemories
                 round.OnStageCleared += OnBattleEnded;
                 round.OnStageApplied += OnStageApplied;
             }
-            if (conductor != null) conductor.OnClockBeat += OnClockBeat;
+            if (rhythmAudio == null && conductor != null)
+                conductor.OnClockBeat += OnClockBeat;
         }
 
         private void Start()
         {
+            if (rhythmAudio != null) return;
             if (_backgroundMusicSource == null) return;
 
             if (conductor != null && conductor.IsRunning)
-                _backgroundMusicSource.PlayScheduled(conductor.ScheduledStartDspTime);
+            {
+                double startDspTime = CalculateBackgroundMusicStartDspTime(
+                    conductor.ScheduledStartDspTime,
+                    backgroundMusicFirstBeatOffset);
+                double currentDspTime = AudioSettings.dspTime;
+
+                if (startDspTime > currentDspTime)
+                {
+                    _backgroundMusicSource.PlayScheduled(startDspTime);
+                }
+                else
+                {
+                    AudioClip clip = _backgroundMusicSource.clip;
+                    double elapsed = currentDspTime - startDspTime;
+                    if (clip != null && clip.length > 0f)
+                        _backgroundMusicSource.time = (float)(elapsed % clip.length);
+                    _backgroundMusicSource.Play();
+                }
+            }
             else
+            {
                 _backgroundMusicSource.Play();
+            }
+        }
+
+        private static double CalculateBackgroundMusicStartDspTime(
+            double scheduledFirstBeatDspTime,
+            float firstBeatOffset)
+        {
+            return scheduledFirstBeatDspTime - Math.Max(0.0, firstBeatOffset);
         }
 
         private void OnDisable()
@@ -119,7 +155,8 @@ namespace BeatMemories
                 round.OnStageCleared -= OnBattleEnded;
                 round.OnStageApplied -= OnStageApplied;
             }
-            if (conductor != null) conductor.OnClockBeat -= OnClockBeat;
+            if (rhythmAudio == null && conductor != null)
+                conductor.OnClockBeat -= OnClockBeat;
             RestoreImmediately();
         }
 
@@ -144,6 +181,7 @@ namespace BeatMemories
         {
             _phase = phase;
             _preparing = true;
+            rhythmAudio?.SetPreparationPhase(phase);
             ApplyTargets();
         }
 

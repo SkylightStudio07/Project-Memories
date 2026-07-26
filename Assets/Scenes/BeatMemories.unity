@@ -1792,7 +1792,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageClearBanner
   actBanners:
-  - {fileID: -5010252602994645219, guid: c23a3777cc77760479a7ee83596a3262, type: 3}
+  - {fileID: 384427853100260225, guid: c23a3777cc77760479a7ee83596a3262, type: 3}
   - {fileID: 1943670197215385112, guid: 0ab561a9874cef143842113c047c1dc5, type: 3}
   - {fileID: -7047583320152506935, guid: 177984710898ccb46bc78f71caef6be3, type: 3}
   - {fileID: -1116788102483584858, guid: 3980dd19ea8d0ce4b8183b5f5faca1cd, type: 3}

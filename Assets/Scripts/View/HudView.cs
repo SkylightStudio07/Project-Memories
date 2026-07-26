@@ -156,6 +156,10 @@ namespace BeatMemories
         [SerializeField, Min(0.01f)] private float damageVignetteRestoreDuration = 0.8f;
 
         [Header("BPM Scale Bounce")]
+        [Tooltip("메트로놈 DSP 위상을 직접 샘플링해 프레임 드롭 뒤에도 현재 박자에 재합류합니다.")]
+        [SerializeField] private bool useDspSyncedIdleBounce;
+        [Tooltip("화면 출력 지연 보정(ms). 양수면 모션을 더 일찍 표시합니다.")]
+        [SerializeField, Range(-100f, 100f)] private float visualBeatOffsetMilliseconds;
         [Tooltip("정박 순간 적용할 Y Scale 배율.")]
         [SerializeField, Range(0.8f, 1f)] private float idleBeatSquash = 0.98f;
         [Tooltip("한 박 길이 중 원래 Y Scale로 복원하는 데 사용할 비율.")]
@@ -405,6 +409,20 @@ namespace BeatMemories
             }
         }
 
+        private void LateUpdate()
+        {
+            if (!useDspSyncedIdleBounce) return;
+
+            UpdateDspIdleBounce(
+                playerSlot,
+                playerBaseScale,
+                playerIdleBounceEnabled);
+            UpdateDspIdleBounce(
+                enemySlot,
+                enemyBaseScale,
+                enemyIdleBounceEnabled);
+        }
+
         private void OnPreview(EnemyPreviewCue cue)
         {
             int slot = cue.Slot;
@@ -643,9 +661,21 @@ namespace BeatMemories
         {
             _enemyHp = Mathf.Clamp(currentHp, 0, Mathf.Max(1, maxHp));
             RefreshEnemyCells();
-            if (_enemyHp == 0 && enemyDeathRoutine == null)
+            int currentPage = round != null ? round.CurrentEnemyPage : 1;
+            int pageCount = round != null ? round.EnemyPageCount : 1;
+            if (ShouldPlayEnemyDeath(_enemyHp, currentPage, pageCount)
+                && enemyDeathRoutine == null)
+            {
                 enemyDeathRoutine = StartCoroutine(BeginEnemyDeathAfterLaser());
+            }
         }
+
+        internal static bool ShouldPlayEnemyDeath(
+            int currentHp,
+            int currentPage,
+            int pageCount)
+            => currentHp <= 0
+               && Mathf.Max(1, currentPage) >= Mathf.Max(1, pageCount);
 
         private void OnStageApplied(StageSO appliedStage)
         {
@@ -704,6 +734,8 @@ namespace BeatMemories
         private void OnBeat(int beatInCycle)
         {
             SetDots(beatInCycle);
+            if (useDspSyncedIdleBounce) return;
+
             PlayIdleBeatBounce(
                 playerSlot,
                 playerBaseScale,
@@ -714,6 +746,57 @@ namespace BeatMemories
                 enemyBaseScale,
                 enemyIdleBounceEnabled,
                 ref enemyIdleBounce);
+        }
+
+        private void UpdateDspIdleBounce(
+            SpriteRenderer slot,
+            Vector3 baseScale,
+            bool enabled)
+        {
+            if (slot == null) return;
+            if (!enabled || conductor == null || !conductor.IsRunning)
+            {
+                RestoreIdleScaleY(slot, baseScale);
+                return;
+            }
+
+            double beatPosition = conductor.ClockBeatPosition;
+            if (conductor.SecondsPerBeat > 0f)
+            {
+                beatPosition +=
+                    visualBeatOffsetMilliseconds
+                    / 1000.0
+                    / conductor.SecondsPerBeat;
+            }
+
+            if (beatPosition < 0.0)
+            {
+                RestoreIdleScaleY(slot, baseScale);
+                return;
+            }
+
+            double phase = beatPosition - System.Math.Floor(beatPosition);
+            float yRatio = EvaluateIdleBeatScaleRatio(
+                (float)phase,
+                idleBeatSquash,
+                idleBeatRestoreRatio,
+                idleBeatRestoreEase);
+            Vector3 scale = slot.transform.localScale;
+            scale.y = baseScale.y * yRatio;
+            slot.transform.localScale = scale;
+        }
+
+        private static float EvaluateIdleBeatScaleRatio(
+            float beatPhase,
+            float squash,
+            float restoreRatio,
+            Ease ease)
+        {
+            float clampedRestore = Mathf.Max(0.0001f, restoreRatio);
+            if (beatPhase >= clampedRestore) return 1f;
+
+            float progress = Mathf.Clamp01(beatPhase / clampedRestore);
+            return DOVirtual.EasedValue(squash, 1f, progress, ease);
         }
 
         private void OnHealth(int current, int max)

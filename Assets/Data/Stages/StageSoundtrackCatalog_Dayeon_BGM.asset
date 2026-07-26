@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d71afdb1ac5467a9471a9ee05387113, type: 3}
+  m_Name: StageSoundtrackCatalog_Dayeon_BGM
+  m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.StageSoundtrackCatalogSO
+  entries:
+  - stage: {fileID: 11400000, guid: 75736b3adfb898c409aff0653402e92f, type: 2}
+    enemyPage: 1
+    clip: {fileID: 8300000, guid: 42a3fb2ce4e3cd542b25569af26b9c02, type: 3}
+    bpm: 94
+    loopBeats: 32
+    volume: 0.35
+  - stage: {fileID: 11400000, guid: 482c9654cdf2e164b9a352a2c62b6c1b, type: 2}
+    enemyPage: 1
+    clip: {fileID: 8300000, guid: c239d3fe647847c4baad0d797f5ce922, type: 3}
+    bpm: 97
+    loopBeats: 256
+    volume: 0.34
+  - stage: {fileID: 11400000, guid: afe601c128089104d8ba261bbd159d03, type: 2}
+    enemyPage: 1
+    clip: {fileID: 8300000, guid: ea46ee7f4ca950a45a83250845fbde3f, type: 3}
+    bpm: 137
+    loopBeats: 48
+    volume: 0.4
+  - stage: {fileID: 11400000, guid: c484d1b1b92755e41bd250f0504349e0, type: 2}
+    enemyPage: 1
+    clip: {fileID: 8300000, guid: 7c27343f042526f468e9bfae1cf02cc4, type: 3}
+    bpm: 93
+    loopBeats: 40
+    volume: 0.39
+  - stage: {fileID: 11400000, guid: 4312e281303d4014e87104c56d16ea12, type: 2}
+    enemyPage: 1
+    clip: {fileID: 8300000, guid: 0596981801ccbab4589364efe66e72ef, type: 3}
+    bpm: 95
+    loopBeats: 184
+    volume: 0.39
+  - stage: {fileID: 11400000, guid: 4312e281303d4014e87104c56d16ea12, type: 2}
+    enemyPage: 2
+    clip: {fileID: 8300000, guid: 2864bb738fd468948846c23ea9d402e8, type: 3}
+    bpm: 92
+    loopBeats: 228
+    volume: 0.35

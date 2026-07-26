@@ -21,6 +21,10 @@ namespace BeatMemories
 
         [Header("참조")]
         [SerializeField] private RoundManager round;
+        [Tooltip("복제 씬에서만 사용하는 DSP BGM 로더. 비우면 기존 시작 흐름을 유지한다.")]
+        [SerializeField] private RhythmAudioController rhythmAudio;
+        [Tooltip("BGM 로딩 완료 후 Round의 DSP 시계를 시작한다. Conductor의 Play On Start를 함께 꺼야 한다.")]
+        [SerializeField] private bool gateClockUntilAudioReady;
         [Tooltip("씬의 '백그라운드' SpriteRenderer")]
         [SerializeField] private SpriteRenderer background;
         [Tooltip("씬의 '바닥' SpriteRenderer")]
@@ -73,14 +77,36 @@ namespace BeatMemories
                 : startStageIndex;
             pendingRetryStageIndex = -1;
             ApplyStage(initialIndex);
-            StartCoroutine(PrologueThenStart());
         }
 
         // 클록은 자동 시작하지 않는다(Conductor.playOnStart=false 전제) — 프롤로그 대사가
         // 끝난 뒤에야(없으면 즉시) 카운트인을 시작해 대사 중 카운팅되는 것을 막는다.
-        private IEnumerator PrologueThenStart()
+        private IEnumerator Start()
         {
             yield return PlayIntroDialogue();
+
+            if (gateClockUntilAudioReady)
+            {
+                if (rhythmAudio == null)
+                {
+                    Debug.LogError(
+                        "[Stage] DSP clock start aborted because the " +
+                        "audio-ready gate has no RhythmAudioController.",
+                        this);
+                    yield break;
+                }
+
+                yield return rhythmAudio.PrepareCurrentClip();
+                if (!rhythmAudio.IsCurrentClipReady)
+                {
+                    Debug.LogError(
+                        "[Stage] DSP clock start aborted because the stage " +
+                        "soundtrack did not finish loading.",
+                        this);
+                    yield break;
+                }
+            }
+
             round?.StartRound();
         }
 
@@ -147,6 +173,31 @@ namespace BeatMemories
 
                 yield return Fade(1f);
                 ApplyStage(nextIndex);
+                if (gateClockUntilAudioReady)
+                {
+                    if (rhythmAudio == null)
+                    {
+                        Debug.LogError(
+                            "[Stage] Stage transition stopped because the " +
+                            "audio-ready gate has no RhythmAudioController.",
+                            this);
+                        yield return Fade(0f);
+                        transitioning = false;
+                        yield break;
+                    }
+
+                    yield return rhythmAudio.PrepareCurrentClip();
+                    if (!rhythmAudio.IsCurrentClipReady)
+                    {
+                        Debug.LogError(
+                            "[Stage] Stage transition stopped because the " +
+                            "next soundtrack did not finish loading.",
+                            this);
+                        yield return Fade(0f);
+                        transitioning = false;
+                        yield break;
+                    }
+                }
                 if (holdBlackSeconds > 0f)
                     yield return new WaitForSecondsRealtime(holdBlackSeconds);
                 yield return Fade(0f);
@@ -212,10 +263,40 @@ namespace BeatMemories
                 blackout.alpha = 0f;
                 blackout.blocksRaycasts = false;
             }
-            transitioning = false;
+            transitioning = true;
             round?.PauseForStageTransition();
             ApplyStage(index);
+            StartCoroutine(DebugStartStage());
+        }
+
+        private IEnumerator DebugStartStage()
+        {
+            if (gateClockUntilAudioReady)
+            {
+                if (rhythmAudio == null)
+                {
+                    Debug.LogError(
+                        "[Stage] Debug switch aborted because the audio-ready " +
+                        "gate has no RhythmAudioController.",
+                        this);
+                    transitioning = false;
+                    yield break;
+                }
+
+                yield return rhythmAudio.PrepareCurrentClip();
+                if (!rhythmAudio.IsCurrentClipReady)
+                {
+                    Debug.LogError(
+                        "[Stage] Debug switch aborted because the selected " +
+                        "soundtrack did not finish loading.",
+                        this);
+                    transitioning = false;
+                    yield break;
+                }
+            }
+
             round?.StartRound();
+            transitioning = false;
         }
 #endif
 
