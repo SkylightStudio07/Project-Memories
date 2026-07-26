@@ -162,6 +162,38 @@
 - 신규 컴파일 오류 0개
 - 기존 `HudView` 미사용 필드 경고 2개만 확인
 
+## 2026-07-26 — 타이틀 BGM 비트 펄스
+
+### 구현 내용
+
+- `Title`에 타이틀 BGM 기반 비트 펄스를 추가했다.
+- `AudioSource.timeSamples`와 음원 주파수로 현재 재생 시간을 계산하여 프레임 누적 오차 없이 박자를 추적한다.
+- 현재 타이틀 BGM `Dreamscape`의 기본 템포를 94 BPM으로 설정했다.
+- 각 박마다 다음 요소가 DOTween으로 빠르게 커졌다가 원래 크기로 복원된다.
+  - `Woofer_Left`: 원본 크기의 1.07배
+  - `Woofer_Right`: 원본 크기의 1.07배
+  - `Text Art`: 원본 크기의 1.035배
+- 기본 펄스 시간은 확대 0.08초, 복원 0.18초다.
+- 세 요소의 등장 연출이 끝난 다음 박부터 펄스를 시작한다.
+- Options 진입 시 `Text Art` 펄스만 중단하여 화면 전환 스케일 트윈과 충돌하지 않게 했다.
+- Options 화면에서도 `Woofer_Left`, `Woofer_Right`는 계속 BGM 박자를 탄다.
+- Options에서 메인 화면으로 돌아오면 `Text Art`가 다음 박부터 다시 펄스에 합류한다.
+- Start 클릭 시에는 씬 전환을 위해 모든 펄스를 중단한다.
+- 음원이 반복되어 `timeSamples`가 처음으로 돌아갈 때 박 카운터도 함께 재동기화한다.
+
+### Inspector 조정값
+
+- `Title Music Bpm`: 곡의 BPM
+- `First Beat Offset`: 음원 시작부터 첫 박까지의 초 단위 오프셋
+- `Woofer Beat Scale`, `Text Art Beat Scale`: 펄스 크기
+- `Beat Pulse Attack`, `Beat Pulse Release`: 확대/복원 시간
+
+### 검증
+
+- `dotnet build Project-Memories.slnx --no-restore` 성공
+- 신규 컴파일 오류 0개
+- 기존 `HudView` 미사용 필드 경고 2개만 확인
+
 ## 2026-07-26 — 타이틀 BGM 및 전역 BGM 음량
 
 ### 구현 내용

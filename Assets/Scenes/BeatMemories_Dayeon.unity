@@ -12298,6 +12298,9 @@ MonoBehaviour:
   - {fileID: 0}
   emptyQueueSprite: {fileID: 8543918897373044191, guid: cb3b7192b503d7341aa64898af925e19, type: 3}
   queueEmptyColor: {r: 0.12, g: 0.15, b: 0.2, a: 0.45}
+  hiddenQueueSprite: {fileID: 21300000, guid: abb142df76ba7e44395898c7228633aa, type: 3}
+  hiddenQueueColor: {r: 1, g: 1, b: 1, a: 1}
+  hiddenQueueScale: 1.2
   queueDamageColor: {r: 0.95, g: 0.18, b: 0.18, a: 1}
   queueSuccessColor: {r: 0.25, g: 0.95, b: 0.38, a: 1}
   queueRevealDuration: 0.18

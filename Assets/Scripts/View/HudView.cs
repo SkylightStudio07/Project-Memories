@@ -62,6 +62,12 @@ namespace BeatMemories
         [SerializeField] private Image[] playerQueueSlots = new Image[QueueSlotCount];
         [SerializeField] private Sprite emptyQueueSprite;
         [SerializeField] private Color queueEmptyColor = new Color(0.12f, 0.15f, 0.20f, 0.45f);
+        [Tooltip("적이 예고를 차폐했을 때 표시할 노이즈 오버레이. 비우면 빈 슬롯과 동일하게 표시")]
+        [SerializeField] private Sprite hiddenQueueSprite;
+        [Tooltip("차폐 슬롯 색. 노이즈 오버레이를 원본 색으로 보이려면 흰색")]
+        [SerializeField] private Color hiddenQueueColor = Color.white;
+        [Tooltip("차폐 노이즈만 슬롯보다 크게 표시할 배율")]
+        [SerializeField, Min(0.1f)] private float hiddenQueueScale = 1.2f;
         [SerializeField] private Color queueDamageColor = new Color(0.95f, 0.18f, 0.18f);
         [SerializeField] private Color queueSuccessColor = new Color(0.25f, 0.95f, 0.38f);
 
@@ -227,6 +233,12 @@ namespace BeatMemories
         private Coroutine playerDeathRoutine;
         private Coroutine enemyDeathRoutine;
         private bool deathPresentationActive;
+        private SpriteRenderer enemyExitActor;
+        private Vector3 enemyExitPosition;
+        private Quaternion enemyExitRotation;
+        private Vector3 enemyExitScale;
+        private bool enemyExitEnabled;
+        private bool enemyExitPendingRestore;
         private int floatingScoreOrder;
         private int displayedScore;
         private Tween scoreCountTween;
@@ -317,6 +329,8 @@ namespace BeatMemories
             if (enemyDeathRoutine != null) StopCoroutine(enemyDeathRoutine);
             playerDeathRoutine = null;
             enemyDeathRoutine = null;
+            enemyExitActor = null;
+            enemyExitPendingRestore = false;
             if (combatUiGroup != null)
             {
                 combatUiGroup.DOKill();
@@ -423,11 +437,17 @@ namespace BeatMemories
             int slot = cue.Slot;
             Enemy enemy = cue.VisibleEnemy;
             if (slot >= 0 && slot < revealedEnemies.Length) revealedEnemies[slot] = enemy;
-            SetQueueSlot(
-                enemyQueueSlots,
-                slot,
-                cue.IsHidden ? emptyQueueSprite : QueueSprite(enemy),
-                cue.IsHidden ? queueEmptyColor : Color.white);
+
+            // 차폐(적 기믹)와 '아직 예고 전인 빈 슬롯'을 구분해서 보여준다.
+            // hiddenQueueSprite가 비어 있으면 기존처럼 빈 슬롯과 동일하게 처리.
+            bool useNoise = cue.IsHidden && hiddenQueueSprite != null;
+            Sprite slotSprite = cue.IsHidden
+                ? (useNoise ? hiddenQueueSprite : emptyQueueSprite)
+                : QueueSprite(enemy);
+            Color slotColor = cue.IsHidden
+                ? (useNoise ? hiddenQueueColor : queueEmptyColor)
+                : Color.white;
+            SetQueueSlot(enemyQueueSlots, slot, slotSprite, slotColor, useNoise ? hiddenQueueScale : 1f);
             if (feedbackLabel != null)
                 feedbackLabel.text = cue.IsHidden || enemy == null ? "" : enemy.DisplayName;
         }
@@ -501,7 +521,9 @@ namespace BeatMemories
             if (r.Cleared && r.Input == PlayerAction.Attack)
                 PlayAttackMotion();
 
-            ResolveQueueSlot(slot, r);
+            // 판정 시점의 실제 적을 함께 넘긴다 — EnemyPreviewCue는 차폐 시 적 참조를 주지 않으므로
+            // (UI 우회 노출 방지), 노이즈로 가려졌던 슬롯을 공개하려면 이 경로가 유일하다.
+            ResolveQueueSlot(slot, e, r);
             if (feedbackLabel != null)
                 feedbackLabel.text = string.IsNullOrEmpty(r.Feedback) ? $"{r.Input} → {r.Type}" : r.Feedback;
         }
@@ -1011,15 +1033,21 @@ namespace BeatMemories
         private static Image QueueSlot(Image[] slots, int index)
             => slots != null && index >= 0 && index < slots.Length ? slots[index] : null;
 
-        private void SetQueueSlot(Image[] slots, int index, Sprite sprite, Color color)
+        // scale은 차폐 노이즈처럼 슬롯보다 크게 보여야 하는 경우에만 1이 아닌 값을 넘긴다.
+        // 기본값이 1이라 다른 호출부는 자동으로 원래 크기로 되돌아간다.
+        private void SetQueueSlot(Image[] slots, int index, Sprite sprite, Color color, float scale = 1f)
         {
             Image slot = QueueSlot(slots, index);
             if (slot == null) return;
             slot.sprite = sprite != null ? sprite : emptyQueueSprite;
             slot.color = color;
+            // 판정 연출(DOPunchScale)은 시작 시점 스케일로 되돌리므로, 살아 있는 트윈을 먼저 끊지 않으면
+            // 노이즈(1.2배) → 일반 슬롯(1배) 전환이 다시 1.2배로 덮일 수 있다.
+            slot.rectTransform.DOKill();
+            slot.rectTransform.localScale = Vector3.one * scale;
         }
 
-        private void ResolveQueueSlot(int slot, JudgeResult result)
+        private void ResolveQueueSlot(int slot, Enemy revealedEnemy, JudgeResult result)
         {
             if (slot < 0 || slot >= QueueSlotCount) return;
 
@@ -1032,8 +1060,19 @@ namespace BeatMemories
             Image queueSlot = QueueSlot(enemyQueueSlots, slot);
             if (queueSlot != null)
             {
+                // 차폐(노이즈)됐던 슬롯도 판정이 끝나면 실제 자세를 공개한다.
+                // 플레이어가 "무엇이 왔는지"를 사후에 확인하고 학습할 수 있어야 하기 때문.
+                // 차폐 시 revealedEnemies는 비어 있으므로 판정이 넘겨준 적을 우선 사용한다.
+                Enemy revealed = revealedEnemy != null
+                    ? revealedEnemy
+                    : (slot < revealedEnemies.Length ? revealedEnemies[slot] : null);
+                if (revealed != null) queueSlot.sprite = QueueSprite(revealed);
+
                 queueSlot.color = resultColor;
                 queueSlot.rectTransform.DOKill();
+                // 노이즈 확대(hiddenQueueScale)를 원래 크기로 되돌린 뒤 펀치를 시작한다.
+                // DOPunchScale은 시작 시점 스케일로 복원하므로 순서가 중요하다.
+                queueSlot.rectTransform.localScale = Vector3.one;
                 queueSlot.rectTransform.DOPunchScale(Vector3.one * 0.16f, 0.18f, 6, 0.5f);
             }
         }
@@ -1647,10 +1686,42 @@ namespace BeatMemories
             playerDeathRoutine = null;
         }
 
+        public IEnumerator WaitForEnemyExit()
+        {
+            while (enemyDeathRoutine != null || deathPresentationActive)
+                yield return null;
+        }
+
+        public void RestoreEnemyAfterExit()
+        {
+            if (!enemyExitPendingRestore)
+                return;
+
+            if (enemyExitActor != null)
+            {
+                Transform actorTransform = enemyExitActor.transform;
+                actorTransform.DOKill();
+                actorTransform.position = enemyExitPosition;
+                actorTransform.rotation = enemyExitRotation;
+                actorTransform.localScale = enemyExitScale;
+                enemyExitActor.enabled = enemyExitEnabled;
+                SetEnemyIdle();
+            }
+
+            enemyExitActor = null;
+            enemyExitPendingRestore = false;
+        }
+
         private IEnumerator PlayDeathSequence(SpriteRenderer actor, bool restoreActor)
         {
             if (actor == null || deathPresentationActive) yield break;
             deathPresentationActive = true;
+
+            // 연출 도중 스테이지가 전환되면 액터(CharacterView 인스턴스)가 Destroy될 수 있다.
+            // 그 경우 파괴된 Transform 접근으로 코루틴이 예외로 죽어 전투 UI가 숨겨진 채 남고
+            // 카메라 줌도 풀리지 않으므로, 매 단계에서 생존을 확인하고 정리는 finally로 보장한다.
+            try
+            {
             HideCombatUi();
             if (actor == playerSlot) StopPlayerIdleBounce();
             else StopEnemyIdleBounce();
@@ -1661,9 +1732,19 @@ namespace BeatMemories
             Quaternion originalRotation = actorTransform.rotation;
             Vector3 originalScale = actorTransform.localScale;
             bool originalEnabled = actor.enabled;
+            if (restoreActor)
+            {
+                enemyExitActor = actor;
+                enemyExitPosition = originalPosition;
+                enemyExitRotation = originalRotation;
+                enemyExitScale = originalScale;
+                enemyExitEnabled = originalEnabled;
+                enemyExitPendingRestore = true;
+            }
 
             if (deathHitStopDuration > 0f)
                 yield return new WaitForSecondsRealtime(deathHitStopDuration);
+            if (actor == null) yield break;
 
             CharacterView actorView = CharacterViewFor(actor);
             Vector3 focusPosition = actorView != null
@@ -1671,6 +1752,7 @@ namespace BeatMemories
                 : actor.bounds.center;
             cameraSway?.FocusOn(focusPosition, deathCameraZoomRatio, deathCameraDuration);
             yield return new WaitForSecondsRealtime(deathCameraDuration);
+            if (actor == null) yield break;
 
             actorTransform.DOShakePosition(
                     deathShakeDuration,
@@ -1682,6 +1764,7 @@ namespace BeatMemories
                     ShakeRandomnessMode.Harmonic)
                 .SetUpdate(true);
             yield return new WaitForSecondsRealtime(deathShakeDuration);
+            if (actor == null) yield break;
 
             Vector3 explosionCenter = actorView != null
                 ? actorView.GetAnchorPosition(CharacterAnchorType.Effect)
@@ -1695,6 +1778,7 @@ namespace BeatMemories
 
             if (explosionFlyDelay > 0f)
                 yield return new WaitForSecondsRealtime(explosionFlyDelay);
+            if (actor == null) yield break;
 
             float direction = actor == playerSlot ? -1f : 1f;
             Vector3 flyTarget = actorTransform.position
@@ -1709,21 +1793,17 @@ namespace BeatMemories
                 .SetEase(Ease.InQuad)
                 .SetUpdate(true);
             yield return new WaitForSecondsRealtime(deathFlyDuration);
+            if (actor == null) yield break;
 
-            cameraSway?.RestoreFocus(deathCameraDuration);
-            FadeCombatUi(1f);
-
-            if (restoreActor)
-            {
-                actorTransform.DOKill();
-                actorTransform.position = originalPosition;
-                actorTransform.rotation = originalRotation;
-                actorTransform.localScale = originalScale;
-                actor.enabled = originalEnabled;
-                SetEnemyIdle();
             }
-
-            deathPresentationActive = false;
+            finally
+            {
+                // 중간에 액터가 파괴돼 조기 종료되더라도 전투 UI·카메라·플래그는 반드시 되돌린다.
+                // (특히 카메라 줌을 여기서 풀지 않으면 다음 스테이지까지 확대된 채 고착된다.)
+                deathPresentationActive = false;
+                FadeCombatUi(1f);
+                cameraSway?.RestoreFocus(deathCameraDuration);
+            }
         }
 
         private CharacterView CharacterViewFor(SpriteRenderer actor)

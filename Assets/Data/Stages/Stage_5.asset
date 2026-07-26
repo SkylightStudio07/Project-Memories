@@ -40,6 +40,9 @@ MonoBehaviour:
   cutPreviewBottomHalfOnSecondPage: 1
   enemyPageTransitionSprite: {fileID: 21300000, guid: 2d45c0db7c5442bd9f4eb85d9173e47c, type: 3}
   introDialogue: {fileID: 11400000, guid: e405f23e66f2b94469819be1c9d3deb3, type: 2}
+  outroDialogue: {fileID: 11400000, guid: 77acdbadede06c74ab7dc93497e2a627, type: 2}
+  pageTransitionDialogues:
+  - {fileID: 11400000, guid: e63d67a45b427124c921415e3b90b284, type: 2}
   backgroundSprite: {fileID: 3621925518522577735, guid: 6c18c42c221c047429b2f836fd017952, type: 3}
   floorSprite: {fileID: -8522455415725479746, guid: b30a3745adb99e94ebde7f49c61d7eeb, type: 3}
   backgroundPrefab: {fileID: 840358950603511695, guid: 646fcf3e26373ae44b78566a99c1b38d, type: 3}
