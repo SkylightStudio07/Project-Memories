@@ -331,10 +331,13 @@ namespace BeatMemories
 
             if (!inResponse)
             {
-                // RoundManager가 Conductor보다 먼저 Update되므로, 응답 시작과 같은 프레임의
-                // 입력은 다음 프레임까지 보존한다. 그보다 오래된 제시 구간 입력만 버린다.
+                // 응답 시작 직전의 선행 입력을 짧게 보존한다. 프레임 단위 보존만으로는
+                // WebGL의 가변 프레임과 음악을 따라 누르는 선행 입력이 쉽게 유실된다.
+                double inputBufferSeconds = conductor.InputBufferSeconds;
+                double expiredBefore =
+                    Time.realtimeSinceStartupAsDouble - inputBufferSeconds;
                 while (pendingInputs.Count > 0
-                    && pendingInputs.Peek().Frame < Time.frameCount)
+                    && pendingInputs.Peek().Realtime < expiredBefore)
                     pendingInputs.Dequeue();
                 responseEndPending = false;
                 responseEndFrame = -1;
@@ -387,37 +390,54 @@ namespace BeatMemories
             if (isOver) return;
 
             int current = -1;
+            bool bufferedEarlyInput = false;
+            double inputBufferSeconds = conductor.InputBufferSeconds;
             for (int i = 0; i < notes.Count; i++)
             {
                 if (notes[i].consumed) continue;
-                if (inputSongTime >= notes[i].openTime && inputSongTime < notes[i].closeTime)
+                if (IsWithinInputWindow(
+                        inputSongTime,
+                        notes[i].openTime,
+                        notes[i].closeTime,
+                        inputBufferSeconds,
+                        out bufferedEarlyInput))
                 {
                     current = i;
                     break;
                 }
+
+                // 아직 가장 가까운 미처리 슬롯의 버퍼보다도 이르다면
+                // 더 뒤의 슬롯과 매칭될 수 없다.
+                if (inputSongTime < notes[i].openTime - inputBufferSeconds)
+                    break;
             }
 
             if (current < 0) return;
 
             ResponseNote note = notes[current];
             if (note.lockedByEarlyInput) return;
-            if (inputSongTime < note.earlyTime)
+            // 버퍼 입력은 해당 박이 열린 뒤의 가장 이른 성공 시각으로 보정한다.
+            // 따라서 입력은 놓치지 않되, 다음 슬롯을 미리 여러 개 소비하지 않는다.
+            double judgedSongTime = bufferedEarlyInput
+                ? Math.Max(note.openTime, note.earlyTime)
+                : inputSongTime;
+            if (judgedSongTime < note.earlyTime)
             {
                 note.lockedByEarlyInput = true;
-                ResolveTimingFrame(note, RhythmTimingResult.TooEarly, inputSongTime);
+                ResolveTimingFrame(note, RhythmTimingResult.TooEarly, judgedSongTime);
                 OnTimingJudged?.Invoke(note.slot, RhythmTimingResult.TooEarly);
                 return;
             }
 
             note.consumed = true;
             input?.NotifyAccepted(timedAction.Action);
-            ResolveTimingFrame(note, RhythmTimingResult.Success, inputSongTime);
+            ResolveTimingFrame(note, RhythmTimingResult.Success, judgedSongTime);
             OnTimingJudged?.Invoke(note.slot, RhythmTimingResult.Success);
-            double timingRange = inputSongTime <= note.targetTime
+            double timingRange = judgedSongTime <= note.targetTime
                 ? note.targetTime - note.earlyTime
                 : note.closeTime - note.targetTime;
             float responseRatio = timingRange > 0.0
-                ? Mathf.Clamp01((float)(Math.Abs(inputSongTime - note.targetTime) / timingRange))
+                ? Mathf.Clamp01((float)(Math.Abs(judgedSongTime - note.targetTime) / timingRange))
                 : 1f;
             ApplyJudge(
                 note.slot,
@@ -425,6 +445,21 @@ namespace BeatMemories
                 timedAction.Action,
                 isMiss: false,
                 responseRatio: responseRatio);
+        }
+
+        private static bool IsWithinInputWindow(
+            double inputSongTime,
+            double openTime,
+            double closeTime,
+            double inputBufferSeconds,
+            out bool bufferedEarlyInput)
+        {
+            double buffer = Math.Max(0.0, inputBufferSeconds);
+            bufferedEarlyInput =
+                inputSongTime < openTime
+                && inputSongTime >= openTime - buffer;
+            return bufferedEarlyInput
+                   || (inputSongTime >= openTime && inputSongTime < closeTime);
         }
 
         private void RefreshPendingNoteWindows()
@@ -778,6 +813,9 @@ namespace BeatMemories
         private PhaseSO PhaseForCycle(int cycleIndex)
         {
             if (phases == null || phases.Count == 0) return null;
+            if (stage != null && stage.phasesFollowEnemyPages)
+                return phases[Mathf.Clamp(CurrentEnemyPage - 1, 0, phases.Count - 1)];
+
             int block = Mathf.Max(1, cyclesPerPhase);
             int localCycle = Mathf.Max(0, cycleIndex - stageStartCycleIndex);
             int idx = localCycle / block;
@@ -809,6 +847,7 @@ namespace BeatMemories
 
         private void BeginNextEnemyPage(int completedCycleIndex)
         {
+            PhaseSO previousPhase = CurrentPhase;
             stageClearPending = false;
             SetEnemyCharged(false);
             CurrentEnemyPage++;
@@ -824,7 +863,18 @@ namespace BeatMemories
             int transitionBeats = stage != null
                 ? Mathf.Max(0, stage.enemyPageTransitionBeats)
                 : 0;
+            PhaseSO nextPagePhase = PhaseForCycle(completedCycleIndex + 1);
+            bool hasDialogue = HasPageTransitionDialogue(CurrentEnemyPage);
+
+            // 대사가 있는 전환은 먼저 기존 클록과 오디오를 완전히 정지한다.
+            // 그 뒤 페이지 이벤트를 보내야 새 페이지의 BGM/BPM 예약이
+            // HandleClockStopped에서 다시 지워지지 않는다.
+            if (hasDialogue)
+                PauseForStageTransition();
+
             OnEnemyHealthChanged?.Invoke(CurrentEnemyHp, EnemyMaxHp);
+            if (nextPagePhase != previousPhase)
+                OnPhasePreparing?.Invoke(completedCycleIndex + 1, nextPagePhase);
             OnEnemyPageTransitionStarted?.Invoke(
                 CurrentEnemyPage,
                 EnemyPageCount,
@@ -832,9 +882,8 @@ namespace BeatMemories
 
             // 이 페이지에 돌입 대사가 있으면 클록을 멈추고 대사가 끝날 때까지 기다린다.
             // (대사 중 비트가 진행되면 안 되므로) 재개는 StageManager가 StartRound로 처리.
-            if (HasPageTransitionDialogue(CurrentEnemyPage))
+            if (hasDialogue)
             {
-                PauseForStageTransition();
                 // 클록이 카운트인부터 다시 시작되므로 페이즈 계산 기준도 0으로 맞춘다.
                 stageStartCycleIndex = 0;
                 // 준비 비트는 지금 큐잉해봐야 StartClock에서 초기화된다.

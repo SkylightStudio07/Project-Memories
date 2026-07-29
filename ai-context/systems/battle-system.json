@@ -1,0 +1,1770 @@
+﻿{
+  "Id": "battle",
+  "Name": "Battle System",
+  "Anchor": "systems/battle-system.md",
+  "Stats": {
+    "NodeCount": 13,
+    "InternalEdges": 56,
+    "ExternalEdges": 88,
+    "EntryMethodCount": 8,
+    "Keywords": [
+      "beat",
+      "memories",
+      "enemy",
+      "sequence",
+      "combat",
+      "phase",
+      "rhythm",
+      "timeline",
+      "balance",
+      "banner",
+      "cue",
+      "position"
+    ]
+  },
+  "RoleEstimate": "Battle System appears to be an externally connected area around beat, memories, enemy, sequence, combat. It contains 13 types, including 4 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.PhasePresentationController.Awake@45",
+      "TypeId": "BeatMemories.PhasePresentationController",
+      "Signature": "Awake()",
+      "Label": "PhasePresentationController.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+      "Line": 45
+    },
+    {
+      "Id": "BeatMemories.PhaseBanner.Start@45",
+      "TypeId": "BeatMemories.PhaseBanner",
+      "Signature": "Start()",
+      "Label": "PhaseBanner.Start()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhaseBanner.cs",
+      "Line": 45
+    },
+    {
+      "Id": "BeatMemories.PhasePresentationController.Start@114",
+      "TypeId": "BeatMemories.PhasePresentationController",
+      "Signature": "Start()",
+      "Label": "PhasePresentationController.Start()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+      "Line": 114
+    },
+    {
+      "Id": "BeatMemories.PhasePresentationController.OnDisable@152",
+      "TypeId": "BeatMemories.PhasePresentationController",
+      "Signature": "OnDisable()",
+      "Label": "PhasePresentationController.OnDisable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+      "Line": 152
+    },
+    {
+      "Id": "BeatMemories.EnemySequenceProvider.GenerateCycle@40",
+      "TypeId": "BeatMemories.EnemySequenceProvider",
+      "Signature": "GenerateCycle(int, int)",
+      "Label": "EnemySequenceProvider.GenerateCycle(int, int)",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+      "Line": 40
+    },
+    {
+      "Id": "BeatMemories.EnemySequenceProvider.GenerateCycleWeighted@82",
+      "TypeId": "BeatMemories.EnemySequenceProvider",
+      "Signature": "GenerateCycleWeighted(int, int, PhaseSO)",
+      "Label": "EnemySequenceProvider.GenerateCycleWeighted(int, int, PhaseSO)",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+      "Line": 82
+    },
+    {
+      "Id": "BeatMemories.CombatTimeline.StartsAfterResponse@111",
+      "TypeId": "BeatMemories.CombatTimeline",
+      "Signature": "StartsAfterResponse(int, int, int)",
+      "Label": "CombatTimeline.StartsAfterResponse(int, int, int)",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+      "Line": 111
+    },
+    {
+      "Id": "BeatMemories.EnemySequenceProvider.BuildGroups@144",
+      "TypeId": "BeatMemories.EnemySequenceProvider",
+      "Signature": "BuildGroups()",
+      "Label": "EnemySequenceProvider.BuildGroups()",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+      "Line": 144
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.Enemy",
+      "Name": "Enemy",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+      "Line": 11,
+      "IsUnityType": false,
+      "Incoming": 57,
+      "Outgoing": 8,
+      "Internal": 33,
+      "External": 32
+    },
+    {
+      "Id": "BeatMemories.EnemySequenceProvider",
+      "Name": "EnemySequenceProvider",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+      "Line": 12,
+      "IsUnityType": false,
+      "Incoming": 3,
+      "Outgoing": 38,
+      "Internal": 28,
+      "External": 13
+    },
+    {
+      "Id": "BeatMemories.PhaseSO",
+      "Name": "PhaseSO",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+      "Line": 31,
+      "IsUnityType": true,
+      "Incoming": 25,
+      "Outgoing": 16,
+      "Internal": 18,
+      "External": 23
+    },
+    {
+      "Id": "BeatMemories.PhasePresentationController",
+      "Name": "PhasePresentationController",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+      "Line": 12,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 11,
+      "Internal": 3,
+      "External": 8
+    },
+    {
+      "Id": "BeatMemories.EnemyData",
+      "Name": "EnemyData",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\EnemyData.cs",
+      "Line": 12,
+      "IsUnityType": false,
+      "Incoming": 3,
+      "Outgoing": 7,
+      "Internal": 5,
+      "External": 5
+    },
+    {
+      "Id": "BeatMemories.EnemyWeight",
+      "Name": "EnemyWeight",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+      "Line": 22,
+      "IsUnityType": false,
+      "Incoming": 6,
+      "Outgoing": 1,
+      "Internal": 7,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.CombatTimelinePosition",
+      "Name": "CombatTimelinePosition",
+      "Kind": "struct",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+      "Line": 13,
+      "IsUnityType": false,
+      "Incoming": 4,
+      "Outgoing": 2,
+      "Internal": 6,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.EnemyPreviewCue",
+      "Name": "EnemyPreviewCue",
+      "Kind": "struct",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemyPreviewCue.cs",
+      "Line": 7,
+      "IsUnityType": false,
+      "Incoming": 4,
+      "Outgoing": 2,
+      "Internal": 2,
+      "External": 4
+    },
+    {
+      "Id": "BeatMemories.CombatTimeline",
+      "Name": "CombatTimeline",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+      "Line": 53,
+      "IsUnityType": false,
+      "Incoming": 0,
+      "Outgoing": 5,
+      "Internal": 5,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.CombatSection",
+      "Name": "CombatSection",
+      "Kind": "enum",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+      "Line": 5,
+      "IsUnityType": false,
+      "Incoming": 3,
+      "Outgoing": 0,
+      "Internal": 3,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.CombatBalanceSettings",
+      "Name": "CombatBalanceSettings",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Core\\CombatBalanceSettings.cs",
+      "Line": 6,
+      "IsUnityType": true,
+      "Incoming": 2,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 2
+    },
+    {
+      "Id": "BeatMemories.PhaseKind",
+      "Name": "PhaseKind",
+      "Kind": "enum",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+      "Line": 6,
+      "IsUnityType": false,
+      "Incoming": 2,
+      "Outgoing": 0,
+      "Internal": 2,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.PhaseBanner",
+      "Name": "PhaseBanner",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhaseBanner.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 1,
+      "Internal": 0,
+      "External": 1
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "PhasePresentationController.Awake()",
+      "Steps": [
+        "PhasePresentationController.Awake()",
+        "PhasePresentationController.CreateFallbackSnare() / terminal"
+      ]
+    },
+    {
+      "Entry": "EnemySequenceProvider.GenerateCycleWeighted(int, int, PhaseSO)",
+      "Steps": [
+        "EnemySequenceProvider.GenerateCycleWeighted(int, int, PhaseSO)",
+        "EnemySequenceProvider.GetWeighted(int, int, PhaseSO)",
+        "EnemySequenceProvider.Get(int, int)",
+        "EnemySequenceProvider.Hash(uint, uint, uint) / terminal"
+      ]
+    },
+    {
+      "Entry": "PhaseBanner.Start()",
+      "Steps": [
+        "PhaseBanner.Start()",
+        "PhaseBanner.OnPreparation(int)",
+        "PhaseBanner.Set(Sprite) / terminal"
+      ]
+    },
+    {
+      "Entry": "PhasePresentationController.Start()",
+      "Steps": [
+        "PhasePresentationController.Start()",
+        "PhasePresentationController.CalculateBackgroundMusicStartDspTime(double, float) / terminal"
+      ]
+    },
+    {
+      "Entry": "PhasePresentationController.OnDisable()",
+      "Steps": [
+        "PhasePresentationController.OnDisable()",
+        "PhasePresentationController.RestoreImmediately() / terminal"
+      ]
+    },
+    {
+      "Entry": "EnemySequenceProvider.GenerateCycle(int, int)",
+      "Steps": [
+        "EnemySequenceProvider.GenerateCycle(int, int)",
+        "EnemySequenceProvider.Get(int, int)",
+        "EnemySequenceProvider.Hash(uint, uint, uint) / terminal"
+      ]
+    },
+    {
+      "Entry": "CombatTimeline.StartsAfterResponse(int, int, int)",
+      "Steps": [
+        "CombatTimeline.StartsAfterResponse(int, int, int)",
+        "CombatTimeline.Resolve(int, int, int)",
+        "CombatTimeline.BeatsPerPhase(int, int)",
+        "CombatTimeline.Validate(int, int) / terminal"
+      ]
+    },
+    {
+      "Entry": "EnemySequenceProvider.BuildGroups()",
+      "Steps": [
+        "EnemySequenceProvider.BuildGroups()",
+        "EnemySequenceProvider.PrimaryAnswer(Enemy) / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [
+      {
+        "Kind": "returns",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 5,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 33,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 44,
+          "Text": "list.Add(Get(cycleIndex, i))"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 19,
+          "Text": "Dictionary\u003CPlayerAction, List\u003CEnemy\u003E\u003E"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 55,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 77,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 89,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.EnemyWeight",
+        "TargetName": "EnemyWeight",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 109,
+          "Text": "IReadOnlyList\u003CEnemyWeight\u003E"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 21,
+          "Text": "IReadOnlyList\u003CEnemy\u003E"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhasePresentationController",
+        "SourceName": "PhasePresentationController",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 184,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 64,
+          "Text": "phase.GetWeight(answerKeys[i])"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.CombatTimeline",
+        "SourceName": "CombatTimeline",
+        "Target": "BeatMemories.CombatTimelinePosition",
+        "TargetName": "CombatTimelinePosition",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 80,
+          "Text": "CombatTimelinePosition"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemyData",
+        "SourceName": "EnemyData",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\EnemyData.cs",
+          "Line": 33,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 15,
+          "Text": "IReadOnlyList\u003CEnemy\u003E"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.CombatTimelinePosition",
+        "SourceName": "CombatTimelinePosition",
+        "Target": "BeatMemories.CombatSection",
+        "TargetName": "CombatSection",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 32,
+          "Text": "CombatSection"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemyPreviewCue",
+        "SourceName": "EnemyPreviewCue",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemyPreviewCue.cs",
+          "Line": 13,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.Enemy",
+        "SourceName": "Enemy",
+        "Target": "BeatMemories.EnemyData",
+        "TargetName": "EnemyData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+          "Line": 13,
+          "Text": "EnemyData"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 44,
+          "Text": "List\u003CEnemy\u003E"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.EnemyWeight",
+        "TargetName": "EnemyWeight",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 41,
+          "Text": "List\u003CEnemyWeight\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.CombatTimelinePosition",
+        "SourceName": "CombatTimelinePosition",
+        "Target": "BeatMemories.CombatSection",
+        "TargetName": "CombatSection",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 22,
+          "Text": "CombatSection"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.Enemy",
+        "SourceName": "Enemy",
+        "Target": "BeatMemories.EnemyData",
+        "TargetName": "EnemyData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+          "Line": 13,
+          "Text": "EnemyData"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemyPreviewCue",
+        "SourceName": "EnemyPreviewCue",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemyPreviewCue.cs",
+          "Line": 10,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.EnemyWeight",
+        "SourceName": "EnemyWeight",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 24,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhasePresentationController",
+        "SourceName": "PhasePresentationController",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 36,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 44,
+          "Text": "List\u003CEnemy\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.EnemyWeight",
+        "TargetName": "EnemyWeight",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 41,
+          "Text": "List\u003CEnemyWeight\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.PhaseKind",
+        "TargetName": "PhaseKind",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 36,
+          "Text": "PhaseKind"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.Enemy",
+        "SourceName": "Enemy",
+        "Target": "BeatMemories.EnemyData",
+        "TargetName": "EnemyData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+          "Line": 16,
+          "Text": "EnemyData"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.EnemyWeight",
+        "TargetName": "EnemyWeight",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 59,
+          "Text": "IReadOnlyList\u003CEnemyWeight\u003E"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.PhaseKind",
+        "TargetName": "PhaseKind",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 55,
+          "Text": "PhaseKind"
+        }
+      },
+      {
+        "Kind": "returns",
+        "Direction": "internal",
+        "Source": "BeatMemories.CombatTimeline",
+        "SourceName": "CombatTimeline",
+        "Target": "BeatMemories.CombatTimelinePosition",
+        "TargetName": "CombatTimelinePosition",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 66,
+          "Text": "CombatTimelinePosition"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.CombatTimeline",
+        "SourceName": "CombatTimeline",
+        "Target": "BeatMemories.CombatSection",
+        "TargetName": "CombatSection",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 95,
+          "Text": "CombatSection"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.CombatTimeline",
+        "SourceName": "CombatTimeline",
+        "Target": "BeatMemories.CombatTimelinePosition",
+        "TargetName": "CombatTimelinePosition",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 117,
+          "Text": "CombatTimelinePosition"
+        }
+      }
+    ],
+    "External": [
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 455,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 236,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 514,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 151,
+          "Text": "byAnswer.TryGetValue(ans, out var list)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 35,
+          "Text": "List\u003CEnemy\u003E"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 438,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 177,
+          "Text": "currentCycle.Clear()"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.EnemyData",
+        "SourceName": "EnemyData",
+        "Target": "BeatMemories.ActionOutcome",
+        "TargetName": "ActionOutcome",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\EnemyData.cs",
+          "Line": 48,
+          "Text": "List\u003CActionOutcome\u003E"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 18,
+          "Text": "List\u003CPlayerAction\u003E"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 45,
+          "Text": "List\u003CPhaseSO\u003E"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 64,
+          "Text": "Action\u003Cint, Enemy\u003E"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 69,
+          "Text": "Action\u003Cint, PhaseSO\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.EnemyData",
+        "SourceName": "EnemyData",
+        "Target": "BeatMemories.ActionOutcome",
+        "TargetName": "ActionOutcome",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\EnemyData.cs",
+          "Line": 48,
+          "Text": "List\u003CActionOutcome\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 18,
+          "Text": "List\u003CPlayerAction\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 35,
+          "Text": "List\u003CEnemy\u003E"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 69,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 317,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.BossPagePresentationController",
+        "SourceName": "BossPagePresentationController",
+        "Target": "BeatMemories.EnemyPreviewCue",
+        "TargetName": "EnemyPreviewCue",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 146,
+          "Text": "EnemyPreviewCue"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.BossPagePresentationController",
+        "SourceName": "BossPagePresentationController",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 132,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.Enemy",
+        "SourceName": "Enemy",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+          "Line": 39,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.EnemyPreviewCue",
+        "TargetName": "EnemyPreviewCue",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 435,
+          "Text": "EnemyPreviewCue"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 739,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.JudgeSystem",
+        "SourceName": "JudgeSystem",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+          "Line": 10,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.PhasePresentationController",
+        "SourceName": "PhasePresentationController",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 207,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 68,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 127,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RhythmTimingDisplay",
+        "SourceName": "RhythmTimingDisplay",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+          "Line": 248,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.PhasePresentationController",
+        "SourceName": "PhasePresentationController",
+        "Target": "BeatMemories.PlayerActionAudioSettings",
+        "TargetName": "PlayerActionAudioSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 75,
+          "Text": "PlayerActionAudioSettings.Load()"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.CombatBalanceSettings",
+        "TargetName": "CombatBalanceSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 142,
+          "Text": "CombatBalanceSettings.Load()"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.EnemySequenceProvider",
+        "TargetName": "EnemySequenceProvider",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 245,
+          "Text": "provider.GenerateCycleWeighted(cycleIndex, count, phase)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 318,
+          "Text": "CurrentPhase.ShouldHidePreview(enemy)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.ActionWeight",
+        "TargetName": "ActionWeight",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 38,
+          "Text": "List\u003CActionWeight\u003E"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.EnemyPreviewCue",
+        "TargetName": "EnemyPreviewCue",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 319,
+          "Text": "EnemyPreviewCue"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.EnemySequenceProvider",
+        "TargetName": "EnemySequenceProvider",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 197,
+          "Text": "EnemySequenceProvider"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageSO",
+        "SourceName": "StageSO",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+          "Line": 22,
+          "Text": "List\u003CEnemy\u003E"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageSO",
+        "SourceName": "StageSO",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+          "Line": 37,
+          "Text": "List\u003CPhaseSO\u003E"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GetWeighted(int, int, PhaseSO)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "Get(int, int)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 60,
+          "Text": "Get(cycleIndex, slotIndex)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GetWeighted(int, int, PhaseSO)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "Hash(uint, uint, uint)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 68,
+          "Text": "Hash((uint)seed, (uint)cycleIndex, (uint)slotIndex)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GetWeighted(int, int, PhaseSO)",
+        "TargetType": "PhaseSO",
+        "Target": "GetWeight(PlayerAction)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 64,
+          "Text": "phase.GetWeight(answerKeys[i])"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "EnemySequenceProvider(int, IReadOnlyList\u003CEnemy\u003E)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "BuildGroups()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 25,
+          "Text": "BuildGroups()"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "Get(int, int)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "Hash(uint, uint, uint)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 36,
+          "Text": "Hash((uint)seed, (uint)cycleIndex, (uint)slotIndex)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GenerateCycle(int, int)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "Get(int, int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 44,
+          "Text": "Get(cycleIndex, i)"
+        }
+      },
+      {
+        "SourceType": "PhaseBanner",
+        "Source": "Start()",
+        "TargetType": "PhaseBanner",
+        "Target": "OnPreparation(int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhaseBanner.cs",
+          "Line": 45,
+          "Text": "OnPreparation(0)"
+        }
+      },
+      {
+        "SourceType": "PhasePresentationController",
+        "Source": "Awake()",
+        "TargetType": "PhasePresentationController",
+        "Target": "CreateFallbackSnare()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 95,
+          "Text": "CreateFallbackSnare()"
+        }
+      },
+      {
+        "SourceType": "PhaseBanner",
+        "Source": "OnPreparation(int)",
+        "TargetType": "PhaseBanner",
+        "Target": "Set(Sprite)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhaseBanner.cs",
+          "Line": 48,
+          "Text": "Set(preparationSprite != null ? preparationSprite : enemyActingSprite)"
+        }
+      },
+      {
+        "SourceType": "PhaseBanner",
+        "Source": "OnPresent(int)",
+        "TargetType": "PhaseBanner",
+        "Target": "Set(Sprite)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhaseBanner.cs",
+          "Line": 49,
+          "Text": "Set(enemyActingSprite)"
+        }
+      },
+      {
+        "SourceType": "PhaseBanner",
+        "Source": "OnResponse(int)",
+        "TargetType": "PhaseBanner",
+        "Target": "Set(Sprite)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhaseBanner.cs",
+          "Line": 50,
+          "Text": "Set(playerActingSprite)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GetWeighted(int, int, PhaseSO)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "GetEnemyWeighted(int, int, PhaseSO, bool)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 59,
+          "Text": "GetEnemyWeighted(cycleIndex, slotIndex, phase, true)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GetWeighted(int, int, PhaseSO)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "Norm(uint)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 68,
+          "Text": "Norm(Hash((uint)seed, (uint)cycleIndex, (uint)slotIndex))"
+        }
+      },
+      {
+        "SourceType": "CombatTimeline",
+        "Source": "BeatsPerPhase(int, int)",
+        "TargetType": "CombatTimeline",
+        "Target": "Validate(int, int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 62,
+          "Text": "Validate(exchangesPerPhase, preparationBeats)"
+        }
+      },
+      {
+        "SourceType": "CombatTimeline",
+        "Source": "Resolve(int, int, int)",
+        "TargetType": "CombatTimeline",
+        "Target": "BeatsPerPhase(int, int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 74,
+          "Text": "BeatsPerPhase(exchangesPerPhase, preparationBeats)"
+        }
+      },
+      {
+        "SourceType": "CombatTimeline",
+        "Source": "Resolve(int, int, int)",
+        "TargetType": "CombatTimeline",
+        "Target": "Validate(int, int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 72,
+          "Text": "Validate(exchangesPerPhase, preparationBeats)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GenerateCycleWeighted(int, int, PhaseSO)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "GetEnemyWeighted(int, int, PhaseSO, bool)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 90,
+          "Text": "GetEnemyWeighted(cycleIndex, i, phase, hasRoomForFollowUp)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GenerateCycleWeighted(int, int, PhaseSO)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "GetWeighted(int, int, PhaseSO)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 91,
+          "Text": "GetWeighted(cycleIndex, i, phase)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GetEnemyWeighted(int, int, PhaseSO, bool)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "Hash(uint, uint, uint)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 123,
+          "Text": "Hash((uint)seed, (uint)cycleIndex, (uint)slotIndex)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "GetEnemyWeighted(int, int, PhaseSO, bool)",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "Norm(uint)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 123,
+          "Text": "Norm(Hash((uint)seed, (uint)cycleIndex, (uint)slotIndex))"
+        }
+      },
+      {
+        "SourceType": "CombatTimeline",
+        "Source": "StartsAfterResponse(int, int, int)",
+        "TargetType": "CombatTimeline",
+        "Target": "Resolve(int, int, int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\CombatTimeline.cs",
+          "Line": 117,
+          "Text": "Resolve(totalBeat - 1, exchangesPerPhase, preparationBeats)"
+        }
+      },
+      {
+        "SourceType": "PhasePresentationController",
+        "Source": "Start()",
+        "TargetType": "PhasePresentationController",
+        "Target": "CalculateBackgroundMusicStartDspTime(double, float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 121,
+          "Text": "CalculateBackgroundMusicStartDspTime(\r\n                    conductor.ScheduledStartDspTime,\r\n                    backgroundMusicFirstBeatOffset)"
+        }
+      },
+      {
+        "SourceType": "EnemySequenceProvider",
+        "Source": "BuildGroups()",
+        "TargetType": "EnemySequenceProvider",
+        "Target": "PrimaryAnswer(Enemy)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 150,
+          "Text": "PrimaryAnswer(e)"
+        }
+      },
+      {
+        "SourceType": "PhasePresentationController",
+        "Source": "OnDisable()",
+        "TargetType": "PhasePresentationController",
+        "Target": "RestoreImmediately()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 164,
+          "Text": "RestoreImmediately()"
+        }
+      },
+      {
+        "SourceType": "PhasePresentationController",
+        "Source": "OnPhasePreparing(int, PhaseSO)",
+        "TargetType": "PhasePresentationController",
+        "Target": "ApplyTargets()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 189,
+          "Text": "ApplyTargets()"
+        }
+      },
+      {
+        "SourceType": "PhasePresentationController",
+        "Source": "OnPhaseActive(int, PhaseSO)",
+        "TargetType": "PhasePresentationController",
+        "Target": "ApplyTargets()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 196,
+          "Text": "ApplyTargets()"
+        }
+      },
+      {
+        "SourceType": "PhasePresentationController",
+        "Source": "OnStageApplied(StageSO)",
+        "TargetType": "PhasePresentationController",
+        "Target": "ApplyTargets()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 216,
+          "Text": "ApplyTargets()"
+        }
+      },
+      {
+        "SourceType": "PhasePresentationController",
+        "Source": "OnStageApplied(StageSO)",
+        "TargetType": "PhasePresentationController",
+        "Target": "RestoreImmediately()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 209,
+          "Text": "RestoreImmediately()"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "PhasePresentationController.Awake() -\u003E PhasePresentationController.CreateFallbackSnare() / terminal"
+    },
+    {
+      "Title": "Likely flow",
+      "Detail": "EnemySequenceProvider.GenerateCycleWeighted(int, int, PhaseSO) -\u003E EnemySequenceProvider.GetWeighted(int, int, PhaseSO) -\u003E EnemySequenceProvider.Get(int, int) -\u003E EnemySequenceProvider.Hash(uint, uint, uint) / terminal"
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "EnemySequenceProvider.GetWeighted(int, int, PhaseSO) -\u003E EnemySequenceProvider.Get(int, int)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 60,
+        "Text": "Get(cycleIndex, slotIndex)"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "EnemySequenceProvider.GetWeighted(int, int, PhaseSO) -\u003E EnemySequenceProvider.Hash(uint, uint, uint)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 68,
+        "Text": "Hash((uint)seed, (uint)cycleIndex, (uint)slotIndex)"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "EnemySequenceProvider.GetWeighted(int, int, PhaseSO) -\u003E PhaseSO.GetWeight(PlayerAction)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 64,
+        "Text": "phase.GetWeight(answerKeys[i])"
+      }
+    },
+    {
+      "Title": "incoming accepts_parameter",
+      "Detail": "HudView -\u003E Enemy / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 455,
+        "Text": "Enemy"
+      }
+    },
+    {
+      "Title": "incoming uses_local_type",
+      "Detail": "RoundManager -\u003E PhaseSO / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 236,
+        "Text": "PhaseSO"
+      }
+    },
+    {
+      "Title": "incoming accepts_parameter",
+      "Detail": "RoundManager -\u003E Enemy / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 514,
+        "Text": "Enemy"
+      }
+    },
+    {
+      "Title": "Internal returns",
+      "Detail": "EnemySequenceProvider -\u003E Enemy / 5 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 33,
+        "Text": "Enemy"
+      }
+    },
+    {
+      "Title": "Internal calls_member",
+      "Detail": "EnemySequenceProvider -\u003E Enemy / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 44,
+        "Text": "list.Add(Get(cycleIndex, i))"
+      }
+    },
+    {
+      "Title": "Internal creates",
+      "Detail": "EnemySequenceProvider -\u003E Enemy / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 19,
+        "Text": "Dictionary\u003CPlayerAction, List\u003CEnemy\u003E\u003E"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "EnemySequenceProvider -\u003E PhaseSO / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 55,
+        "Text": "PhaseSO"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "PhaseSO -\u003E Enemy / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+        "Line": 77,
+        "Text": "Enemy"
+      }
+    },
+    {
+      "Title": "Internal uses_local_type",
+      "Detail": "EnemySequenceProvider -\u003E Enemy / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 89,
+        "Text": "Enemy"
+      }
+    },
+    {
+      "Title": "Internal uses_local_type",
+      "Detail": "EnemySequenceProvider -\u003E EnemyWeight / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 109,
+        "Text": "IReadOnlyList\u003CEnemyWeight\u003E"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "EnemySequenceProvider -\u003E Enemy / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 21,
+        "Text": "IReadOnlyList\u003CEnemy\u003E"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Battle System context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

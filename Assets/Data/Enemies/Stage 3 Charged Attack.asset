@@ -17,7 +17,7 @@ MonoBehaviour:
     displayName: "\uC801 \uCC28\uC9C0 \uACF5\uACA9"
     sprite: {fileID: 821004469448238302, guid: 7ed6d39d39ad42b44b3f5adb2106f403, type: 3}
     action: 2
-    attackDamage: 2
+    attackDamage: 1
     unblockableAttack: 1
     invulnerableWhileActing: 1
     fixedAttackDamage: 1
@@ -30,5 +30,5 @@ MonoBehaviour:
     defaultOutcome:
       action: 0
       type: 2
-      playerDamage: 2
+      playerDamage: 1
       feedback: "\uBC29\uC5B4 \uBD88\uAC00 \uCC28\uC9C0 \uACF5\uACA9"

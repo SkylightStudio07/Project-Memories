@@ -76,6 +76,7 @@ namespace BeatMemories.Tests
             Assert.That(serialized.FindProperty("cyclesPerPhase").intValue, Is.EqualTo(2));
             Assert.That(serialized.FindProperty("phasePreparationBeats").intValue, Is.EqualTo(4));
             Assert.That(serialized.FindProperty("repeatPhasePlan").boolValue, Is.False);
+            Assert.That(serialized.FindProperty("phasesFollowEnemyPages").boolValue, Is.True);
             Assert.That(serialized.FindProperty("bpm").floatValue, Is.EqualTo(90f));
             Assert.That(serialized.FindProperty("playerMaxHp").intValue, Is.EqualTo(7));
             Assert.That(serialized.FindProperty("enemyMaxHp").intValue, Is.EqualTo(8));
@@ -211,8 +212,63 @@ namespace BeatMemories.Tests
                     null,
                     new[] { chargedAttack, Enum.ToObject(actionType, input), (object)false });
                 Assert.That(ResultField<bool>(result, "Cleared"), Is.False);
-                Assert.That(ResultField<int>(result, "PlayerDamage"), Is.EqualTo(2));
+                Assert.That(ResultField<int>(result, "PlayerDamage"), Is.EqualTo(1));
             }
+        }
+
+        [TestCase("Assets/Data/Enemies/Stage 3 Charged Attack.asset")]
+        [TestCase("Assets/Data/Enemies/Stage 4 Charged Attack.asset")]
+        [TestCase("Assets/Data/Enemies/Stage 5 Charged Attack.asset")]
+        public void ChargedEnemyAttacksUseOneBaseDamageBeforeGlobalMultiplier(
+            string assetPath)
+        {
+            UnityEngine.Object chargedAttack = Load(assetPath);
+            var serialized = new SerializedObject(chargedAttack);
+
+            Assert.That(
+                serialized.FindProperty("data.attackDamage").intValue,
+                Is.EqualTo(1));
+            Assert.That(
+                serialized.FindProperty("data.defaultOutcome.playerDamage").intValue,
+                Is.EqualTo(1));
+        }
+
+        [Test]
+        public void EnemyChargedAttackDealsThreeFinalDamage()
+        {
+            Type playerType = runtimeAssembly.GetType("BeatMemories.PlayerData", true);
+            Type actionType = runtimeAssembly.GetType("BeatMemories.PlayerAction", true);
+
+            var playerObject = new GameObject("Charged Attack Player Test");
+            created.Add(playerObject);
+            Component player = playerObject.AddComponent(playerType);
+            playerType.GetMethod("SetMaxHp").Invoke(player, new object[] { 7 });
+
+            var roundObject = new GameObject("Charged Attack Round Test");
+            created.Add(roundObject);
+            Component round = roundObject.AddComponent(roundType);
+            SetPrivate(roundType, round, "player", player);
+            PrivateMethod(roundType, "Awake").Invoke(round, null);
+            PrivateMethod(roundType, "SetEnemyCharged")
+                .Invoke(round, new object[] { true });
+
+            UnityEngine.Object chargedAttack = Load(
+                "Assets/Data/Enemies/Stage 5 Charged Attack.asset");
+            PrivateMethod(roundType, "ApplyJudge").Invoke(
+                round,
+                new[]
+                {
+                    (object)0,
+                    chargedAttack,
+                    Enum.ToObject(actionType, 1),
+                    false,
+                    0f
+                });
+
+            Assert.That(
+                (int)playerType.GetProperty("CurrentHp").GetValue(player),
+                Is.EqualTo(4),
+                "7 HP must become 4 after one 1 × 3 charged enemy hit.");
         }
 
         [Test]
@@ -246,7 +302,8 @@ namespace BeatMemories.Tests
 
             MethodInfo damage = PrivateMethod(roundType, "DamageEnemy");
             MethodInfo resolve = PrivateMethod(roundType, "ResolveEnemyHpDepletion");
-            for (int i = 0; i < 8; i++) damage.Invoke(round, null);
+            for (int i = 0; i < 8; i++)
+                damage.Invoke(round, new object[] { false, 1f });
             resolve.Invoke(round, new object[] { 3 });
 
             Assert.That(PublicInt(round, "CurrentEnemyPage"), Is.EqualTo(2));
@@ -255,13 +312,48 @@ namespace BeatMemories.Tests
             Assert.That(transitionBeats, Is.EqualTo(4));
             Assert.That(clearCount, Is.Zero);
 
-            for (int i = 0; i < 8; i++) damage.Invoke(round, null);
+            for (int i = 0; i < 8; i++)
+                damage.Invoke(round, new object[] { false, 1f });
             resolve.Invoke(round, new object[] { 7 });
             Assert.That(PublicInt(round, "CurrentEnemyHp"), Is.Zero);
             Assert.That(clearCount, Is.EqualTo(1));
 
             pageTransition.RemoveEventHandler(round, pageHandler);
             stageClear.RemoveEventHandler(round, clearHandler);
+        }
+
+        [Test]
+        public void StageFivePagesOwnTheirCombatPhases()
+        {
+            var roundObject = new GameObject("Stage 5 Page Phase Test");
+            created.Add(roundObject);
+            Component round = roundObject.AddComponent(roundType);
+            PrivateMethod(roundType, "Awake").Invoke(round, null);
+
+            UnityEngine.Object stage = Load("Assets/Data/Stages/Stage_5.asset");
+            roundType.GetMethod("SetStage").Invoke(round, new[] { stage });
+
+            SerializedProperty phases =
+                new SerializedObject(stage).FindProperty("phases");
+            UnityEngine.Object visible =
+                phases.GetArrayElementAtIndex(0).objectReferenceValue;
+            UnityEngine.Object hidden =
+                phases.GetArrayElementAtIndex(1).objectReferenceValue;
+            MethodInfo phaseForCycle = PrivateMethod(roundType, "PhaseForCycle");
+
+            Assert.That(
+                phaseForCycle.Invoke(round, new object[] { 99 }),
+                Is.SameAs(visible),
+                "Page 1 must stay visible even when it takes many cycles.");
+
+            PrivateMethod(roundType, "BeginNextEnemyPage")
+                .Invoke(round, new object[] { 99 });
+
+            Assert.That(PublicInt(round, "CurrentEnemyPage"), Is.EqualTo(2));
+            Assert.That(
+                phaseForCycle.Invoke(round, new object[] { 0 }),
+                Is.SameAs(hidden),
+                "Page 2 must enter the hidden-attack phase immediately.");
         }
 
         [Test]
@@ -297,7 +389,7 @@ namespace BeatMemories.Tests
         }
 
         [Test]
-        public void SecondPageCutsVisibleSlotsToBottomHalfAndRestoresHiddenSlots()
+        public void SecondPageCutsEverySlotIncludingHiddenAttackNoise()
         {
             Type controllerType = runtimeAssembly.GetType(
                 "BeatMemories.BossPagePresentationController",
@@ -306,17 +398,33 @@ namespace BeatMemories.Tests
             created.Add(controllerObject);
             Component controller = controllerObject.AddComponent(controllerType);
 
+            var previewRootObject =
+                new GameObject("Preview Root", typeof(RectTransform));
+            created.Add(previewRootObject);
+            RectTransform previewRoot =
+                previewRootObject.GetComponent<RectTransform>();
             var slots = new Image[4];
             for (int i = 0; i < slots.Length; i++)
             {
+                var containerObject =
+                    new GameObject($"Slot Container {i}", typeof(RectTransform));
+                created.Add(containerObject);
+                RectTransform container =
+                    containerObject.GetComponent<RectTransform>();
+                container.SetParent(previewRoot, false);
+                container.sizeDelta = new Vector2(200f, 200f);
+
                 var slotObject = new GameObject($"Slot {i}", typeof(RectTransform), typeof(Image));
                 created.Add(slotObject);
                 slots[i] = slotObject.GetComponent<Image>();
+                slots[i].rectTransform.SetParent(container, false);
+                slots[i].rectTransform.sizeDelta = new Vector2(120f, 120f);
                 slots[i].type = Image.Type.Simple;
                 slots[i].fillAmount = 1f;
             }
 
             SetPrivate(controllerType, controller, "previewSlots", slots);
+            SetPrivate(controllerType, controller, "previewContainer", previewRoot);
             SetPrivate(controllerType, controller, "originalsCaptured", false);
             PrivateMethod(controllerType, "CaptureOriginalSlotState").Invoke(controller, null);
             PrivateMethod(controllerType, "SetPreviewCutActive").Invoke(
@@ -330,15 +438,24 @@ namespace BeatMemories.Tests
                 Assert.That(slot.fillOrigin, Is.EqualTo((int)Image.OriginVertical.Bottom));
                 Assert.That(slot.fillAmount, Is.EqualTo(0.5f));
             }
+            RectMask2D[] masks =
+                previewRoot.GetComponentsInChildren<RectMask2D>();
+            Assert.That(masks.Length, Is.EqualTo(4));
+            foreach (RectMask2D mask in masks)
+                Assert.That(mask.padding.w, Is.EqualTo(100f).Within(0.01f));
 
             Type cueType = runtimeAssembly.GetType("BeatMemories.EnemyPreviewCue", true);
             object hiddenCue = Activator.CreateInstance(cueType, new object[] { 1, null, true });
             PrivateMethod(controllerType, "OnEnemyPreviewed").Invoke(
                 controller,
                 new[] { hiddenCue });
-            Assert.That(slots[1].type, Is.EqualTo(Image.Type.Simple));
-            Assert.That(slots[1].fillAmount, Is.EqualTo(1f));
+            Assert.That(slots[1].type, Is.EqualTo(Image.Type.Filled));
+            Assert.That(slots[1].fillAmount, Is.EqualTo(0.5f));
             Assert.That(slots[0].fillAmount, Is.EqualTo(0.5f));
+            RectMask2D hiddenMask = previewRoot
+                .Find("BossPreviewMask_1")
+                .GetComponent<RectMask2D>();
+            Assert.That(hiddenMask.padding.w, Is.EqualTo(100f).Within(0.01f));
 
             ScriptableObject nextStage = ScriptableObject.CreateInstance(stageType);
             created.Add(nextStage);

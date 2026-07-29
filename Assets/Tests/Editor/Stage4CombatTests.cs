@@ -139,7 +139,7 @@ namespace BeatMemories.Tests
             {
                 object result = Judge(chargedAttack, input, true);
                 Assert.That(ResultField<bool>(result, "Cleared"), Is.False);
-                Assert.That(ResultField<int>(result, "PlayerDamage"), Is.EqualTo(2));
+                Assert.That(ResultField<int>(result, "PlayerDamage"), Is.EqualTo(1));
             }
         }
 

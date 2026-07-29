@@ -1,0 +1,341 @@
+﻿# Beat
+
+Beat appears to be an externally connected area around beat, memories, managers, rhythm, stage. It contains 20 types, including 14 Unity-facing types.
+
+## Stats
+
+- Types: 20
+- Internal relationships: 81
+- External relationships: 191
+- Entry candidates: 8
+- Keywords: `beat`, `memories`, `managers`, `rhythm`, `stage`, `so`, `catalog`, `display`, `game`, `light2d`, `neon`, `round`
+
+## Start Here
+
+- `DropShadow2D.OnEnable()` - unity_lifecycle / H:\Unity\Project-Memories\Assets\Scripts\View\DropShadow2D.cs:30
+- `RoundManager.Awake()` - unity_lifecycle / H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:140
+- `Conductor.Update()` - unity_lifecycle / H:\Unity\Project-Memories\Assets\Scripts\Rhythm\Conductor.cs:288
+- `RoundManager.Update()` - unity_lifecycle / H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:324
+- `RhythmTimingDisplay.CreateOutlineEdges(RectTransform)` - flow_candidate / H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:132
+- `Conductor.StartClock()` - flow_candidate / H:\Unity\Project-Memories\Assets\Scripts\Rhythm\Conductor.cs:217
+- `Conductor.BeginPreparation()` - flow_candidate / H:\Unity\Project-Memories\Assets\Scripts\Rhythm\Conductor.cs:458
+- `RoundManager.BeginNextEnemyPage(int)` - flow_candidate / H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:810
+
+## Core Types
+
+- `RoundManager` - class / Unity / 101 out / 17 in / H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:23
+- `Conductor` - class / Unity / 23 out / 23 in / H:\Unity\Project-Memories\Assets\Scripts\Rhythm\Conductor.cs:11
+- `StageManager` - class / Unity / 36 out / 7 in / H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:13
+- `StageSO` - class / Unity / 12 out / 30 in / H:\Unity\Project-Memories\Assets\Scripts\Managers\StageSO.cs:11
+- `StageSoundtrackCatalogSO+Entry` - class / 3 out / 26 in / H:\Unity\Project-Memories\Assets\Scripts\Rhythm\StageSoundtrackCatalogSO.cs:18
+- `RoundManager+ResponseNote` - class / 1 out / 16 in / H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:98
+- `BossPagePresentationController` - class / Unity / 10 out / 0 in / H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:12
+- `StageSoundtrackCatalogSO` - class / Unity / 7 out / 2 in / H:\Unity\Project-Memories\Assets\Scripts\Rhythm\StageSoundtrackCatalogSO.cs:15
+- `StageRosterSO` - class / Unity / 3 out / 4 in / H:\Unity\Project-Memories\Assets\Scripts\Managers\StageRosterSO.cs:11
+- `DialogueViewer` - class / Unity / 4 out / 2 in / H:\Unity\Project-Memories\Assets\Scripts\View\DialogueViewer.cs:18
+- `RhythmTimingDisplay` - class / Unity / 6 out / 0 in / H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:12
+- `RhythmTimingResult` - enum / 0 out / 5 in / H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:7
+- `GameOverView` - class / Unity / 4 out / 0 in / H:\Unity\Project-Memories\Assets\Scripts\View\GameOverView.cs:13
+- `GameSettings` - class / 0 out / 4 in / H:\Unity\Project-Memories\Assets\Scripts\Core\GameSettings.cs:6
+- `OutcomeType` - enum / 0 out / 4 in / H:\Unity\Project-Memories\Assets\Scripts\Core\OutcomeType.cs:7
+- `CountdownDisplay` - class / Unity / 1 out / 0 in / H:\Unity\Project-Memories\Assets\Scripts\View\CountdownDisplay.cs:11
+- `NeonLight2D` - class / Unity / 1 out / 0 in / H:\Unity\Project-Memories\Assets\Scripts\View\NeonLight2D.cs:14
+- `NeonLight2D+Preset` - enum / 0 out / 1 in / H:\Unity\Project-Memories\Assets\Scripts\View\NeonLight2D.cs:16
+- `DropShadow2D` - class / Unity / 0 out / 0 in / H:\Unity\Project-Memories\Assets\Scripts\View\DropShadow2D.cs:12
+- `Parallax` - class / Unity / 0 out / 0 in / H:\Unity\Project-Memories\Assets\Scripts\View\Parallax.cs:10
+
+## Likely Method Flows
+
+- `Conductor.Update()`
+  - `Conductor.Update()`
+  - `Conductor.AdvanceBeat()`
+  - `Conductor.DispatchCurrentBeat()`
+  - `Conductor.DispatchClockBeat() / terminal`
+- `Conductor.StartClock()`
+  - `Conductor.StartClock()`
+  - `Conductor.CalculateScheduledStartDspTime(double, double) / terminal`
+- `RoundManager.Update()`
+  - `RoundManager.Update()`
+  - `RoundManager.FinalizeResponseEnd(int)`
+  - `RoundManager.FlushUnanswered()`
+  - `RoundManager.ApplyJudge(int, Enemy, PlayerAction, bool, float)`
+  - `RoundManager.SetEnemyCharged(bool) / terminal`
+- `RhythmTimingDisplay.CreateOutlineEdges(RectTransform)`
+  - `RhythmTimingDisplay.CreateOutlineEdges(RectTransform)`
+  - `RhythmTimingDisplay.CreateEdge(RectTransform, string, Vector2, Vector2, Vector2) / terminal`
+- `Conductor.BeginPreparation()`
+  - `Conductor.BeginPreparation()`
+  - `Conductor.EnsureTempoMapsInitialized() / terminal`
+- `RoundManager.Awake()`
+  - `RoundManager.Awake()`
+  - `RoundManager.ApplyStage(StageSO)`
+  - `RoundManager.RebuildStageRuntime() / terminal`
+- `RoundManager.BeginNextEnemyPage(int)`
+  - `RoundManager.BeginNextEnemyPage(int)`
+  - `RoundManager.HasPageTransitionDialogue(int) / terminal`
+- `DropShadow2D.OnEnable()`
+  - `DropShadow2D.OnEnable()`
+  - `DropShadow2D.Ensure() / terminal`
+
+## Internal Type Relationships
+
+- `RoundManager` -> `Conductor` - internal / calls_member / 10 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:261 / conductor.BeatToTime(globalBeat)`
+- `RoundManager` -> `RoundManager+ResponseNote` - internal / calls_member / 6 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:178 / notes.Clear()`
+- `RoundManager` -> `RoundManager+ResponseNote` - internal / uses_local_type / 5 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:402 / ResponseNote`
+- `StageManager` -> `StageRosterSO` - internal / calls_member / 3 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:70 / roster.Get(CurrentIndex)`
+- `StageManager` -> `StageSO` - internal / uses_local_type / 3 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:117 / StageSO`
+- `RoundManager` -> `RoundManager+ResponseNote` - internal / accepts_parameter / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:709 / ResponseNote`
+- `RoundManager` -> `StageSO` - internal / accepts_parameter / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:134 / StageSO`
+- `StageManager` -> `StageSO` - internal / accepts_parameter / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:371 / StageSO`
+- `GameOverView` -> `StageManager` - internal / calls_member / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\GameOverView.cs:132 / stageManager.RememberCurrentStageForRetry()`
+- `StageManager` -> `RoundManager` - internal / calls_member / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:154 / round.GetPageTransitionDialogue(page)`
+- `RoundManager` -> `RoundManager+ResponseNote` - internal / creates / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:114 / List<ResponseNote>`
+- `RoundManager` -> `RhythmTimingResult` - internal / has_event_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:67 / Action<int, RhythmTimingResult>`
+- `BossPagePresentationController` -> `StageSO` - internal / accepts_parameter / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:87 / StageSO`
+- `RhythmTimingDisplay` -> `RhythmTimingResult` - internal / accepts_parameter / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:231 / RhythmTimingResult`
+- `RoundManager` -> `RhythmTimingResult` - internal / accepts_parameter / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:710 / RhythmTimingResult`
+- `StageSoundtrackCatalogSO` -> `StageSO` - internal / accepts_parameter / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\StageSoundtrackCatalogSO.cs:43 / StageSO`
+- `StageSoundtrackCatalogSO` -> `StageSoundtrackCatalogSO+Entry` - internal / accepts_parameter / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\StageSoundtrackCatalogSO.cs:43 / Entry`
+- `StageSoundtrackCatalogSO+Entry` -> `StageSO` - internal / accepts_parameter / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\StageSoundtrackCatalogSO.cs:34 / StageSO`
+- `RhythmTimingDisplay` -> `RoundManager` - internal / calls_member / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:213 / round.TryGetTimingFrameTargetTime(slot, out double targetTime)`
+- `StageManager` -> `DialogueViewer` - internal / calls_member / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:125 / dialogueViewer.PlayRoutine(dialogue)`
+- `StageSoundtrackCatalogSO` -> `StageSoundtrackCatalogSO+Entry` - internal / calls_member / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\StageSoundtrackCatalogSO.cs:50 / candidate.Matches(stage, enemyPage)`
+- `StageRosterSO` -> `StageSO` - internal / creates / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageRosterSO.cs:13 / List<StageSO>`
+- `StageSoundtrackCatalogSO` -> `StageSoundtrackCatalogSO+Entry` - internal / creates / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\StageSoundtrackCatalogSO.cs:39 / List<Entry>`
+- `RoundManager` -> `StageSO` - internal / has_event_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:79 / Action<StageSO>`
+- `BossPagePresentationController` -> `Conductor` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:16 / Conductor`
+- `BossPagePresentationController` -> `RoundManager` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:15 / RoundManager`
+- `BossPagePresentationController` -> `StageManager` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:17 / StageManager`
+- `BossPagePresentationController` -> `StageSO` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:34 / StageSO`
+- `CountdownDisplay` -> `Conductor` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\CountdownDisplay.cs:13 / Conductor`
+- `GameOverView` -> `RoundManager` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\GameOverView.cs:18 / RoundManager`
+- `GameOverView` -> `StageManager` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\GameOverView.cs:19 / StageManager`
+- `NeonLight2D` -> `NeonLight2D+Preset` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\NeonLight2D.cs:19 / Preset`
+- `RhythmTimingDisplay` -> `Conductor` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:14 / Conductor`
+- `RhythmTimingDisplay` -> `RoundManager` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:15 / RoundManager`
+- `RoundManager` -> `Conductor` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:31 / Conductor`
+- `RoundManager` -> `RoundManager+ResponseNote` - internal / has_field_type / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:114 / List<ResponseNote>`
+
+## External Touchpoints
+
+- `Conductor` -> `RhythmTempoMap` - outgoing / calls_member / 17 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\Conductor.cs:44 / clockTempoMap.TempoAt(AudioSettings.dspTime)`
+- `RoundManager` -> `TimedPlayerAction` - outgoing / calls_member / 10 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:179 / pendingInputs.Clear()`
+- `RhythmAudioController` -> `StageSoundtrackCatalogSO+Entry` - incoming / accepts_parameter / 8 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\RhythmAudioController.cs:342 / StageSoundtrackCatalogSO.Entry`
+- `RhythmAudioController` -> `StageSoundtrackCatalogSO+Entry` - incoming / has_field_type / 6 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\RhythmAudioController.cs:55 / StageSoundtrackCatalogSO.Entry`
+- `RhythmAudioController` -> `StageSoundtrackCatalogSO+Entry` - incoming / uses_local_type / 6 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\RhythmAudioController.cs:201 / IReadOnlyList<StageSoundtrackCatalogSO.Entry>`
+- `RoundManager` -> `PlayerData` - outgoing / calls_member / 4 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:162 / player.SetMaxHp(s.playerMaxHp)`
+- `RoundManager` -> `JudgeResult` - outgoing / creates / 4 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:530 / JudgeResult`
+- `RoundManager` -> `PhaseSO` - outgoing / uses_local_type / 4 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:236 / PhaseSO`
+- `RoundManager` -> `Enemy` - outgoing / accepts_parameter / 3 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:514 / Enemy`
+- `RoundManager` -> `Enemy` - outgoing / creates / 3 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:35 / List<Enemy>`
+- `StageSO` -> `DialogueSO` - outgoing / has_field_type / 3 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageSO.cs:64 / DialogueSO`
+- `HudView` -> `StageSO` - incoming / accepts_parameter / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\HudView.cs:706 / StageSO`
+- `RhythmAudioController` -> `StageSO` - incoming / accepts_parameter / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\RhythmAudioController.cs:228 / StageSO`
+- `RoundManager` -> `PlayerAction` - outgoing / accepts_parameter / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:514 / PlayerAction`
+- `RoundManager` -> `TimedPlayerAction` - outgoing / accepts_parameter / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:368 / TimedPlayerAction`
+- `StageManager` -> `CharacterView` - outgoing / accepts_parameter / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:414 / CharacterView`
+- `HudView` -> `RoundManager` - incoming / calls_member / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\HudView.cs:1880 / round.CommitScore(points)`
+- `OptionsSettingsController` -> `GameSettings` - incoming / calls_member / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\UI\OptionsSettingsController.cs:315 / GameSettings.BgmVolumeToDecibels(bgmVolume)`
+- `RoundManager` -> `Enemy` - outgoing / calls_member / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:177 / currentCycle.Clear()`
+- `RoundManager` -> `RhythmPatternSO` - outgoing / calls_member / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:198 / pattern.SpotlightBeatIndices()`
+- `StageManager` -> `RhythmAudioController` - outgoing / calls_member / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:101 / rhythmAudio.PrepareCurrentClip()`
+- `Conductor` -> `RhythmTempoMap` - outgoing / creates / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\Conductor.cs:35 / RhythmTempoMap`
+- `RoundManager` -> `PhaseSO` - outgoing / creates / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:45 / List<PhaseSO>`
+- `RoundManager` -> `Enemy` - outgoing / has_event_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:64 / Action<int, Enemy>`
+- `RoundManager` -> `PhaseSO` - outgoing / has_event_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:69 / Action<int, PhaseSO>`
+- `Conductor` -> `RhythmTempoMap` - outgoing / has_field_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\Conductor.cs:35 / RhythmTempoMap`
+- `RoundManager` -> `Enemy` - outgoing / has_field_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:35 / List<Enemy>`
+- `StageManager` -> `CharacterView` - outgoing / has_field_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:39 / CharacterView`
+- `StageSO` -> `CharacterView` - outgoing / has_field_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageSO.cs:26 / CharacterView`
+- `StageManager` -> `CharacterView` - outgoing / has_property_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:42 / CharacterView`
+- `HudView` -> `StageSO` - incoming / uses_local_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\HudView.cs:714 / StageSO`
+- `RhythmAudioController` -> `StageSO` - incoming / uses_local_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\RhythmAudioController.cs:193 / StageSO`
+- `RoundManager` -> `Enemy` - outgoing / uses_local_type / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:317 / Enemy`
+- `ActionButton` -> `StageSO` - incoming / accepts_parameter / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\ActionButton.cs:57 / StageSO`
+- `BossPagePresentationController` -> `EnemyPreviewCue` - outgoing / accepts_parameter / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:146 / EnemyPreviewCue`
+- `BossPagePresentationController` -> `PhaseSO` - outgoing / accepts_parameter / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:132 / PhaseSO`
+
+## Internal Method Calls
+
+- `RhythmTimingDisplay.CreateOutlineEdges(RectTransform)` -> `RhythmTimingDisplay.CreateEdge(RectTransform, string, Vector2, Vector2, Vector2)` / 4 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:136 / CreateEdge(root, "Top", new Vector2(0f, 1f), new Vector2(1f, 1f),                     new Vector2(0f, outlineThickness))`
+- `StageManager.StageTransition()` -> `StageManager.Fade(float)` / 4 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:209 / Fade(1f)`
+- `DialogueViewer.ShowLine(DialogueLine)` -> `DialogueViewer.SetPortrait(Image, Sprite)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\DialogueViewer.cs:137 / SetPortrait(enemyPortrait, _lastEnemyPortrait)`
+- `DialogueViewer.ShowLine(DialogueLine)` -> `DialogueViewer.StartTyping(TMP_Text, string)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\DialogueViewer.cs:139 / StartTyping(enemyText, body)`
+- `RoundManager.HandleResponseStart(int)` -> `Conductor.BeatToTime(int)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:261 / conductor.BeatToTime(globalBeat)`
+- `Conductor.AdvanceBeat()` -> `Conductor.DispatchCurrentBeat()` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\Conductor.cs:337 / DispatchCurrentBeat()`
+- `RoundManager.ConsumeInput(TimedPlayerAction)` -> `RoundManager.ResolveTimingFrame(ResponseNote, RhythmTimingResult, double)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:407 / ResolveTimingFrame(note, RhythmTimingResult.TooEarly, inputSongTime)`
+- `StageManager.ApplyCharacterPrefabs(StageSO)` -> `StageManager.ReplaceCharacter(CharacterView, SpriteRenderer, CharacterView)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:397 / ReplaceCharacter(                 s != null ? s.playerPrefab : null,                 playerActor,                 ref playerCharacterInstance)`
+- `StageManager.ReplaceCharacter(CharacterView, SpriteRenderer, CharacterView)` -> `StageManager.SetLegacyPresentationEnabled(SpriteRenderer, bool)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:428 / SetLegacyPresentationEnabled(legacyActor, true)`
+- `RoundManager.RefreshPendingNoteWindows()` -> `Conductor.BeatToTime(int)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:437 / conductor.BeatToTime(notes[i].globalBeat)`
+- `RoundManager.ExpireElapsedNotes(double)` -> `RoundManager.ApplyJudge(int, Enemy, PlayerAction, bool, float)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:459 / ApplyJudge(                         note.slot,                         note.enemy,                         PlayerAction.None,                         isMiss: true,                         responseRatio: 1f)`
+- `RoundManager.ApplyJudge(int, Enemy, PlayerAction, bool, float)` -> `RoundManager.SetEnemyCharged(bool)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:571 / SetEnemyCharged(!result.Cleared)`
+- `RoundManager.StartsPhasePreparation(int)` -> `RoundManager.PhaseForCycle(int)` / 2 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:793 / PhaseForCycle(cycleIndex)`
+- `DropShadow2D.OnEnable()` -> `DropShadow2D.Apply()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\DropShadow2D.cs:30 / Apply()`
+- `DropShadow2D.OnEnable()` -> `DropShadow2D.Ensure()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\DropShadow2D.cs:30 / Ensure()`
+- `DropShadow2D.OnValidate()` -> `DropShadow2D.Apply()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\DropShadow2D.cs:31 / Apply()`
+- `DropShadow2D.OnValidate()` -> `DropShadow2D.Ensure()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\DropShadow2D.cs:31 / Ensure()`
+- `DropShadow2D.LateUpdate()` -> `DropShadow2D.Apply()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\DropShadow2D.cs:32 / Apply()`
+- `NeonLight2D.OnEnable()` -> `NeonLight2D.Apply()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\NeonLight2D.cs:36 / Apply()`
+- `CountdownDisplay.OnDisable()` -> `CountdownDisplay.ResetVisual()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\CountdownDisplay.cs:37 / ResetVisual()`
+- `NeonLight2D.OnValidate()` -> `NeonLight2D.Apply()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\NeonLight2D.cs:37 / Apply()`
+- `NeonLight2D.Update()` -> `NeonLight2D.AimAt(Transform)` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\NeonLight2D.cs:41 / AimAt(aimTarget)`
+- `BossPagePresentationController.Awake()` -> `BossPagePresentationController.CaptureOriginalSlotState()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:49 / CaptureOriginalSlotState()`
+- `GameSettings.ApplySfxVolume(AudioMixer)` -> `GameSettings.BgmVolumeToDecibels(float)` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Core\GameSettings.cs:48 / BgmVolumeToDecibels(SfxVolume)`
+- `StageSoundtrackCatalogSO.TryGetCue(StageSO, int, Entry)` -> `Entry.Matches(StageSO, int)` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\StageSoundtrackCatalogSO.cs:50 / candidate.Matches(stage, enemyPage)`
+- `NeonLight2D.Apply()` -> `NeonLight2D.ResolveColor()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\NeonLight2D.cs:50 / ResolveColor()`
+- `RhythmTimingDisplay.Awake()` -> `RhythmTimingDisplay.CreateFrames()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:61 / CreateFrames()`
+- `BossPagePresentationController.Start()` -> `BossPagePresentationController.OnStageApplied(StageSO)` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:68 / OnStageApplied(round.CurrentStage)`
+- `BossPagePresentationController.OnDisable()` -> `BossPagePresentationController.HideSlash()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:84 / HideSlash()`
+- `BossPagePresentationController.OnDisable()` -> `BossPagePresentationController.SetPreviewCutActive(bool)` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\BossPagePresentationController.cs:83 / SetPreviewCutActive(false)`
+- `StageManager.Awake()` -> `StageManager.ApplyStage(int)` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:81 / ApplyStage(initialIndex)`
+- `StageManager.Awake()` -> `StageManager.ResolveLegacyActors()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:76 / ResolveLegacyActors()`
+- `GameOverView.Show()` -> `GameOverView.ShowAfterDeathPresentation()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\GameOverView.cs:78 / ShowAfterDeathPresentation()`
+- `GameOverView.ShowAfterDeathPresentation()` -> `GameOverView.HideCombatUI()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\GameOverView.cs:84 / HideCombatUI()`
+- `GameOverView.ShowAfterDeathPresentation()` -> `GameOverView.PresentRoot()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\GameOverView.cs:85 / PresentRoot()`
+- `RhythmTimingDisplay.OnDisable()` -> `RhythmTimingDisplay.HideFrames()` / 1 refs
+  - Evidence: `H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:96 / HideFrames()`
+
+## Evidence
+
+- Likely flow - Conductor.Update() -> Conductor.AdvanceBeat() -> Conductor.DispatchCurrentBeat() -> Conductor.DispatchClockBeat() / terminal
+- Likely flow - Conductor.StartClock() -> Conductor.CalculateScheduledStartDspTime(double, double) / terminal
+- Internal call - RhythmTimingDisplay.CreateOutlineEdges(RectTransform) -> RhythmTimingDisplay.CreateEdge(RectTransform, string, Vector2, Vector2, Vector2)
+  - `H:\Unity\Project-Memories\Assets\Scripts\View\RhythmTimingDisplay.cs:136 / CreateEdge(root, "Top", new Vector2(0f, 1f), new Vector2(1f, 1f),                     new Vector2(0f, outlineThickness))`
+- Internal call - StageManager.StageTransition() -> StageManager.Fade(float)
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:209 / Fade(1f)`
+- Internal call - DialogueViewer.ShowLine(DialogueLine) -> DialogueViewer.SetPortrait(Image, Sprite)
+  - `H:\Unity\Project-Memories\Assets\Scripts\View\DialogueViewer.cs:137 / SetPortrait(enemyPortrait, _lastEnemyPortrait)`
+- outgoing calls_member - Conductor -> RhythmTempoMap / 17 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\Conductor.cs:44 / clockTempoMap.TempoAt(AudioSettings.dspTime)`
+- outgoing calls_member - RoundManager -> TimedPlayerAction / 10 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:179 / pendingInputs.Clear()`
+- incoming accepts_parameter - RhythmAudioController -> StageSoundtrackCatalogSO+Entry / 8 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Rhythm\RhythmAudioController.cs:342 / StageSoundtrackCatalogSO.Entry`
+- Internal calls_member - RoundManager -> Conductor / 10 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:261 / conductor.BeatToTime(globalBeat)`
+- Internal calls_member - RoundManager -> RoundManager+ResponseNote / 6 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:178 / notes.Clear()`
+- Internal uses_local_type - RoundManager -> RoundManager+ResponseNote / 5 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:402 / ResponseNote`
+- Internal calls_member - StageManager -> StageRosterSO / 3 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:70 / roster.Get(CurrentIndex)`
+- Internal uses_local_type - StageManager -> StageSO / 3 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:117 / StageSO`
+- Internal accepts_parameter - RoundManager -> RoundManager+ResponseNote / 2 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:709 / ResponseNote`
+- Internal accepts_parameter - RoundManager -> StageSO / 2 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\RoundManager.cs:134 / StageSO`
+- Internal accepts_parameter - StageManager -> StageSO / 2 refs
+  - `H:\Unity\Project-Memories\Assets\Scripts\Managers\StageManager.cs:371 / StageSO`
+
+## Suggested AI Task
+
+Use the Beat context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible.
+

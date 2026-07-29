@@ -1,0 +1,972 @@
+﻿{
+  "Id": "player",
+  "Name": "Player / Input",
+  "Anchor": "systems/player-input.md",
+  "Stats": {
+    "NodeCount": 6,
+    "InternalEdges": 9,
+    "ExternalEdges": 43,
+    "EntryMethodCount": 8,
+    "Keywords": [
+      "player",
+      "beat",
+      "memories",
+      "character",
+      "action",
+      "camera",
+      "input",
+      "key",
+      "mode",
+      "reader",
+      "sway",
+      "timed"
+    ]
+  },
+  "RoleEstimate": "Player / Input appears to be an externally connected area around player, beat, memories, character, action. It contains 6 types, including 3 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.CameraSway.Start@33",
+      "TypeId": "BeatMemories.CameraSway",
+      "Signature": "Start()",
+      "Label": "CameraSway.Start()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\CameraSway.cs",
+      "Line": 33
+    },
+    {
+      "Id": "BeatMemories.InputReader.Awake@57",
+      "TypeId": "BeatMemories.InputReader",
+      "Signature": "Awake()",
+      "Label": "InputReader.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+      "Line": 57
+    },
+    {
+      "Id": "BeatMemories.InputReader.OnEnable@71",
+      "TypeId": "BeatMemories.InputReader",
+      "Signature": "OnEnable()",
+      "Label": "InputReader.OnEnable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+      "Line": 71
+    },
+    {
+      "Id": "BeatMemories.InputReader.OnDisable@79",
+      "TypeId": "BeatMemories.InputReader",
+      "Signature": "OnDisable()",
+      "Label": "InputReader.OnDisable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+      "Line": 79
+    },
+    {
+      "Id": "BeatMemories.PlayerData.Awake@84",
+      "TypeId": "BeatMemories.PlayerData",
+      "Signature": "Awake()",
+      "Label": "PlayerData.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+      "Line": 84
+    },
+    {
+      "Id": "BeatMemories.InputReader.OnDestroy@86",
+      "TypeId": "BeatMemories.InputReader",
+      "Signature": "OnDestroy()",
+      "Label": "InputReader.OnDestroy()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+      "Line": 86
+    },
+    {
+      "Id": "BeatMemories.PlayerData.OnEnable@91",
+      "TypeId": "BeatMemories.PlayerData",
+      "Signature": "OnEnable()",
+      "Label": "PlayerData.OnEnable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+      "Line": 91
+    },
+    {
+      "Id": "BeatMemories.PlayerData.OnDisable@92",
+      "TypeId": "BeatMemories.PlayerData",
+      "Signature": "OnDisable()",
+      "Label": "PlayerData.OnDisable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+      "Line": 92
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.TimedPlayerAction",
+      "Name": "TimedPlayerAction",
+      "Kind": "struct",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+      "Line": 18,
+      "IsUnityType": false,
+      "Incoming": 16,
+      "Outgoing": 2,
+      "Internal": 2,
+      "External": 16
+    },
+    {
+      "Id": "BeatMemories.PlayerData",
+      "Name": "PlayerData",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+      "Line": 12,
+      "IsUnityType": true,
+      "Incoming": 9,
+      "Outgoing": 8,
+      "Internal": 5,
+      "External": 12
+    },
+    {
+      "Id": "BeatMemories.InputReader",
+      "Name": "InputReader",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+      "Line": 37,
+      "IsUnityType": true,
+      "Incoming": 5,
+      "Outgoing": 10,
+      "Internal": 5,
+      "External": 10
+    },
+    {
+      "Id": "BeatMemories.PlayerCharacterData",
+      "Name": "PlayerCharacterData",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\PlayerCharacterData.cs",
+      "Line": 9,
+      "IsUnityType": false,
+      "Incoming": 5,
+      "Outgoing": 2,
+      "Internal": 4,
+      "External": 3
+    },
+    {
+      "Id": "BeatMemories.KeyMode",
+      "Name": "KeyMode",
+      "Kind": "enum",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+      "Line": 9,
+      "IsUnityType": false,
+      "Incoming": 3,
+      "Outgoing": 0,
+      "Internal": 2,
+      "External": 1
+    },
+    {
+      "Id": "BeatMemories.CameraSway",
+      "Name": "CameraSway",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\CameraSway.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 1,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 1
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "PlayerData.Awake()",
+      "Steps": [
+        "PlayerData.Awake()",
+        "PlayerData.ResetState() / terminal"
+      ]
+    },
+    {
+      "Entry": "CameraSway.Start()",
+      "Steps": [
+        "CameraSway.Start() / terminal"
+      ]
+    },
+    {
+      "Entry": "InputReader.Awake()",
+      "Steps": [
+        "InputReader.Awake() / terminal"
+      ]
+    },
+    {
+      "Entry": "InputReader.OnEnable()",
+      "Steps": [
+        "InputReader.OnEnable() / terminal"
+      ]
+    },
+    {
+      "Entry": "InputReader.OnDisable()",
+      "Steps": [
+        "InputReader.OnDisable() / terminal"
+      ]
+    },
+    {
+      "Entry": "InputReader.OnDestroy()",
+      "Steps": [
+        "InputReader.OnDestroy() / terminal"
+      ]
+    },
+    {
+      "Entry": "PlayerData.OnEnable()",
+      "Steps": [
+        "PlayerData.OnEnable() / terminal"
+      ]
+    },
+    {
+      "Entry": "PlayerData.OnDisable()",
+      "Steps": [
+        "PlayerData.OnDisable() / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.PlayerData",
+        "SourceName": "PlayerData",
+        "Target": "BeatMemories.PlayerCharacterData",
+        "TargetName": "PlayerCharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 76,
+          "Text": "PlayerCharacterData"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.PlayerData",
+        "SourceName": "PlayerData",
+        "Target": "BeatMemories.PlayerCharacterData",
+        "TargetName": "PlayerCharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 147,
+          "Text": "characterData.SpritesFor(action)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.InputReader",
+        "SourceName": "InputReader",
+        "Target": "BeatMemories.TimedPlayerAction",
+        "TargetName": "TimedPlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 115,
+          "Text": "TimedPlayerAction"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.InputReader",
+        "SourceName": "InputReader",
+        "Target": "BeatMemories.TimedPlayerAction",
+        "TargetName": "TimedPlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 49,
+          "Text": "Action\u003CTimedPlayerAction\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.InputReader",
+        "SourceName": "InputReader",
+        "Target": "BeatMemories.KeyMode",
+        "TargetName": "KeyMode",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 41,
+          "Text": "KeyMode"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.PlayerData",
+        "SourceName": "PlayerData",
+        "Target": "BeatMemories.InputReader",
+        "TargetName": "InputReader",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 38,
+          "Text": "InputReader"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.PlayerData",
+        "SourceName": "PlayerData",
+        "Target": "BeatMemories.PlayerCharacterData",
+        "TargetName": "PlayerCharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 16,
+          "Text": "PlayerCharacterData"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.InputReader",
+        "SourceName": "InputReader",
+        "Target": "BeatMemories.KeyMode",
+        "TargetName": "KeyMode",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 44,
+          "Text": "KeyMode"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.PlayerData",
+        "SourceName": "PlayerData",
+        "Target": "BeatMemories.PlayerCharacterData",
+        "TargetName": "PlayerCharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 48,
+          "Text": "PlayerCharacterData"
+        }
+      }
+    ],
+    "External": [
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.TimedPlayerAction",
+        "TargetName": "TimedPlayerAction",
+        "Weight": 10,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 179,
+          "Text": "pendingInputs.Clear()"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.InputReader",
+        "SourceName": "InputReader",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 101,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PlayerData",
+        "TargetName": "PlayerData",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 162,
+          "Text": "player.SetMaxHp(s.playerMaxHp)"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.PlayerData",
+        "SourceName": "PlayerData",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 133,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.TimedPlayerAction",
+        "TargetName": "TimedPlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 368,
+          "Text": "TimedPlayerAction"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.ActionButton",
+        "SourceName": "ActionButton",
+        "Target": "BeatMemories.InputReader",
+        "TargetName": "InputReader",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 63,
+          "Text": "input.IsActionAvailable(action)"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.InputReader",
+        "SourceName": "InputReader",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 47,
+          "Text": "Action\u003CPlayerAction\u003E"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.PlayerCharacterData",
+        "SourceName": "PlayerCharacterData",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\PlayerCharacterData.cs",
+          "Line": 38,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.TimedPlayerAction",
+        "SourceName": "TimedPlayerAction",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 24,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.PlayerData",
+        "TargetName": "PlayerData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 409,
+          "Text": "playerData.SetCharacterData(definition)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.TimedPlayerAction",
+        "TargetName": "TimedPlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 115,
+          "Text": "Queue\u003CTimedPlayerAction\u003E"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.PlayerData",
+        "SourceName": "PlayerData",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 71,
+          "Text": "Action\u003CPlayerAction, Sprite\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.ActionButton",
+        "SourceName": "ActionButton",
+        "Target": "BeatMemories.InputReader",
+        "TargetName": "InputReader",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 15,
+          "Text": "InputReader"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.CameraSway",
+        "TargetName": "CameraSway",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 25,
+          "Text": "CameraSway"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PlayerData",
+        "TargetName": "PlayerData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 23,
+          "Text": "PlayerData"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.InputReader",
+        "TargetName": "InputReader",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 33,
+          "Text": "InputReader"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PlayerData",
+        "TargetName": "PlayerData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 32,
+          "Text": "PlayerData"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.TimedPlayerAction",
+        "TargetName": "TimedPlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 115,
+          "Text": "Queue\u003CTimedPlayerAction\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.PlayerData",
+        "TargetName": "PlayerData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 37,
+          "Text": "PlayerData"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageSO",
+        "SourceName": "StageSO",
+        "Target": "BeatMemories.KeyMode",
+        "TargetName": "KeyMode",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+          "Line": 19,
+          "Text": "KeyMode"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.TimedPlayerAction",
+        "SourceName": "TimedPlayerAction",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 20,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "inherits",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.PlayerCharacterData",
+        "SourceName": "PlayerCharacterData",
+        "Target": "BeatMemories.CharacterData",
+        "TargetName": "CharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\PlayerCharacterData.cs",
+          "Line": 9,
+          "Text": "CharacterData"
+        }
+      },
+      {
+        "Kind": "type_check",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.PlayerCharacterData",
+        "TargetName": "PlayerCharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 407,
+          "Text": "PlayerCharacterData"
+        }
+      },
+      {
+        "Kind": "unity_find_object",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.PlayerData",
+        "TargetName": "PlayerData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 382,
+          "Text": "PlayerData"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "PlayerData",
+        "Source": "SetCharacterData(PlayerCharacterData)",
+        "TargetType": "PlayerData",
+        "Target": "ResetState()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 81,
+          "Text": "ResetState()"
+        }
+      },
+      {
+        "SourceType": "PlayerData",
+        "Source": "Awake()",
+        "TargetType": "PlayerData",
+        "Target": "ResetState()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 88,
+          "Text": "ResetState()"
+        }
+      },
+      {
+        "SourceType": "InputReader",
+        "Source": "OnGuard(InputAction.CallbackContext)",
+        "TargetType": "InputReader",
+        "Target": "Emit(PlayerAction, double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 93,
+          "Text": "Emit(PlayerAction.Guard, context.time)"
+        }
+      },
+      {
+        "SourceType": "InputReader",
+        "Source": "OnAttack(InputAction.CallbackContext)",
+        "TargetType": "InputReader",
+        "Target": "Emit(PlayerAction, double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 94,
+          "Text": "Emit(PlayerAction.Attack, context.time)"
+        }
+      },
+      {
+        "SourceType": "InputReader",
+        "Source": "OnCharge(InputAction.CallbackContext)",
+        "TargetType": "InputReader",
+        "Target": "Emit(PlayerAction, double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 97,
+          "Text": "Emit(PlayerAction.Charge, context.time)"
+        }
+      },
+      {
+        "SourceType": "PlayerData",
+        "Source": "SetMaxHp(int)",
+        "TargetType": "PlayerData",
+        "Target": "ResetState()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 106,
+          "Text": "ResetState()"
+        }
+      },
+      {
+        "SourceType": "InputReader",
+        "Source": "Press(PlayerAction)",
+        "TargetType": "InputReader",
+        "Target": "Emit(PlayerAction, double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 109,
+          "Text": "Emit(action, InputState.currentTime)"
+        }
+      },
+      {
+        "SourceType": "InputReader",
+        "Source": "Press(PlayerAction)",
+        "TargetType": "InputReader",
+        "Target": "IsActionAvailable(PlayerAction)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 108,
+          "Text": "IsActionAvailable(action)"
+        }
+      },
+      {
+        "SourceType": "PlayerData",
+        "Source": "ConsumeCharge()",
+        "TargetType": "PlayerData",
+        "Target": "SetCharged(bool)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 128,
+          "Text": "SetCharged(false)"
+        }
+      },
+      {
+        "SourceType": "PlayerData",
+        "Source": "HandleAction(PlayerAction)",
+        "TargetType": "PlayerData",
+        "Target": "SpritesFor(PlayerAction)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 135,
+          "Text": "SpritesFor(action)"
+        }
+      },
+      {
+        "SourceType": "PlayerData",
+        "Source": "SpritesFor(PlayerAction)",
+        "TargetType": "PlayerCharacterData",
+        "Target": "SpritesFor(PlayerAction)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 147,
+          "Text": "characterData.SpritesFor(action)"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "PlayerData.Awake() -\u003E PlayerData.ResetState() / terminal"
+    },
+    {
+      "Title": "Likely flow",
+      "Detail": "CameraSway.Start() -\u003E "
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "PlayerData.SetCharacterData(PlayerCharacterData) -\u003E PlayerData.ResetState()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+        "Line": 81,
+        "Text": "ResetState()"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "PlayerData.Awake() -\u003E PlayerData.ResetState()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+        "Line": 88,
+        "Text": "ResetState()"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "InputReader.OnGuard(InputAction.CallbackContext) -\u003E InputReader.Emit(PlayerAction, double)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+        "Line": 93,
+        "Text": "Emit(PlayerAction.Guard, context.time)"
+      }
+    },
+    {
+      "Title": "incoming calls_member",
+      "Detail": "RoundManager -\u003E TimedPlayerAction / 10 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 179,
+        "Text": "pendingInputs.Clear()"
+      }
+    },
+    {
+      "Title": "outgoing accepts_parameter",
+      "Detail": "InputReader -\u003E PlayerAction / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+        "Line": 101,
+        "Text": "PlayerAction"
+      }
+    },
+    {
+      "Title": "incoming calls_member",
+      "Detail": "RoundManager -\u003E PlayerData / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 162,
+        "Text": "player.SetMaxHp(s.playerMaxHp)"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "PlayerData -\u003E PlayerCharacterData / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+        "Line": 76,
+        "Text": "PlayerCharacterData"
+      }
+    },
+    {
+      "Title": "Internal calls_member",
+      "Detail": "PlayerData -\u003E PlayerCharacterData / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+        "Line": 147,
+        "Text": "characterData.SpritesFor(action)"
+      }
+    },
+    {
+      "Title": "Internal creates",
+      "Detail": "InputReader -\u003E TimedPlayerAction / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+        "Line": 115,
+        "Text": "TimedPlayerAction"
+      }
+    },
+    {
+      "Title": "Internal has_event_type",
+      "Detail": "InputReader -\u003E TimedPlayerAction / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+        "Line": 49,
+        "Text": "Action\u003CTimedPlayerAction\u003E"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "InputReader -\u003E KeyMode / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+        "Line": 41,
+        "Text": "KeyMode"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "PlayerData -\u003E InputReader / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+        "Line": 38,
+        "Text": "InputReader"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "PlayerData -\u003E PlayerCharacterData / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+        "Line": 16,
+        "Text": "PlayerCharacterData"
+      }
+    },
+    {
+      "Title": "Internal has_property_type",
+      "Detail": "InputReader -\u003E KeyMode / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+        "Line": 44,
+        "Text": "KeyMode"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Player / Input context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

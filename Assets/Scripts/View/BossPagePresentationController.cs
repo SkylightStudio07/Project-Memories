@@ -30,13 +30,17 @@ namespace BeatMemories
         private int[] originalFillOrigins;
         private float[] originalFillAmounts;
         private bool[] originalFillClockwise;
+        private RectMask2D[] previewMasks;
+        private RectTransform[] previewMaskRects;
         private bool originalsCaptured;
+        private bool masksInitialized;
         private StageSO currentStage;
         private Image slashImage;
         private Coroutine slashRoutine;
         private bool transitionActive;
         private bool previewCutActive;
         private int transitionBeatCount;
+        private int currentPage = 1;
 
         public bool IsPreviewCutActive => previewCutActive;
 
@@ -87,14 +91,16 @@ namespace BeatMemories
         private void OnStageApplied(StageSO appliedStage)
         {
             currentStage = appliedStage;
+            currentPage = round != null ? round.CurrentEnemyPage : 1;
             transitionActive = false;
             transitionBeatCount = 0;
-            SetPreviewCutActive(false);
+            SetPreviewCutActive(ShouldCutCurrentPage());
             HideSlash();
         }
 
         private void OnEnemyPageTransitionStarted(int page, int pageCount, int preparationBeats)
         {
+            currentPage = Mathf.Max(1, page);
             if (currentStage == null
                 || !currentStage.cutPreviewBottomHalfOnSecondPage
                 || page < 2)
@@ -102,6 +108,9 @@ namespace BeatMemories
 
             transitionActive = true;
             transitionBeatCount = Mathf.Max(0, preparationBeats);
+            // 준비 비트 이벤트가 누락되거나 대사 뒤 클록이 재시작되더라도
+            // 페이지 상태만으로 절단이 유지되어야 한다.
+            SetPreviewCutActive(true);
             SpriteRenderer activeEnemyActor = stageManager != null
                 ? stageManager.EnemyActor
                 : enemyActor;
@@ -114,7 +123,6 @@ namespace BeatMemories
 
             if (transitionBeatCount <= 0)
             {
-                SetPreviewCutActive(true);
                 PlaySlash();
             }
         }
@@ -131,13 +139,15 @@ namespace BeatMemories
 
         private void OnPhaseChanged(int cycleIndex, PhaseSO phase)
         {
-            if (!transitionActive) return;
             transitionActive = false;
+            SetPreviewCutActive(ShouldCutCurrentPage());
             HideSlash();
         }
 
         private void OnCycleStarted(int cycleIndex)
         {
+            if (round != null) currentPage = round.CurrentEnemyPage;
+            SetPreviewCutActive(ShouldCutCurrentPage());
             if (!previewCutActive) return;
             for (int i = 0; i < previewSlots.Length; i++)
                 ApplyBottomHalf(i);
@@ -146,13 +156,20 @@ namespace BeatMemories
         private void OnEnemyPreviewed(EnemyPreviewCue cue)
         {
             if (!previewCutActive) return;
-            if (cue.IsHidden) RestoreSlot(cue.Slot);
-            else ApplyBottomHalf(cue.Slot);
+            // 숨김 공격의 노이즈 스프라이트도 2페이지 기믹의 대상이다.
+            // 여기서 전체 높이로 복원하면 가장 중요한 공격 슬롯만 절단이 풀린다.
+            ApplyBottomHalf(cue.Slot);
         }
+
+        private bool ShouldCutCurrentPage()
+            => currentStage != null
+               && currentStage.cutPreviewBottomHalfOnSecondPage
+               && currentPage >= 2;
 
         private void SetPreviewCutActive(bool active)
         {
             CaptureOriginalSlotState();
+            EnsurePreviewMasks();
             previewCutActive = active;
             for (int i = 0; i < previewSlots.Length; i++)
             {
@@ -184,6 +201,62 @@ namespace BeatMemories
             originalsCaptured = true;
         }
 
+        // 슬롯 안쪽 아이콘의 Image.fillAmount만 바꾸면 바깥 프레임은 온전히
+        // 남는다. 각 슬롯 컨테이너 위에 RectMask2D 래퍼를 런타임 생성해
+        // 프레임과 아이콘을 함께 절단한다.
+        private void EnsurePreviewMasks()
+        {
+            if (masksInitialized || previewSlots == null) return;
+
+            previewMasks = new RectMask2D[previewSlots.Length];
+            previewMaskRects = new RectTransform[previewSlots.Length];
+            for (int i = 0; i < previewSlots.Length; i++)
+            {
+                Image slot = previewSlots[i];
+                RectTransform slotContainer =
+                    slot != null ? slot.rectTransform.parent as RectTransform : null;
+                RectTransform parent =
+                    slotContainer != null ? slotContainer.parent as RectTransform : null;
+                if (slotContainer == null || parent == null) continue;
+
+                int siblingIndex = slotContainer.GetSiblingIndex();
+                var wrapperObject = new GameObject(
+                    $"BossPreviewMask_{i}",
+                    typeof(RectTransform),
+                    typeof(RectMask2D),
+                    typeof(LayoutElement));
+                wrapperObject.layer = slotContainer.gameObject.layer;
+
+                RectTransform wrapper = wrapperObject.GetComponent<RectTransform>();
+                wrapper.SetParent(parent, false);
+                wrapper.SetSiblingIndex(siblingIndex);
+                wrapper.anchorMin = slotContainer.anchorMin;
+                wrapper.anchorMax = slotContainer.anchorMax;
+                wrapper.anchoredPosition = slotContainer.anchoredPosition;
+                wrapper.sizeDelta = slotContainer.sizeDelta;
+                wrapper.pivot = slotContainer.pivot;
+                wrapper.localRotation = slotContainer.localRotation;
+                wrapper.localScale = slotContainer.localScale;
+
+                var layout = wrapperObject.GetComponent<LayoutElement>();
+                layout.preferredWidth = Mathf.Abs(slotContainer.rect.width);
+                layout.preferredHeight = Mathf.Abs(slotContainer.rect.height);
+
+                Vector2 containerSize = slotContainer.sizeDelta;
+                slotContainer.SetParent(wrapper, false);
+                slotContainer.anchorMin = new Vector2(0.5f, 0.5f);
+                slotContainer.anchorMax = new Vector2(0.5f, 0.5f);
+                slotContainer.anchoredPosition = Vector2.zero;
+                slotContainer.sizeDelta = containerSize;
+                slotContainer.localRotation = Quaternion.identity;
+                slotContainer.localScale = Vector3.one;
+
+                previewMaskRects[i] = wrapper;
+                previewMasks[i] = wrapperObject.GetComponent<RectMask2D>();
+            }
+            masksInitialized = true;
+        }
+
         private void ApplyBottomHalf(int index)
         {
             Image slot = Slot(index);
@@ -193,6 +266,7 @@ namespace BeatMemories
             slot.fillOrigin = (int)Image.OriginVertical.Bottom;
             slot.fillAmount = 0.5f;
             slot.fillClockwise = false;
+            SetMaskCut(index, true);
         }
 
         private void RestoreSlot(int index)
@@ -204,6 +278,25 @@ namespace BeatMemories
             slot.fillOrigin = originalFillOrigins[index];
             slot.fillAmount = originalFillAmounts[index];
             slot.fillClockwise = originalFillClockwise[index];
+            SetMaskCut(index, false);
+        }
+
+        private void SetMaskCut(int index, bool cut)
+        {
+            if (previewMasks == null
+                || previewMaskRects == null
+                || index < 0
+                || index >= previewMasks.Length
+                || previewMasks[index] == null
+                || previewMaskRects[index] == null)
+                return;
+
+            float height = Mathf.Abs(previewMaskRects[index].rect.height);
+            if (height <= 0f)
+                height = Mathf.Abs(previewMaskRects[index].sizeDelta.y);
+            previewMasks[index].padding = cut
+                ? new Vector4(0f, 0f, 0f, height * 0.5f)
+                : Vector4.zero;
         }
 
         private Image Slot(int index)
@@ -238,7 +331,8 @@ namespace BeatMemories
                 "BossPreviewSlash",
                 typeof(RectTransform),
                 typeof(CanvasRenderer),
-                typeof(Image));
+                typeof(Image),
+                typeof(LayoutElement));
             RectTransform rect = slashObject.GetComponent<RectTransform>();
             rect.SetParent(parent, false);
             rect.anchorMin = new Vector2(0f, 0.5f);
@@ -247,6 +341,7 @@ namespace BeatMemories
             rect.offsetMin = new Vector2(0f, -slashThickness * 0.5f);
             rect.offsetMax = new Vector2(0f, slashThickness * 0.5f);
             rect.SetAsLastSibling();
+            slashObject.GetComponent<LayoutElement>().ignoreLayout = true;
 
             slashImage = slashObject.GetComponent<Image>();
             slashImage.raycastTarget = false;

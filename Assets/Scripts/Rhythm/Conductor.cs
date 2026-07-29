@@ -54,6 +54,9 @@ namespace BeatMemories
         public float LateOffset => timingSettings != null
             ? timingSettings.LateOffset
             : 0.12f;
+        public float InputBufferSeconds => timingSettings != null
+            ? timingSettings.InputBufferSeconds
+            : 0.15f;
         public RhythmTimingSettings TimingSettings => timingSettings;
         public bool IsRunning { get; private set; }
 
@@ -228,7 +231,8 @@ namespace BeatMemories
             queuedPreparationBeats = 0;
             preparationBeatCount = 0;
             preparationBeatIndex = -1;
-            hasPendingTempoAfterPreparation = false;
+            // 정지 상태에서 페이지 전환 이벤트가 예약한 템포는 보존한다.
+            // 예약 시점(DSP)은 새 준비 구간이 실제로 시작될 때 계산한다.
             hasScheduledTempoAfterPreparation = false;
 
             double dspNow = AudioSettings.dspTime;

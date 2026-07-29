@@ -45,14 +45,35 @@ namespace BeatMemories.Tests
             Assert.That(clearPending.GetValue(round), Is.False,
                 "페이즈 계획이 끝나도 적 HP가 남아 있으면 클리어하면 안 된다.");
 
-            damageEnemy.Invoke(round, null);
+            damageEnemy.Invoke(round, new object[] { false, 1f });
             Assert.That(PublicInt(round, "CurrentEnemyHp"), Is.EqualTo(1));
             Assert.That(clearPending.GetValue(round), Is.False);
 
-            damageEnemy.Invoke(round, null);
+            damageEnemy.Invoke(round, new object[] { false, 1f });
             Assert.That(PublicInt(round, "CurrentEnemyHp"), Is.Zero);
             Assert.That(clearPending.GetValue(round), Is.True,
                 "적 HP가 0이 되면 현재 응답 종료 시 클리어를 예약해야 한다.");
+        }
+
+        [TestCase(0.86, true, true)]
+        [TestCase(0.84, false, false)]
+        [TestCase(1.00, true, false)]
+        [TestCase(1.50, true, false)]
+        [TestCase(2.00, false, false)]
+        public void InputWindowBuffersOnlyTheImmediateEarlyGrace(
+            double inputTime,
+            bool expectedAccepted,
+            bool expectedBuffered)
+        {
+            MethodInfo method = roundManagerType.GetMethod(
+                "IsWithinInputWindow",
+                BindingFlags.Static | BindingFlags.NonPublic);
+            object[] arguments = { inputTime, 1.0, 2.0, 0.15, false };
+
+            bool accepted = (bool)method.Invoke(null, arguments);
+
+            Assert.That(accepted, Is.EqualTo(expectedAccepted));
+            Assert.That((bool)arguments[4], Is.EqualTo(expectedBuffered));
         }
 
         private Component CreateRoundWithEnemyHp(int enemyMaxHp)

@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2dec8aae5fbb4b839ddccfc123b077e2, type: 2}
   playerPrefab: {fileID: 4825611272768709046, guid: ff351e35aaf02da4fa6e712193ca25fc, type: 3}
   enemyPrefab: {fileID: 1751598418395291649, guid: 98e028a83d5f6f04684fcc3ca636df5d, type: 3}
-  enemySprite: {fileID: 21300000, guid: 1bdf79295a7341e59133d1a78b950458, type: 3}
+  enemySprite: {fileID: 673249064, guid: 1bdf79295a7341e59133d1a78b950458, type: 3}
   flipEnemyIdleX: 0
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
   phases:
@@ -38,7 +38,7 @@ MonoBehaviour:
   enemyPageCount: 2
   enemyPageTransitionBeats: 4
   cutPreviewBottomHalfOnSecondPage: 1
-  enemyPageTransitionSprite: {fileID: 21300000, guid: 2d45c0db7c5442bd9f4eb85d9173e47c, type: 3}
+  enemyPageTransitionSprite: {fileID: -315018510, guid: 2d45c0db7c5442bd9f4eb85d9173e47c, type: 3}
   backgroundSprite: {fileID: 3621925518522577735, guid: 6c18c42c221c047429b2f836fd017952, type: 3}
   floorSprite: {fileID: -8522455415725479746, guid: b30a3745adb99e94ebde7f49c61d7eeb, type: 3}
   backgroundPrefab: {fileID: 840358950603511695, guid: 646fcf3e26373ae44b78566a99c1b38d, type: 3}

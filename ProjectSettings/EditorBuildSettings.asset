@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Title.unity
     guid: 6202ff40b7d56b64995b819d8ba7822a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BeatMemories.unity
     guid: 7ebe2a8abb4a18641b10ad57d6ae9e60
   - enabled: 1

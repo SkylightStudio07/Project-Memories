@@ -1,0 +1,333 @@
+﻿{
+  "Id": "topic:dialogue",
+  "Name": "Dialogue",
+  "Anchor": "systems/dialogue.md",
+  "Stats": {
+    "NodeCount": 4,
+    "InternalEdges": 3,
+    "ExternalEdges": 11,
+    "EntryMethodCount": 1,
+    "Keywords": [
+      "dialogue",
+      "beat",
+      "memories",
+      "line",
+      "settings",
+      "so",
+      "speaker",
+      "typing"
+    ]
+  },
+  "RoleEstimate": "Dialogue appears to be an externally connected area around dialogue, beat, memories, line, settings. It contains 4 types, including 2 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.DialogueTypingSettings.Load@27",
+      "TypeId": "BeatMemories.DialogueTypingSettings",
+      "Signature": "Load()",
+      "Label": "DialogueTypingSettings.Load()",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueTypingSettings.cs",
+      "Line": 27
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.DialogueSO",
+      "Name": "DialogueSO",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueSO.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 7,
+      "Outgoing": 2,
+      "Internal": 2,
+      "External": 7
+    },
+    {
+      "Id": "BeatMemories.DialogueLine",
+      "Name": "DialogueLine",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueLine.cs",
+      "Line": 13,
+      "IsUnityType": false,
+      "Incoming": 3,
+      "Outgoing": 1,
+      "Internal": 3,
+      "External": 1
+    },
+    {
+      "Id": "BeatMemories.DialogueTypingSettings",
+      "Name": "DialogueTypingSettings",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueTypingSettings.cs",
+      "Line": 7,
+      "IsUnityType": true,
+      "Incoming": 2,
+      "Outgoing": 1,
+      "Internal": 0,
+      "External": 3
+    },
+    {
+      "Id": "BeatMemories.DialogueSpeaker",
+      "Name": "DialogueSpeaker",
+      "Kind": "enum",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueLine.cs",
+      "Line": 5,
+      "IsUnityType": false,
+      "Incoming": 1,
+      "Outgoing": 0,
+      "Internal": 1,
+      "External": 0
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "DialogueTypingSettings.Load()",
+      "Steps": [
+        "DialogueTypingSettings.Load() / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.DialogueSO",
+        "SourceName": "DialogueSO",
+        "Target": "BeatMemories.DialogueLine",
+        "TargetName": "DialogueLine",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueSO.cs",
+          "Line": 13,
+          "Text": "List\u003CDialogueLine\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.DialogueLine",
+        "SourceName": "DialogueLine",
+        "Target": "BeatMemories.DialogueSpeaker",
+        "TargetName": "DialogueSpeaker",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueLine.cs",
+          "Line": 15,
+          "Text": "DialogueSpeaker"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.DialogueSO",
+        "SourceName": "DialogueSO",
+        "Target": "BeatMemories.DialogueLine",
+        "TargetName": "DialogueLine",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueSO.cs",
+          "Line": 13,
+          "Text": "List\u003CDialogueLine\u003E"
+        }
+      }
+    ],
+    "External": [
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageSO",
+        "SourceName": "StageSO",
+        "Target": "BeatMemories.DialogueSO",
+        "TargetName": "DialogueSO",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+          "Line": 64,
+          "Text": "DialogueSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.DialogueViewer",
+        "SourceName": "DialogueViewer",
+        "Target": "BeatMemories.DialogueLine",
+        "TargetName": "DialogueLine",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+          "Line": 122,
+          "Text": "DialogueLine"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.DialogueViewer",
+        "SourceName": "DialogueViewer",
+        "Target": "BeatMemories.DialogueSO",
+        "TargetName": "DialogueSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+          "Line": 96,
+          "Text": "DialogueSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.DialogueSO",
+        "TargetName": "DialogueSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 122,
+          "Text": "DialogueSO"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.DialogueTypingSettings",
+        "SourceName": "DialogueTypingSettings",
+        "Target": "BeatMemories.GameSettings",
+        "TargetName": "GameSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueTypingSettings.cs",
+          "Line": 32,
+          "Text": "GameSettings.ApplySfxVolume(settings.output.audioMixer)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.DialogueViewer",
+        "SourceName": "DialogueViewer",
+        "Target": "BeatMemories.DialogueTypingSettings",
+        "TargetName": "DialogueTypingSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+          "Line": 72,
+          "Text": "DialogueTypingSettings.Load()"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageSO",
+        "SourceName": "StageSO",
+        "Target": "BeatMemories.DialogueSO",
+        "TargetName": "DialogueSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+          "Line": 70,
+          "Text": "List\u003CDialogueSO\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.DialogueViewer",
+        "SourceName": "DialogueViewer",
+        "Target": "BeatMemories.DialogueTypingSettings",
+        "TargetName": "DialogueTypingSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+          "Line": 31,
+          "Text": "DialogueTypingSettings"
+        }
+      },
+      {
+        "Kind": "returns",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.DialogueSO",
+        "TargetName": "DialogueSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 867,
+          "Text": "DialogueSO"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": []
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "DialogueTypingSettings.Load() -\u003E "
+    },
+    {
+      "Title": "incoming has_field_type",
+      "Detail": "StageSO -\u003E DialogueSO / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+        "Line": 64,
+        "Text": "DialogueSO"
+      }
+    },
+    {
+      "Title": "incoming accepts_parameter",
+      "Detail": "DialogueViewer -\u003E DialogueLine / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+        "Line": 122,
+        "Text": "DialogueLine"
+      }
+    },
+    {
+      "Title": "incoming accepts_parameter",
+      "Detail": "DialogueViewer -\u003E DialogueSO / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+        "Line": 96,
+        "Text": "DialogueSO"
+      }
+    },
+    {
+      "Title": "Internal creates",
+      "Detail": "DialogueSO -\u003E DialogueLine / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueSO.cs",
+        "Line": 13,
+        "Text": "List\u003CDialogueLine\u003E"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "DialogueLine -\u003E DialogueSpeaker / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueLine.cs",
+        "Line": 15,
+        "Text": "DialogueSpeaker"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "DialogueSO -\u003E DialogueLine / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Dialogue\\DialogueSO.cs",
+        "Line": 13,
+        "Text": "List\u003CDialogueLine\u003E"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Dialogue context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

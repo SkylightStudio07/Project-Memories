@@ -67,11 +67,11 @@ namespace BeatMemories.Tests
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(4)]
-        public void ChargedAttackAlwaysDealsTwoDamage(int input)
+        public void ChargedAttackAlwaysDealsConfiguredBaseDamage(int input)
         {
             UnityEngine.Object attack = CreateEnemy(
                 action: 2,
-                attackDamage: 2,
+                attackDamage: 1,
                 unblockable: true,
                 invulnerable: true,
                 fixedDamage: true);
@@ -80,7 +80,7 @@ namespace BeatMemories.Tests
 
             Assert.That(ResultField<bool>(result, "Cleared"), Is.False);
             Assert.That(Convert.ToInt32(ResultField<object>(result, "Type")), Is.EqualTo(2));
-            Assert.That(ResultField<int>(result, "PlayerDamage"), Is.EqualTo(2));
+            Assert.That(ResultField<int>(result, "PlayerDamage"), Is.EqualTo(1));
         }
 
         [Test]

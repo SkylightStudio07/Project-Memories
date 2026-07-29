@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2dec8aae5fbb4b839ddccfc123b077e2, type: 2}
   playerPrefab: {fileID: 4825611272768709046, guid: ff351e35aaf02da4fa6e712193ca25fc, type: 3}
   enemyPrefab: {fileID: 1751598418395291649, guid: 98e028a83d5f6f04684fcc3ca636df5d, type: 3}
-  enemySprite: {fileID: 21300000, guid: 1bdf79295a7341e59133d1a78b950458, type: 3}
+  enemySprite: {fileID: 673249064, guid: 1bdf79295a7341e59133d1a78b950458, type: 3}
   flipEnemyIdleX: 0
   pattern: {fileID: 11400000, guid: 52250322d7fded34082e58556ea9355c, type: 2}
   phases:
@@ -31,6 +31,7 @@ MonoBehaviour:
   cyclesPerPhase: 2
   phasePreparationBeats: 4
   repeatPhasePlan: 0
+  phasesFollowEnemyPages: 1
   bpm: 90
   playerMaxHp: 7
   enemyMaxHp: 8
@@ -38,7 +39,7 @@ MonoBehaviour:
   enemyPageCount: 2
   enemyPageTransitionBeats: 4
   cutPreviewBottomHalfOnSecondPage: 1
-  enemyPageTransitionSprite: {fileID: 21300000, guid: 2d45c0db7c5442bd9f4eb85d9173e47c, type: 3}
+  enemyPageTransitionSprite: {fileID: -315018510, guid: 2d45c0db7c5442bd9f4eb85d9173e47c, type: 3}
   introDialogue: {fileID: 11400000, guid: e405f23e66f2b94469819be1c9d3deb3, type: 2}
   outroDialogue: {fileID: 11400000, guid: 77acdbadede06c74ab7dc93497e2a627, type: 2}
   pageTransitionDialogues:

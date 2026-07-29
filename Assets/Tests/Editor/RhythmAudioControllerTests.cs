@@ -51,6 +51,35 @@ namespace BeatMemories.Tests
         }
 
         [Test]
+        public void PendingPageTempoSurvivesFreshClockStart()
+        {
+            Type conductorType = RuntimeType("BeatMemories.Conductor");
+            var gameObject = new GameObject("Pending Page Tempo Test");
+            try
+            {
+                Component conductor = gameObject.AddComponent(conductorType);
+                conductorType.GetMethod("SetRuntimeTempo")
+                    .Invoke(conductor, new object[] { 95f, 0f });
+                conductorType.GetMethod("SetTempoAfterPreparation")
+                    .Invoke(conductor, new object[] { 92f });
+                conductorType.GetMethod("StartClock").Invoke(conductor, null);
+
+                bool pending = (bool)conductorType.GetField(
+                        "hasPendingTempoAfterPreparation",
+                        BindingFlags.Instance | BindingFlags.NonPublic)
+                    .GetValue(conductor);
+                Assert.That(
+                    pending,
+                    Is.True,
+                    "Dialogue resume must keep the page tempo until preparation starts.");
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(gameObject);
+            }
+        }
+
+        [Test]
         public void StageFiveGateCollectsBothBossPagesForPreloading()
         {
             const string catalogPath =

@@ -17,6 +17,8 @@ namespace BeatMemories
         [SerializeField, Min(0f)] private float earlyOffset = 0.12f;
         [Tooltip("정박보다 이 시간 이내로 느린 입력까지 성공으로 인정한다.")]
         [SerializeField, Min(0f)] private float lateOffset = 0.12f;
+        [Tooltip("다음 행동 박보다 조금 일찍 누른 입력을 보관하는 시간. 웹 프레임 지연과 선행 입력 유실을 완화한다.")]
+        [SerializeField, Range(0f, 0.3f)] private float inputBufferSeconds = 0.15f;
 
         [Header("메트로놈")]
         [SerializeField] private AudioClip tick;
@@ -26,6 +28,7 @@ namespace BeatMemories
 
         public float EarlyOffset => Mathf.Max(0f, earlyOffset);
         public float LateOffset => Mathf.Max(0f, lateOffset);
+        public float InputBufferSeconds => Mathf.Clamp(inputBufferSeconds, 0f, 0.3f);
         public AudioClip Tick => tick;
         public AudioClip Tack => tack;
         public float MetronomeVolume => Mathf.Clamp01(metronomeVolume);

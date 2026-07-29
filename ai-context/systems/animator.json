@@ -1,0 +1,332 @@
+﻿{
+  "Id": "topic:animator",
+  "Name": "Animator",
+  "Anchor": "systems/animator.md",
+  "Stats": {
+    "NodeCount": 1,
+    "InternalEdges": 0,
+    "ExternalEdges": 8,
+    "EntryMethodCount": 4,
+    "Keywords": [
+      "animator",
+      "beat",
+      "keyframe",
+      "memories"
+    ]
+  },
+  "RoleEstimate": "Animator appears to be an externally connected area around animator, beat, keyframe, memories. It contains 1 types, including 1 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.KeyframeAnimator.Awake@33",
+      "TypeId": "BeatMemories.KeyframeAnimator",
+      "Signature": "Awake()",
+      "Label": "KeyframeAnimator.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+      "Line": 33
+    },
+    {
+      "Id": "BeatMemories.KeyframeAnimator.OnEnable@35",
+      "TypeId": "BeatMemories.KeyframeAnimator",
+      "Signature": "OnEnable()",
+      "Label": "KeyframeAnimator.OnEnable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+      "Line": 35
+    },
+    {
+      "Id": "BeatMemories.KeyframeAnimator.OnDisable@41",
+      "TypeId": "BeatMemories.KeyframeAnimator",
+      "Signature": "OnDisable()",
+      "Label": "KeyframeAnimator.OnDisable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+      "Line": 41
+    },
+    {
+      "Id": "BeatMemories.KeyframeAnimator.Update@46",
+      "TypeId": "BeatMemories.KeyframeAnimator",
+      "Signature": "Update()",
+      "Label": "KeyframeAnimator.Update()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+      "Line": 46
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.KeyframeAnimator",
+      "Name": "KeyframeAnimator",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 7,
+      "Outgoing": 1,
+      "Internal": 0,
+      "External": 8
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "KeyframeAnimator.OnEnable()",
+      "Steps": [
+        "KeyframeAnimator.OnEnable()",
+        "KeyframeAnimator.Show() / terminal"
+      ]
+    },
+    {
+      "Entry": "KeyframeAnimator.Update()",
+      "Steps": [
+        "KeyframeAnimator.Update()",
+        "KeyframeAnimator.Advance()",
+        "KeyframeAnimator.Show() / terminal"
+      ]
+    },
+    {
+      "Entry": "KeyframeAnimator.Awake()",
+      "Steps": [
+        "KeyframeAnimator.Awake() / terminal"
+      ]
+    },
+    {
+      "Entry": "KeyframeAnimator.OnDisable()",
+      "Steps": [
+        "KeyframeAnimator.OnDisable() / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [],
+    "External": [
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 852,
+          "Text": "playerIdleAnim.Pause()"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 34,
+          "Text": "KeyframeAnimator"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.KeyframeAnimator",
+        "SourceName": "KeyframeAnimator",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+          "Line": 19,
+          "Text": "Conductor"
+        }
+      },
+      {
+        "Kind": "unity_get_component",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1210,
+          "Text": "KeyframeAnimator"
+        }
+      },
+      {
+        "Kind": "unity_get_component",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 447,
+          "Text": "KeyframeAnimator"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1209,
+          "Text": "KeyframeAnimator"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 446,
+          "Text": "KeyframeAnimator"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "KeyframeAnimator",
+        "Source": "OnEnable()",
+        "TargetType": "KeyframeAnimator",
+        "Target": "Show()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+          "Line": 38,
+          "Text": "Show()"
+        }
+      },
+      {
+        "SourceType": "KeyframeAnimator",
+        "Source": "Update()",
+        "TargetType": "KeyframeAnimator",
+        "Target": "Advance()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+          "Line": 54,
+          "Text": "Advance()"
+        }
+      },
+      {
+        "SourceType": "KeyframeAnimator",
+        "Source": "OnBeat(int)",
+        "TargetType": "KeyframeAnimator",
+        "Target": "Advance()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+          "Line": 62,
+          "Text": "Advance()"
+        }
+      },
+      {
+        "SourceType": "KeyframeAnimator",
+        "Source": "Resume()",
+        "TargetType": "KeyframeAnimator",
+        "Target": "Show()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+          "Line": 72,
+          "Text": "Show()"
+        }
+      },
+      {
+        "SourceType": "KeyframeAnimator",
+        "Source": "Advance()",
+        "TargetType": "KeyframeAnimator",
+        "Target": "Show()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+          "Line": 78,
+          "Text": "Show()"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "KeyframeAnimator.OnEnable() -\u003E KeyframeAnimator.Show() / terminal"
+    },
+    {
+      "Title": "Likely flow",
+      "Detail": "KeyframeAnimator.Update() -\u003E KeyframeAnimator.Advance() -\u003E KeyframeAnimator.Show() / terminal"
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "KeyframeAnimator.OnEnable() -\u003E KeyframeAnimator.Show()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+        "Line": 38,
+        "Text": "Show()"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "KeyframeAnimator.Update() -\u003E KeyframeAnimator.Advance()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+        "Line": 54,
+        "Text": "Advance()"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "KeyframeAnimator.OnBeat(int) -\u003E KeyframeAnimator.Advance()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+        "Line": 62,
+        "Text": "Advance()"
+      }
+    },
+    {
+      "Title": "incoming calls_member",
+      "Detail": "HudView -\u003E KeyframeAnimator / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 852,
+        "Text": "playerIdleAnim.Pause()"
+      }
+    },
+    {
+      "Title": "incoming has_field_type",
+      "Detail": "HudView -\u003E KeyframeAnimator / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 34,
+        "Text": "KeyframeAnimator"
+      }
+    },
+    {
+      "Title": "outgoing has_field_type",
+      "Detail": "KeyframeAnimator -\u003E Conductor / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\KeyframeAnimator.cs",
+        "Line": 19,
+        "Text": "Conductor"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Animator context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

@@ -56,6 +56,10 @@ namespace BeatMemories
 
         private void Awake()
         {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            // 임베디드 WebGL 캔버스에서도 방향키가 브라우저/호스트로 빠지지 않게 한다.
+            WebGLInput.captureAllKeyboardInput = true;
+#endif
             guardAction = new InputAction("Guard", InputActionType.Button, "<Keyboard>/leftArrow");
             attackAction = new InputAction("Attack", InputActionType.Button, "<Keyboard>/rightArrow");
             chargeAction = new InputAction("Charge", InputActionType.Button, "<Keyboard>/downArrow");

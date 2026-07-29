@@ -1,0 +1,1183 @@
+﻿{
+  "Id": "action",
+  "Name": "Action Event Pipeline",
+  "Anchor": "systems/action-event-pipeline.md",
+  "Stats": {
+    "NodeCount": 6,
+    "InternalEdges": 4,
+    "ExternalEdges": 58,
+    "EntryMethodCount": 8,
+    "Keywords": [
+      "beat",
+      "memories",
+      "action",
+      "effect",
+      "aura",
+      "button",
+      "charge",
+      "death",
+      "enemy",
+      "explosion",
+      "outcome",
+      "player"
+    ]
+  },
+  "RoleEstimate": "Action Event Pipeline appears to be an externally connected area around beat, memories, action, effect, aura. It contains 6 types, including 3 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.DeathExplosionEffect.Awake@27",
+      "TypeId": "BeatMemories.DeathExplosionEffect",
+      "Signature": "Awake()",
+      "Label": "DeathExplosionEffect.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DeathExplosionEffect.cs",
+      "Line": 27
+    },
+    {
+      "Id": "BeatMemories.ChargeAuraEffect.Awake@33",
+      "TypeId": "BeatMemories.ChargeAuraEffect",
+      "Signature": "Awake()",
+      "Label": "ChargeAuraEffect.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+      "Line": 33
+    },
+    {
+      "Id": "BeatMemories.ActionButton.Awake@34",
+      "TypeId": "BeatMemories.ActionButton",
+      "Signature": "Awake()",
+      "Label": "ActionButton.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+      "Line": 34
+    },
+    {
+      "Id": "BeatMemories.ChargeAuraEffect.LateUpdate@39",
+      "TypeId": "BeatMemories.ChargeAuraEffect",
+      "Signature": "LateUpdate()",
+      "Label": "ChargeAuraEffect.LateUpdate()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+      "Line": 39
+    },
+    {
+      "Id": "BeatMemories.ActionButton.OnEnable@43",
+      "TypeId": "BeatMemories.ActionButton",
+      "Signature": "OnEnable()",
+      "Label": "ActionButton.OnEnable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+      "Line": 43
+    },
+    {
+      "Id": "BeatMemories.ChargeAuraEffect.OnDisable@44",
+      "TypeId": "BeatMemories.ChargeAuraEffect",
+      "Signature": "OnDisable()",
+      "Label": "ChargeAuraEffect.OnDisable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+      "Line": 44
+    },
+    {
+      "Id": "BeatMemories.ChargeAuraEffect.Initialize@49",
+      "TypeId": "BeatMemories.ChargeAuraEffect",
+      "Signature": "Initialize(SpriteRenderer, Color)",
+      "Label": "ChargeAuraEffect.Initialize(SpriteRenderer, Color)",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+      "Line": 49
+    },
+    {
+      "Id": "BeatMemories.ChargeAuraEffect.InitializeRing@251",
+      "TypeId": "BeatMemories.ChargeAuraEffect",
+      "Signature": "InitializeRing()",
+      "Label": "ChargeAuraEffect.InitializeRing()",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+      "Line": 251
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.PlayerAction",
+      "Name": "PlayerAction",
+      "Kind": "enum",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Core\\PlayerAction.cs",
+      "Line": 8,
+      "IsUnityType": false,
+      "Incoming": 40,
+      "Outgoing": 0,
+      "Internal": 4,
+      "External": 36
+    },
+    {
+      "Id": "BeatMemories.ActionButton",
+      "Name": "ActionButton",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+      "Line": 13,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 8,
+      "Internal": 2,
+      "External": 6
+    },
+    {
+      "Id": "BeatMemories.ActionOutcome",
+      "Name": "ActionOutcome",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\ActionOutcome.cs",
+      "Line": 11,
+      "IsUnityType": false,
+      "Incoming": 5,
+      "Outgoing": 2,
+      "Internal": 1,
+      "External": 6
+    },
+    {
+      "Id": "BeatMemories.ChargeAuraEffect",
+      "Name": "ChargeAuraEffect",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 7,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 7
+    },
+    {
+      "Id": "BeatMemories.ActionWeight",
+      "Name": "ActionWeight",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+      "Line": 13,
+      "IsUnityType": false,
+      "Incoming": 3,
+      "Outgoing": 1,
+      "Internal": 1,
+      "External": 3
+    },
+    {
+      "Id": "BeatMemories.DeathExplosionEffect",
+      "Name": "DeathExplosionEffect",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DeathExplosionEffect.cs",
+      "Line": 12,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 0
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "ChargeAuraEffect.Initialize(SpriteRenderer, Color)",
+      "Steps": [
+        "ChargeAuraEffect.Initialize(SpriteRenderer, Color)",
+        "ChargeAuraEffect.StopImmediate() / terminal"
+      ]
+    },
+    {
+      "Entry": "ChargeAuraEffect.Awake()",
+      "Steps": [
+        "ChargeAuraEffect.Awake()",
+        "ChargeAuraEffect.StopImmediate() / terminal"
+      ]
+    },
+    {
+      "Entry": "ChargeAuraEffect.LateUpdate()",
+      "Steps": [
+        "ChargeAuraEffect.LateUpdate()",
+        "ChargeAuraEffect.FollowPlayer() / terminal"
+      ]
+    },
+    {
+      "Entry": "ActionButton.OnEnable()",
+      "Steps": [
+        "ActionButton.OnEnable()",
+        "ActionButton.RefreshAvailability() / terminal"
+      ]
+    },
+    {
+      "Entry": "ChargeAuraEffect.OnDisable()",
+      "Steps": [
+        "ChargeAuraEffect.OnDisable()",
+        "ChargeAuraEffect.StopImmediate() / terminal"
+      ]
+    },
+    {
+      "Entry": "ChargeAuraEffect.InitializeRing()",
+      "Steps": [
+        "ChargeAuraEffect.InitializeRing()",
+        "ChargeAuraEffect.SetRingColor(float) / terminal"
+      ]
+    },
+    {
+      "Entry": "DeathExplosionEffect.Awake()",
+      "Steps": [
+        "DeathExplosionEffect.Awake() / terminal"
+      ]
+    },
+    {
+      "Entry": "ActionButton.Awake()",
+      "Steps": [
+        "ActionButton.Awake() / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.ActionButton",
+        "SourceName": "ActionButton",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 79,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.ActionButton",
+        "SourceName": "ActionButton",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 16,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.ActionOutcome",
+        "SourceName": "ActionOutcome",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\ActionOutcome.cs",
+          "Line": 14,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.ActionWeight",
+        "SourceName": "ActionWeight",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 15,
+          "Text": "PlayerAction"
+        }
+      }
+    ],
+    "External": [
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.InputReader",
+        "SourceName": "InputReader",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 101,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.ChargeAuraEffect",
+        "TargetName": "ChargeAuraEffect",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1488,
+          "Text": "chargeAura.Initialize(playerSlot, playerLaserColor)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 151,
+          "Text": "byAnswer.TryGetValue(ans, out var list)"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PlayerData",
+        "SourceName": "PlayerData",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 133,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 514,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.ActionButton",
+        "SourceName": "ActionButton",
+        "Target": "BeatMemories.InputReader",
+        "TargetName": "InputReader",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 63,
+          "Text": "input.IsActionAvailable(action)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.EnemyData",
+        "SourceName": "EnemyData",
+        "Target": "BeatMemories.ActionOutcome",
+        "TargetName": "ActionOutcome",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\EnemyData.cs",
+          "Line": 48,
+          "Text": "List\u003CActionOutcome\u003E"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 18,
+          "Text": "List\u003CPlayerAction\u003E"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.InputReader",
+        "SourceName": "InputReader",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 47,
+          "Text": "Action\u003CPlayerAction\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.EnemyData",
+        "SourceName": "EnemyData",
+        "Target": "BeatMemories.ActionOutcome",
+        "TargetName": "ActionOutcome",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\EnemyData.cs",
+          "Line": 48,
+          "Text": "List\u003CActionOutcome\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 18,
+          "Text": "List\u003CPlayerAction\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.ChargeAuraEffect",
+        "TargetName": "ChargeAuraEffect",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 141,
+          "Text": "ChargeAuraEffect"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.EnemySequenceProvider",
+        "SourceName": "EnemySequenceProvider",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+          "Line": 69,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.ActionButton",
+        "SourceName": "ActionButton",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 57,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Enemy",
+        "SourceName": "Enemy",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+          "Line": 39,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 849,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.JudgeResult",
+        "SourceName": "JudgeResult",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeResult.cs",
+          "Line": 24,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.JudgeSystem",
+        "SourceName": "JudgeSystem",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+          "Line": 10,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 68,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PlayerCharacterData",
+        "SourceName": "PlayerCharacterData",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\PlayerCharacterData.cs",
+          "Line": 38,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.TimedPlayerAction",
+        "SourceName": "TimedPlayerAction",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 24,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.ActionWeight",
+        "TargetName": "ActionWeight",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 38,
+          "Text": "List\u003CActionWeight\u003E"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PlayerData",
+        "SourceName": "PlayerData",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\PlayerData.cs",
+          "Line": 71,
+          "Text": "Action\u003CPlayerAction, Sprite\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.ActionButton",
+        "SourceName": "ActionButton",
+        "Target": "BeatMemories.InputReader",
+        "TargetName": "InputReader",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 15,
+          "Text": "InputReader"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.ActionButton",
+        "SourceName": "ActionButton",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 21,
+          "Text": "RoundManager"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.ActionOutcome",
+        "SourceName": "ActionOutcome",
+        "Target": "BeatMemories.OutcomeType",
+        "TargetName": "OutcomeType",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\ActionOutcome.cs",
+          "Line": 17,
+          "Text": "OutcomeType"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.EnemyData",
+        "SourceName": "EnemyData",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\EnemyData.cs",
+          "Line": 24,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.JudgeResult",
+        "SourceName": "JudgeResult",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeResult.cs",
+          "Line": 10,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.ActionWeight",
+        "TargetName": "ActionWeight",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 38,
+          "Text": "List\u003CActionWeight\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 37,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.TimedPlayerAction",
+        "SourceName": "TimedPlayerAction",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+          "Line": 20,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Enemy",
+        "SourceName": "Enemy",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+          "Line": 21,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.ActionWeight",
+        "TargetName": "ActionWeight",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 58,
+          "Text": "IReadOnlyList\u003CActionWeight\u003E"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PhaseSO",
+        "SourceName": "PhaseSO",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+          "Line": 57,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "returns",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Enemy",
+        "SourceName": "Enemy",
+        "Target": "BeatMemories.ActionOutcome",
+        "TargetName": "ActionOutcome",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+          "Line": 39,
+          "Text": "ActionOutcome"
+        }
+      },
+      {
+        "Kind": "returns",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Enemy",
+        "SourceName": "Enemy",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+          "Line": 54,
+          "Text": "PlayerAction"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "PlayReadyRing()",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "SetRingColor(float)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 280,
+          "Text": "SetRingColor(alpha)"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "Awake()",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "CacheReferences()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 35,
+          "Text": "CacheReferences()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "Awake()",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "StopImmediate()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 36,
+          "Text": "StopImmediate()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "LateUpdate()",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "FollowPlayer()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 41,
+          "Text": "FollowPlayer()"
+        }
+      },
+      {
+        "SourceType": "ActionButton",
+        "Source": "OnEnable()",
+        "TargetType": "ActionButton",
+        "Target": "RefreshAvailability()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 47,
+          "Text": "RefreshAvailability()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "OnDisable()",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "StopImmediate()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 46,
+          "Text": "StopImmediate()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "Initialize(SpriteRenderer, Color)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "ApplyColor()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 54,
+          "Text": "ApplyColor()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "Initialize(SpriteRenderer, Color)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "CacheReferences()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 53,
+          "Text": "CacheReferences()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "Initialize(SpriteRenderer, Color)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "FollowPlayer()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 56,
+          "Text": "FollowPlayer()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "Initialize(SpriteRenderer, Color)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "InitializeRing()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 55,
+          "Text": "InitializeRing()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "Initialize(SpriteRenderer, Color)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "StopImmediate()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 57,
+          "Text": "StopImmediate()"
+        }
+      },
+      {
+        "SourceType": "ActionButton",
+        "Source": "OnStageApplied(StageSO)",
+        "TargetType": "ActionButton",
+        "Target": "RefreshAvailability()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 57,
+          "Text": "RefreshAvailability()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "SetReady(bool)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "FollowPlayer()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 68,
+          "Text": "FollowPlayer()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "SetReady(bool)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "PlayGlow()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 70,
+          "Text": "PlayGlow()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "SetReady(bool)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "PlayParticles()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 69,
+          "Text": "PlayParticles()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "SetReady(bool)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "PlayReadyRing()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 71,
+          "Text": "PlayReadyRing()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "SetReady(bool)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "StopGlow()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 76,
+          "Text": "StopGlow()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "SetReady(bool)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "StopParticles()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 75,
+          "Text": "StopParticles()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "SetReady(bool)",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "StopReadyRing()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 77,
+          "Text": "StopReadyRing()"
+        }
+      },
+      {
+        "SourceType": "ActionButton",
+        "Source": "OnPointerDown(PointerEventData)",
+        "TargetType": "ActionButton",
+        "Target": "OnClick()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 75,
+          "Text": "OnClick()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "CacheReferences()",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "ConfigureRuntimeParticles()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 113,
+          "Text": "ConfigureRuntimeParticles()"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "ApplyColor()",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "SetRingColor(float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 168,
+          "Text": "SetRingColor(0f)"
+        }
+      },
+      {
+        "SourceType": "ChargeAuraEffect",
+        "Source": "InitializeRing()",
+        "TargetType": "ChargeAuraEffect",
+        "Target": "SetRingColor(float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+          "Line": 267,
+          "Text": "SetRingColor(0f)"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "ChargeAuraEffect.Initialize(SpriteRenderer, Color) -\u003E ChargeAuraEffect.StopImmediate() / terminal"
+    },
+    {
+      "Title": "Likely flow",
+      "Detail": "ChargeAuraEffect.Awake() -\u003E ChargeAuraEffect.StopImmediate() / terminal"
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "ChargeAuraEffect.PlayReadyRing() -\u003E ChargeAuraEffect.SetRingColor(float)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+        "Line": 280,
+        "Text": "SetRingColor(alpha)"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "ChargeAuraEffect.Awake() -\u003E ChargeAuraEffect.CacheReferences()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+        "Line": 35,
+        "Text": "CacheReferences()"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "ChargeAuraEffect.Awake() -\u003E ChargeAuraEffect.StopImmediate()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ChargeAuraEffect.cs",
+        "Line": 36,
+        "Text": "StopImmediate()"
+      }
+    },
+    {
+      "Title": "incoming accepts_parameter",
+      "Detail": "InputReader -\u003E PlayerAction / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Player\\InputReader.cs",
+        "Line": 101,
+        "Text": "PlayerAction"
+      }
+    },
+    {
+      "Title": "incoming calls_member",
+      "Detail": "HudView -\u003E ChargeAuraEffect / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 1488,
+        "Text": "chargeAura.Initialize(playerSlot, playerLaserColor)"
+      }
+    },
+    {
+      "Title": "incoming calls_member",
+      "Detail": "EnemySequenceProvider -\u003E PlayerAction / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\EnemySequenceProvider.cs",
+        "Line": 151,
+        "Text": "byAnswer.TryGetValue(ans, out var list)"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "ActionButton -\u003E PlayerAction / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+        "Line": 79,
+        "Text": "PlayerAction"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "ActionButton -\u003E PlayerAction / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+        "Line": 16,
+        "Text": "PlayerAction"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "ActionOutcome -\u003E PlayerAction / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\ActionOutcome.cs",
+        "Line": 14,
+        "Text": "PlayerAction"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "ActionWeight -\u003E PlayerAction / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Sequence\\PhaseSO.cs",
+        "Line": 15,
+        "Text": "PlayerAction"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Action Event Pipeline context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

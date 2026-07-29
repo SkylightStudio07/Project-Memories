@@ -40,6 +40,8 @@ namespace BeatMemories
         [Min(0)] public int phasePreparationBeats;
         [Tooltip("켜면 마지막 페이즈 뒤 처음으로 순환. 끄면 마지막 페이즈를 적 HP가 0이 될 때까지 유지")]
         public bool repeatPhasePlan = true;
+        [Tooltip("보스 페이지마다 phases의 같은 인덱스를 사용. 페이지 1=페이즈 1, 페이지 2=페이즈 2")]
+        public bool phasesFollowEnemyPages;
 
         [Header("수치")]
         [Min(1f)] public float bpm = 96f;

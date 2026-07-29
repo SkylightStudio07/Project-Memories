@@ -1,0 +1,180 @@
+﻿{
+  "Id": "topic:rhythm",
+  "Name": "Rhythm",
+  "Anchor": "systems/rhythm.md",
+  "Stats": {
+    "NodeCount": 2,
+    "InternalEdges": 0,
+    "ExternalEdges": 6,
+    "EntryMethodCount": 1,
+    "Keywords": [
+      "rhythm",
+      "beat",
+      "memories",
+      "pattern",
+      "settings",
+      "so",
+      "timing"
+    ]
+  },
+  "RoleEstimate": "Rhythm appears to be an externally connected area around rhythm, beat, memories, pattern, settings. It contains 2 types, including 2 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.RhythmPatternSO.OnValidate@54",
+      "TypeId": "BeatMemories.RhythmPatternSO",
+      "Signature": "OnValidate()",
+      "Label": "RhythmPatternSO.OnValidate()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmPatternSO.cs",
+      "Line": 54
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.RhythmPatternSO",
+      "Name": "RhythmPatternSO",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmPatternSO.cs",
+      "Line": 14,
+      "IsUnityType": true,
+      "Incoming": 4,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 4
+    },
+    {
+      "Id": "BeatMemories.RhythmTimingSettings",
+      "Name": "RhythmTimingSettings",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTimingSettings.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 2,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 2
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "RhythmPatternSO.OnValidate()",
+      "Steps": [
+        "RhythmPatternSO.OnValidate() / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [],
+    "External": [
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RhythmPatternSO",
+        "TargetName": "RhythmPatternSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 198,
+          "Text": "pattern.SpotlightBeatIndices()"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Conductor",
+        "SourceName": "Conductor",
+        "Target": "BeatMemories.RhythmTimingSettings",
+        "TargetName": "RhythmTimingSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+          "Line": 19,
+          "Text": "RhythmTimingSettings"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RhythmPatternSO",
+        "TargetName": "RhythmPatternSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 34,
+          "Text": "RhythmPatternSO"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageSO",
+        "SourceName": "StageSO",
+        "Target": "BeatMemories.RhythmPatternSO",
+        "TargetName": "RhythmPatternSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+          "Line": 36,
+          "Text": "RhythmPatternSO"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Conductor",
+        "SourceName": "Conductor",
+        "Target": "BeatMemories.RhythmTimingSettings",
+        "TargetName": "RhythmTimingSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+          "Line": 57,
+          "Text": "RhythmTimingSettings"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": []
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "RhythmPatternSO.OnValidate() -\u003E "
+    },
+    {
+      "Title": "incoming calls_member",
+      "Detail": "RoundManager -\u003E RhythmPatternSO / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 198,
+        "Text": "pattern.SpotlightBeatIndices()"
+      }
+    },
+    {
+      "Title": "incoming has_field_type",
+      "Detail": "Conductor -\u003E RhythmTimingSettings / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+        "Line": 19,
+        "Text": "RhythmTimingSettings"
+      }
+    },
+    {
+      "Title": "incoming has_field_type",
+      "Detail": "RoundManager -\u003E RhythmPatternSO / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 34,
+        "Text": "RhythmPatternSO"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Rhythm context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

@@ -1,0 +1,329 @@
+﻿{
+  "Id": "topic:judge",
+  "Name": "Judge",
+  "Anchor": "systems/judge.md",
+  "Stats": {
+    "NodeCount": 2,
+    "InternalEdges": 3,
+    "ExternalEdges": 20,
+    "EntryMethodCount": 0,
+    "Keywords": [
+      "judge",
+      "beat",
+      "memories",
+      "result"
+    ]
+  },
+  "RoleEstimate": "Judge appears to be an externally connected area around judge, beat, memories, result. It contains 2 types, including 0 Unity-facing types.",
+  "StartHere": [],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.JudgeResult",
+      "Name": "JudgeResult",
+      "Kind": "struct",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeResult.cs",
+      "Line": 7,
+      "IsUnityType": false,
+      "Incoming": 14,
+      "Outgoing": 4,
+      "Internal": 3,
+      "External": 15
+    },
+    {
+      "Id": "BeatMemories.JudgeSystem",
+      "Name": "JudgeSystem",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+      "Line": 8,
+      "IsUnityType": false,
+      "Incoming": 1,
+      "Outgoing": 7,
+      "Internal": 3,
+      "External": 5
+    }
+  ],
+  "LikelyFlows": [],
+  "Relationships": {
+    "Internal": [
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.JudgeSystem",
+        "SourceName": "JudgeSystem",
+        "Target": "BeatMemories.JudgeResult",
+        "TargetName": "JudgeResult",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+          "Line": 13,
+          "Text": "JudgeResult"
+        }
+      },
+      {
+        "Kind": "returns",
+        "Direction": "internal",
+        "Source": "BeatMemories.JudgeSystem",
+        "SourceName": "JudgeSystem",
+        "Target": "BeatMemories.JudgeResult",
+        "TargetName": "JudgeResult",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+          "Line": 10,
+          "Text": "JudgeResult"
+        }
+      }
+    ],
+    "External": [
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.JudgeResult",
+        "TargetName": "JudgeResult",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 455,
+          "Text": "JudgeResult"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.JudgeResult",
+        "TargetName": "JudgeResult",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 530,
+          "Text": "JudgeResult"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.JudgeResult",
+        "SourceName": "JudgeResult",
+        "Target": "BeatMemories.OutcomeType",
+        "TargetName": "OutcomeType",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeResult.cs",
+          "Line": 24,
+          "Text": "OutcomeType"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.JudgeResult",
+        "SourceName": "JudgeResult",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeResult.cs",
+          "Line": 24,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.JudgeSystem",
+        "SourceName": "JudgeSystem",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+          "Line": 10,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.JudgeSystem",
+        "SourceName": "JudgeSystem",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+          "Line": 10,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RhythmTimingDisplay",
+        "SourceName": "RhythmTimingDisplay",
+        "Target": "BeatMemories.JudgeResult",
+        "TargetName": "JudgeResult",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+          "Line": 248,
+          "Text": "JudgeResult"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.JudgeSystem",
+        "TargetName": "JudgeSystem",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 525,
+          "Text": "JudgeSystem.Judge(enemy, action, charged)"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.JudgeResult",
+        "TargetName": "JudgeResult",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 66,
+          "Text": "Action\u003Cint, Enemy, JudgeResult\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.JudgeResult",
+        "SourceName": "JudgeResult",
+        "Target": "BeatMemories.OutcomeType",
+        "TargetName": "OutcomeType",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeResult.cs",
+          "Line": 13,
+          "Text": "OutcomeType"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.JudgeResult",
+        "SourceName": "JudgeResult",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeResult.cs",
+          "Line": 10,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.JudgeSystem",
+        "SourceName": "JudgeSystem",
+        "Target": "BeatMemories.OutcomeType",
+        "TargetName": "OutcomeType",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+          "Line": 32,
+          "Text": "OutcomeType"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.JudgeSystem",
+        "SourceName": "JudgeSystem",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+          "Line": 15,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.JudgeResult",
+        "TargetName": "JudgeResult",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 525,
+          "Text": "JudgeResult"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": []
+  },
+  "Evidence": [
+    {
+      "Title": "incoming accepts_parameter",
+      "Detail": "HudView -\u003E JudgeResult / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 455,
+        "Text": "JudgeResult"
+      }
+    },
+    {
+      "Title": "incoming creates",
+      "Detail": "RoundManager -\u003E JudgeResult / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 530,
+        "Text": "JudgeResult"
+      }
+    },
+    {
+      "Title": "outgoing accepts_parameter",
+      "Detail": "JudgeResult -\u003E OutcomeType / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeResult.cs",
+        "Line": 24,
+        "Text": "OutcomeType"
+      }
+    },
+    {
+      "Title": "Internal creates",
+      "Detail": "JudgeSystem -\u003E JudgeResult / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+        "Line": 13,
+        "Text": "JudgeResult"
+      }
+    },
+    {
+      "Title": "Internal returns",
+      "Detail": "JudgeSystem -\u003E JudgeResult / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Judge\\JudgeSystem.cs",
+        "Line": 10,
+        "Text": "JudgeResult"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Judge context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

@@ -28,6 +28,7 @@ public class TitleButton : MonoBehaviour,
     private bool interactionEnabled = true;
 
     public Graphic Graphic => targetImage;
+    public Button Button => button;
 
     private void Awake()
     {

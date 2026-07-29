@@ -1,0 +1,957 @@
+﻿{
+  "Id": "audio",
+  "Name": "Audio System",
+  "Anchor": "systems/audio-system.md",
+  "Stats": {
+    "NodeCount": 2,
+    "InternalEdges": 0,
+    "ExternalEdges": 41,
+    "EntryMethodCount": 6,
+    "Keywords": [
+      "audio",
+      "beat",
+      "memories",
+      "rhythm",
+      "action",
+      "player",
+      "settings"
+    ]
+  },
+  "RoleEstimate": "Audio System appears to be an externally connected area around audio, beat, memories, rhythm, action. It contains 2 types, including 2 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.RhythmAudioController.Awake@71",
+      "TypeId": "BeatMemories.RhythmAudioController",
+      "Signature": "Awake()",
+      "Label": "RhythmAudioController.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+      "Line": 71
+    },
+    {
+      "Id": "BeatMemories.RhythmAudioController.OnEnable@78",
+      "TypeId": "BeatMemories.RhythmAudioController",
+      "Signature": "OnEnable()",
+      "Label": "RhythmAudioController.OnEnable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+      "Line": 78
+    },
+    {
+      "Id": "BeatMemories.RhythmAudioController.OnDisable@98",
+      "TypeId": "BeatMemories.RhythmAudioController",
+      "Signature": "OnDisable()",
+      "Label": "RhythmAudioController.OnDisable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+      "Line": 98
+    },
+    {
+      "Id": "BeatMemories.RhythmAudioController.Update@117",
+      "TypeId": "BeatMemories.RhythmAudioController",
+      "Signature": "Update()",
+      "Label": "RhythmAudioController.Update()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+      "Line": 117
+    },
+    {
+      "Id": "BeatMemories.PlayerActionAudioSettings.Load@42",
+      "TypeId": "BeatMemories.PlayerActionAudioSettings",
+      "Signature": "Load()",
+      "Label": "PlayerActionAudioSettings.Load()",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Audio\\PlayerActionAudioSettings.cs",
+      "Line": 42
+    },
+    {
+      "Id": "BeatMemories.RhythmAudioController.BeginLoopTimeline@389",
+      "TypeId": "BeatMemories.RhythmAudioController",
+      "Signature": "BeginLoopTimeline(StageSoundtrackCatalogSO.Entry, double)",
+      "Label": "RhythmAudioController.BeginLoopTimeline(StageSoundtrackCatalogSO.Entry, double)",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+      "Line": 389
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.RhythmAudioController",
+      "Name": "RhythmAudioController",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+      "Line": 16,
+      "IsUnityType": true,
+      "Incoming": 4,
+      "Outgoing": 32,
+      "Internal": 0,
+      "External": 36
+    },
+    {
+      "Id": "BeatMemories.PlayerActionAudioSettings",
+      "Name": "PlayerActionAudioSettings",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Audio\\PlayerActionAudioSettings.cs",
+      "Line": 7,
+      "IsUnityType": true,
+      "Incoming": 4,
+      "Outgoing": 1,
+      "Internal": 0,
+      "External": 5
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "RhythmAudioController.Update()",
+      "Steps": [
+        "RhythmAudioController.Update()",
+        "RhythmAudioController.ScheduleMusicLookahead()",
+        "RhythmAudioController.IsPlayable(StageSoundtrackCatalogSO.Entry) / terminal"
+      ]
+    },
+    {
+      "Entry": "RhythmAudioController.BeginLoopTimeline(StageSoundtrackCatalogSO.Entry, double)",
+      "Steps": [
+        "RhythmAudioController.BeginLoopTimeline(StageSoundtrackCatalogSO.Entry, double)",
+        "RhythmAudioController.ScheduleLoop(long)",
+        "RhythmAudioController.LoopStartDspTime(long)",
+        "RhythmAudioController.CalculateLoopDspTime(double, long, int, float)",
+        "RhythmAudioController.LoopDurationSeconds(int, float) / terminal"
+      ]
+    },
+    {
+      "Entry": "RhythmAudioController.Awake()",
+      "Steps": [
+        "RhythmAudioController.Awake()",
+        "RhythmAudioController.EnsureAudioSources()",
+        "RhythmAudioController.ConfigureSource(AudioSource, AudioMixerGroup) / terminal"
+      ]
+    },
+    {
+      "Entry": "RhythmAudioController.OnEnable()",
+      "Steps": [
+        "RhythmAudioController.OnEnable()",
+        "RhythmAudioController.HandleStageApplied(StageSO)",
+        "RhythmAudioController.TrySelectCue(StageSO, int, StageSoundtrackCatalogSO.Entry)",
+        "RhythmAudioController.IsPlayable(StageSoundtrackCatalogSO.Entry) / terminal"
+      ]
+    },
+    {
+      "Entry": "RhythmAudioController.OnDisable()",
+      "Steps": [
+        "RhythmAudioController.OnDisable()",
+        "RhythmAudioController.StopAllAudio()",
+        "RhythmAudioController.StopMusicImmediately()",
+        "RhythmAudioController.StopMusicSource(int) / terminal"
+      ]
+    },
+    {
+      "Entry": "PlayerActionAudioSettings.Load()",
+      "Steps": [
+        "PlayerActionAudioSettings.Load() / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [],
+    "External": [
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "TargetName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Weight": 8,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 342,
+          "Text": "StageSoundtrackCatalogSO.Entry"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "TargetName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Weight": 6,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 55,
+          "Text": "StageSoundtrackCatalogSO.Entry"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "TargetName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Weight": 6,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 201,
+          "Text": "IReadOnlyList\u003CStageSoundtrackCatalogSO.Entry\u003E"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 228,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.RhythmAudioController",
+        "TargetName": "RhythmAudioController",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 101,
+          "Text": "rhythmAudio.PrepareCurrentClip()"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 193,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 127,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PlayerActionAudioSettings",
+        "TargetName": "PlayerActionAudioSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 256,
+          "Text": "PlayerActionAudioSettings.Load()"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PhasePresentationController",
+        "SourceName": "PhasePresentationController",
+        "Target": "BeatMemories.PlayerActionAudioSettings",
+        "TargetName": "PlayerActionAudioSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 75,
+          "Text": "PlayerActionAudioSettings.Load()"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.PlayerActionAudioSettings",
+        "SourceName": "PlayerActionAudioSettings",
+        "Target": "BeatMemories.GameSettings",
+        "TargetName": "GameSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Audio\\PlayerActionAudioSettings.cs",
+          "Line": 39,
+          "Text": "GameSettings.ApplySfxVolume(output.audioMixer)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 252,
+          "Text": "conductor.SetRuntimeTempo(\r\n                hasCue ? selectedCue.Bpm : stage.bpm,\r\n                stage.startDelay)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO",
+        "TargetName": "StageSoundtrackCatalogSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 345,
+          "Text": "catalog.TryGetCue(stage, enemyPage, out cue)"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PlayerActionAudioSettings",
+        "TargetName": "PlayerActionAudioSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 28,
+          "Text": "PlayerActionAudioSettings"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PhasePresentationController",
+        "SourceName": "PhasePresentationController",
+        "Target": "BeatMemories.RhythmAudioController",
+        "TargetName": "RhythmAudioController",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 21,
+          "Text": "RhythmAudioController"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 26,
+          "Text": "Conductor"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 25,
+          "Text": "RoundManager"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO",
+        "TargetName": "StageSoundtrackCatalogSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 27,
+          "Text": "StageSoundtrackCatalogSO"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.RhythmAudioController",
+        "TargetName": "RhythmAudioController",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 26,
+          "Text": "RhythmAudioController"
+        }
+      },
+      {
+        "Kind": "unity_find_object",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 74,
+          "Text": "Conductor"
+        }
+      },
+      {
+        "Kind": "unity_find_object",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 73,
+          "Text": "RoundManager"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PhasePresentationController",
+        "SourceName": "PhasePresentationController",
+        "Target": "BeatMemories.PlayerActionAudioSettings",
+        "TargetName": "PlayerActionAudioSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\PhasePresentationController.cs",
+          "Line": 74,
+          "Text": "PlayerActionAudioSettings"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "ScheduleLoop(long)",
+        "TargetType": "RhythmAudioController",
+        "Target": "LoopStartDspTime(long)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 429,
+          "Text": "LoopStartDspTime(iteration)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "EnsureAudioSources()",
+        "TargetType": "RhythmAudioController",
+        "Target": "ConfigureSource(AudioSource, AudioMixerGroup)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 635,
+          "Text": "ConfigureSource(source, musicOutput)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "Awake()",
+        "TargetType": "RhythmAudioController",
+        "Target": "EnsureAudioSources()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 75,
+          "Text": "EnsureAudioSources()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "OnEnable()",
+        "TargetType": "RhythmAudioController",
+        "Target": "HandleStageApplied(StageSO)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 95,
+          "Text": "HandleStageApplied(round.CurrentStage)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "OnDisable()",
+        "TargetType": "RhythmAudioController",
+        "Target": "StopAllAudio()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 114,
+          "Text": "StopAllAudio()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "Update()",
+        "TargetType": "RhythmAudioController",
+        "Target": "ScheduleMusicLookahead()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 120,
+          "Text": "ScheduleMusicLookahead()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "Update()",
+        "TargetType": "RhythmAudioController",
+        "Target": "TrySchedulePendingSwitch()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 119,
+          "Text": "TrySchedulePendingSwitch()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "PrepareCurrentClip()",
+        "TargetType": "RhythmAudioController",
+        "Target": "CollectCurrentStageClips()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 145,
+          "Text": "CollectCurrentStageClips()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "PrepareCurrentClip()",
+        "TargetType": "RhythmAudioController",
+        "Target": "RequestClipLoad(AudioClip)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 155,
+          "Text": "RequestClipLoad(clips[i])"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleStageApplied(StageSO)",
+        "TargetType": "RhythmAudioController",
+        "Target": "RequestClipLoad(AudioClip)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 240,
+          "Text": "RequestClipLoad(selectedCue.Clip)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleStageApplied(StageSO)",
+        "TargetType": "RhythmAudioController",
+        "Target": "StopMusicImmediately()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 230,
+          "Text": "StopMusicImmediately()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleStageApplied(StageSO)",
+        "TargetType": "RhythmAudioController",
+        "Target": "TrySelectCue(StageSO, int, StageSoundtrackCatalogSO.Entry)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 239,
+          "Text": "TrySelectCue(stage, 1, out selectedCue)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleClockScheduled(double)",
+        "TargetType": "RhythmAudioController",
+        "Target": "BeginLoopTimeline(StageSoundtrackCatalogSO.Entry, double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 272,
+          "Text": "BeginLoopTimeline(selectedCue, scheduledStartDspTime)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleClockScheduled(double)",
+        "TargetType": "RhythmAudioController",
+        "Target": "IsPlayable(StageSoundtrackCatalogSO.Entry)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 260,
+          "Text": "IsPlayable(selectedCue)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleClockScheduled(double)",
+        "TargetType": "RhythmAudioController",
+        "Target": "StopMusicImmediately()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 259,
+          "Text": "StopMusicImmediately()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleClockScheduled(double)",
+        "TargetType": "RhythmAudioController",
+        "Target": "ValidateLoopLength(StageSoundtrackCatalogSO.Entry)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 271,
+          "Text": "ValidateLoopLength(selectedCue)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleClockStopped()",
+        "TargetType": "RhythmAudioController",
+        "Target": "StopAllAudio()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 277,
+          "Text": "StopAllAudio()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleEnemyPageTransitionStarted(int, int, int)",
+        "TargetType": "RhythmAudioController",
+        "Target": "RequestClipLoad(AudioClip)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 303,
+          "Text": "RequestClipLoad(pendingPageCue.Clip)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandleEnemyPageTransitionStarted(int, int, int)",
+        "TargetType": "RhythmAudioController",
+        "Target": "TrySelectCue(StageSO, int, StageSoundtrackCatalogSO.Entry)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 300,
+          "Text": "TrySelectCue(stage, page, out pendingPageCue)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandlePreparationScheduled(double, double, int)",
+        "TargetType": "RhythmAudioController",
+        "Target": "IsPlayable(StageSoundtrackCatalogSO.Entry)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 328,
+          "Text": "IsPlayable(pendingPageCue)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandlePreparationScheduled(double, double, int)",
+        "TargetType": "RhythmAudioController",
+        "Target": "SchedulePreparationSnares(double, double, int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 320,
+          "Text": "SchedulePreparationSnares(startDspTime, endDspTime, beats)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandlePreparationScheduled(double, double, int)",
+        "TargetType": "RhythmAudioController",
+        "Target": "StopLoopTimelineAt(double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 326,
+          "Text": "StopLoopTimelineAt(endDspTime)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "HandlePreparationScheduled(double, double, int)",
+        "TargetType": "RhythmAudioController",
+        "Target": "TrySchedulePendingSwitch()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 336,
+          "Text": "TrySchedulePendingSwitch()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "TrySelectCue(StageSO, int, StageSoundtrackCatalogSO.Entry)",
+        "TargetType": "RhythmAudioController",
+        "Target": "IsPlayable(StageSoundtrackCatalogSO.Entry)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 346,
+          "Text": "IsPlayable(cue)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "ValidateLoopLength(StageSoundtrackCatalogSO.Entry)",
+        "TargetType": "RhythmAudioController",
+        "Target": "LoopDurationSeconds(int, float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 374,
+          "Text": "LoopDurationSeconds(\r\n                cue.LoopBeats,\r\n                cue.Bpm)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "BeginLoopTimeline(StageSoundtrackCatalogSO.Entry, double)",
+        "TargetType": "RhythmAudioController",
+        "Target": "FindAssignableMusicSource()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 393,
+          "Text": "FindAssignableMusicSource()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "BeginLoopTimeline(StageSoundtrackCatalogSO.Entry, double)",
+        "TargetType": "RhythmAudioController",
+        "Target": "ScheduleLoop(long)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 408,
+          "Text": "ScheduleLoop(nextLoopIteration)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "ScheduleMusicLookahead()",
+        "TargetType": "RhythmAudioController",
+        "Target": "IsPlayable(StageSoundtrackCatalogSO.Entry)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 414,
+          "Text": "IsPlayable(loopCue)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "ScheduleMusicLookahead()",
+        "TargetType": "RhythmAudioController",
+        "Target": "LoopStartDspTime(long)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 417,
+          "Text": "LoopStartDspTime(nextLoopIteration)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "ScheduleMusicLookahead()",
+        "TargetType": "RhythmAudioController",
+        "Target": "ScheduleLoop(long)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 419,
+          "Text": "ScheduleLoop(nextLoopIteration)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "LoopStartDspTime(long)",
+        "TargetType": "RhythmAudioController",
+        "Target": "CalculateLoopDspTime(double, long, int, float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 465,
+          "Text": "CalculateLoopDspTime(\r\n                loopStartDspTime,\r\n                iteration,\r\n                loopCue.LoopBeats,\r\n                loopCue.Bpm)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "CalculateLoopDspTime(double, long, int, float)",
+        "TargetType": "RhythmAudioController",
+        "Target": "LoopDurationSeconds(int, float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 477,
+          "Text": "LoopDurationSeconds(loopBeats, bpm)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "StopLoopTimelineAt(double)",
+        "TargetType": "RhythmAudioController",
+        "Target": "StopMusicSource(int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 489,
+          "Text": "StopMusicSource(i)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "TrySchedulePendingSwitch()",
+        "TargetType": "RhythmAudioController",
+        "Target": "FindAssignableMusicSource()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 547,
+          "Text": "FindAssignableMusicSource()"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "TrySchedulePendingSwitch()",
+        "TargetType": "RhythmAudioController",
+        "Target": "RequestClipLoad(AudioClip)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 516,
+          "Text": "RequestClipLoad(pendingPageCue.Clip)"
+        }
+      },
+      {
+        "SourceType": "RhythmAudioController",
+        "Source": "TrySchedulePendingSwitch()",
+        "TargetType": "RhythmAudioController",
+        "Target": "ScheduleLoop(long)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 579,
+          "Text": "ScheduleLoop(nextLoopIteration)"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "RhythmAudioController.Update() -\u003E RhythmAudioController.ScheduleMusicLookahead() -\u003E RhythmAudioController.IsPlayable(StageSoundtrackCatalogSO.Entry) / terminal"
+    },
+    {
+      "Title": "Likely flow",
+      "Detail": "RhythmAudioController.BeginLoopTimeline(StageSoundtrackCatalogSO.Entry, double) -\u003E RhythmAudioController.ScheduleLoop(long) -\u003E RhythmAudioController.LoopStartDspTime(long) -\u003E RhythmAudioController.CalculateLoopDspTime(double, long, int, float)"
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "RhythmAudioController.ScheduleLoop(long) -\u003E RhythmAudioController.LoopStartDspTime(long)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+        "Line": 429,
+        "Text": "LoopStartDspTime(iteration)"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "RhythmAudioController.EnsureAudioSources() -\u003E RhythmAudioController.ConfigureSource(AudioSource, AudioMixerGroup)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+        "Line": 635,
+        "Text": "ConfigureSource(source, musicOutput)"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "RhythmAudioController.Awake() -\u003E RhythmAudioController.EnsureAudioSources()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+        "Line": 75,
+        "Text": "EnsureAudioSources()"
+      }
+    },
+    {
+      "Title": "outgoing accepts_parameter",
+      "Detail": "RhythmAudioController -\u003E StageSoundtrackCatalogSO\u002BEntry / 8 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+        "Line": 342,
+        "Text": "StageSoundtrackCatalogSO.Entry"
+      }
+    },
+    {
+      "Title": "outgoing has_field_type",
+      "Detail": "RhythmAudioController -\u003E StageSoundtrackCatalogSO\u002BEntry / 6 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+        "Line": 55,
+        "Text": "StageSoundtrackCatalogSO.Entry"
+      }
+    },
+    {
+      "Title": "outgoing uses_local_type",
+      "Detail": "RhythmAudioController -\u003E StageSoundtrackCatalogSO\u002BEntry / 6 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+        "Line": 201,
+        "Text": "IReadOnlyList\u003CStageSoundtrackCatalogSO.Entry\u003E"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Audio System context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

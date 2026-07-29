@@ -1,0 +1,227 @@
+﻿{
+  "Id": "topic:banner",
+  "Name": "Banner",
+  "Anchor": "systems/banner.md",
+  "Stats": {
+    "NodeCount": 1,
+    "InternalEdges": 0,
+    "ExternalEdges": 2,
+    "EntryMethodCount": 1,
+    "Keywords": [
+      "banner",
+      "beat",
+      "clear",
+      "memories",
+      "stage"
+    ]
+  },
+  "RoleEstimate": "Banner appears to be an externally connected area around banner, beat, clear, memories, stage. It contains 1 types, including 1 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.StageClearBanner.Awake@44",
+      "TypeId": "BeatMemories.StageClearBanner",
+      "Signature": "Awake()",
+      "Label": "StageClearBanner.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+      "Line": 44
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.StageClearBanner",
+      "Name": "StageClearBanner",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+      "Line": 14,
+      "IsUnityType": true,
+      "Incoming": 2,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 2
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "StageClearBanner.Awake()",
+      "Steps": [
+        "StageClearBanner.Awake()",
+        "StageClearBanner.EnsureDimBackground() / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [],
+    "External": [
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.StageClearBanner",
+        "TargetName": "StageClearBanner",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 207,
+          "Text": "stageClearBanner.PlayActClear(CurrentStage.stageNumber)"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.StageClearBanner",
+        "TargetName": "StageClearBanner",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 63,
+          "Text": "StageClearBanner"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "StageClearBanner",
+        "Source": "Awake()",
+        "TargetType": "StageClearBanner",
+        "Target": "EnsureDimBackground()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+          "Line": 50,
+          "Text": "EnsureDimBackground()"
+        }
+      },
+      {
+        "SourceType": "StageClearBanner",
+        "Source": "PlayActClear(int)",
+        "TargetType": "StageClearBanner",
+        "Target": "EnsureDimBackground()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+          "Line": 63,
+          "Text": "EnsureDimBackground()"
+        }
+      },
+      {
+        "SourceType": "StageClearBanner",
+        "Source": "PlayActClear(int)",
+        "TargetType": "StageClearBanner",
+        "Target": "Hide()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+          "Line": 116,
+          "Text": "Hide()"
+        }
+      },
+      {
+        "SourceType": "StageClearBanner",
+        "Source": "PlayActClear(int)",
+        "TargetType": "StageClearBanner",
+        "Target": "SetAlpha(float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+          "Line": 79,
+          "Text": "SetAlpha(0f)"
+        }
+      },
+      {
+        "SourceType": "StageClearBanner",
+        "Source": "PlayActClear(int)",
+        "TargetType": "StageClearBanner",
+        "Target": "SetDimAlpha(float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+          "Line": 68,
+          "Text": "SetDimAlpha(0f)"
+        }
+      },
+      {
+        "SourceType": "StageClearBanner",
+        "Source": "Hide()",
+        "TargetType": "StageClearBanner",
+        "Target": "SetAlpha(float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+          "Line": 124,
+          "Text": "SetAlpha(1f)"
+        }
+      },
+      {
+        "SourceType": "StageClearBanner",
+        "Source": "Hide()",
+        "TargetType": "StageClearBanner",
+        "Target": "SetDimAlpha(float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+          "Line": 128,
+          "Text": "SetDimAlpha(0f)"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "StageClearBanner.Awake() -\u003E StageClearBanner.EnsureDimBackground() / terminal"
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "StageClearBanner.Awake() -\u003E StageClearBanner.EnsureDimBackground()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+        "Line": 50,
+        "Text": "EnsureDimBackground()"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "StageClearBanner.PlayActClear(int) -\u003E StageClearBanner.EnsureDimBackground()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+        "Line": 63,
+        "Text": "EnsureDimBackground()"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "StageClearBanner.PlayActClear(int) -\u003E StageClearBanner.Hide()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\StageClearBanner.cs",
+        "Line": 116,
+        "Text": "Hide()"
+      }
+    },
+    {
+      "Title": "incoming calls_member",
+      "Detail": "StageManager -\u003E StageClearBanner / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+        "Line": 207,
+        "Text": "stageClearBanner.PlayActClear(CurrentStage.stageNumber)"
+      }
+    },
+    {
+      "Title": "incoming has_field_type",
+      "Detail": "StageManager -\u003E StageClearBanner / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+        "Line": 63,
+        "Text": "StageClearBanner"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Banner context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

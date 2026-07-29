@@ -1,0 +1,2013 @@
+﻿{
+  "Id": "topic:beat",
+  "Name": "Beat",
+  "Anchor": "systems/beat.md",
+  "Stats": {
+    "NodeCount": 20,
+    "InternalEdges": 81,
+    "ExternalEdges": 191,
+    "EntryMethodCount": 8,
+    "Keywords": [
+      "beat",
+      "memories",
+      "managers",
+      "rhythm",
+      "stage",
+      "so",
+      "catalog",
+      "display",
+      "game",
+      "light2d",
+      "neon",
+      "round"
+    ]
+  },
+  "RoleEstimate": "Beat appears to be an externally connected area around beat, memories, managers, rhythm, stage. It contains 20 types, including 14 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.DropShadow2D.OnEnable@30",
+      "TypeId": "BeatMemories.DropShadow2D",
+      "Signature": "OnEnable()",
+      "Label": "DropShadow2D.OnEnable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DropShadow2D.cs",
+      "Line": 30
+    },
+    {
+      "Id": "BeatMemories.RoundManager.Awake@140",
+      "TypeId": "BeatMemories.RoundManager",
+      "Signature": "Awake()",
+      "Label": "RoundManager.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+      "Line": 140
+    },
+    {
+      "Id": "BeatMemories.Conductor.Update@288",
+      "TypeId": "BeatMemories.Conductor",
+      "Signature": "Update()",
+      "Label": "Conductor.Update()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+      "Line": 288
+    },
+    {
+      "Id": "BeatMemories.RoundManager.Update@324",
+      "TypeId": "BeatMemories.RoundManager",
+      "Signature": "Update()",
+      "Label": "RoundManager.Update()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+      "Line": 324
+    },
+    {
+      "Id": "BeatMemories.RhythmTimingDisplay.CreateOutlineEdges@132",
+      "TypeId": "BeatMemories.RhythmTimingDisplay",
+      "Signature": "CreateOutlineEdges(RectTransform)",
+      "Label": "RhythmTimingDisplay.CreateOutlineEdges(RectTransform)",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+      "Line": 132
+    },
+    {
+      "Id": "BeatMemories.Conductor.StartClock@217",
+      "TypeId": "BeatMemories.Conductor",
+      "Signature": "StartClock()",
+      "Label": "Conductor.StartClock()",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+      "Line": 217
+    },
+    {
+      "Id": "BeatMemories.Conductor.BeginPreparation@458",
+      "TypeId": "BeatMemories.Conductor",
+      "Signature": "BeginPreparation()",
+      "Label": "Conductor.BeginPreparation()",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+      "Line": 458
+    },
+    {
+      "Id": "BeatMemories.RoundManager.BeginNextEnemyPage@810",
+      "TypeId": "BeatMemories.RoundManager",
+      "Signature": "BeginNextEnemyPage(int)",
+      "Label": "RoundManager.BeginNextEnemyPage(int)",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+      "Line": 810
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.RoundManager",
+      "Name": "RoundManager",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+      "Line": 23,
+      "IsUnityType": true,
+      "Incoming": 17,
+      "Outgoing": 101,
+      "Internal": 43,
+      "External": 75
+    },
+    {
+      "Id": "BeatMemories.Conductor",
+      "Name": "Conductor",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 23,
+      "Outgoing": 23,
+      "Internal": 15,
+      "External": 31
+    },
+    {
+      "Id": "BeatMemories.StageManager",
+      "Name": "StageManager",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+      "Line": 13,
+      "IsUnityType": true,
+      "Incoming": 7,
+      "Outgoing": 36,
+      "Internal": 20,
+      "External": 23
+    },
+    {
+      "Id": "BeatMemories.StageSO",
+      "Name": "StageSO",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 30,
+      "Outgoing": 12,
+      "Internal": 20,
+      "External": 22
+    },
+    {
+      "Id": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+      "Name": "StageSoundtrackCatalogSO\u002BEntry",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\StageSoundtrackCatalogSO.cs",
+      "Line": 18,
+      "IsUnityType": false,
+      "Incoming": 26,
+      "Outgoing": 3,
+      "Internal": 9,
+      "External": 20
+    },
+    {
+      "Id": "BeatMemories.RoundManager\u002BResponseNote",
+      "Name": "RoundManager\u002BResponseNote",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+      "Line": 98,
+      "IsUnityType": false,
+      "Incoming": 16,
+      "Outgoing": 1,
+      "Internal": 16,
+      "External": 1
+    },
+    {
+      "Id": "BeatMemories.BossPagePresentationController",
+      "Name": "BossPagePresentationController",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+      "Line": 12,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 10,
+      "Internal": 8,
+      "External": 2
+    },
+    {
+      "Id": "BeatMemories.StageSoundtrackCatalogSO",
+      "Name": "StageSoundtrackCatalogSO",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\StageSoundtrackCatalogSO.cs",
+      "Line": 15,
+      "IsUnityType": true,
+      "Incoming": 2,
+      "Outgoing": 7,
+      "Internal": 7,
+      "External": 2
+    },
+    {
+      "Id": "BeatMemories.StageRosterSO",
+      "Name": "StageRosterSO",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageRosterSO.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 4,
+      "Outgoing": 3,
+      "Internal": 7,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.DialogueViewer",
+      "Name": "DialogueViewer",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+      "Line": 18,
+      "IsUnityType": true,
+      "Incoming": 2,
+      "Outgoing": 4,
+      "Internal": 2,
+      "External": 4
+    },
+    {
+      "Id": "BeatMemories.RhythmTimingDisplay",
+      "Name": "RhythmTimingDisplay",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+      "Line": 12,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 6,
+      "Internal": 4,
+      "External": 2
+    },
+    {
+      "Id": "BeatMemories.RhythmTimingResult",
+      "Name": "RhythmTimingResult",
+      "Kind": "enum",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+      "Line": 7,
+      "IsUnityType": false,
+      "Incoming": 5,
+      "Outgoing": 0,
+      "Internal": 4,
+      "External": 1
+    },
+    {
+      "Id": "BeatMemories.GameOverView",
+      "Name": "GameOverView",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\GameOverView.cs",
+      "Line": 13,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 4,
+      "Internal": 4,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.GameSettings",
+      "Name": "GameSettings",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Core\\GameSettings.cs",
+      "Line": 6,
+      "IsUnityType": false,
+      "Incoming": 4,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 4
+    },
+    {
+      "Id": "BeatMemories.OutcomeType",
+      "Name": "OutcomeType",
+      "Kind": "enum",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Core\\OutcomeType.cs",
+      "Line": 7,
+      "IsUnityType": false,
+      "Incoming": 4,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 4
+    },
+    {
+      "Id": "BeatMemories.CountdownDisplay",
+      "Name": "CountdownDisplay",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\CountdownDisplay.cs",
+      "Line": 11,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 1,
+      "Internal": 1,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.NeonLight2D",
+      "Name": "NeonLight2D",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\NeonLight2D.cs",
+      "Line": 14,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 1,
+      "Internal": 1,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.NeonLight2D\u002BPreset",
+      "Name": "NeonLight2D\u002BPreset",
+      "Kind": "enum",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\NeonLight2D.cs",
+      "Line": 16,
+      "IsUnityType": false,
+      "Incoming": 1,
+      "Outgoing": 0,
+      "Internal": 1,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.DropShadow2D",
+      "Name": "DropShadow2D",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DropShadow2D.cs",
+      "Line": 12,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.Parallax",
+      "Name": "Parallax",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\Parallax.cs",
+      "Line": 10,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 0,
+      "Internal": 0,
+      "External": 0
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "Conductor.Update()",
+      "Steps": [
+        "Conductor.Update()",
+        "Conductor.AdvanceBeat()",
+        "Conductor.DispatchCurrentBeat()",
+        "Conductor.DispatchClockBeat() / terminal"
+      ]
+    },
+    {
+      "Entry": "Conductor.StartClock()",
+      "Steps": [
+        "Conductor.StartClock()",
+        "Conductor.CalculateScheduledStartDspTime(double, double) / terminal"
+      ]
+    },
+    {
+      "Entry": "RoundManager.Update()",
+      "Steps": [
+        "RoundManager.Update()",
+        "RoundManager.FinalizeResponseEnd(int)",
+        "RoundManager.FlushUnanswered()",
+        "RoundManager.ApplyJudge(int, Enemy, PlayerAction, bool, float)",
+        "RoundManager.SetEnemyCharged(bool) / terminal"
+      ]
+    },
+    {
+      "Entry": "RhythmTimingDisplay.CreateOutlineEdges(RectTransform)",
+      "Steps": [
+        "RhythmTimingDisplay.CreateOutlineEdges(RectTransform)",
+        "RhythmTimingDisplay.CreateEdge(RectTransform, string, Vector2, Vector2, Vector2) / terminal"
+      ]
+    },
+    {
+      "Entry": "Conductor.BeginPreparation()",
+      "Steps": [
+        "Conductor.BeginPreparation()",
+        "Conductor.EnsureTempoMapsInitialized() / terminal"
+      ]
+    },
+    {
+      "Entry": "RoundManager.Awake()",
+      "Steps": [
+        "RoundManager.Awake()",
+        "RoundManager.ApplyStage(StageSO)",
+        "RoundManager.RebuildStageRuntime() / terminal"
+      ]
+    },
+    {
+      "Entry": "RoundManager.BeginNextEnemyPage(int)",
+      "Steps": [
+        "RoundManager.BeginNextEnemyPage(int)",
+        "RoundManager.HasPageTransitionDialogue(int) / terminal"
+      ]
+    },
+    {
+      "Entry": "DropShadow2D.OnEnable()",
+      "Steps": [
+        "DropShadow2D.OnEnable()",
+        "DropShadow2D.Ensure() / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 10,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 261,
+          "Text": "conductor.BeatToTime(globalBeat)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RoundManager\u002BResponseNote",
+        "TargetName": "RoundManager\u002BResponseNote",
+        "Weight": 6,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 178,
+          "Text": "notes.Clear()"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RoundManager\u002BResponseNote",
+        "TargetName": "RoundManager\u002BResponseNote",
+        "Weight": 5,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 402,
+          "Text": "ResponseNote"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.StageRosterSO",
+        "TargetName": "StageRosterSO",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 70,
+          "Text": "roster.Get(CurrentIndex)"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 117,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RoundManager\u002BResponseNote",
+        "TargetName": "RoundManager\u002BResponseNote",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 709,
+          "Text": "ResponseNote"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 134,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 371,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.GameOverView",
+        "SourceName": "GameOverView",
+        "Target": "BeatMemories.StageManager",
+        "TargetName": "StageManager",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\GameOverView.cs",
+          "Line": 132,
+          "Text": "stageManager.RememberCurrentStageForRetry()"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 154,
+          "Text": "round.GetPageTransitionDialogue(page)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RoundManager\u002BResponseNote",
+        "TargetName": "RoundManager\u002BResponseNote",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 114,
+          "Text": "List\u003CResponseNote\u003E"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RhythmTimingResult",
+        "TargetName": "RhythmTimingResult",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 67,
+          "Text": "Action\u003Cint, RhythmTimingResult\u003E"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.BossPagePresentationController",
+        "SourceName": "BossPagePresentationController",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 87,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.RhythmTimingDisplay",
+        "SourceName": "RhythmTimingDisplay",
+        "Target": "BeatMemories.RhythmTimingResult",
+        "TargetName": "RhythmTimingResult",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+          "Line": 231,
+          "Text": "RhythmTimingResult"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RhythmTimingResult",
+        "TargetName": "RhythmTimingResult",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 710,
+          "Text": "RhythmTimingResult"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageSoundtrackCatalogSO",
+        "SourceName": "StageSoundtrackCatalogSO",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\StageSoundtrackCatalogSO.cs",
+          "Line": 43,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageSoundtrackCatalogSO",
+        "SourceName": "StageSoundtrackCatalogSO",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "TargetName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\StageSoundtrackCatalogSO.cs",
+          "Line": 43,
+          "Text": "Entry"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "SourceName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\StageSoundtrackCatalogSO.cs",
+          "Line": 34,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.RhythmTimingDisplay",
+        "SourceName": "RhythmTimingDisplay",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+          "Line": 213,
+          "Text": "round.TryGetTimingFrameTargetTime(slot, out double targetTime)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.DialogueViewer",
+        "TargetName": "DialogueViewer",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 125,
+          "Text": "dialogueViewer.PlayRoutine(dialogue)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageSoundtrackCatalogSO",
+        "SourceName": "StageSoundtrackCatalogSO",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "TargetName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\StageSoundtrackCatalogSO.cs",
+          "Line": 50,
+          "Text": "candidate.Matches(stage, enemyPage)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageRosterSO",
+        "SourceName": "StageRosterSO",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageRosterSO.cs",
+          "Line": 13,
+          "Text": "List\u003CStageSO\u003E"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.StageSoundtrackCatalogSO",
+        "SourceName": "StageSoundtrackCatalogSO",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "TargetName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\StageSoundtrackCatalogSO.cs",
+          "Line": 39,
+          "Text": "List\u003CEntry\u003E"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 79,
+          "Text": "Action\u003CStageSO\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.BossPagePresentationController",
+        "SourceName": "BossPagePresentationController",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 16,
+          "Text": "Conductor"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.BossPagePresentationController",
+        "SourceName": "BossPagePresentationController",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 15,
+          "Text": "RoundManager"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.BossPagePresentationController",
+        "SourceName": "BossPagePresentationController",
+        "Target": "BeatMemories.StageManager",
+        "TargetName": "StageManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 17,
+          "Text": "StageManager"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.BossPagePresentationController",
+        "SourceName": "BossPagePresentationController",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 34,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.CountdownDisplay",
+        "SourceName": "CountdownDisplay",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\CountdownDisplay.cs",
+          "Line": 13,
+          "Text": "Conductor"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.GameOverView",
+        "SourceName": "GameOverView",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\GameOverView.cs",
+          "Line": 18,
+          "Text": "RoundManager"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.GameOverView",
+        "SourceName": "GameOverView",
+        "Target": "BeatMemories.StageManager",
+        "TargetName": "StageManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\GameOverView.cs",
+          "Line": 19,
+          "Text": "StageManager"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.NeonLight2D",
+        "SourceName": "NeonLight2D",
+        "Target": "BeatMemories.NeonLight2D\u002BPreset",
+        "TargetName": "NeonLight2D\u002BPreset",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\NeonLight2D.cs",
+          "Line": 19,
+          "Text": "Preset"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.RhythmTimingDisplay",
+        "SourceName": "RhythmTimingDisplay",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+          "Line": 14,
+          "Text": "Conductor"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.RhythmTimingDisplay",
+        "SourceName": "RhythmTimingDisplay",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+          "Line": 15,
+          "Text": "RoundManager"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 31,
+          "Text": "Conductor"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RoundManager\u002BResponseNote",
+        "TargetName": "RoundManager\u002BResponseNote",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 114,
+          "Text": "List\u003CResponseNote\u003E"
+        }
+      }
+    ],
+    "External": [
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.Conductor",
+        "SourceName": "Conductor",
+        "Target": "BeatMemories.RhythmTempoMap",
+        "TargetName": "RhythmTempoMap",
+        "Weight": 17,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+          "Line": 44,
+          "Text": "clockTempoMap.TempoAt(AudioSettings.dspTime)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.TimedPlayerAction",
+        "TargetName": "TimedPlayerAction",
+        "Weight": 10,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 179,
+          "Text": "pendingInputs.Clear()"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "TargetName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Weight": 8,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 342,
+          "Text": "StageSoundtrackCatalogSO.Entry"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "TargetName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Weight": 6,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 55,
+          "Text": "StageSoundtrackCatalogSO.Entry"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSoundtrackCatalogSO\u002BEntry",
+        "TargetName": "StageSoundtrackCatalogSO\u002BEntry",
+        "Weight": 6,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 201,
+          "Text": "IReadOnlyList\u003CStageSoundtrackCatalogSO.Entry\u003E"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PlayerData",
+        "TargetName": "PlayerData",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 162,
+          "Text": "player.SetMaxHp(s.playerMaxHp)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.JudgeResult",
+        "TargetName": "JudgeResult",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 530,
+          "Text": "JudgeResult"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 236,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 514,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 35,
+          "Text": "List\u003CEnemy\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.StageSO",
+        "SourceName": "StageSO",
+        "Target": "BeatMemories.DialogueSO",
+        "TargetName": "DialogueSO",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+          "Line": 64,
+          "Text": "DialogueSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 706,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 228,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 514,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.TimedPlayerAction",
+        "TargetName": "TimedPlayerAction",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 368,
+          "Text": "TimedPlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 414,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1880,
+          "Text": "round.CommitScore(points)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.OptionsSettingsController",
+        "SourceName": "OptionsSettingsController",
+        "Target": "BeatMemories.GameSettings",
+        "TargetName": "GameSettings",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\OptionsSettingsController.cs",
+          "Line": 315,
+          "Text": "GameSettings.BgmVolumeToDecibels(bgmVolume)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 177,
+          "Text": "currentCycle.Clear()"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.RhythmPatternSO",
+        "TargetName": "RhythmPatternSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 198,
+          "Text": "pattern.SpotlightBeatIndices()"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.RhythmAudioController",
+        "TargetName": "RhythmAudioController",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 101,
+          "Text": "rhythmAudio.PrepareCurrentClip()"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.Conductor",
+        "SourceName": "Conductor",
+        "Target": "BeatMemories.RhythmTempoMap",
+        "TargetName": "RhythmTempoMap",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+          "Line": 35,
+          "Text": "RhythmTempoMap"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 45,
+          "Text": "List\u003CPhaseSO\u003E"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 64,
+          "Text": "Action\u003Cint, Enemy\u003E"
+        }
+      },
+      {
+        "Kind": "has_event_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 69,
+          "Text": "Action\u003Cint, PhaseSO\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.Conductor",
+        "SourceName": "Conductor",
+        "Target": "BeatMemories.RhythmTempoMap",
+        "TargetName": "RhythmTempoMap",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+          "Line": 35,
+          "Text": "RhythmTempoMap"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 35,
+          "Text": "List\u003CEnemy\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 39,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.StageSO",
+        "SourceName": "StageSO",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+          "Line": 26,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 42,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 714,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.RhythmAudioController",
+        "SourceName": "RhythmAudioController",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+          "Line": 193,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.RoundManager",
+        "SourceName": "RoundManager",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 317,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.ActionButton",
+        "SourceName": "ActionButton",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\ActionButton.cs",
+          "Line": 57,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.BossPagePresentationController",
+        "SourceName": "BossPagePresentationController",
+        "Target": "BeatMemories.EnemyPreviewCue",
+        "TargetName": "EnemyPreviewCue",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 146,
+          "Text": "EnemyPreviewCue"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.BossPagePresentationController",
+        "SourceName": "BossPagePresentationController",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 132,
+          "Text": "PhaseSO"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "RhythmTimingDisplay",
+        "Source": "CreateOutlineEdges(RectTransform)",
+        "TargetType": "RhythmTimingDisplay",
+        "Target": "CreateEdge(RectTransform, string, Vector2, Vector2, Vector2)",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+          "Line": 136,
+          "Text": "CreateEdge(root, \u0022Top\u0022, new Vector2(0f, 1f), new Vector2(1f, 1f),\r\n                    new Vector2(0f, outlineThickness))"
+        }
+      },
+      {
+        "SourceType": "StageManager",
+        "Source": "StageTransition()",
+        "TargetType": "StageManager",
+        "Target": "Fade(float)",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 209,
+          "Text": "Fade(1f)"
+        }
+      },
+      {
+        "SourceType": "DialogueViewer",
+        "Source": "ShowLine(DialogueLine)",
+        "TargetType": "DialogueViewer",
+        "Target": "SetPortrait(Image, Sprite)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+          "Line": 137,
+          "Text": "SetPortrait(enemyPortrait, _lastEnemyPortrait)"
+        }
+      },
+      {
+        "SourceType": "DialogueViewer",
+        "Source": "ShowLine(DialogueLine)",
+        "TargetType": "DialogueViewer",
+        "Target": "StartTyping(TMP_Text, string)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+          "Line": 139,
+          "Text": "StartTyping(enemyText, body)"
+        }
+      },
+      {
+        "SourceType": "RoundManager",
+        "Source": "HandleResponseStart(int)",
+        "TargetType": "Conductor",
+        "Target": "BeatToTime(int)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 261,
+          "Text": "conductor.BeatToTime(globalBeat)"
+        }
+      },
+      {
+        "SourceType": "Conductor",
+        "Source": "AdvanceBeat()",
+        "TargetType": "Conductor",
+        "Target": "DispatchCurrentBeat()",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+          "Line": 337,
+          "Text": "DispatchCurrentBeat()"
+        }
+      },
+      {
+        "SourceType": "RoundManager",
+        "Source": "ConsumeInput(TimedPlayerAction)",
+        "TargetType": "RoundManager",
+        "Target": "ResolveTimingFrame(ResponseNote, RhythmTimingResult, double)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 407,
+          "Text": "ResolveTimingFrame(note, RhythmTimingResult.TooEarly, inputSongTime)"
+        }
+      },
+      {
+        "SourceType": "StageManager",
+        "Source": "ApplyCharacterPrefabs(StageSO)",
+        "TargetType": "StageManager",
+        "Target": "ReplaceCharacter(CharacterView, SpriteRenderer, CharacterView)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 397,
+          "Text": "ReplaceCharacter(\r\n                s != null ? s.playerPrefab : null,\r\n                playerActor,\r\n                ref playerCharacterInstance)"
+        }
+      },
+      {
+        "SourceType": "StageManager",
+        "Source": "ReplaceCharacter(CharacterView, SpriteRenderer, CharacterView)",
+        "TargetType": "StageManager",
+        "Target": "SetLegacyPresentationEnabled(SpriteRenderer, bool)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 428,
+          "Text": "SetLegacyPresentationEnabled(legacyActor, true)"
+        }
+      },
+      {
+        "SourceType": "RoundManager",
+        "Source": "RefreshPendingNoteWindows()",
+        "TargetType": "Conductor",
+        "Target": "BeatToTime(int)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 437,
+          "Text": "conductor.BeatToTime(notes[i].globalBeat)"
+        }
+      },
+      {
+        "SourceType": "RoundManager",
+        "Source": "ExpireElapsedNotes(double)",
+        "TargetType": "RoundManager",
+        "Target": "ApplyJudge(int, Enemy, PlayerAction, bool, float)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 459,
+          "Text": "ApplyJudge(\r\n                        note.slot,\r\n                        note.enemy,\r\n                        PlayerAction.None,\r\n                        isMiss: true,\r\n                        responseRatio: 1f)"
+        }
+      },
+      {
+        "SourceType": "RoundManager",
+        "Source": "ApplyJudge(int, Enemy, PlayerAction, bool, float)",
+        "TargetType": "RoundManager",
+        "Target": "SetEnemyCharged(bool)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 571,
+          "Text": "SetEnemyCharged(!result.Cleared)"
+        }
+      },
+      {
+        "SourceType": "RoundManager",
+        "Source": "StartsPhasePreparation(int)",
+        "TargetType": "RoundManager",
+        "Target": "PhaseForCycle(int)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+          "Line": 793,
+          "Text": "PhaseForCycle(cycleIndex)"
+        }
+      },
+      {
+        "SourceType": "DropShadow2D",
+        "Source": "OnEnable()",
+        "TargetType": "DropShadow2D",
+        "Target": "Apply()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DropShadow2D.cs",
+          "Line": 30,
+          "Text": "Apply()"
+        }
+      },
+      {
+        "SourceType": "DropShadow2D",
+        "Source": "OnEnable()",
+        "TargetType": "DropShadow2D",
+        "Target": "Ensure()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DropShadow2D.cs",
+          "Line": 30,
+          "Text": "Ensure()"
+        }
+      },
+      {
+        "SourceType": "DropShadow2D",
+        "Source": "OnValidate()",
+        "TargetType": "DropShadow2D",
+        "Target": "Apply()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DropShadow2D.cs",
+          "Line": 31,
+          "Text": "Apply()"
+        }
+      },
+      {
+        "SourceType": "DropShadow2D",
+        "Source": "OnValidate()",
+        "TargetType": "DropShadow2D",
+        "Target": "Ensure()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DropShadow2D.cs",
+          "Line": 31,
+          "Text": "Ensure()"
+        }
+      },
+      {
+        "SourceType": "DropShadow2D",
+        "Source": "LateUpdate()",
+        "TargetType": "DropShadow2D",
+        "Target": "Apply()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DropShadow2D.cs",
+          "Line": 32,
+          "Text": "Apply()"
+        }
+      },
+      {
+        "SourceType": "NeonLight2D",
+        "Source": "OnEnable()",
+        "TargetType": "NeonLight2D",
+        "Target": "Apply()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\NeonLight2D.cs",
+          "Line": 36,
+          "Text": "Apply()"
+        }
+      },
+      {
+        "SourceType": "CountdownDisplay",
+        "Source": "OnDisable()",
+        "TargetType": "CountdownDisplay",
+        "Target": "ResetVisual()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\CountdownDisplay.cs",
+          "Line": 37,
+          "Text": "ResetVisual()"
+        }
+      },
+      {
+        "SourceType": "NeonLight2D",
+        "Source": "OnValidate()",
+        "TargetType": "NeonLight2D",
+        "Target": "Apply()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\NeonLight2D.cs",
+          "Line": 37,
+          "Text": "Apply()"
+        }
+      },
+      {
+        "SourceType": "NeonLight2D",
+        "Source": "Update()",
+        "TargetType": "NeonLight2D",
+        "Target": "AimAt(Transform)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\NeonLight2D.cs",
+          "Line": 41,
+          "Text": "AimAt(aimTarget)"
+        }
+      },
+      {
+        "SourceType": "BossPagePresentationController",
+        "Source": "Awake()",
+        "TargetType": "BossPagePresentationController",
+        "Target": "CaptureOriginalSlotState()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 49,
+          "Text": "CaptureOriginalSlotState()"
+        }
+      },
+      {
+        "SourceType": "GameSettings",
+        "Source": "ApplySfxVolume(AudioMixer)",
+        "TargetType": "GameSettings",
+        "Target": "BgmVolumeToDecibels(float)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Core\\GameSettings.cs",
+          "Line": 48,
+          "Text": "BgmVolumeToDecibels(SfxVolume)"
+        }
+      },
+      {
+        "SourceType": "StageSoundtrackCatalogSO",
+        "Source": "TryGetCue(StageSO, int, Entry)",
+        "TargetType": "Entry",
+        "Target": "Matches(StageSO, int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\StageSoundtrackCatalogSO.cs",
+          "Line": 50,
+          "Text": "candidate.Matches(stage, enemyPage)"
+        }
+      },
+      {
+        "SourceType": "NeonLight2D",
+        "Source": "Apply()",
+        "TargetType": "NeonLight2D",
+        "Target": "ResolveColor()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\NeonLight2D.cs",
+          "Line": 50,
+          "Text": "ResolveColor()"
+        }
+      },
+      {
+        "SourceType": "RhythmTimingDisplay",
+        "Source": "Awake()",
+        "TargetType": "RhythmTimingDisplay",
+        "Target": "CreateFrames()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+          "Line": 61,
+          "Text": "CreateFrames()"
+        }
+      },
+      {
+        "SourceType": "BossPagePresentationController",
+        "Source": "Start()",
+        "TargetType": "BossPagePresentationController",
+        "Target": "OnStageApplied(StageSO)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 68,
+          "Text": "OnStageApplied(round.CurrentStage)"
+        }
+      },
+      {
+        "SourceType": "BossPagePresentationController",
+        "Source": "OnDisable()",
+        "TargetType": "BossPagePresentationController",
+        "Target": "HideSlash()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 84,
+          "Text": "HideSlash()"
+        }
+      },
+      {
+        "SourceType": "BossPagePresentationController",
+        "Source": "OnDisable()",
+        "TargetType": "BossPagePresentationController",
+        "Target": "SetPreviewCutActive(bool)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\BossPagePresentationController.cs",
+          "Line": 83,
+          "Text": "SetPreviewCutActive(false)"
+        }
+      },
+      {
+        "SourceType": "StageManager",
+        "Source": "Awake()",
+        "TargetType": "StageManager",
+        "Target": "ApplyStage(int)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 81,
+          "Text": "ApplyStage(initialIndex)"
+        }
+      },
+      {
+        "SourceType": "StageManager",
+        "Source": "Awake()",
+        "TargetType": "StageManager",
+        "Target": "ResolveLegacyActors()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 76,
+          "Text": "ResolveLegacyActors()"
+        }
+      },
+      {
+        "SourceType": "GameOverView",
+        "Source": "Show()",
+        "TargetType": "GameOverView",
+        "Target": "ShowAfterDeathPresentation()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\GameOverView.cs",
+          "Line": 78,
+          "Text": "ShowAfterDeathPresentation()"
+        }
+      },
+      {
+        "SourceType": "GameOverView",
+        "Source": "ShowAfterDeathPresentation()",
+        "TargetType": "GameOverView",
+        "Target": "HideCombatUI()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\GameOverView.cs",
+          "Line": 84,
+          "Text": "HideCombatUI()"
+        }
+      },
+      {
+        "SourceType": "GameOverView",
+        "Source": "ShowAfterDeathPresentation()",
+        "TargetType": "GameOverView",
+        "Target": "PresentRoot()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\GameOverView.cs",
+          "Line": 85,
+          "Text": "PresentRoot()"
+        }
+      },
+      {
+        "SourceType": "RhythmTimingDisplay",
+        "Source": "OnDisable()",
+        "TargetType": "RhythmTimingDisplay",
+        "Target": "HideFrames()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+          "Line": 96,
+          "Text": "HideFrames()"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "Conductor.Update() -\u003E Conductor.AdvanceBeat() -\u003E Conductor.DispatchCurrentBeat() -\u003E Conductor.DispatchClockBeat() / terminal"
+    },
+    {
+      "Title": "Likely flow",
+      "Detail": "Conductor.StartClock() -\u003E Conductor.CalculateScheduledStartDspTime(double, double) / terminal"
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "RhythmTimingDisplay.CreateOutlineEdges(RectTransform) -\u003E RhythmTimingDisplay.CreateEdge(RectTransform, string, Vector2, Vector2, Vector2)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\RhythmTimingDisplay.cs",
+        "Line": 136,
+        "Text": "CreateEdge(root, \u0022Top\u0022, new Vector2(0f, 1f), new Vector2(1f, 1f),\r\n                    new Vector2(0f, outlineThickness))"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "StageManager.StageTransition() -\u003E StageManager.Fade(float)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+        "Line": 209,
+        "Text": "Fade(1f)"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "DialogueViewer.ShowLine(DialogueLine) -\u003E DialogueViewer.SetPortrait(Image, Sprite)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\DialogueViewer.cs",
+        "Line": 137,
+        "Text": "SetPortrait(enemyPortrait, _lastEnemyPortrait)"
+      }
+    },
+    {
+      "Title": "outgoing calls_member",
+      "Detail": "Conductor -\u003E RhythmTempoMap / 17 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+        "Line": 44,
+        "Text": "clockTempoMap.TempoAt(AudioSettings.dspTime)"
+      }
+    },
+    {
+      "Title": "outgoing calls_member",
+      "Detail": "RoundManager -\u003E TimedPlayerAction / 10 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 179,
+        "Text": "pendingInputs.Clear()"
+      }
+    },
+    {
+      "Title": "incoming accepts_parameter",
+      "Detail": "RhythmAudioController -\u003E StageSoundtrackCatalogSO\u002BEntry / 8 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmAudioController.cs",
+        "Line": 342,
+        "Text": "StageSoundtrackCatalogSO.Entry"
+      }
+    },
+    {
+      "Title": "Internal calls_member",
+      "Detail": "RoundManager -\u003E Conductor / 10 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 261,
+        "Text": "conductor.BeatToTime(globalBeat)"
+      }
+    },
+    {
+      "Title": "Internal calls_member",
+      "Detail": "RoundManager -\u003E RoundManager\u002BResponseNote / 6 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 178,
+        "Text": "notes.Clear()"
+      }
+    },
+    {
+      "Title": "Internal uses_local_type",
+      "Detail": "RoundManager -\u003E RoundManager\u002BResponseNote / 5 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 402,
+        "Text": "ResponseNote"
+      }
+    },
+    {
+      "Title": "Internal calls_member",
+      "Detail": "StageManager -\u003E StageRosterSO / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+        "Line": 70,
+        "Text": "roster.Get(CurrentIndex)"
+      }
+    },
+    {
+      "Title": "Internal uses_local_type",
+      "Detail": "StageManager -\u003E StageSO / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+        "Line": 117,
+        "Text": "StageSO"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "RoundManager -\u003E RoundManager\u002BResponseNote / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 709,
+        "Text": "ResponseNote"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "RoundManager -\u003E StageSO / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\RoundManager.cs",
+        "Line": 134,
+        "Text": "StageSO"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "StageManager -\u003E StageSO / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+        "Line": 371,
+        "Text": "StageSO"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Beat context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

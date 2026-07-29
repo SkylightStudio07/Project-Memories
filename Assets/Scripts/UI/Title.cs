@@ -99,6 +99,8 @@ public class Title : MonoBehaviour
             titleMusicSource.Play();
         }
 
+        exitButton.Button.onClick.AddListener(QuitGame);
+
         PlayIntro();
     }
 
@@ -228,6 +230,15 @@ public class Title : MonoBehaviour
     private static void LoadGameScene()
     {
         SceneManager.LoadScene(BeatMemoriesSceneName);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
     }
 
     public void HideOptions()

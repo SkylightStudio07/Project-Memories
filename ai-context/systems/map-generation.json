@@ -1,0 +1,476 @@
+﻿{
+  "Id": "map",
+  "Name": "Map Generation",
+  "Anchor": "systems/map-generation.md",
+  "Stats": {
+    "NodeCount": 2,
+    "InternalEdges": 12,
+    "ExternalEdges": 21,
+    "EntryMethodCount": 1,
+    "Keywords": [
+      "rhythm",
+      "tempo",
+      "beat",
+      "map",
+      "memories",
+      "segment"
+    ]
+  },
+  "RoleEstimate": "Map Generation appears to be an externally connected area around rhythm, tempo, beat, map, memories. It contains 2 types, including 0 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.RhythmTempoMap.Reset@31",
+      "TypeId": "BeatMemories.RhythmTempoMap",
+      "Signature": "Reset(double, double)",
+      "Label": "RhythmTempoMap.Reset(double, double)",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+      "Line": 31
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.RhythmTempoMap",
+      "Name": "RhythmTempoMap",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+      "Line": 10,
+      "IsUnityType": false,
+      "Incoming": 21,
+      "Outgoing": 12,
+      "Internal": 12,
+      "External": 21
+    },
+    {
+      "Id": "BeatMemories.RhythmTempoMap\u002BTempoSegment",
+      "Name": "RhythmTempoMap\u002BTempoSegment",
+      "Kind": "struct",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+      "Line": 12,
+      "IsUnityType": false,
+      "Incoming": 12,
+      "Outgoing": 0,
+      "Internal": 12,
+      "External": 0
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "RhythmTempoMap.Reset(double, double)",
+      "Steps": [
+        "RhythmTempoMap.Reset(double, double)",
+        "RhythmTempoMap.ValidateBpm(double, string) / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "BeatMemories.RhythmTempoMap",
+        "SourceName": "RhythmTempoMap",
+        "Target": "BeatMemories.RhythmTempoMap\u002BTempoSegment",
+        "TargetName": "RhythmTempoMap\u002BTempoSegment",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 35,
+          "Text": "segments.Clear()"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.RhythmTempoMap",
+        "SourceName": "RhythmTempoMap",
+        "Target": "BeatMemories.RhythmTempoMap\u002BTempoSegment",
+        "TargetName": "RhythmTempoMap\u002BTempoSegment",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 27,
+          "Text": "List\u003CTempoSegment\u003E"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.RhythmTempoMap",
+        "SourceName": "RhythmTempoMap",
+        "Target": "BeatMemories.RhythmTempoMap\u002BTempoSegment",
+        "TargetName": "RhythmTempoMap\u002BTempoSegment",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 45,
+          "Text": "TempoSegment"
+        }
+      },
+      {
+        "Kind": "returns",
+        "Direction": "internal",
+        "Source": "BeatMemories.RhythmTempoMap",
+        "SourceName": "RhythmTempoMap",
+        "Target": "BeatMemories.RhythmTempoMap\u002BTempoSegment",
+        "TargetName": "RhythmTempoMap\u002BTempoSegment",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 88,
+          "Text": "TempoSegment"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.RhythmTempoMap",
+        "SourceName": "RhythmTempoMap",
+        "Target": "BeatMemories.RhythmTempoMap\u002BTempoSegment",
+        "TargetName": "RhythmTempoMap\u002BTempoSegment",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 27,
+          "Text": "List\u003CTempoSegment\u003E"
+        }
+      }
+    ],
+    "External": [
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Conductor",
+        "SourceName": "Conductor",
+        "Target": "BeatMemories.RhythmTempoMap",
+        "TargetName": "RhythmTempoMap",
+        "Weight": 17,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+          "Line": 44,
+          "Text": "clockTempoMap.TempoAt(AudioSettings.dspTime)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Conductor",
+        "SourceName": "Conductor",
+        "Target": "BeatMemories.RhythmTempoMap",
+        "TargetName": "RhythmTempoMap",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+          "Line": 35,
+          "Text": "RhythmTempoMap"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Conductor",
+        "SourceName": "Conductor",
+        "Target": "BeatMemories.RhythmTempoMap",
+        "TargetName": "RhythmTempoMap",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+          "Line": 35,
+          "Text": "RhythmTempoMap"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "Reset(double, double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "ValidateBpm(double, string)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 34,
+          "Text": "ValidateBpm(bpm, nameof(bpm))"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "Reset(double, double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "ValidateTime(double, string)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 33,
+          "Text": "ValidateTime(startTime, nameof(startTime))"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "ScheduleTempoChange(double, double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "BeatPositionAt(double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 58,
+          "Text": "BeatPositionAt(startTime)"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "ScheduleTempoChange(double, double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "EnsureInitialized()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 41,
+          "Text": "EnsureInitialized()"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "ScheduleTempoChange(double, double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "ValidateBpm(double, string)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 43,
+          "Text": "ValidateBpm(bpm, nameof(bpm))"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "ScheduleTempoChange(double, double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "ValidateTime(double, string)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 42,
+          "Text": "ValidateTime(startTime, nameof(startTime))"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "BeatPositionAt(double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "EnsureInitialized()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 65,
+          "Text": "EnsureInitialized()"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "BeatPositionAt(double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "SegmentAtTime(double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 67,
+          "Text": "SegmentAtTime(time)"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "BeatPositionAt(double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "ValidateTime(double, string)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 66,
+          "Text": "ValidateTime(time, nameof(time))"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "TimeAtBeat(double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "EnsureInitialized()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 74,
+          "Text": "EnsureInitialized()"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "TimeAtBeat(double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "SegmentAtBeat(double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 76,
+          "Text": "SegmentAtBeat(beat)"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "TimeAtBeat(double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "ValidateTime(double, string)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 75,
+          "Text": "ValidateTime(beat, nameof(beat))"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "TempoAt(double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "EnsureInitialized()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 83,
+          "Text": "EnsureInitialized()"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "TempoAt(double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "SegmentAtTime(double)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 85,
+          "Text": "SegmentAtTime(time)"
+        }
+      },
+      {
+        "SourceType": "RhythmTempoMap",
+        "Source": "TempoAt(double)",
+        "TargetType": "RhythmTempoMap",
+        "Target": "ValidateTime(double, string)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+          "Line": 84,
+          "Text": "ValidateTime(time, nameof(time))"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "RhythmTempoMap.Reset(double, double) -\u003E RhythmTempoMap.ValidateBpm(double, string) / terminal"
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "RhythmTempoMap.Reset(double, double) -\u003E RhythmTempoMap.ValidateBpm(double, string)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+        "Line": 34,
+        "Text": "ValidateBpm(bpm, nameof(bpm))"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "RhythmTempoMap.Reset(double, double) -\u003E RhythmTempoMap.ValidateTime(double, string)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+        "Line": 33,
+        "Text": "ValidateTime(startTime, nameof(startTime))"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "RhythmTempoMap.ScheduleTempoChange(double, double) -\u003E RhythmTempoMap.BeatPositionAt(double)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+        "Line": 58,
+        "Text": "BeatPositionAt(startTime)"
+      }
+    },
+    {
+      "Title": "incoming calls_member",
+      "Detail": "Conductor -\u003E RhythmTempoMap / 17 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+        "Line": 44,
+        "Text": "clockTempoMap.TempoAt(AudioSettings.dspTime)"
+      }
+    },
+    {
+      "Title": "incoming creates",
+      "Detail": "Conductor -\u003E RhythmTempoMap / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+        "Line": 35,
+        "Text": "RhythmTempoMap"
+      }
+    },
+    {
+      "Title": "incoming has_field_type",
+      "Detail": "Conductor -\u003E RhythmTempoMap / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\Conductor.cs",
+        "Line": 35,
+        "Text": "RhythmTempoMap"
+      }
+    },
+    {
+      "Title": "Internal calls_member",
+      "Detail": "RhythmTempoMap -\u003E RhythmTempoMap\u002BTempoSegment / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+        "Line": 35,
+        "Text": "segments.Clear()"
+      }
+    },
+    {
+      "Title": "Internal creates",
+      "Detail": "RhythmTempoMap -\u003E RhythmTempoMap\u002BTempoSegment / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+        "Line": 27,
+        "Text": "List\u003CTempoSegment\u003E"
+      }
+    },
+    {
+      "Title": "Internal uses_local_type",
+      "Detail": "RhythmTempoMap -\u003E RhythmTempoMap\u002BTempoSegment / 3 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+        "Line": 45,
+        "Text": "TempoSegment"
+      }
+    },
+    {
+      "Title": "Internal returns",
+      "Detail": "RhythmTempoMap -\u003E RhythmTempoMap\u002BTempoSegment / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+        "Line": 88,
+        "Text": "TempoSegment"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "RhythmTempoMap -\u003E RhythmTempoMap\u002BTempoSegment / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Rhythm\\RhythmTempoMap.cs",
+        "Line": 27,
+        "Text": "List\u003CTempoSegment\u003E"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Map Generation context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

@@ -1,0 +1,423 @@
+﻿{
+  "Id": "topic:character",
+  "Name": "Character",
+  "Anchor": "systems/character.md",
+  "Stats": {
+    "NodeCount": 4,
+    "InternalEdges": 8,
+    "ExternalEdges": 20,
+    "EntryMethodCount": 0,
+    "Keywords": [
+      "character",
+      "beat",
+      "memories",
+      "anchor",
+      "binding"
+    ]
+  },
+  "RoleEstimate": "Character appears to be an externally connected area around character, beat, memories, anchor, binding. It contains 4 types, including 2 Unity-facing types.",
+  "StartHere": [],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.CharacterView",
+      "Name": "CharacterView",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+      "Line": 28,
+      "IsUnityType": true,
+      "Incoming": 18,
+      "Outgoing": 7,
+      "Internal": 7,
+      "External": 18
+    },
+    {
+      "Id": "BeatMemories.CharacterAnchorBinding",
+      "Name": "CharacterAnchorBinding",
+      "Kind": "struct",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+      "Line": 17,
+      "IsUnityType": false,
+      "Incoming": 3,
+      "Outgoing": 1,
+      "Internal": 4,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.CharacterData",
+      "Name": "CharacterData",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterData.cs",
+      "Line": 9,
+      "IsUnityType": true,
+      "Incoming": 4,
+      "Outgoing": 0,
+      "Internal": 2,
+      "External": 2
+    },
+    {
+      "Id": "BeatMemories.CharacterAnchorType",
+      "Name": "CharacterAnchorType",
+      "Kind": "enum",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+      "Line": 7,
+      "IsUnityType": false,
+      "Incoming": 3,
+      "Outgoing": 0,
+      "Internal": 3,
+      "External": 0
+    }
+  ],
+  "LikelyFlows": [],
+  "Relationships": {
+    "Internal": [
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "BeatMemories.CharacterView",
+        "SourceName": "CharacterView",
+        "Target": "BeatMemories.CharacterAnchorType",
+        "TargetName": "CharacterAnchorType",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+          "Line": 52,
+          "Text": "CharacterAnchorType"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "BeatMemories.CharacterView",
+        "SourceName": "CharacterView",
+        "Target": "BeatMemories.CharacterAnchorBinding",
+        "TargetName": "CharacterAnchorBinding",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+          "Line": 41,
+          "Text": "List\u003CCharacterAnchorBinding\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.CharacterAnchorBinding",
+        "SourceName": "CharacterAnchorBinding",
+        "Target": "BeatMemories.CharacterAnchorType",
+        "TargetName": "CharacterAnchorType",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+          "Line": 19,
+          "Text": "CharacterAnchorType"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.CharacterView",
+        "SourceName": "CharacterView",
+        "Target": "BeatMemories.CharacterAnchorBinding",
+        "TargetName": "CharacterAnchorBinding",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+          "Line": 40,
+          "Text": "List\u003CCharacterAnchorBinding\u003E"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.CharacterView",
+        "SourceName": "CharacterView",
+        "Target": "BeatMemories.CharacterData",
+        "TargetName": "CharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+          "Line": 30,
+          "Text": "CharacterData"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.CharacterView",
+        "SourceName": "CharacterView",
+        "Target": "BeatMemories.CharacterData",
+        "TargetName": "CharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+          "Line": 43,
+          "Text": "CharacterData"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "internal",
+        "Source": "BeatMemories.CharacterView",
+        "SourceName": "CharacterView",
+        "Target": "BeatMemories.CharacterAnchorBinding",
+        "TargetName": "CharacterAnchorBinding",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+          "Line": 71,
+          "Text": "CharacterAnchorBinding"
+        }
+      }
+    ],
+    "External": [
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 5,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1210,
+          "Text": "view.GetComponent\u003CKeyframeAnimator\u003E()"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1208,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 414,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 39,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageSO",
+        "SourceName": "StageSO",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageSO.cs",
+          "Line": 26,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "has_property_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 42,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "inherits",
+        "Direction": "incoming",
+        "Source": "BeatMemories.Enemy",
+        "SourceName": "Enemy",
+        "Target": "BeatMemories.CharacterData",
+        "TargetName": "CharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Enemy\\Enemy.cs",
+          "Line": 11,
+          "Text": "CharacterData"
+        }
+      },
+      {
+        "Kind": "inherits",
+        "Direction": "incoming",
+        "Source": "BeatMemories.PlayerCharacterData",
+        "SourceName": "PlayerCharacterData",
+        "Target": "BeatMemories.CharacterData",
+        "TargetName": "CharacterData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\PlayerCharacterData.cs",
+          "Line": 9,
+          "Text": "CharacterData"
+        }
+      },
+      {
+        "Kind": "returns",
+        "Direction": "incoming",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1809,
+          "Text": "CharacterView"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "CharacterView",
+        "Source": "GetAnchorPosition(CharacterAnchorType)",
+        "TargetType": "CharacterView",
+        "Target": "GetAnchor(CharacterAnchorType)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+          "Line": 82,
+          "Text": "GetAnchor(type)"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Internal call",
+      "Detail": "CharacterView.GetAnchorPosition(CharacterAnchorType) -\u003E CharacterView.GetAnchor(CharacterAnchorType)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+        "Line": 82,
+        "Text": "GetAnchor(type)"
+      }
+    },
+    {
+      "Title": "incoming calls_member",
+      "Detail": "HudView -\u003E CharacterView / 5 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 1210,
+        "Text": "view.GetComponent\u003CKeyframeAnimator\u003E()"
+      }
+    },
+    {
+      "Title": "incoming uses_local_type",
+      "Detail": "HudView -\u003E CharacterView / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 1208,
+        "Text": "CharacterView"
+      }
+    },
+    {
+      "Title": "incoming accepts_parameter",
+      "Detail": "StageManager -\u003E CharacterView / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+        "Line": 414,
+        "Text": "CharacterView"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "CharacterView -\u003E CharacterAnchorType / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+        "Line": 52,
+        "Text": "CharacterAnchorType"
+      }
+    },
+    {
+      "Title": "Internal creates",
+      "Detail": "CharacterView -\u003E CharacterAnchorBinding / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+        "Line": 41,
+        "Text": "List\u003CCharacterAnchorBinding\u003E"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "CharacterAnchorBinding -\u003E CharacterAnchorType / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+        "Line": 19,
+        "Text": "CharacterAnchorType"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "CharacterView -\u003E CharacterAnchorBinding / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+        "Line": 40,
+        "Text": "List\u003CCharacterAnchorBinding\u003E"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "CharacterView -\u003E CharacterData / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+        "Line": 30,
+        "Text": "CharacterData"
+      }
+    },
+    {
+      "Title": "Internal has_property_type",
+      "Detail": "CharacterView -\u003E CharacterData / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+        "Line": 43,
+        "Text": "CharacterData"
+      }
+    },
+    {
+      "Title": "Internal uses_local_type",
+      "Detail": "CharacterView -\u003E CharacterAnchorBinding / 1 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Character\\CharacterView.cs",
+        "Line": 71,
+        "Text": "CharacterAnchorBinding"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the Character context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}

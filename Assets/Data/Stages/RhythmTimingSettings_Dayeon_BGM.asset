@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.RhythmTimingSettings
   earlyOffset: 0.35
   lateOffset: 0.35
+  inputBufferSeconds: 0.15
   tick: {fileID: 8300000, guid: f326586ded1d4487bc74603165677fb3, type: 3}
   tack: {fileID: 8300000, guid: 1b38de357c484892a6641c1aaceba0e0, type: 3}
   metronomeVolume: 0.65

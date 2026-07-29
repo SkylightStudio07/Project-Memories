@@ -1,0 +1,1329 @@
+﻿{
+  "Id": "ui",
+  "Name": "UI Layer",
+  "Anchor": "systems/ui-layer.md",
+  "Stats": {
+    "NodeCount": 5,
+    "InternalEdges": 44,
+    "ExternalEdges": 57,
+    "EntryMethodCount": 8,
+    "Keywords": [
+      "ui",
+      "title",
+      "beat",
+      "memories",
+      "button",
+      "element",
+      "hud",
+      "options",
+      "settings"
+    ]
+  },
+  "RoleEstimate": "UI Layer appears to be an externally connected area around ui, title, beat, memories, button. It contains 5 types, including 4 Unity-facing types.",
+  "StartHere": [
+    {
+      "Id": "BeatMemories.OptionsSettingsController.Awake@66",
+      "TypeId": "BeatMemories.OptionsSettingsController",
+      "Signature": "Awake()",
+      "Label": "OptionsSettingsController.Awake()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\OptionsSettingsController.cs",
+      "Line": 66
+    },
+    {
+      "Id": "BeatMemories.HudView.OnDisable@289",
+      "TypeId": "BeatMemories.HudView",
+      "Signature": "OnDisable()",
+      "Label": "HudView.OnDisable()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+      "Line": 289
+    },
+    {
+      "Id": "BeatMemories.HudView.Start@358",
+      "TypeId": "BeatMemories.HudView",
+      "Signature": "Start()",
+      "Label": "HudView.Start()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+      "Line": 358
+    },
+    {
+      "Id": "BeatMemories.HudView.Update@385",
+      "TypeId": "BeatMemories.HudView",
+      "Signature": "Update()",
+      "Label": "HudView.Update()",
+      "EntryKind": "unity_lifecycle",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+      "Line": 385
+    },
+    {
+      "Id": "Title.StartGame@203",
+      "TypeId": "Title",
+      "Signature": "StartGame()",
+      "Label": "Title.StartGame()",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+      "Line": 203
+    },
+    {
+      "Id": "BeatMemories.HudView.InitializeQueues@999",
+      "TypeId": "BeatMemories.HudView",
+      "Signature": "InitializeQueues()",
+      "Label": "HudView.InitializeQueues()",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+      "Line": 999
+    },
+    {
+      "Id": "BeatMemories.HudView.InitializeLaser@1164",
+      "TypeId": "BeatMemories.HudView",
+      "Signature": "InitializeLaser(LineRenderer, LineRenderer, Light2D, Light2D)",
+      "Label": "HudView.InitializeLaser(LineRenderer, LineRenderer, Light2D, Light2D)",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+      "Line": 1164
+    },
+    {
+      "Id": "BeatMemories.HudView.InitializeChargeEffects@1484",
+      "TypeId": "BeatMemories.HudView",
+      "Signature": "InitializeChargeEffects()",
+      "Label": "HudView.InitializeChargeEffects()",
+      "EntryKind": "flow_candidate",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+      "Line": 1484
+    }
+  ],
+  "CoreTypes": [
+    {
+      "Id": "BeatMemories.HudView",
+      "Name": "HudView",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+      "Line": 16,
+      "IsUnityType": true,
+      "Incoming": 3,
+      "Outgoing": 52,
+      "Internal": 0,
+      "External": 55
+    },
+    {
+      "Id": "Title",
+      "Name": "Title",
+      "Kind": "class",
+      "Namespace": "",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+      "Line": 6,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 44,
+      "Internal": 44,
+      "External": 0
+    },
+    {
+      "Id": "Title\u002BElementState",
+      "Name": "Title\u002BElementState",
+      "Kind": "struct",
+      "Namespace": "",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+      "Line": 594,
+      "IsUnityType": false,
+      "Incoming": 25,
+      "Outgoing": 0,
+      "Internal": 25,
+      "External": 0
+    },
+    {
+      "Id": "TitleButton",
+      "Name": "TitleButton",
+      "Kind": "class",
+      "Namespace": "",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\TitleButton.cs",
+      "Line": 7,
+      "IsUnityType": true,
+      "Incoming": 19,
+      "Outgoing": 0,
+      "Internal": 19,
+      "External": 0
+    },
+    {
+      "Id": "BeatMemories.OptionsSettingsController",
+      "Name": "OptionsSettingsController",
+      "Kind": "class",
+      "Namespace": "BeatMemories",
+      "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\OptionsSettingsController.cs",
+      "Line": 10,
+      "IsUnityType": true,
+      "Incoming": 0,
+      "Outgoing": 2,
+      "Internal": 0,
+      "External": 2
+    }
+  ],
+  "LikelyFlows": [
+    {
+      "Entry": "HudView.OnDisable()",
+      "Steps": [
+        "HudView.OnDisable()",
+        "HudView.StopEffectLight(Light2D) / terminal"
+      ]
+    },
+    {
+      "Entry": "HudView.Start()",
+      "Steps": [
+        "HudView.Start()",
+        "HudView.InitializeLaser(LineRenderer, LineRenderer, Light2D, Light2D)",
+        "HudView.InitializeLaserLine(LineRenderer, float) / terminal"
+      ]
+    },
+    {
+      "Entry": "OptionsSettingsController.Awake()",
+      "Steps": [
+        "OptionsSettingsController.Awake()",
+        "OptionsSettingsController.HasRequiredReferences() / terminal"
+      ]
+    },
+    {
+      "Entry": "HudView.Update()",
+      "Steps": [
+        "HudView.Update()",
+        "HudView.DamageFlash(Color, float) / terminal"
+      ]
+    },
+    {
+      "Entry": "HudView.InitializeLaser(LineRenderer, LineRenderer, Light2D, Light2D)",
+      "Steps": [
+        "HudView.InitializeLaser(LineRenderer, LineRenderer, Light2D, Light2D)",
+        "HudView.InitializeLaserLine(LineRenderer, float) / terminal"
+      ]
+    },
+    {
+      "Entry": "HudView.InitializeChargeEffects()",
+      "Steps": [
+        "HudView.InitializeChargeEffects() / terminal"
+      ]
+    },
+    {
+      "Entry": "Title.StartGame()",
+      "Steps": [
+        "Title.StartGame()",
+        "Title.LoadGameScene() / terminal"
+      ]
+    },
+    {
+      "Entry": "HudView.InitializeQueues()",
+      "Steps": [
+        "HudView.InitializeQueues()",
+        "HudView.QueueSlot(Image[], int) / terminal"
+      ]
+    }
+  ],
+  "Relationships": {
+    "Internal": [
+      {
+        "Kind": "calls_member",
+        "Direction": "internal",
+        "Source": "Title",
+        "SourceName": "Title",
+        "Target": "TitleButton",
+        "TargetName": "TitleButton",
+        "Weight": 13,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 172,
+          "Text": "backButton.SetInteractionEnabled(false)"
+        }
+      },
+      {
+        "Kind": "creates",
+        "Direction": "internal",
+        "Source": "Title",
+        "SourceName": "Title",
+        "Target": "Title\u002BElementState",
+        "TargetName": "Title\u002BElementState",
+        "Weight": 9,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 421,
+          "Text": "ElementState"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "Title",
+        "SourceName": "Title",
+        "Target": "Title\u002BElementState",
+        "TargetName": "Title\u002BElementState",
+        "Weight": 9,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 63,
+          "Text": "ElementState"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "Title",
+        "SourceName": "Title",
+        "Target": "Title\u002BElementState",
+        "TargetName": "Title\u002BElementState",
+        "Weight": 7,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 368,
+          "Text": "ElementState"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "internal",
+        "Source": "Title",
+        "SourceName": "Title",
+        "Target": "TitleButton",
+        "TargetName": "TitleButton",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 15,
+          "Text": "TitleButton"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "internal",
+        "Source": "Title",
+        "SourceName": "Title",
+        "Target": "TitleButton",
+        "TargetName": "TitleButton",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 454,
+          "Text": "TitleButton"
+        }
+      }
+    ],
+    "External": [
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 5,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1210,
+          "Text": "view.GetComponent\u003CKeyframeAnimator\u003E()"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 455,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.JudgeResult",
+        "TargetName": "JudgeResult",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 455,
+          "Text": "JudgeResult"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.ChargeAuraEffect",
+        "TargetName": "ChargeAuraEffect",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1488,
+          "Text": "chargeAura.Initialize(playerSlot, playerLaserColor)"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1208,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 438,
+          "Text": "Enemy"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 706,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 852,
+          "Text": "playerIdleAnim.Pause()"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1880,
+          "Text": "round.CommitScore(points)"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.OptionsSettingsController",
+        "SourceName": "OptionsSettingsController",
+        "Target": "BeatMemories.GameSettings",
+        "TargetName": "GameSettings",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\OptionsSettingsController.cs",
+          "Line": 315,
+          "Text": "GameSettings.BgmVolumeToDecibels(bgmVolume)"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.ChargeAuraEffect",
+        "TargetName": "ChargeAuraEffect",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 141,
+          "Text": "ChargeAuraEffect"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.StageSO",
+        "TargetName": "StageSO",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 714,
+          "Text": "StageSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.EnemyPreviewCue",
+        "TargetName": "EnemyPreviewCue",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 435,
+          "Text": "EnemyPreviewCue"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PhaseSO",
+        "TargetName": "PhaseSO",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 739,
+          "Text": "PhaseSO"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PlayerAction",
+        "TargetName": "PlayerAction",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 849,
+          "Text": "PlayerAction"
+        }
+      },
+      {
+        "Kind": "accepts_parameter",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.RhythmTimingResult",
+        "TargetName": "RhythmTimingResult",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 598,
+          "Text": "RhythmTimingResult"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PlayerActionAudioSettings",
+        "TargetName": "PlayerActionAudioSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 256,
+          "Text": "PlayerActionAudioSettings.Load()"
+        }
+      },
+      {
+        "Kind": "calls_member",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.HudView",
+        "TargetName": "HudView",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 197,
+          "Text": "hud.WaitForEnemyExit()"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.CameraSway",
+        "TargetName": "CameraSway",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 25,
+          "Text": "CameraSway"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.Conductor",
+        "TargetName": "Conductor",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 22,
+          "Text": "Conductor"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.Enemy",
+        "TargetName": "Enemy",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 226,
+          "Text": "Enemy[]"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 34,
+          "Text": "KeyframeAnimator"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PlayerActionAudioSettings",
+        "TargetName": "PlayerActionAudioSettings",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 28,
+          "Text": "PlayerActionAudioSettings"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.PlayerData",
+        "TargetName": "PlayerData",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 23,
+          "Text": "PlayerData"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.RoundManager",
+        "TargetName": "RoundManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 21,
+          "Text": "RoundManager"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.StageManager",
+        "TargetName": "StageManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 24,
+          "Text": "StageManager"
+        }
+      },
+      {
+        "Kind": "has_field_type",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.HudView",
+        "TargetName": "HudView",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 24,
+          "Text": "HudView"
+        }
+      },
+      {
+        "Kind": "returns",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.CharacterView",
+        "TargetName": "CharacterView",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1809,
+          "Text": "CharacterView"
+        }
+      },
+      {
+        "Kind": "unity_add_component",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.ChargeAuraEffect",
+        "TargetName": "ChargeAuraEffect",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1502,
+          "Text": "ChargeAuraEffect"
+        }
+      },
+      {
+        "Kind": "unity_find_object",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.StageManager",
+        "TargetName": "StageManager",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1196,
+          "Text": "StageManager"
+        }
+      },
+      {
+        "Kind": "unity_find_object",
+        "Direction": "incoming",
+        "Source": "BeatMemories.StageManager",
+        "SourceName": "StageManager",
+        "Target": "BeatMemories.HudView",
+        "TargetName": "HudView",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\Managers\\StageManager.cs",
+          "Line": 75,
+          "Text": "HudView"
+        }
+      },
+      {
+        "Kind": "unity_get_component",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1210,
+          "Text": "KeyframeAnimator"
+        }
+      },
+      {
+        "Kind": "uses_local_type",
+        "Direction": "outgoing",
+        "Source": "BeatMemories.HudView",
+        "SourceName": "HudView",
+        "Target": "BeatMemories.KeyframeAnimator",
+        "TargetName": "KeyframeAnimator",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1209,
+          "Text": "KeyframeAnimator"
+        }
+      }
+    ]
+  },
+  "MethodCalls": {
+    "Internal": [
+      {
+        "SourceType": "Title",
+        "Source": "RestoreFinalState()",
+        "TargetType": "Title",
+        "Target": "RestoreElement(ElementState)",
+        "Weight": 9,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 472,
+          "Text": "RestoreElement(wooferLeftState)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "OnDisable()",
+        "TargetType": "HudView",
+        "Target": "StopEffectLight(Light2D)",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 340,
+          "Text": "StopEffectLight(playerLaserMuzzleGlow)"
+        }
+      },
+      {
+        "SourceType": "Title",
+        "Source": "TryCacheElementStates()",
+        "TargetType": "TitleButton",
+        "Target": "Prepare()",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 416,
+          "Text": "startButton.Prepare()"
+        }
+      },
+      {
+        "SourceType": "Title",
+        "Source": "ApplyIntroState()",
+        "TargetType": "Title",
+        "Target": "ApplyHiddenState(ElementState, Vector2, float)",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 435,
+          "Text": "ApplyHiddenState(\r\n            wooferLeftState,\r\n            new Vector2(-wooferHorizontalOffset, 0f),\r\n            wooferStartScale)"
+        }
+      },
+      {
+        "SourceType": "Title",
+        "Source": "AddMainUiTweens(Sequence, float, bool)",
+        "TargetType": "Title",
+        "Target": "AddMainUiTween(Sequence, ElementState, float, bool)",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 500,
+          "Text": "AddMainUiTween(sequence, textArtState, startTime, visible)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "FlipSprite(SpriteRenderer, Sprite, Vector3, bool)",
+        "TargetType": "HudView",
+        "Target": "ScaleSpriteWidth(SpriteRenderer, Vector3, float, float, float)",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 951,
+          "Text": "ScaleSpriteWidth(slot, baseScale, 1f, 0f, quarterDuration)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "PlayLaser(LineRenderer, LineRenderer, Light2D, Light2D, SpriteRenderer, Vector3, Vector3, Color, bool, float)",
+        "TargetType": "HudView",
+        "Target": "SetLaserColor(LineRenderer, Color, float)",
+        "Weight": 4,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1286,
+          "Text": "SetLaserColor(laser, color, alpha)"
+        }
+      },
+      {
+        "SourceType": "Title",
+        "Source": "PlayIntro()",
+        "TargetType": "Title",
+        "Target": "AddButtonTween(ElementState, TitleButton, float)",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 153,
+          "Text": "AddButtonTween(startButtonState, startButton, stageStart)"
+        }
+      },
+      {
+        "SourceType": "Title",
+        "Source": "PlayBeatPulse()",
+        "TargetType": "Title",
+        "Target": "CreateBeatPulse(ElementState, float, Sequence)",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 342,
+          "Text": "CreateBeatPulse(\r\n            wooferLeftState,\r\n            wooferBeatScale,\r\n            wooferLeftPulseSequence)"
+        }
+      },
+      {
+        "SourceType": "Title",
+        "Source": "ApplyIntroState()",
+        "TargetType": "Title",
+        "Target": "ApplyButtonIntroState(ElementState, TitleButton)",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 448,
+          "Text": "ApplyButtonIntroState(startButtonState, startButton)"
+        }
+      },
+      {
+        "SourceType": "Title",
+        "Source": "SetMainButtonsInteraction(bool)",
+        "TargetType": "TitleButton",
+        "Target": "SetInteractionEnabled(bool)",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 493,
+          "Text": "startButton.SetInteractionEnabled(value)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "PlayPlayerJudgementVoice(JudgeResult)",
+        "TargetType": "HudView",
+        "Target": "PlayPlayerVoice(AudioClip[])",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 540,
+          "Text": "PlayPlayerVoice(playerActionAudioSettings.MistakeVoices)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "PlayResolvedActionEffect(Enemy, JudgeResult)",
+        "TargetType": "HudView",
+        "Target": "PlayPlayerVoice(AudioClip[])",
+        "Weight": 3,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 576,
+          "Text": "PlayPlayerVoice(playerActionAudioSettings.ParryEffect)"
+        }
+      },
+      {
+        "SourceType": "Title",
+        "Source": "PlayIntro()",
+        "TargetType": "Title",
+        "Target": "AddWooferTween(ElementState, float)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 140,
+          "Text": "AddWooferTween(wooferLeftState, stageStart)"
+        }
+      },
+      {
+        "SourceType": "Title",
+        "Source": "ShowOptions()",
+        "TargetType": "TitleButton",
+        "Target": "SetInteractionEnabled(bool)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+          "Line": 172,
+          "Text": "backButton.SetInteractionEnabled(false)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "OnDisable()",
+        "TargetType": "HudView",
+        "Target": "RestorePresentation(SpriteRenderer, Vector3, Vector3)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 320,
+          "Text": "RestorePresentation(enemySlot, enemyBaseScale, ref enemyShakeOffset)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "OnDisable()",
+        "TargetType": "HudView",
+        "Target": "StopGuardShield(SpriteRenderer)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 345,
+          "Text": "StopGuardShield(playerGuardShield)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "OnDisable()",
+        "TargetType": "HudView",
+        "Target": "StopLaser(LineRenderer, LineRenderer)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 324,
+          "Text": "StopLaser(playerLaser, playerLaserOuter)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "Start()",
+        "TargetType": "HudView",
+        "Target": "InitializeLaser(LineRenderer, LineRenderer, Light2D, Light2D)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 378,
+          "Text": "InitializeLaser(playerLaser, playerLaserOuter, playerLaserMuzzleGlow, playerLaserHitFlash)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "Update()",
+        "TargetType": "HudView",
+        "Target": "DamageFlash(Color, float)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 403,
+          "Text": "DamageFlash(Color.white, ref enemyDamageFlashTimer)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "LateUpdate()",
+        "TargetType": "HudView",
+        "Target": "UpdateDspIdleBounce(SpriteRenderer, Vector3, bool)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 425,
+          "Text": "UpdateDspIdleBounce(\r\n                playerSlot,\r\n                playerBaseScale,\r\n                playerIdleBounceEnabled)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "OnJudged(int, Enemy, JudgeResult)",
+        "TargetType": "HudView",
+        "Target": "PlayGuardShield(SpriteRenderer, SpriteRenderer, SpriteRenderer)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 514,
+          "Text": "PlayGuardShield(playerGuardShield, playerSlot, enemySlot)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "OnJudged(int, Enemy, JudgeResult)",
+        "TargetType": "HudView",
+        "Target": "PlayLaser(LineRenderer, LineRenderer, Light2D, Light2D, SpriteRenderer, Vector3, Vector3, Color, bool, float)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 478,
+          "Text": "PlayLaser(\r\n                    playerLaser,\r\n                    playerLaserOuter,\r\n                    playerLaserMuzzleGlow,\r\n                    playerLaserHitFlash,\r\n                    enemySlot,\r\n                    ResolveLaserOrigi"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "OnJudged(int, Enemy, JudgeResult)",
+        "TargetType": "HudView",
+        "Target": "ResolveHitPosition(bool, SpriteRenderer)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 485,
+          "Text": "ResolveHitPosition(false, enemySlot)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "OnJudged(int, Enemy, JudgeResult)",
+        "TargetType": "HudView",
+        "Target": "ResolveLaserOrigin(bool, LineRenderer)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 484,
+          "Text": "ResolveLaserOrigin(true, playerLaser)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "OnBeat(int)",
+        "TargetType": "HudView",
+        "Target": "PlayIdleBeatBounce(SpriteRenderer, Vector3, bool, Tween)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 765,
+          "Text": "PlayIdleBeatBounce(\r\n                playerSlot,\r\n                playerBaseScale,\r\n                playerIdleBounceEnabled,\r\n                ref playerIdleBounce)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "UpdateDspIdleBounce(SpriteRenderer, Vector3, bool)",
+        "TargetType": "HudView",
+        "Target": "RestoreIdleScaleY(SpriteRenderer, Vector3)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 785,
+          "Text": "RestoreIdleScaleY(slot, baseScale)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "InitializeQueues()",
+        "TargetType": "HudView",
+        "Target": "QueueSlot(Image[], int)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1003,
+          "Text": "QueueSlot(enemyQueueSlots, i)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "InitializeLaser(LineRenderer, LineRenderer, Light2D, Light2D)",
+        "TargetType": "HudView",
+        "Target": "InitializeEffectLight(Light2D)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1177,
+          "Text": "InitializeEffectLight(muzzleGlow)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "InitializeLaser(LineRenderer, LineRenderer, Light2D, Light2D)",
+        "TargetType": "HudView",
+        "Target": "InitializeLaserLine(LineRenderer, float)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1171,
+          "Text": "InitializeLaserLine(laser, laserWidth)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "ResolveCurrentLaserOrigin(LineRenderer, Vector3)",
+        "TargetType": "HudView",
+        "Target": "ResolveLaserOrigin(bool, LineRenderer)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1246,
+          "Text": "ResolveLaserOrigin(true, laser)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "PlayLaser(LineRenderer, LineRenderer, Light2D, Light2D, SpriteRenderer, Vector3, Vector3, Color, bool, float)",
+        "TargetType": "HudView",
+        "Target": "SetLaserPositions(LineRenderer, LineRenderer, Vector3, Vector3)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1293,
+          "Text": "SetLaserPositions(laser, outerLaser, origin, origin)"
+        }
+      },
+      {
+        "SourceType": "HudView",
+        "Source": "InitializeGuardShields()",
+        "TargetType": "HudView",
+        "Target": "CreateGuardShield(SpriteRenderer, string)",
+        "Weight": 2,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+          "Line": 1513,
+          "Text": "CreateGuardShield(\r\n                playerGuardShield,\r\n                \u0022PlayerGuardShield\u0022)"
+        }
+      },
+      {
+        "SourceType": "TitleButton",
+        "Source": "Awake()",
+        "TargetType": "TitleButton",
+        "Target": "ApplySprite(bool)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\TitleButton.cs",
+          "Line": 36,
+          "Text": "ApplySprite(false)"
+        }
+      },
+      {
+        "SourceType": "TitleButton",
+        "Source": "Awake()",
+        "TargetType": "TitleButton",
+        "Target": "Prepare()",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\TitleButton.cs",
+          "Line": 35,
+          "Text": "Prepare()"
+        }
+      },
+      {
+        "SourceType": "TitleButton",
+        "Source": "SetInteractionEnabled(bool)",
+        "TargetType": "TitleButton",
+        "Target": "ApplySprite(bool)",
+        "Weight": 1,
+        "Example": {
+          "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\TitleButton.cs",
+          "Line": 65,
+          "Text": "ApplySprite(false)"
+        }
+      }
+    ]
+  },
+  "Evidence": [
+    {
+      "Title": "Likely flow",
+      "Detail": "HudView.OnDisable() -\u003E HudView.StopEffectLight(Light2D) / terminal"
+    },
+    {
+      "Title": "Likely flow",
+      "Detail": "HudView.Start() -\u003E HudView.InitializeLaser(LineRenderer, LineRenderer, Light2D, Light2D) -\u003E HudView.InitializeLaserLine(LineRenderer, float) / terminal"
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "Title.RestoreFinalState() -\u003E Title.RestoreElement(ElementState)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+        "Line": 472,
+        "Text": "RestoreElement(wooferLeftState)"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "HudView.OnDisable() -\u003E HudView.StopEffectLight(Light2D)",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 340,
+        "Text": "StopEffectLight(playerLaserMuzzleGlow)"
+      }
+    },
+    {
+      "Title": "Internal call",
+      "Detail": "Title.TryCacheElementStates() -\u003E TitleButton.Prepare()",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+        "Line": 416,
+        "Text": "startButton.Prepare()"
+      }
+    },
+    {
+      "Title": "outgoing calls_member",
+      "Detail": "HudView -\u003E CharacterView / 5 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 1210,
+        "Text": "view.GetComponent\u003CKeyframeAnimator\u003E()"
+      }
+    },
+    {
+      "Title": "outgoing accepts_parameter",
+      "Detail": "HudView -\u003E Enemy / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 455,
+        "Text": "Enemy"
+      }
+    },
+    {
+      "Title": "outgoing accepts_parameter",
+      "Detail": "HudView -\u003E JudgeResult / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\View\\HudView.cs",
+        "Line": 455,
+        "Text": "JudgeResult"
+      }
+    },
+    {
+      "Title": "Internal calls_member",
+      "Detail": "Title -\u003E TitleButton / 13 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+        "Line": 172,
+        "Text": "backButton.SetInteractionEnabled(false)"
+      }
+    },
+    {
+      "Title": "Internal creates",
+      "Detail": "Title -\u003E Title\u002BElementState / 9 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+        "Line": 421,
+        "Text": "ElementState"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "Title -\u003E Title\u002BElementState / 9 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+        "Line": 63,
+        "Text": "ElementState"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "Title -\u003E Title\u002BElementState / 7 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+        "Line": 368,
+        "Text": "ElementState"
+      }
+    },
+    {
+      "Title": "Internal has_field_type",
+      "Detail": "Title -\u003E TitleButton / 4 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+        "Line": 15,
+        "Text": "TitleButton"
+      }
+    },
+    {
+      "Title": "Internal accepts_parameter",
+      "Detail": "Title -\u003E TitleButton / 2 refs",
+      "Example": {
+        "File": "H:\\Unity\\Project-Memories\\Assets\\Scripts\\UI\\Title.cs",
+        "Line": 454,
+        "Text": "TitleButton"
+      }
+    }
+  ],
+  "SuggestedAiTask": "Use the UI Layer context to explain the reading order, likely runtime flow, and risky assumptions. Cite method names, relationship edges, and file references when possible."
+}
