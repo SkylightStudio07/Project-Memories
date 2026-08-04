@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 847f4c1c8e10cbe46a6b957043c80246, type: 3}
   m_Name: Ending
   m_EditorClassIdentifier: Assembly-CSharp::BeatMemories.DialogueSO
+  cinematicBackground: {fileID: 6992585115682665841, guid: 612bbd82b38c0a54788767f59201e587, type: 3}
+  showBackgroundForLastLines: 3
+  keepBackgroundVisibleAfterDialogue: 1
   lines:
   - speaker: 0
     speakerName: "\uB2E4\uB97C\uB808\uC559"

@@ -11,5 +11,10 @@ namespace BeatMemories
     public class DialogueSO : ScriptableObject
     {
         public List<DialogueLine> lines = new List<DialogueLine>();
+
+        [Header("Optional Cinematic Background")]
+        public Sprite cinematicBackground;
+        [Min(0)] public int showBackgroundForLastLines;
+        public bool keepBackgroundVisibleAfterDialogue;
     }
 }

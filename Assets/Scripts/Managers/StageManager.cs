@@ -347,6 +347,15 @@ namespace BeatMemories
             pendingRetryStageIndex = -1;
         }
 
+        /// <summary>
+        /// Forces the next battle-scene load to start from Act 1 (index 0).
+        /// This intentionally overrides the inspector's debug start index.
+        /// </summary>
+        public static void PrepareNewRun()
+        {
+            pendingRetryStageIndex = 0;
+        }
+
         private IEnumerator Fade(float targetAlpha)
         {
             if (blackout == null) yield break;

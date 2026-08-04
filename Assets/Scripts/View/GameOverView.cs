@@ -18,6 +18,10 @@ namespace BeatMemories
         [SerializeField] private RoundManager round;
         [SerializeField] private StageManager stageManager;
         [SerializeField] private GameObject gameOverRoot;
+        [SerializeField] private GameObject leaderboardButton;
+        [SerializeField] private GameObject leaderboardScreen;
+        [SerializeField] private LeaderboardScreenController leaderboardController;
+        [SerializeField] private GameObject endingSceneBackground;
 
         [Header("게임오버 시 숨길 전투 UI")]
         [SerializeField] private GameObject[] hideOnGameOver;
@@ -37,6 +41,7 @@ namespace BeatMemories
         [SerializeField] private GameObject[] hideOnVictory;
 
         private bool _shown;
+        private bool _leaderboardUnlocked;
         private Coroutine _showRoutine;
         private Vector3 _gameOverBaseScale = Vector3.one;
 
@@ -64,17 +69,25 @@ namespace BeatMemories
         private void Start()
         {
             _shown = false;
+            _leaderboardUnlocked = false;
             if (gameOverRoot != null)
             {
                 _gameOverBaseScale = gameOverRoot.transform.localScale;
                 gameOverRoot.SetActive(false);
             }
+            if (leaderboardButton != null) leaderboardButton.SetActive(false);
+            if (leaderboardScreen != null) leaderboardScreen.SetActive(false);
+            if (endingSceneBackground != null) endingSceneBackground.SetActive(false);
         }
 
         private void Show()
         {
             if (_shown) return;
             _shown = true;
+            _leaderboardUnlocked = false;
+            if (endingSceneBackground != null) endingSceneBackground.SetActive(false);
+            if (leaderboardButton != null) leaderboardButton.SetActive(false);
+            if (leaderboardScreen != null) leaderboardScreen.SetActive(false);
             _showRoutine = StartCoroutine(ShowAfterDeathPresentation());
         }
 
@@ -91,7 +104,10 @@ namespace BeatMemories
         {
             if (_shown) return;
             _shown = true;
+            _leaderboardUnlocked = true;
             if (bannerImage != null && gameClearBanner != null) bannerImage.sprite = gameClearBanner;
+            if (endingSceneBackground != null) endingSceneBackground.SetActive(true);
+            if (leaderboardButton != null) leaderboardButton.SetActive(true);
             if (hideOnVictory != null)
                 foreach (GameObject target in hideOnVictory)
                     if (target != null) target.SetActive(false);
@@ -137,6 +153,24 @@ namespace BeatMemories
         {
             StageManager.ClearPendingRetry();
             SceneManager.LoadScene(TitleSceneName);
+        }
+
+        public void OpenLeaderboard()
+        {
+            if (!_leaderboardUnlocked || leaderboardScreen == null) return;
+            if (gameOverRoot != null) gameOverRoot.SetActive(false);
+            if (endingSceneBackground != null) endingSceneBackground.SetActive(true);
+            leaderboardScreen.SetActive(true);
+            leaderboardScreen.transform.SetAsLastSibling();
+            leaderboardController?.Open(round != null ? round.Score : 0);
+        }
+
+        public void StartNewRun()
+        {
+            Scene activeScene = SceneManager.GetActiveScene();
+            if (!activeScene.IsValid() || string.IsNullOrEmpty(activeScene.name)) return;
+            StageManager.PrepareNewRun();
+            SceneManager.LoadScene(activeScene.name);
         }
     }
 }

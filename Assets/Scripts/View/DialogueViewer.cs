@@ -24,6 +24,7 @@ namespace BeatMemories
         [SerializeField] private Image dimBackground;
         [SerializeField] private Color dimBackgroundColor =
             new Color(0f, 0f, 0f, 0.58f);
+        [SerializeField] private Image cinematicBackground;
 
         [Header("타자기 연출 (인스펙터 조정)")]
         [Tooltip("초당 표시할 글자 수. 0이면 즉시 전체 표시")]
@@ -77,6 +78,7 @@ namespace BeatMemories
             _typingAudio.spatialBlend = 0f;
             if (typingSettings != null)
                 _typingAudio.outputAudioMixerGroup = typingSettings.Output;
+            SetCinematicBackgroundVisible(false);
         }
 
         private void Update()
@@ -104,9 +106,11 @@ namespace BeatMemories
             _lastEnemyName = null;
             _lastPlayerName = null;
             if (root != null) root.SetActive(true);
+            PrepareCinematicBackground(dialogue);
 
             for (int i = 0; i < lines.Count; i++)
             {
+                UpdateCinematicBackground(dialogue, i, lines.Count);
                 ShowLine(lines[i]);
                 _advanced = false;
                 yield return new WaitUntil(() => _advanced);
@@ -116,7 +120,44 @@ namespace BeatMemories
             if (enemyWindow != null) enemyWindow.SetActive(false);
             if (playerWindow != null) playerWindow.SetActive(false);
             if (root != null) root.SetActive(false);
+            if (!dialogue.keepBackgroundVisibleAfterDialogue)
+                SetCinematicBackgroundVisible(false);
             IsPlaying = false;
+        }
+
+        private void PrepareCinematicBackground(DialogueSO dialogue)
+        {
+            if (cinematicBackground == null) return;
+
+            if (dialogue != null && dialogue.cinematicBackground != null)
+                cinematicBackground.sprite = dialogue.cinematicBackground;
+            SetCinematicBackgroundVisible(false);
+        }
+
+        private void UpdateCinematicBackground(
+            DialogueSO dialogue,
+            int lineIndex,
+            int lineCount)
+        {
+            if (cinematicBackground == null
+                || dialogue == null
+                || dialogue.cinematicBackground == null
+                || dialogue.showBackgroundForLastLines <= 0)
+            {
+                return;
+            }
+
+            int visibleLineCount = Mathf.Min(
+                dialogue.showBackgroundForLastLines,
+                lineCount);
+            SetCinematicBackgroundVisible(
+                lineIndex >= lineCount - visibleLineCount);
+        }
+
+        private void SetCinematicBackgroundVisible(bool visible)
+        {
+            if (cinematicBackground != null)
+                cinematicBackground.gameObject.SetActive(visible);
         }
 
         private void ShowLine(DialogueLine line)
@@ -243,6 +284,7 @@ namespace BeatMemories
             if (enemyWindow != null) enemyWindow.SetActive(false);
             if (playerWindow != null) playerWindow.SetActive(false);
             if (root != null) root.SetActive(false);
+            SetCinematicBackgroundVisible(false);
         }
     }
 }
